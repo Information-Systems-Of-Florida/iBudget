@@ -8,6 +8,7 @@
 \usepackage{morefloats}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{totpages}
 
 \setmargins{3.5cm}%			% left edge
 		   {2.5cm}%     % top edge
@@ -139,7 +140,7 @@ contents={
 \setcounter{page}{1} 
 %\lfoot{\today}
 %\cfoot{\sc{\footnotesize jgutierrez@isf.com}}
-\rfoot{Page \thepage \hspace{0.02cm} of \ThePageCount}
+\rfoot{Page \thepage \hspace{0.005cm} of \pageref*{TotPages}} % \ThePageCount
 %%************************************************
 
 %\hypersetup{colorlinks=true, linkcolor=blue, filecolor=blue, pagecolor=blue, urlcolor=blue}
