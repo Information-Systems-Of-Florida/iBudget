@@ -1,0 +1,299 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Previous Algorithm}  \newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------------
+\section{Previous Algorithm}
+%---------------------------------------------
+
+The current algorithm, designated as Model 5b, operates as a multiple linear regression model that calculates individual budget allocations based on a square-root transformation of fiscal year 2013-14 claims data. This approach incorporates 22 independent variables spanning living settings, age categories, and Questionnaire for Situational Information (QSI) assessment scores that evaluate behavioral, functional, and physical support needs. While the algorithm achieves an R-squared value of 0.7998, explaining approximately 80\% of expenditure variation, this statistical performance comes with significant methodological concerns, including the removal of 9.40\% of cases as outliers and reliance on data that is now over a decade old.
+
+The temporal disconnect between the algorithm's 2013-14 data foundation and current service delivery realities represents perhaps the most immediate concern. Over the intervening decade, disability services have experienced significant evolution in cost structures, service delivery models, demographic patterns, and regulatory requirements. The algorithm's inability to reflect these changes compromises its predictive validity and creates systematic biases that may disadvantage certain populations or service categories.
+
+Beyond data currency issues, the algorithm's statistical architecture raises fundamental questions about its alignment with person-centered planning principles. The current approach prioritizes actuarial prediction based on historical patterns rather than incorporating individual preferences, goals, and strengths that form the cornerstone of person-centered planning. This disconnect between statistical methodology and philosophical foundation creates a system that may achieve statistical significance while failing to serve the individualization requirements that define quality disability services.
+
+The outlier management approach presents additional concerns about the algorithm's ability to serve the full spectrum of disability support needs. The requirement to remove nearly 10\% of cases to achieve acceptable statistical fit suggests fundamental limitations in the model's capacity to accommodate complex or atypical support requirements. This exclusion rate is particularly concerning given that individuals with the most intensive or unique needs may be precisely those most dependent on accurate algorithmic predictions for service access.
+
+Variable validation limitations further compromise the algorithm's comprehensiveness and potential compliance with statutory requirements. The exclusion of QSI questions 8 through 13 due to validation concerns creates gaps in needs assessment that may conflict with requirements for thorough evaluation of individual characteristics and support needs. This limitation reflects broader challenges in balancing statistical rigor with comprehensive needs assessment in algorithmic systems.
+
+%---------------------------------------------
+\section{Statistical Methods Analysis}
+%---------------------------------------------
+
+\subsection{Overview of Statistical Framework}
+
+The documentation of Model 5b presents the statistical methods employed in developing the Florida APD's iBudget Algorithm. This section examines the technical approaches used for multiple linear regression modeling with transformations, model selection techniques, and outlier detection methods applied to predict APD consumers' FY 2013-2014 expenditures.
+
+\subsection{Multiple Linear Regression Foundation}
+
+The statistical framework builds upon linear regression as the primary analytical method for modeling relationships between dependent and independent variables. The study defines:
+
+\begin{itemize}
+    \item \textbf{Dependent variable}: APD consumers' FY 2013-2014 expenditures
+    \item \textbf{Independent variables}: consumers' age, living setting status, individual characteristics and support needs specified in QSI assessments
+\end{itemize}
+
+The classical multiple linear regression model is specified as:
+
+\begin{equation}
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \varepsilon_i, \quad i = 1, 2, \ldots, n
+\end{equation}
+
+where $y_i$ represents the dependent variable, $\{x_{1i}, x_{2i}, \ldots, x_{pi}\}$ are independent variables or predictors, $\beta_0$ is the intercept, $\{\beta_0, \beta_1, \ldots, \beta_p\}$ are unknown coefficients, and $\{\varepsilon_1, \varepsilon_2, \ldots, \varepsilon_n\}$ are random error terms.
+
+\subsection{Statistical Assumptions and Limitations}
+
+The regression framework requires three critical assumptions for the random error terms:
+
+\begin{enumerate}
+    \item Each term $\varepsilon_i$ follows a normal distribution
+    \item Error terms $\{\varepsilon_1, \varepsilon_2, \ldots, \varepsilon_n\}$ are mutually independent
+    \item Each term $\varepsilon_i$ has constant variance $\sigma^2$ (homoscedasticity)
+\end{enumerate}
+
+These assumptions present immediate challenges when applied to disability expenditure data, which typically exhibits high variability and non-normal distributions due to the diverse and individualized nature of support needs.
+
+\subsection{Box-Cox Power Transformation}
+
+To address distributional concerns, the methodology employs Box-Cox power transformation to normalize the response variable. The transformation is defined as:
+
+\begin{equation}
+z_i^{(\lambda)} = \begin{cases}
+\frac{y_i^\lambda - 1}{\lambda \cdot GM(y)^{\lambda-1}} & \text{if } \lambda \neq 0 \\
+GM(y) \cdot \ln(y_i) & \text{if } \lambda = 0
+\end{cases}
+\end{equation}
+
+where $GM(y) = \left[\prod_{i=1}^n y_i\right]^{1/n}$ represents the geometric mean of observations. The scale adjustment by $GM(y)$ ensures unit comparability across different transformation values.
+
+The optimal transformation parameter $\lambda$ is selected to minimize the Residual Sum of Squares:
+\begin{equation}
+RSS(\lambda) = \sum_{i=1}^n \left(\hat{\varepsilon}_i^{(\lambda)}\right)^2
+\end{equation}
+
+In practice, $RSS(\lambda)$ is evaluated for discrete values: \\ $\lambda \in \{-3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3\}$.
+
+\subsection{Model Selection via Bayesian Information Criterion}
+
+The methodology employs the Bayesian Information Criterion (SBC) for model selection among 125 candidate independent variables. This approach aims to identify variables with significant predictive power while maintaining model parsimony and avoiding overfitting.
+
+The SBC framework compares multiple candidate models to select the configuration with optimal predictive capability for individual budget allocation. However, this statistical optimization approach prioritizes mathematical fit over substantive considerations of individual needs assessment and person-centered planning principles.
+
+\subsection{Methodological Concerns}
+
+The statistical framework reveals several fundamental limitations that impact the algorithm's suitability for person-centered disability services:
+
+\subsubsection{Outlier Management}
+The requirement to remove 9.40\% of cases to achieve acceptable statistical fit indicates fundamental model limitations in accommodating diverse support needs. This exclusion rate suggests the methodology cannot adequately serve individuals with complex or atypical requirements—precisely those who may most depend on accurate algorithmic predictions.
+
+\subsubsection{Temporal Validity}
+The reliance on FY 2013-2014 data for model development creates a significant temporal disconnect with current service delivery realities. The statistical framework lacks mechanisms for updating or recalibrating the model to reflect evolving cost structures, service models, or demographic patterns.
+
+\subsubsection{Person-Centered Alignment}
+The emphasis on actuarial prediction based on historical patterns conflicts with person-centered planning principles that prioritize individual preferences, goals, and strengths. The statistical methodology treats individuals as data points to be fitted to historical patterns rather than unique persons with individualized support requirements.
+
+\subsection{Implementation Implications}
+
+The statistical methods underlying Model 5b demonstrate technical competency within traditional regression frameworks while revealing fundamental misalignment with contemporary disability services principles. The methodology's focus on statistical optimization may achieve mathematical significance while failing to serve the individualization and person-centered requirements that define quality disability services.
+
+The documented approach establishes that while the statistical framework follows accepted practices for regression modeling, its application to disability budget allocation raises significant concerns about equity, individualization, and compliance with person-centered planning requirements. These methodological limitations provide important context for evaluating the algorithm's overall suitability for Florida's disability services system.
+
+%---------------------------------------------
+\section{Critical Deficiencies in Model 5b}
+%---------------------------------------------
+Questions Q8, Q9, Q12, and Q13 were systematically excluded from statistical modeling because ``items were not validated and the reliability of these items was not examined.'' This represents a fundamental design flaw where questions addressing life changes and community inclusion were incorporated into the instrument without proper psychometric validation. The exclusion of these variables reduced the total usable predictors from 125 to a smaller subset, eliminating potentially valuable contextual information about life transitions and community participation that could influence support needs. This suggests inadequate instrument development protocols and quality control procedures.
+
+
+The statistical analysis revealed multiple fundamental deficiencies that compromise the validity and utility of the proposed linear regression models for resource allocation.
+
+\subsubsection{Counter-Intuitive Negative Coefficients}
+
+The most egregious deficiency involved negative coefficients for the functional status sum (FSum) and physical status sum (PSum) variables in Model 5a1. These negative coefficients mathematically implied that individuals with greater functional or physical impairments would receive \textit{less} funding, directly contradicting the logical expectation that higher support needs should correspond to increased resource allocation. This fundamental violation of face validity forced the removal of these theoretically important variables from subsequent models, eliminating key predictors that should logically drive resource allocation decisions.
+
+\subsubsection{Widespread Statistical Insignificance}
+
+Multiple predictor variables demonstrated non-significant relationships with the outcome variable, including disability type categories, individual QSI items, and interaction terms. For example, Q24 (evacuation ability) became non-significant (p-value = 0.53) after removing FSum and PSum from the model. Many disability type variables showed coefficients that were not statistically different from zero, despite their theoretical relevance to support needs. This pattern of insignificance suggests either inadequate model specification or fundamental measurement issues in the predictor variables.
+
+\subsubsection{Violation of Distributional Assumptions}
+
+Residual diagnostic analysis revealed persistent deviations from normality assumptions even after square-root transformation of the dependent variable. The Q-Q normal plots demonstrated heavy tails inconsistent with the normal distribution required for valid linear regression inference. The diagnostic plots showed that "the distribution is still away from the normal distribution in the two tails," indicating that standard linear regression assumptions were not met, potentially invalidating hypothesis tests and confidence intervals.
+
+\subsubsection{Excessive Outlier Exclusion}
+
+The final recommended Model 5b required exclusion of 9.40\% of cases (2,410 consumers) as outliers—an extraordinarily high proportion suggesting either systematic data quality issues or fundamental model misspecification. Removing nearly one in ten cases raises serious concerns about model generalizability and may indicate that the linear modeling approach is fundamentally inappropriate for this data structure. Such extensive outlier removal suggests the presence of unmodeled nonlinear relationships or heteroscedasticity that the current approach cannot accommodate.
+
+\subsubsection{Limited Construct Validity}
+
+Primary, secondary, and other disability type variables were ultimately excluded from the final model because they were "not statistically predictive for the response variable." The analysis noted that "estimated coefficients for some categories of the three variables are negative and/or the estimated coefficients are not statistically different from zero." This represents a critical failure of construct validity, as disability type should logically influence support needs and resource requirements.
+
+\subsubsection{Validation and Reliability Gaps}
+
+The exclusion of questions Q8, Q9, Q12, and Q13 due to lack of validation represents a significant methodological weakness. These items address life changes and community inclusion—factors that could substantially influence support needs. The systematic exclusion of unvalidated items, while methodologically sound, highlights the incomplete development of the assessment instrument.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Model 5b Implementation and Testing Framework}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Implementation Overview}
+
+The Model 5b algorithm has been implemented in Python as \texttt{model5b.py}, providing a complete computational framework for budget prediction based on the statistical methodology described in Section II. This implementation translates the regression coefficients from Table 4 of the UpdateStatisticalModelsiBudget document into a functional prediction system that can process individual QSI assessments and generate budget allocations according to the square-root transformation methodology.
+
+The implementation maintains full fidelity to the original statistical model, including all 22 independent variables, interaction terms, and the critical square-root transformation that enables the algorithm to achieve its documented R-squared value of 0.7998. The program architecture emphasizes transparency, validation, and reproducibility, ensuring that predictions can be traced through each computational step.
+
+\subsection{Program Execution}
+
+\subsubsection{System Requirements}
+
+The implementation requires Python 3.6 or higher with standard library modules only. No external dependencies are required, ensuring compatibility across diverse computing environments. The program consists of two primary files:
+
+\begin{itemize}
+    \item \texttt{model5b.py} - Complete Model 5b implementation
+    \item \texttt{QSI-unit-test1.json} - Comprehensive test dataset
+\end{itemize}
+
+\subsubsection{Execution Instructions}
+
+To execute the Model 5b test program, ensure both files are located in the same directory and run the following command:
+
+\begin{verbatim}
+python model5b.py
+\end{verbatim}
+
+The program automatically loads the test dataset, processes all test cases through the Model 5b algorithm, and generates comprehensive output including individual predictions, summary statistics, and model performance metrics. No command-line arguments or configuration files are required for basic operation.
+
+\subsubsection{Expected Output Structure}
+
+Program execution produces structured output organized into several sections:
+
+\begin{enumerate}
+    \item \textbf{Loading Confirmation} - Verification of test data file access and case count
+    \item \textbf{Individual Predictions} - Detailed results for each test case including:
+        \begin{itemize}
+            \item Individual identifier and demographic information
+            \item Living setting and age group classification
+            \item Predicted budget amount in dollars
+            \item Square-root scale intermediate calculation
+        \end{itemize}
+    \item \textbf{Summary Statistics} - Aggregate analysis including:
+        \begin{itemize}
+            \item Count of successful predictions
+            \item Average, minimum, and maximum predicted budgets
+            \item Distribution characteristics across test cases
+        \end{itemize}
+    \item \textbf{Model Information} - Technical specifications including R-squared, outlier removal percentage, and statistical performance metrics
+\end{enumerate}
+
+\subsection{Test Dataset Specification}
+
+\subsubsection{Dataset Structure}
+
+The \texttt{QSI-unit-test1.json} file contains a comprehensive test dataset designed to validate Model 5b implementation across the full spectrum of disability support scenarios. The dataset employs JSON formatting for platform independence and includes both test cases and extensive metadata documentation.
+
+The file structure consists of four primary components:
+
+\begin{itemize}
+    \item \textbf{Metadata Section} - Dataset description, version information, and data source documentation
+    \item \textbf{Test Cases Array} - Twelve individual assessment records representing diverse support scenarios
+    \item \textbf{Variable Definitions} - Complete specification of all input variables and their valid ranges
+    \item \textbf{Model Information} - Technical parameters and performance characteristics of Model 5b
+\end{itemize}
+
+\subsubsection{Test Case Coverage}
+
+The dataset includes twelve carefully constructed test cases that systematically cover the parameter space defined by Model 5b variables:
+
+\textbf{Living Setting Distribution:}
+\begin{itemize}
+    \item Family Home (FH): 4 cases representing the reference level
+    \item Independent Living \& Supported Living (ILSL): 3 cases with varying support intensities
+    \item Residential Habilitation Standard (RH1): 2 cases including standard residential care
+    \item Residential Habilitation Behavior Focus (RH2): 1 case with behavioral specialization
+    \item Residential Habilitation Intensive Behavior (RH3): 1 case with intensive behavioral support
+    \item Residential Habilitation Special Medical (RH4): 1 case with complex medical needs
+\end{itemize}
+
+\textbf{Age Group Representation:}
+\begin{itemize}
+    \item Under 21 (reference level): 2 cases representing adolescent populations
+    \item Age 21-30: 4 cases covering young adult transition period
+    \item Age 31+: 6 cases spanning adult and senior populations (ages 31-67)
+\end{itemize}
+
+\textbf{Support Need Variation:}
+The test cases systematically vary across support intensity levels:
+\begin{itemize}
+    \item \textbf{Minimal Support} (TEST007): Teenager with limited intervention requirements
+    \item \textbf{Moderate Support} (TEST001, TEST008, TEST011): Individuals with balanced functional and behavioral needs
+    \item \textbf{High Support} (TEST003, TEST010): Adults requiring intensive assistance across multiple domains
+    \item \textbf{Severe Support} (TEST005, TEST006): Complex cases with maximum intervention requirements
+\end{itemize}
+
+\subsubsection{Variable Validation Framework}
+
+Each test case includes validation of all required Model 5b input variables:
+
+\textbf{Demographic Variables:}
+\begin{itemize}
+    \item \texttt{living\_setting} - Categorical variable with six valid levels
+    \item \texttt{age} - Continuous variable determining age group classification
+\end{itemize}
+
+\textbf{QSI Sum Scores:}
+\begin{itemize}
+    \item \texttt{bsum} - Behavioral status sum (0-24 range)
+    \item \texttt{fsum} - Functional status sum (0-44 range) 
+    \item \texttt{psum} - Physical status sum (0-76 range)
+\end{itemize}
+
+\textbf{Individual QSI Questions:}
+Ten specific questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43) each scored on 0-4 scales representing:
+\begin{itemize}
+    \item Functional domains: Eating, transfers, hygiene, dressing, self-protection
+    \item Behavioral domains: Sexual behavior, aggression, restraint use
+    \item Medical domains: Psychotropic medications, physician-prescribed treatments
+\end{itemize}
+
+\subsubsection{Data Integrity and Realism}
+
+The test dataset maintains realistic relationships between variables, ensuring that sum scores align with individual question responses and that support needs correspond appropriately to living settings. For example, individuals in RH3 and RH4 settings demonstrate correspondingly higher QSI scores, while those in family homes show more variable support profiles reflecting diverse family capacity.
+
+The dataset also incorporates edge cases and boundary conditions to test algorithm robustness, including individuals with minimal support needs, maximum scoring scenarios, and atypical combinations that may occur in real-world assessments.
+
+\subsection{Implementation Validation}
+
+\subsubsection{Computational Accuracy}
+
+The Python implementation reproduces the exact coefficient structure documented in the UpdateStatisticalModelsiBudget report, ensuring mathematical fidelity to the research methodology. All regression coefficients, interaction terms, and transformation procedures match the specifications in Table 4, enabling direct comparison with the original statistical analysis.
+
+The program includes comprehensive input validation to prevent computational errors and ensure that all QSI scores fall within their defined ranges. Invalid inputs generate descriptive error messages identifying the specific validation failure, supporting quality assurance in operational deployment.
+
+\subsubsection{Transparency and Traceability}
+
+Each prediction includes detailed intermediate calculations, allowing users to trace the contribution of individual variables to the final budget prediction. The output format displays the square-root scale calculation before transformation to dollars, enabling verification of the mathematical procedures against manual calculations.
+
+The implementation also provides complete documentation of which coefficients were applied for each individual, including living setting classification, age group determination, and specific QSI question contributions. This transparency supports both technical validation and policy analysis of algorithmic decision-making.
+
+\subsection{Testing Framework Applications}
+
+This implementation and testing framework serves multiple analytical purposes beyond basic algorithm validation:
+
+\textbf{Policy Analysis:} The comprehensive test cases enable examination of how different policy scenarios (changes in living setting availability, age group definitions, or QSI scoring protocols) would affect budget predictions across diverse populations.
+
+\textbf{Equity Assessment:} The systematic coverage of demographic and support need combinations facilitates analysis of potential disparities in budget allocation across different population subgroups.
+
+\textbf{Sensitivity Analysis:} The modular implementation structure supports investigation of how changes to individual coefficients or variable definitions would propagate through the prediction system.
+
+\textbf{Validation Studies:} The test framework provides a standardized basis for comparing alternative algorithmic approaches or validating implementation accuracy across different programming environments.
+
+The combination of comprehensive implementation and systematic test data establishes a robust foundation for ongoing analysis and refinement of the Florida APD iBudget algorithm methodology.
+
+\subsection{Source code \& Output}
+
+\subsubsection{Python Implementation}
+
+\textbf{Python Implementation:}
+\lstinputlisting[language=Python]{../scripts/model5b.py}
+
+\textbf{Output:}
+\lstinputlisting{../scripts/model5b_output.txt}
