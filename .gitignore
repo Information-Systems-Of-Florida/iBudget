@@ -14,7 +14,7 @@ config.json
 # Exclude workspace
 CommandLineGPT.code-workspace
 # Exclude local files 
-*.txt
+# *.txt
 *.mp3
 *.bat
 config_*.json

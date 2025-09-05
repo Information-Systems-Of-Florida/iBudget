@@ -1,0 +1,110 @@
+Florida APD iBudget Algorithm - Model 5b Implementation
+============================================================
+Execution Date/Time: 2025-09-05 17:40:02
+Output File: model5b_output.txt
+============================================================
+
+Loaded 12 test cases from QSI-unit-test1.json
+Test data description: Unit test data for Model 5b iBudget Algorithm based on QSI assessments
+
+Model 5b Prediction Results:
+----------------------------------------
+
+Record 0:
+  Individual: TEST001
+  Living Setting: ILSL
+  Age: 25 (21-30)
+  Predicted Budget: $42,960.19
+  Square-root Scale: 207.2684
+
+Record 1:
+  Individual: TEST002
+  Living Setting: FH
+  Age: 19 (Under 21 (reference))
+  Predicted Budget: $4,709.91
+  Square-root Scale: 68.6288
+
+Record 2:
+  Individual: TEST003
+  Living Setting: RH1
+  Age: 35 (31+)
+  Predicted Budget: $69,109.36
+  Square-root Scale: 262.8866
+
+Record 3:
+  Individual: TEST004
+  Living Setting: RH2
+  Age: 28 (21-30)
+  Predicted Budget: $96,521.94
+  Square-root Scale: 310.6798
+
+Record 4:
+  Individual: TEST005
+  Living Setting: RH3
+  Age: 42 (31+)
+  Predicted Budget: $169,866.55
+  Square-root Scale: 412.1487
+
+Record 5:
+  Individual: TEST006
+  Living Setting: RH4
+  Age: 55 (31+)
+  Predicted Budget: $215,268.90
+  Square-root Scale: 463.9708
+
+Record 6:
+  Individual: TEST007
+  Living Setting: FH
+  Age: 16 (Under 21 (reference))
+  Predicted Budget: $3,662.69
+  Square-root Scale: 60.5202
+
+Record 7:
+  Individual: TEST008
+  Living Setting: ILSL
+  Age: 31 (31+)
+  Predicted Budget: $56,536.28
+  Square-root Scale: 237.7736
+
+Record 8:
+  Individual: TEST009
+  Living Setting: FH
+  Age: 24 (21-30)
+  Predicted Budget: $19,418.14
+  Square-root Scale: 139.349
+
+Record 9:
+  Individual: TEST010
+  Living Setting: RH1
+  Age: 67 (31+)
+  Predicted Budget: $68,804.18
+  Square-root Scale: 262.3055
+
+Record 10:
+  Individual: TEST011
+  Living Setting: ILSL
+  Age: 29 (21-30)
+  Predicted Budget: $40,415.35
+  Square-root Scale: 201.0357
+
+Record 11:
+  Individual: TEST012
+  Living Setting: FH
+  Age: 38 (31+)
+  Predicted Budget: $27,697.45
+  Square-root Scale: 166.4255
+
+Summary Statistics:
+  Successful predictions: 12
+  Average predicted budget: $67,914.24
+  Minimum predicted budget: $3,662.69
+  Maximum predicted budget: $215,268.90
+
+Model Information:
+  R-squared: 0.7998
+  Outliers removed: 9.4%
+  Residual standard error: 30.82
+
+============================================================
+Execution completed successfully.
+Results saved to: model5b_output.txt
