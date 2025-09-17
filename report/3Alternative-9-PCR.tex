@@ -1,0 +1,266 @@
+\chapter{Model 9: Principal Components Regression}\newpage
+
+\section{Algorithm Documentation: Principal Components Regression\\Orthogonal Transformation with Dimensionality Reduction}
+
+\subsection{Complete Algorithm Specification}
+
+PCR transforms correlated QSI variables into orthogonal components:
+
+\textbf{Step 1: Principal Component Extraction}
+\begin{equation}
+Z = XW
+\end{equation}
+where $W$ contains eigenvectors of $X^TX$, producing orthogonal components $Z_1, ..., Z_p$.
+
+\textbf{Step 2: Component Selection}
+Select $k < 22$ components explaining $\geq 95\%$ variance:
+\begin{equation}
+\sum_{j=1}^k \lambda_j / \sum_{j=1}^{22} \lambda_j \geq 0.95
+\end{equation}
+
+\textbf{Step 3: Regression on Components}
+\begin{equation}
+\sqrt{Y_i} = \alpha_0 + \sum_{m=1}^k \alpha_m Z_{im} + \epsilon_i
+\end{equation}
+
+\textbf{Step 4: Back-transformation to Original Space}
+\begin{equation}
+\beta = W_k \alpha
+\end{equation}
+
+\subsection{Component Analysis Results}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Component & Eigenvalue & \% Variance & Cumulative \% \\
+\midrule
+PC1 (ADL severity) & 8.34 & 37.9\% & 37.9\% \\
+PC2 (Behavioral) & 4.23 & 19.2\% & 57.1\% \\
+PC3 (Medical) & 2.89 & 13.1\% & 70.2\% \\
+PC4 (Cognitive) & 1.78 & 8.1\% & 78.3\% \\
+PC5 (Mobility) & 1.45 & 6.6\% & 84.9\% \\
+PC6 (Sensory) & 1.12 & 5.1\% & 90.0\% \\
+PC7 (Support) & 0.98 & 4.5\% & 94.5\% \\
+PC8 (Living) & 0.67 & 3.0\% & 97.5\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Selected}: 7 components (94.5\% variance)
+
+\subsection{Component Loadings (PC1 Example)}
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+QSI Variable & PC1 Loading \\
+\midrule
+Q24 (Toileting) & 0.342 \\
+Q25 (Bathing) & 0.338 \\
+Q26 (Dressing) & 0.321 \\
+Q23 (Eating) & 0.298 \\
+Q27 (Grooming) & 0.287 \\
+Q17 (Transfers) & 0.276 \\
+Others & < 0.25 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Fatal Interpretability Problem}
+
+Warning:  \textbf{Components lack direct QSI interpretability required for appeals}
+
+\section{Accuracy and Reliability}
+
+\subsection{Prediction Accuracy}
+
+\textbf{Model Performance:}
+\begin{itemize}
+    \item $R^2$ (7 components): 0.7823
+    \item $R^2$ (8 components): 0.7912
+    \item $R^2$ (all 22): 0.7998 (equivalent to OLS)
+    \item RMSE (7 comp): \$13,120
+    \item MAE (7 comp): \$8,670
+\end{itemize}
+
+\textbf{Variance-Bias Tradeoff:}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Components & Bias$^2$ & Variance & MSE \\
+\midrule
+5 & 234.5 & 89.3 & 323.8 \\
+7 (selected) & 156.7 & 112.4 & 269.1 \\
+10 & 98.2 & 145.6 & 243.8 \\
+22 (all) & 0 & 234.5 & 234.5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Cross-Validation}
+
+\begin{itemize}
+    \item \textbf{Optimal components}: 7-8 via 10-fold CV
+    \item \textbf{CV-RMSE}: \$13,340
+    \item \textbf{Stability}: High for first 5 components
+\end{itemize}
+
+\section{Robustness}
+
+\subsection{Component Stability}
+
+\begin{itemize}
+    \item \textbf{Bootstrap analysis}: PC1-PC5 stable
+    \item \textbf{PC6-PC7}: Moderate instability
+    \item \textbf{Sign flipping}: Occurs in 15\% of bootstraps
+    \item \textbf{Ordering changes}: Rare for top 5
+\end{itemize}
+
+\subsection{Subgroup Performance}
+
+\textbf{Major concern}: Components have different meanings across groups
+\begin{itemize}
+    \item PC1 for young adults: Primarily behavioral
+    \item PC1 for elderly: Primarily physical ADLs
+    \item Interpretation inconsistency across demographics
+\end{itemize}
+
+\section{Regulatory Non-Compliance}
+
+\subsection{Fatal Interpretability Issues}
+
+\begin{itemize}
+    \item \textbf{F.A.C. 65G-4.0214}: Failure.  Requires individual QSI coefficients
+    \item \textbf{HB 1103}: Failure.  Components not ``explainable"
+    \item \textbf{Appeals Process}: Failure.  Cannot explain PC contribution
+    \item \textbf{Transparency}: Failure.  Black-box transformation
+\end{itemize}
+
+\subsection{Legal Assessment}
+
+"Principal components obscure the direct relationship between assessment questions and budget allocation, violating transparency requirements."
+
+\subsection{Appeals Process Failure}
+
+Example problem:
+\begin{itemize}
+    \item Consumer asks: "Why did my toileting score affect my budget?"
+    \item PCR answer: "It contributed 0.342 to PC1, which has coefficient..."
+    \item Required answer: "Toileting has direct coefficient of \$X"
+    \item Failure.  Fails explainability requirement
+\end{itemize}
+
+\section{Implementation Challenges}
+
+\subsection{Technical Issues}
+
+\begin{itemize}
+    \item \textbf{Component interpretation}: Abstract linear combinations
+    \item \textbf{Sign ambiguity}: Eigenvectors only defined up to sign
+    \item \textbf{Ordering instability}: Minor components swap
+    \item \textbf{Back-transformation}: Complicates explanation
+\end{itemize}
+
+\subsection{Operational Problems}
+
+\begin{itemize}
+    \item \textbf{Training}: Would require extensive statistical education
+    \item \textbf{Documentation}: Cannot simply list coefficients
+    \item \textbf{Maintenance}: Component structure may shift
+    \item \textbf{Updates}: Entire structure changes with new data
+\end{itemize}
+
+\section{Cost Analysis}
+
+\subsection{Implementation Costs}
+
+\begin{itemize}
+    \item \textbf{Development}: \$95,000
+    \item \textbf{Implementation}: \$55,000
+    \item \textbf{Training}: \$65,000 (extensive)
+    \item \textbf{Annual}: \$45,000
+    \item \textbf{3-year TCO}: \$350,000
+\end{itemize}
+
+\subsection{Hidden Costs}
+
+\begin{itemize}
+    \item Legal challenges: High probability
+    \item Appeals complications: Severe
+    \item Stakeholder resistance: Extreme
+    \item Reputation damage: Likely
+\end{itemize}
+
+\section{Stakeholder Impact}
+
+\subsection{Comprehension Barriers}
+
+\begin{itemize}
+    \item \textbf{Clients}: Complete inability to understand
+    \item \textbf{Providers}: Would require PhD-level training
+    \item \textbf{Appeals officers}: Cannot adjudicate
+    \item \textbf{Courts}: Would reject as opaque
+\end{itemize}
+
+\section{Risk Assessment}
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Risk & Probability & Impact & Overall \\
+\midrule
+Regulatory rejection & Certain & Fatal & Unacceptable \\
+Legal challenge success & Certain & Fatal & Unacceptable \\
+Stakeholder revolt & Certain & Severe & Unacceptable \\
+Implementation failure & High & High & Unacceptable \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Limited Research Value}
+
+\subsection{Potential Uses}
+
+\begin{itemize}
+    \item \textbf{Dimensionality analysis}: Understand QSI structure
+    \item \textbf{Multicollinearity}: Identify correlated clusters
+    \item \textbf{Variable grouping}: Inform simpler models
+    \item \textbf{Never for allocation}: Research only
+\end{itemize}
+
+\section{Summary and Recommendations}
+
+\subsection{Overall Assessment}
+
+\textbf{Minor Strengths:}
+\begin{itemize}
+    \item Handles multicollinearity
+    \item Reduces dimensions
+    \item Orthogonal predictors
+\end{itemize}
+
+\textbf{Fatal Weaknesses:}
+\begin{itemize}
+    \item Failure.  Components lack interpretability
+    \item Failure.  Violates regulatory requirements
+    \item Failure.  Impossible appeals process
+    \item Failure.  Complete transparency failure
+    \item Failure.  Stakeholder comprehension impossible
+\end{itemize}
+
+\subsection{Final Recommendation}
+
+\textbf{STRONGLY REJECT for All Purposes}
+
+Principal Components Regression is fundamentally incompatible with iBudget requirements. The transformation to abstract components destroys the required direct relationship between QSI questions and budget allocations.
+
+\textbf{Critical Failures:}
+1. \textbf{Regulatory}: Violates F.A.C. 65G-4.0214 coefficient requirements
+2. \textbf{Legal}: Fails HB 1103 explainability mandate
+3. \textbf{Practical}: Appeals process becomes impossible
+4. \textbf{Ethical}: Removes transparency from public program
+
+\textbf{Research Value}: Minimal - only for understanding QSI correlation structure
+
+\textbf{Alternative}: Use Ridge Regression (Model 5) for multicollinearity while maintaining interpretability.

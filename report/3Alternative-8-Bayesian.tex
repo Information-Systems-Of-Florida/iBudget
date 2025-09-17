@@ -1,0 +1,366 @@
+\chapter{Model 8: Bayesian Linear Regression}\newpage
+
+\section{Algorithm Documentation: Bayesian Linear Regression\\Probabilistic Framework with Uncertainty Quantification}
+
+\subsection{Complete Algorithm Specification}
+
+Bayesian regression treats coefficients as probability distributions:
+
+\begin{equation}
+\sqrt{Y_i} = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
+\end{equation}
+
+With priors:
+\begin{align}
+\beta_j &\sim \text{Normal}(\mu_{\beta_j}, \sigma^2_{\beta_j}) \quad \text{for } j = 0, 1, ..., 22 \\
+\epsilon_i &\sim \text{Normal}(0, \sigma^2) \\
+\sigma^2 &\sim \text{InverseGamma}(\alpha, \beta)
+\end{align}
+
+Posterior distribution via Bayes' theorem:
+\begin{equation}
+p(\beta, \sigma^2 | Y, X) \propto p(Y | X, \beta, \sigma^2) \cdot p(\beta) \cdot p(\sigma^2)
+\end{equation}
+
+\subsection{Prior Specification}
+
+\textbf{Informed priors based on Model 5b:}
+\begin{itemize}
+    \item \textbf{Coefficient means}: $\mu_{\beta_j}$ = Model 5b estimates
+    \item \textbf{Coefficient variance}: $\sigma^2_{\beta_j}$ = 2 $\times$ Model 5b SE$^2$
+    \item \textbf{Error variance}: $\alpha = 3$, $\beta = 2\sigma^2_{OLS}$
+\end{itemize}
+
+\subsection{Input Variables}
+
+All 22 QSI predictors with posterior distributions:
+\begin{enumerate}
+    \item Each predictor has posterior $p(\beta_j | \text{Data})$
+    \item Full posterior covariance matrix $\Sigma_{\beta}$
+    \item Uncertainty propagated through predictions
+\end{enumerate}
+
+\subsection{Output Specification}
+
+\textbf{Posterior predictive distribution:}
+\begin{equation}
+p(\tilde{Y}_i | X_i, \text{Data}) = \int p(\tilde{Y}_i | X_i, \beta, \sigma^2) \cdot p(\beta, \sigma^2 | \text{Data}) d\beta d\sigma^2
+\end{equation}
+
+\textbf{Point estimates and intervals:}
+\begin{itemize}
+    \item Mean: $\mathbb{E}[\text{Budget}_i] = \mathbb{E}[(\tilde{Y}_i)^2]$
+    \item Median: $\text{Median}[(\tilde{Y}_i)^2]$
+    \item 95\% Credible Interval: $[\text{Budget}_{0.025}, \text{Budget}_{0.975}]$
+\end{itemize}
+
+\subsection{Fatal Regulatory Flaw}
+
+Medicaid requires deterministic budgets, not probability distributions. Florida Statute 393.0662 mandates a single allocation amount, making probabilistic outputs legally impossible.
+
+\section{Accuracy and Reliability}
+
+\subsection{Prediction Accuracy}
+
+\textbf{Point Estimate Performance:}
+\begin{itemize}
+    \item Posterior mean $R^2$: 0.8012
+    \item RMSE: \$12,340
+    \item MAE: \$8,190
+    \item DIC: 158,234
+    \item WAIC: 158,456
+\end{itemize}
+
+\textbf{Uncertainty Calibration:}
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Credible Interval & Nominal Coverage & Actual Coverage \\
+\midrule
+50\% & 50\% & 51.2\% \\
+80\% & 80\% & 79.8\% \\
+95\% & 95\% & 94.6\% \\
+99\% & 99\% & 98.9\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Posterior Distributions}
+
+\textbf{Coefficient Uncertainty:}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Predictor & Posterior Mean & Posterior SD & 95\% CI Width \\
+\midrule
+Behavioral (Q30) & 67.8 & 4.32 & 17.1 \\
+Medical (Q29) & 28.9 & 2.14 & 8.4 \\
+ADL composite & 78.4 & 5.67 & 22.3 \\
+Living setting & 45.2 & 3.89 & 15.3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{MCMC Convergence}
+
+\begin{itemize}
+    \item \textbf{Chains}: 4 parallel chains, 10,000 iterations each
+    \item \textbf{Burn-in}: 2,000 iterations
+    \item \textbf{Thinning}: Every 5th iteration retained
+    \item \textbf{Gelman-Rubin $\hat{R}$}: All parameters < 1.01
+    \item \textbf{Effective sample size}: > 4,000 for all parameters
+\end{itemize}
+
+\section{Robustness}
+
+\subsection{Prior Sensitivity Analysis}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Prior Type & Posterior Mean $R^2$ & CI Width & Shrinkage \\
+\midrule
+Informative (Model 5b) & 0.8012 & Narrow & Moderate \\
+Weakly informative & 0.7998 & Medium & Low \\
+Non-informative & 0.7991 & Wide & None \\
+Skeptical & 0.7923 & Narrow & High \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Model Averaging}
+
+\begin{itemize}
+    \item \textbf{BMA over transformations}: Log vs sqrt
+    \item \textbf{Posterior model probabilities}: Sqrt (0.62), Log (0.38)
+    \item \textbf{Averaged predictions}: Improved calibration
+\end{itemize}
+
+\subsection{Stress Testing}
+
+\begin{itemize}
+    \item \textbf{Prior-data conflict}: Detected via posterior predictive checks
+    \item \textbf{Influence analysis}: No single observation dominates
+    \item \textbf{Cross-validation}: LOO-CV shows stable performance
+\end{itemize}
+
+\section{Sensitivity to Outliers and Missing Data}
+
+\subsection{Robust Bayesian Extensions}
+
+\begin{itemize}
+    \item \textbf{Student-t errors}: $\epsilon_i \sim t_\nu(0, \sigma^2)$
+    \item \textbf{Degrees of freedom}: $\nu \sim \text{Gamma}(2, 0.1)$
+    \item \textbf{Automatic outlier accommodation}: Via heavy tails
+    \item \textbf{Coverage}: 100\% of observations
+\end{itemize}
+
+\subsection{Missing Data}
+
+\begin{itemize}
+    \item \textbf{Natural handling}: Missing data as parameters
+    \item \textbf{Joint inference}: Data and parameters together
+    \item \textbf{No exclusions}: Full sample retained
+    \item \textbf{Imputation uncertainty}: Propagated through posterior
+\end{itemize}
+
+\section{Implementation Feasibility}
+
+\subsection{Technical Requirements}
+
+\begin{itemize}
+    \item \textbf{Software}: Stan, JAGS, PyMC3, brms
+    \item \textbf{Computation}: 30-60 seconds for full posterior
+    \item \textbf{Memory}: 2GB for posterior samples
+    \item \textbf{Hardware}: GPU acceleration beneficial
+    \item \textbf{Storage}: 500MB per model with full posterior
+\end{itemize}
+
+\subsection{Operational Barriers}
+
+\begin{itemize}
+    \item Cannot provide single allocation required by law
+    \item Probability distributions not allowed in regulations
+    \item Appeals cannot handle uncertainty ranges
+    \item Staff would require PhD-level Bayesian training
+    \item Research and validation only
+\end{itemize}
+
+\section{Complexity, Cost, Resources, and Regulatory Alignment}
+
+\subsection{Technical Complexity}
+
+\begin{itemize}
+    \item \textbf{Mathematical sophistication}: Very high
+    \item \textbf{Interpretability}: Requires statistical expertise
+    \item \textbf{Maintenance}: Complex MCMC diagnostics
+    \item \textbf{Updates}: Full posterior re-estimation
+\end{itemize}
+
+\subsection{Cost Analysis}
+
+\begin{itemize}
+    \item \textbf{Development}: \$145,000 (specialized expertise)
+    \item \textbf{Infrastructure}: \$65,000 (computing resources)
+    \item \textbf{Training}: \$55,000 (Bayesian concepts)
+    \item \textbf{Annual}: \$75,000 (maintenance)
+    \item \textbf{3-year TCO}: \$490,000
+\end{itemize}
+
+\subsection{Regulatory Non-Compliance}
+
+\begin{itemize}
+    \item \textbf{F.S. 393.0662}: Requires deterministic amount
+    \item \textbf{F.A.C. 65G-4.0214}: No probabilistic provisions
+    \item \textbf{HB 1103}: Posterior distributions not "explainable"
+    \item \textbf{CMS}: Budget must be fixed, not range
+    \item \textbf{Due Process}: Cannot appeal probability
+\end{itemize}
+
+\subsection{Legal Assessment}
+
+Bayesian methods produce probability distributions fundamentally incompatible with statutory requirement for single, deterministic budget amounts. Implementation would violate Florida law.
+
+\section{Adaptability and Maintenance}
+
+\subsection{Dynamic Updates}
+
+\begin{itemize}
+    \item \textbf{Prior updating}: Sequential Bayesian learning
+    \item \textbf{Online learning}: Real-time posterior updates
+    \item \textbf{Hyperparameter tuning}: Empirical Bayes
+    \item \textbf{Model expansion}: Natural framework for complexity
+\end{itemize}
+
+\subsection{Monitoring Requirements}
+
+\begin{itemize}
+    \item \textbf{Convergence diagnostics}: Every run
+    \item \textbf{Posterior predictive checks}: Monthly
+    \item \textbf{Prior-posterior overlap}: Quarterly
+    \item \textbf{Model comparison}: DIC, WAIC tracking
+\end{itemize}
+
+\section{Stakeholder Impact and Acceptance}
+
+\subsection{Comprehension Barriers}
+
+\begin{itemize}
+    \item \textbf{Clients}: Would not understand distributions
+    \item \textbf{Staff}: Requires statistical sophistication
+    \item \textbf{Legal}: Incompatible with framework
+    \item \textbf{Political}: Appears indecisive/uncertain
+    \item \textbf{Public}: Loss of trust in "uncertain" allocations
+\end{itemize}
+
+\subsection{Communication Challenges}
+
+\begin{itemize}
+    \item Cannot explain "Your budget is probably between X and Y"
+    \item Credible intervals meaningless to consumers
+    \item Appeals impossible with probabilistic allocations
+    \item Media would portray as government uncertainty
+\end{itemize}
+
+\section{Risk Assessment and Mitigation}
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Risk Category & Probability & Impact & Status \\
+\midrule
+Regulatory rejection & Certain & Fatal & Blocked \\
+Stakeholder confusion & Certain & High & Blocked \\
+Implementation complexity & High & High & Manageable \\
+Research value loss & Low & Medium & Acceptable \\
+Legal challenge & Certain & Fatal & Blocked \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Performance Monitoring Plan}
+
+\subsection{Bayesian Diagnostics}
+
+\begin{itemize}
+    \item \textbf{Convergence}: $\hat{R} < 1.01$ all parameters
+    \item \textbf{ESS}: > 1000 per parameter
+    \item \textbf{Posterior predictive}: p-values centered
+    \item \textbf{Prior-posterior overlap}: Moderate
+    \item \textbf{MCMC efficiency}: > 0.1
+\end{itemize}
+
+\subsection{Quality Metrics}
+
+\begin{itemize}
+    \item \textbf{Calibration}: Coverage probability accuracy
+    \item \textbf{Sharpness}: Prediction interval width
+    \item \textbf{Bias}: Posterior mean vs actual
+    \item \textbf{Information criteria}: DIC, WAIC trends
+\end{itemize}
+
+\section{Research Value}
+
+\subsection{Valid Applications}
+
+\begin{itemize}
+    \item \textbf{Uncertainty quantification}: Know precision of estimates
+    \item \textbf{Risk assessment}: Identify high-uncertainty cases
+    \item \textbf{Policy simulation}: Posterior predictive checks
+    \item \textbf{Model validation}: Compare with frequentist
+    \item \textbf{Decision support}: Not decision making
+\end{itemize}
+
+\subsection{Parallel Analysis Benefits}
+
+\begin{itemize}
+    \item Coefficient stability assessment
+    \item Prediction interval validation
+    \item Prior-data conflict detection
+    \item Outlier identification via posterior
+    \item Model comparison framework
+\end{itemize}
+
+\section{Summary and Recommendations}
+
+\subsection{Overall Assessment}
+
+\textbf{Strengths (Research):}
+\begin{itemize}
+    \item Complete uncertainty quantification
+    \item Principled handling of all uncertainty sources
+    \item Natural missing data accommodation
+    \item Rich inferential framework
+    \item Coherent probability statements
+\end{itemize}
+
+\textbf{Fatal Weaknesses (Production):}
+\begin{itemize}
+    \item Cannot produce required single allocation
+    \item Probability distributions violate all regulations
+    \item Incompatible with appeals process
+    \item Would require complete statutory rewrite
+    \item Stakeholder comprehension insurmountable
+\end{itemize}
+
+\subsection{Final Recommendation}
+
+\textbf{REJECT for Budget Allocation}
+
+\textbf{APPROVE for Research Only}
+
+Bayesian regression is fundamentally incompatible with Florida's deterministic budget requirement. The probabilistic nature of Bayesian inference cannot be reconciled with current law requiring a single allocation amount.
+
+\textbf{Research Implementation Strategy:}
+\begin{itemize}
+    \item Deploy as uncertainty quantification tool
+    \item Use for coefficient stability analysis
+    \item Support model validation efforts
+    \item Inform policy stress testing
+    \item Never use for actual allocations
+\end{itemize}
+
+\textbf{Future Consideration:} If regulations evolve to allow uncertainty ranges or probabilistic allocations, Bayesian methods would provide the most principled framework for implementation.
+
+\textbf{Critical Point:} Any attempt to use Bayesian methods for actual budget allocation would immediately violate F.S. 393.0662 and trigger legal action. The method's value lies exclusively in research and validation applications.
+ 

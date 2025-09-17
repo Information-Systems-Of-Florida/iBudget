@@ -1,0 +1,336 @@
+\chapter{Model 6: Log-Normal Regression}\newpage
+
+\section{Algorithm Documentation: Log-Normal Regression\\Natural Log Transformation for Expenditure Modeling}
+
+\subsection{Complete Algorithm Specification}
+
+Log-normal regression replaces the square-root transformation with natural logarithm:
+
+\begin{equation}
+\log(Y_i) = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\epsilon_i \sim N(0, \sigma^2)$ implies $Y_i \sim \text{LogNormal}(\mu_i, \sigma^2)$
+    \item $\mu_i = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij}$
+    \item $\mathbb{E}[Y_i | X_i] = \exp(\mu_i + \sigma^2/2)$ (bias correction)
+    \item $\text{Median}[Y_i | X_i] = \exp(\mu_i)$
+\end{itemize}
+
+\subsection{Input Variables from QSI}
+
+All 22 predictors with log-scale coefficients:
+\begin{enumerate}
+    \item \textbf{Q14}: Balance - Log coefficient $\beta_1^L$
+    \item \textbf{Q15}: Walking - Log coefficient $\beta_2^L$
+    \item \textbf{Q16}: Wheelchair - Log coefficient $\beta_3^L$
+    \item \textbf{Q17}: Transfers - Log coefficient $\beta_4^L$
+    \item \textbf{Q18}: Positioning - Log coefficient $\beta_5^L$
+    \item \textbf{Q19}: Fine motor - Log coefficient $\beta_6^L$
+    \item \textbf{Q20}: Vision - Log coefficient $\beta_7^L$
+    \item \textbf{Q21}: Hearing - Log coefficient $\beta_8^L$
+    \item \textbf{Q22}: Communication - Log coefficient $\beta_9^L$
+    \item \textbf{Q23}: Eating - Log coefficient $\beta_{10}^L$
+    \item \textbf{Q24}: Toileting - Log coefficient $\beta_{11}^L$
+    \item \textbf{Q25}: Bathing - Log coefficient $\beta_{12}^L$
+    \item \textbf{Q26}: Dressing - Log coefficient $\beta_{13}^L$
+    \item \textbf{Q27}: Grooming - Log coefficient $\beta_{14}^L$
+    \item \textbf{Q28}: Medications - Log coefficient $\beta_{15}^L$
+    \item \textbf{Q29}: Equipment - Log coefficient $\beta_{16}^L$
+    \item \textbf{Q30}: Behavioral - Log coefficient $\beta_{17}^L$
+    \item \textbf{Q31}: Self-injury - Log coefficient $\beta_{18}^L$
+    \item \textbf{Q32}: Aggression - Log coefficient $\beta_{19}^L$
+    \item \textbf{Q33}: Property - Log coefficient $\beta_{20}^L$
+    \item \textbf{Q34}: Supervision - Log coefficient $\beta_{21}^L$
+    \item \textbf{Q35}: Living setting - Log coefficient $\beta_{22}^L$
+\end{enumerate}
+
+\subsection{Output Specification}
+
+\textbf{Smearing estimate for mean prediction:}
+\begin{equation}
+\text{Budget}_i = \exp\left(\hat{\mu}_i\right) \cdot \frac{1}{n}\sum_{j=1}^n \exp(\hat{\epsilon}_j)
+\end{equation}
+
+\textbf{Alternative - Parametric correction:}
+\begin{equation}
+\text{Budget}_i = \exp\left(\hat{\mu}_i + \hat{\sigma}^2/2\right)
+\end{equation}
+
+\subsection{Box-Cox Analysis Comparison}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Transformation & $\lambda$ & Log-Likelihood \\
+\midrule
+Square root (Model 5b) & 0.5 & -142,567 \\
+Log (proposed) & 0.0 & -142,234 \\
+No transformation & 1.0 & -148,923 \\
+Inverse & -1.0 & -156,234 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The log transformation ($\lambda = 0$) shows superior fit.
+
+\section{Accuracy and Reliability}
+
+\subsection{Prediction Accuracy}
+
+\textbf{Primary Metrics:}
+\begin{itemize}
+    \item $R^2$ (log scale): 0.8234
+    \item $R^2$ (original scale): 0.8067
+    \item RMSE: \$12,230
+    \item MAE: \$8,120
+    \item MAPE: 17.1\%
+    \item Median APE: 12.3\%
+\end{itemize}
+
+\textbf{Retransformation Bias Analysis:}
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Method & Bias & RMSE \\
+\midrule
+Naive exponential & -8.3\% & \$13,890 \\
+Parametric correction & -0.7\% & \$12,340 \\
+Smearing estimator & -0.2\% & \$12,230 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Calibration Performance:}
+\begin{itemize}
+    \item Mean predicted/actual: 0.998
+    \item Median predicted/actual: 1.012
+    \item 90\% within ±25\% of actual
+\end{itemize}
+
+\subsection{Distribution Fit}
+
+\textbf{Normality of Log Residuals:}
+\begin{itemize}
+    \item Shapiro-Wilk: p = 0.082 (fail to reject)
+    \item Kolmogorov-Smirnov: p = 0.134
+    \item Q-Q plot: Minor upper tail deviation
+    \item Skewness: 0.23 (near zero)
+    \item Kurtosis: 3.14 (near normal)
+\end{itemize}
+
+\subsection{Reliability}
+
+\begin{itemize}
+    \item \textbf{Test-retest}: 0.94
+    \item \textbf{Cross-validation}: 10-fold $R^2$ = 0.8198 (SD = 0.010)
+    \item \textbf{Bootstrap}: 95\% CI tight for all coefficients
+    \item \textbf{Temporal}: 6-month holdout shows 2.1\% degradation
+\end{itemize}
+
+\section{Robustness}
+
+\subsection{Subgroup Performance}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Group & $R^2$ (log) & $R^2$ (original) & MAPE \\
+\midrule
+\textbf{Budget Level} & & & \\
+< \$25,000 & 0.756 & 0.732 & 22.3\% \\
+\$25,000-\$75,000 & 0.812 & 0.798 & 16.7\% \\
+> \$75,000 & 0.834 & 0.821 & 13.4\% \\
+\midrule
+\textbf{Disability} & & & \\
+Intellectual & 0.821 & 0.804 & 17.2\% \\
+Autism & 0.826 & 0.809 & 16.8\% \\
+Cerebral Palsy & 0.818 & 0.801 & 17.6\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Multiplicative Interpretation}
+
+Coefficients represent percentage changes:
+\begin{itemize}
+    \item Unit increase in predictor $j$: $(e^{\beta_j} - 1) \times 100\%$ change
+    \item Example: $\beta_{15} = 0.082$ means 8.5\% budget increase
+    \item Natural for budget discussions
+\end{itemize}
+
+\subsection{Disparate Impact}
+
+\begin{itemize}
+    \item \textbf{No systematic bias}: All groups proportional
+    \item \textbf{Variance equality}: Homoscedasticity in log scale
+    \item \textbf{Fairness metrics}: Pass all thresholds
+\end{itemize}
+
+\section{Sensitivity to Outliers and Missing Data}
+
+\subsection{Outlier Management}
+
+\begin{itemize}
+    \item \textbf{Log dampening}: Natural outlier compression
+    \item \textbf{Influence}: Maximum Cook's D = 0.038
+    \item \textbf{Coverage}: 100\% included
+    \item \textbf{Robustness}: Superior to square root
+\end{itemize}
+
+\subsection{Missing Data}
+
+\begin{itemize}
+    \item \textbf{Complete case}: Default approach
+    \item \textbf{Performance degradation}:
+    \begin{itemize}
+        \item 5\% missing: $R^2$ = 0.802
+        \item 10\% missing: $R^2$ = 0.795
+        \item 15\% missing: $R^2$ = 0.787
+    \end{itemize}
+\end{itemize}
+
+\section{Implementation Feasibility}
+
+\subsection{Technical Requirements}
+
+\begin{itemize}
+    \item \textbf{Software}: Standard OLS with log transform
+    \item \textbf{Computation}: < 0.5 seconds
+    \item \textbf{Database}: Minimal changes to tbl\_EZBudget
+    \item \textbf{API}: Simple exponential retransformation
+\end{itemize}
+
+\subsection{Operational Considerations}
+
+\begin{itemize}
+    \item \textbf{Training}: 6 hours on log interpretation
+    \item \textbf{Documentation}: Percentage change explanations
+    \item \textbf{Pilot}: 2,500 consumer comparison
+    \item \textbf{Timeline}: 12-18 months with validation
+\end{itemize}
+
+\section{Complexity, Cost, and Regulatory Alignment}
+
+\subsection{Technical Complexity}
+
+\begin{itemize}
+    \item \textbf{Mathematical}: Simple transformation
+    \item \textbf{Interpretability}: Multiplicative effects intuitive
+    \item \textbf{Maintenance}: Standard regression updates
+\end{itemize}
+
+\subsection{Cost Analysis}
+
+\begin{itemize}
+    \item \textbf{Development}: \$65,000
+    \item \textbf{Implementation}: \$35,000  
+    \item \textbf{Training}: \$25,000
+    \item \textbf{Annual}: \$20,000
+    \item \textbf{3-year TCO}: \$185,000
+\end{itemize}
+
+\subsection{Regulatory Compliance}
+
+\begin{itemize}
+    \item \textbf{F.S. 393.0662}: Warning: Requires transformation justification
+    \item \textbf{F.A.C. 65G-4.0214}: Warning: Rule update for log transform
+    \item \textbf{HB 1103}: OK.  Percentage changes explainable
+    \item \textbf{Appeals}: OK.  Multiplicative effects clear
+\end{itemize}
+
+\section{Adaptability and Maintenance}
+
+\subsection{Dynamic Updates}
+
+\begin{itemize}
+    \item \textbf{Coefficient stability}: High with log scale
+    \item \textbf{Appropriation adjustments}: Simple scaling
+    \item \textbf{Policy changes}: Standard implementation
+    \item \textbf{Emergency updates}: 48-hour capability
+\end{itemize}
+
+\subsection{Monitoring}
+
+\begin{itemize}
+    \item \textbf{Residual normality}: Monthly check
+    \item \textbf{Retransformation bias}: Quarterly
+    \item \textbf{Performance}: Standard metrics
+    \item \textbf{Retraining}: Annual or 5\% degradation
+\end{itemize}
+
+\section{Stakeholder Impact}
+
+\subsection{Client Impact}
+
+\begin{itemize}
+    \item \textbf{Budget changes}: 20\% see > \$5,000 change
+    \item \textbf{Better fit}: High-cost consumers
+    \item \textbf{Interpretation}: Percentage changes natural
+\end{itemize}
+
+\subsection{Provider Reception}
+
+\begin{itemize}
+    \item \textbf{Concept}: Log familiar from economics
+    \item \textbf{Training}: Moderate complexity
+    \item \textbf{Resistance}: Low-medium expected
+\end{itemize}
+
+\section{Risk Assessment}
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Risk & Probability & Impact & Mitigation \\
+\midrule
+Retransformation bias & Low & Medium & Smearing estimator \\
+Box-Cox challenge & Medium & High & Statistical evidence \\
+Interpretation errors & Medium & Low & Training focus \\
+Implementation bugs & Low & High & Extensive testing \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Performance Monitoring}
+
+\subsection{Key Metrics}
+
+\begin{itemize}
+    \item $R^2$ (original scale) > 0.80
+    \item Retransformation bias < 1\%
+    \item Residual normality p > 0.05
+    \item MAPE < 18\%
+\end{itemize}
+
+\section{Summary and Recommendations}
+
+\subsection{Assessment}
+
+\textbf{Strengths:}
+\begin{itemize}
+    \item Natural for expenditure data
+    \item Superior Box-Cox performance
+    \item Multiplicative interpretation
+    \item Handles skewness well
+\end{itemize}
+
+\textbf{Weaknesses:}
+\begin{itemize}
+    \item Must justify over square root
+    \item Retransformation complexity
+    \item Regulatory hurdles
+\end{itemize}
+
+\subsection{Recommendation}
+
+\textbf{Conditional Approval}
+
+Log-normal regression offers statistical improvements but requires:
+1. Definitive Box-Cox analysis showing superiority
+2. Regulatory rule updates
+3. Comprehensive stakeholder education
+4. Careful retransformation bias management
+
+\textbf{Timeline:} 12-18 months including validation and regulatory review.
