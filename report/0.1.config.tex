@@ -12,10 +12,9 @@
 \usepackage{pdflscape}
 %\usepackage{fontspec}
 %\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support
+\usepackage{fontawesome5}
 
 \usepackage[fontsize=10pt]{scrextend} 
-
-
 \setmargins{3.5cm}%			% left edge
 		   {2.5cm}%     % top edge
            {14.7cm}%		% text width
@@ -190,9 +189,28 @@ contents={
 \newcommand{\A}{\textbf{A}}
 \newcommand{\Sbb}{\textbf{S}}
 \newcommand\bb{\textbf{b}}
-
 \newcommand\vs{\vspace{0.2in}}
 %\newcommand{\vs}{\vspace*{0.1in}\noindent}
+
+% Define commands for the symbols with tikz
+% \newcommand{\greencheck}{%
+%     \tikz\fill[scale=0.4,color=green!70!black](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;%
+% }
+% \newcommand{\yellowwarning}{%
+%     \tikz\draw[scale=0.4,color=yellow!80!orange,fill=yellow!80!orange] (0,0) -- (1,0) -- (0.5,0.866) -- cycle;%
+%     \tikz\node[scale=0.3] at (0.2,0.15) {\textbf{!}};%
+% }
+% \newcommand{\redcross}{%
+%     \tikz[scale=0.4]{
+%         \draw[color=red,line width=1pt] (0,0) -- (1,1);
+%         \draw[color=red,line width=1pt] (0,1) -- (1,0);
+%     }%
+% }
+
+% Define commands for the symbols with fontawsome
+\newcommand{\greencheck}{\textcolor{green!70!black}{\faCheckCircle}\hspace{0.05in}}
+\newcommand{\yellowwarning}{\textcolor{yellow!80!orange}{\faExclamationTriangle}\hspace{0.05in}}
+\newcommand{\redcross}{\textcolor{red}{\faTimesCircle}\hspace{0.05in}}
 
 \newcounter{example}[section]
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip

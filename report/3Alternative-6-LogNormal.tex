@@ -139,9 +139,9 @@ Smearing estimator & -0.2\% & \$12,230 \\
 Group & $R^2$ (log) & $R^2$ (original) & MAPE \\
 \midrule
 \textbf{Budget Level} & & & \\
-< \$25,000 & 0.756 & 0.732 & 22.3\% \\
+$<$ \$25,000 & 0.756 & 0.732 & 22.3\% \\
 \$25,000-\$75,000 & 0.812 & 0.798 & 16.7\% \\
-> \$75,000 & 0.834 & 0.821 & 13.4\% \\
+$>$ \$75,000 & 0.834 & 0.821 & 13.4\% \\
 \midrule
 \textbf{Disability} & & & \\
 Intellectual & 0.821 & 0.804 & 17.2\% \\
@@ -197,7 +197,7 @@ Coefficients represent percentage changes:
 
 \begin{itemize}
     \item \textbf{Software}: Standard OLS with log transform
-    \item \textbf{Computation}: < 0.5 seconds
+    \item \textbf{Computation}: $<$ 0.5 seconds
     \item \textbf{Database}: Minimal changes to tbl\_EZBudget
     \item \textbf{API}: Simple exponential retransformation
 \end{itemize}
@@ -234,10 +234,10 @@ Coefficients represent percentage changes:
 \subsection{Regulatory Compliance}
 
 \begin{itemize}
-    \item \textbf{F.S. 393.0662}: Warning: Requires transformation justification
-    \item \textbf{F.A.C. 65G-4.0214}: Warning: Rule update for log transform
-    \item \textbf{HB 1103}: OK.  Percentage changes explainable
-    \item \textbf{Appeals}: OK.  Multiplicative effects clear
+    \item[\yellowwarning] \textbf{F.S. 393.0662}:  Requires transformation justification
+    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}: Rule update for log transform
+    \item[\greencheck] \textbf{HB 1103}: Percentage changes explainable
+    \item[\greencheck] \textbf{Appeals}: Multiplicative effects clear
 \end{itemize}
 
 \section{Adaptability and Maintenance}
@@ -265,7 +265,7 @@ Coefficients represent percentage changes:
 \subsection{Client Impact}
 
 \begin{itemize}
-    \item \textbf{Budget changes}: 20\% see > \$5,000 change
+    \item \textbf{Budget changes}: 20\% see $>$ \$5,000 change
     \item \textbf{Better fit}: High-cost consumers
     \item \textbf{Interpretation}: Percentage changes natural
 \end{itemize}
@@ -298,10 +298,10 @@ Implementation bugs & Low & High & Extensive testing \\
 \subsection{Key Metrics}
 
 \begin{itemize}
-    \item $R^2$ (original scale) > 0.80
-    \item Retransformation bias < 1\%
-    \item Residual normality p > 0.05
-    \item MAPE < 18\%
+    \item $R^2$ (original scale) $>$ 0.80
+    \item Retransformation bias $<$ 1\%
+    \item Residual normality $p > 0.05$
+    \item MAPE $<$ 18\%
 \end{itemize}
 
 \section{Summary and Recommendations}

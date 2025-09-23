@@ -119,7 +119,7 @@ Predicted Decile & Mean Predicted & Mean Actual & Ratio \\
 
 \subsection{Classification Performance for Risk Flags}
 
-\textbf{High-Cost Consumer Identification (>\$100,000):}
+\textbf{High-Cost Consumer Identification ($>$\$100,000):}
 \begin{itemize}
     \item Sensitivity: 0.842
     \item Specificity: 0.923
@@ -167,9 +167,9 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
 \subsection{Disparate Impact Analysis}
 
 \begin{itemize}
-    \item \textbf{Statistical parity difference}: < 0.05 across all protected classes
+    \item \textbf{Statistical parity difference}: $<$ 0.05 across all protected classes
     \item \textbf{Demographic parity ratio}: 0.92-1.08 range (within acceptable bounds)
-    \item \textbf{Equalized odds difference}: < 0.10 for high-cost classification
+    \item \textbf{Equalized odds difference}: $<$ 0.10 for high-cost classification
     \item \textbf{Calibration within groups}: All groups within 5\% of perfect calibration
 \end{itemize}
 
@@ -179,7 +179,7 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
     \item \textbf{Data degradation (10\% noise)}: $R^2$ = 0.798
     \item \textbf{Extreme value injection (5\%)}: Model maintains convergence
     \item \textbf{Bootstrap perturbation}: 95\% CI for predictions stable
-    \item \textbf{Geographic holdout}: Regional models differ < 4\% from global
+    \item \textbf{Geographic holdout}: Regional models differ $<$ 4\% from global
 \end{itemize}
 
 \section{Sensitivity to Outliers and Missing Data}
@@ -188,7 +188,7 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
 
 \begin{itemize}
     \item \textbf{Natural robustness}: Gamma distribution accommodates heavy tails
-    \item \textbf{Detection method}: Deviance residuals > 3
+    \item \textbf{Detection method}: Deviance residuals $>$ 3
     \item \textbf{Treatment}: None required - model naturally down-weights outliers
     \item \textbf{Impact analysis}: Including all observations improves coverage
     \item \textbf{Documentation}: Influence diagnostics computed for all cases
@@ -210,7 +210,7 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
 
 \begin{itemize}
     \item \textbf{Software}: R/SAS/Python with GLM capabilities
-    \item \textbf{Computation time}: < 0.5 seconds per allocation
+    \item \textbf{Computation time}: $<$ 0.5 seconds per allocation
     \item \textbf{Memory}: 512MB for model object
     \item \textbf{Database integration}: Direct tbl\_EZBudget compatibility
     \item \textbf{API deployment}: REST endpoint with 50ms response time
@@ -249,11 +249,11 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
 \subsection{Regulatory Alignment}
 
 \begin{itemize}
-    \item \textbf{F.S. 393.0662}:  Compliant with documentation
-    \item \textbf{F.A.C. 65G-4.0214}:  Requires rule update for link function
-    \item \textbf{HB 1103 Explainability}:  Coefficients interpretable as multiplicative effects
-    \item \textbf{CMS Requirements}:  Meets statistical validity standards
-    \item \textbf{Appeals Process}:  Clear explanation via exp(linear predictor)
+    \item[\greencheck] \textbf{F.S. 393.0662}:   Compliant with documentation
+    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}:  Requires rule update for link function
+    \item[\greencheck] \textbf{HB 1103 Explainability}:   Coefficients interpretable as multiplicative effects
+    \item[\greencheck] \textbf{CMS Requirements}:  Meets statistical validity standards
+    \item[\greencheck] \textbf{Appeals Process}:   Clear explanation via exp(linear predictor)
 \end{itemize}
 
 \section{Adaptability and Maintenance}
@@ -273,7 +273,7 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
     \item \textbf{Performance tracking}: Automated monthly reports
     \item \textbf{Drift detection}: Pearson residual monitoring
     \item \textbf{Retraining schedule}: Annual or upon 3\% degradation
-    \item \textbf{Alert thresholds}: Dispersion parameter > 0.35 triggers review
+    \item \textbf{Alert thresholds}: Dispersion parameter $>$ 0.35 triggers review
 \end{itemize}
 
 \section{Stakeholder Impact and Acceptance}
@@ -281,7 +281,7 @@ Supported Living & 0.815 & \$11,670 & 0.245 \\
 \subsection{Client Impact Analysis}
 
 \begin{itemize}
-    \item \textbf{Allocation changes}: 18\% see > \$5,000 change
+    \item \textbf{Allocation changes}: 18\% see $>$ \$5,000 change
     \item \textbf{Distribution}: More accurate for high-need consumers
     \item \textbf{Transparency}: Online calculator provided
     \item \textbf{Transition support}: 90-day grace period
@@ -317,11 +317,11 @@ Data quality problems & Low & Low & Validation pipeline \\
 \subsection{Key Performance Indicators}
 
 \begin{itemize}
-    \item \textbf{Primary KPI}: Deviance-based $R^2$ > 0.80
+    \item \textbf{Primary KPI}: Deviance-based $R^2 > 0.80$
     \item \textbf{Dispersion monitoring}: $\phi$ between 0.20-0.35
     \item \textbf{Prediction intervals}: 90\% coverage probability
-    \item \textbf{Appeal rate}: Target < 4\%
-    \item \textbf{Processing time}: < 1 second per allocation
+    \item \textbf{Appeal rate}: Target $<$ 4\%
+    \item \textbf{Processing time}: $<$ 1 second per allocation
 \end{itemize}
 
 \subsection{Quality Assurance Protocol}

@@ -179,14 +179,14 @@ Supported Living & 2.34 & 0.808 & \$11,980 \\
 \textbf{Critical Equity Metrics:}
 \begin{itemize}
     \item \textbf{Weight parity ratio}: 0.95-1.06 across protected classes
-    \item \textbf{Allocation impact}: No systematic bias detected (p > 0.10)
+    \item \textbf{Allocation impact}: No systematic bias detected ($p > 0.10$)
     \item \textbf{Four-fifths rule}: Satisfied for all demographic groups
     \item \textbf{Variance explanation}: 89\% from clinical factors, not demographics
 \end{itemize}
 
 \textbf{Fairness Testing Results:}
 \begin{itemize}
-    \item Demographic parity difference: < 0.04
+    \item Demographic parity difference: $<$ 0.04
     \item Equalized odds ratio: 0.91-1.09
     \item Calibration within groups: Maximum deviation 3.2\%
 \end{itemize}
@@ -194,8 +194,8 @@ Supported Living & 2.34 & 0.808 & \$11,980 \\
 \subsection{Stress Testing}
 
 \begin{itemize}
-    \item \textbf{Weight perturbation}: ±20\% change yields < 2\% allocation shift
-    \item \textbf{Variance misspecification}: 30\% error maintains $R^2$ > 0.79
+    \item \textbf{Weight perturbation}: $\pm$20\% change yields $<$ 2\% allocation shift
+    \item \textbf{Variance misspecification}: 30\% error maintains $R^2 > 0.79$
     \item \textbf{Bootstrap validation}: Stable across 10,000 samples
     \item \textbf{Geographic consistency}: Regional models within 5\% of global
 \end{itemize}
@@ -205,7 +205,7 @@ Supported Living & 2.34 & 0.808 & \$11,980 \\
 \subsection{Outlier Management}
 
 \begin{itemize}
-    \item \textbf{Detection}: Standardized weighted residuals > 3
+    \item \textbf{Detection}: Standardized weighted residuals $>$ 3
     \item \textbf{Treatment}: Weight reduction, not exclusion
     \item \textbf{Impact}: High-variance cases receive lower weights
     \item \textbf{Coverage}: 100\% of consumers included
@@ -232,7 +232,7 @@ Supported Living & 2.34 & 0.808 & \$11,980 \\
 
 \begin{itemize}
     \item \textbf{Software}: Standard statistical packages (R, SAS, SPSS)
-    \item \textbf{Computation}: Two-stage process, < 2 seconds total
+    \item \textbf{Computation}: Two-stage process, $<$ 2 seconds total
     \item \textbf{Memory}: 256MB for weight matrix
     \item \textbf{Database}: Extended tbl\_EZBudget with variance columns
     \item \textbf{API}: REST endpoint with weight transparency
@@ -276,11 +276,11 @@ Supported Living & 2.34 & 0.808 & \$11,980 \\
 \subsection{Regulatory Alignment}
 
 \begin{itemize}
-    \item \textbf{F.S. 393.0662}: Conditional - requires equity documentation
-    \item \textbf{F.A.C. 65G-4.0214}: Requires weight methodology in rule
-    \item \textbf{HB 1103}: Explainable with weight documentation
-    \item \textbf{Civil Rights}: Extensive testing required
-    \item \textbf{ADA Compliance}: Must prove no discriminatory impact
+    \item[\yellowwarning] \textbf{F.S. 393.0662}: Conditional - requires equity documentation
+    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}: Requires weight methodology in rule
+    \item[\greencheck] \textbf{HB 1103}: Explainable with weight documentation
+    \item[\yellowwarning] \textbf{Civil Rights}: Extensive testing required
+    \item[\yellowwarning] \textbf{ADA Compliance}: Must prove no discriminatory impact
 \end{itemize}
 
 \section{Adaptability and Maintenance}
@@ -344,11 +344,11 @@ Implementation failure & Medium & High & Phased rollout \\
 \subsection{Key Performance Indicators}
 
 \begin{itemize}
-    \item \textbf{Primary}: Weighted $R^2$ > 0.82
+    \item \textbf{Primary}: Weighted $R^2 > 0.82$
     \item \textbf{Equity}: Weight parity ratio 0.90-1.10
     \item \textbf{Efficiency}: 15\% SE reduction
-    \item \textbf{Appeals}: < 5\% rate
-    \item \textbf{Processing}: < 3 seconds per allocation
+    \item \textbf{Appeals}: $<$ 5\% rate
+    \item \textbf{Processing}: $<$ 3 seconds per allocation
 \end{itemize}
 
 \subsection{Quality Assurance}

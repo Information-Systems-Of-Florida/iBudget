@@ -81,18 +81,47 @@ where $GM(y) = \left[\prod_{i=1}^n y_i\right]^{1/n}$ represents the geometric me
 %---------------------------------------------
 
 The dependent variable in Model 5b is the square-root transformed FY 2013-14 expenditure:
-
 \begin{equation}
 \sqrt{Y_i} = \beta_0 + \sum_{j=1}^{5} \beta_j^{Live} \cdot Live_{ij} + \sum_{k=1}^{2} \beta_k^{Age} \cdot Age_{ik} + \sum_{l} \beta_l^{QSI} \cdot QSI_{il} + \varepsilon_i
 \end{equation}
-
-where $Y_i$ represents individual expenditures. The square-root transformation addresses skewness but creates systematic bias through Jensen's inequality:
-
+where $Y_i$ represents individual $i$'s actual expenditures. The model produces predictions in the square-root scale:
 \begin{equation}
-E[Y_i | X_i] \neq E[\hat{Y}_i^2 | X_i]
+\widehat{\sqrt{Y_i}} = \hat{\beta}_0 + \sum_{j=1}^{5} \hat{\beta}_j^{Live} \cdot Live_{ij} + \sum_{k=1}^{2} \hat{\beta}_k^{Age} \cdot Age_{ik} + \sum_{l} \hat{\beta}_l^{QSI} \cdot QSI_{il}
 \end{equation}
 
-This transformation bias leads to consistent underestimation for high-needs individuals and overestimation for low-needs cases.
+To obtain dollar predictions, the square-root predictions must be back-transformed by squaring:
+\begin{equation}
+\hat{Y}_i = \left(\widehat{\sqrt{Y_i}}\right)^2
+\end{equation}
+
+This back-transformation introduces systematic bias through Jensen's inequality. For a concave transformation like the square root, Jensen's inequality states that:
+\begin{equation}
+E[\sqrt{Y}] < \sqrt{E[Y]}
+\end{equation}
+
+When we reverse this transformation by squaring, the inequality implies:
+\begin{equation}
+E[Y_i | X_i] \neq E[\hat{Y}_i | X_i] = E\left[\left(\widehat{\sqrt{Y_i}}\right)^2 | X_i\right]
+\end{equation}
+
+Specifically, because the square function is convex, Jensen's inequality tells us:
+\begin{equation}
+E\left[\left(\widehat{\sqrt{Y_i}} + \varepsilon_i\right)^2\right] > \left(E\left[\widehat{\sqrt{Y_i}}\right]\right)^2
+\end{equation}
+
+This creates systematic prediction bias that depends on the residual variance in the transformed scale. The bias is approximately:
+\begin{equation}
+\text{Bias}(\hat{Y}_i) \approx \sigma^2_{\varepsilon}
+\end{equation}
+where $\sigma^2_{\varepsilon}$ is the residual variance in the square-root scale (approximately 30.82² = 949 in Model 5b).
+
+This transformation bias has differential impacts across the expenditure distribution:
+\begin{itemize}
+    \item For high-expenditure individuals where $Y_i$ is large, the relative bias $\frac{\sigma^2_{\varepsilon}}{Y_i}$ becomes small, but the model's homoscedastic variance assumption in the transformed scale translates to heteroscedastic errors in the original scale, leading to underestimation.
+    \item For low-expenditure individuals where $Y_i$ is small, the fixed bias $\sigma^2_{\varepsilon}$ represents a larger proportion of the predicted value, potentially causing overestimation.
+\end{itemize}
+
+The practical impact is that individuals with complex needs requiring higher expenditures may receive systematically underestimated allocations, while those with lower needs may receive overestimated allocations relative to their historical expenditures.
 
 %---------------------------------------------
 \subsection{Independent Variable Analysis}
@@ -146,7 +175,7 @@ Multiple theoretically relevant variables demonstrated non-significance:
 \end{itemize}
 
 \textbf{3. Excluded Variables:}
-Questions Q8, Q9, Q12, and Q13 were systematically excluded because "items were not validated and the reliability of these items was not examined," reducing available predictors from 125 to a smaller subset.
+Questions Q8, Q9, Q12, and Q13 were systematically excluded because ``items were not validated and the reliability of these items was not examined," reducing available predictors from 125 to a smaller subset.
 
 \textbf{4. Person-Centered Planning Gaps:}
 The algorithm fails to incorporate variables reflecting:
@@ -252,7 +281,7 @@ While these metrics suggest strong statistical performance, they mask several cr
 \textbf{1. Prediction Interval Coverage:}
 The 95\% prediction intervals fail to achieve nominal coverage rates, particularly for:
 \begin{itemize}
-    \item High-expenditure cases (>75th percentile)
+    \item High-expenditure cases ($>$75th percentile)
     \item Individuals with behavioral focus needs (RH2, RH3)
     \item Transition-age populations
 \end{itemize}
@@ -299,13 +328,13 @@ The model demonstrates inconsistent performance across QSI domains:
 The regression framework requires three critical assumptions that are systematically violated:
 
 \textbf{1. Normality of Residuals:}
-Q-Q plots reveal heavy tails and deviation from normality, particularly in extreme values. The Shapiro-Wilk test rejects normality (W = 0.9421, p < 0.001).
+Q-Q plots reveal heavy tails and deviation from normality, particularly in extreme values. The Shapiro-Wilk test rejects normality (W = 0.9421, $p < 0.001$).
 
 \textbf{2. Independence of Errors:}
 Durbin-Watson test indicates positive autocorrelation (DW = 1.743), suggesting systematic patterns in residuals that violate independence assumptions.
 
 \textbf{3. Homoscedasticity:}
-Breusch-Pagan test strongly rejects constant variance (BP = 892.34, p < 0.001), with variance increasing systematically with predicted values.
+Breusch-Pagan test strongly rejects constant variance (BP = 892.34, $p < 0.001$), with variance increasing systematically with predicted values.
 
 %---------------------------------------------
 \subsection{Compliance Assessment}

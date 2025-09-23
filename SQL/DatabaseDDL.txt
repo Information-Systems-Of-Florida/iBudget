@@ -1,0 +1,614 @@
+USE [APD]
+GO
+/****** Object:  Table [dbo].[tbl_Budgets]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Budgets](
+	[CaseNo] [bigint] NOT NULL,
+	[BudgetID] [bigint] NOT NULL,
+	[BudgetType] [varchar](100) NOT NULL,
+	[BudgetStatus] [varchar](100) NOT NULL,
+	[FiscalYear] [varchar](100) NULL,
+	[Programs] [varchar](75) NULL,
+	[WSC] [varchar](100) NULL,
+	[ApprovedBy] [int] NULL,
+	[ApprovalDate] [datetime] NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[BudgetAmount] [numeric](19, 2) NULL,
+	[AnnualizedAmount] [numeric](19, 2) NULL,
+	[AmountEncumbered] [numeric](19, 2) NULL,
+	[AmountUnauthorized] [numeric](19, 2) NULL,
+	[PrioriBudgetAmount] [numeric](19, 2) NULL,
+	[Comments] [varchar](max) NULL,
+	[UserStamp] [varchar](100) NULL,
+	[DateTimeStamp] [datetime] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Claims_MMIS]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Claims_MMIS](
+	[CaseNo] [bigint] NOT NULL,
+	[PIN] [varchar](20) NULL,
+	[ProviderName] [varchar](500) NULL,
+	[ProviderMedcId] [varchar](20) NULL,
+	[ProcCode] [varchar](20) NULL,
+	[ServiceDate] [datetime] NULL,
+	[Units] [int] NULL,
+	[BilledAmt] [numeric](9, 2) NULL,
+	[PaidAmt] [numeric](9, 2) NULL,
+	[PaidDate] [datetime] NULL,
+	[ICN] [varchar](100) NULL,
+	[AdjustICN] [varchar](100) NULL,
+	[TreatingProvMedcId] [varchar](20) NULL,
+	[TransType] [char](1) NULL,
+	[LineNmbr] [varchar](20) NULL,
+	[PA] [varchar](20) NULL,
+	[ClaimType] [char](1) NULL,
+	[ClaimSubType] [char](1) NULL,
+	[CreateDate] [datetime] NULL,
+	[Id] [bigint] IDENTITY(1,1) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_ConsumerContacts]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_ConsumerContacts](
+	[CONTACTID] [bigint] NOT NULL,
+	[FIRSTNAME] [varchar](30) NOT NULL,
+	[LASTNAME] [varchar](30) NOT NULL,
+	[GENDER] [varchar](100) NULL,
+	[CASENO] [bigint] NOT NULL,
+	[RELATIONSHIP] [varchar](100) NULL,
+	[Multirelationship] [varchar](max) NULL,
+	[Active] [int] NULL,
+	[DateTimeStamp] [datetime2](3) NULL,
+	[UserStamp] [varchar](100) NULL,
+	[RECID] [bigint] NOT NULL,
+ CONSTRAINT [PK_ConsumerContacts] PRIMARY KEY CLUSTERED 
+(
+	[RECID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Consumers]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Consumers](
+	[CASENO] [bigint] NOT NULL,
+	[DOB] [datetime] NULL,
+	[GENDER] [varchar](100) NULL,
+	[RACE] [varchar](100) NULL,
+	[PLANGUAGE] [varchar](100) NULL,
+	[SLANGUAGE] [varchar](100) NULL,
+	[TITLE] [varchar](50) NULL,
+	[ETHNICITYLOOKUP] [varchar](30) NULL,
+	[County] [varchar](100) NULL,
+	[District] [varchar](25) NULL,
+	[Region] [varchar](100) NULL,
+	[DOD] [datetime] NULL,
+	[CauseOfDeath] [varchar](1000) NULL,
+	[DODAction] [varchar](50) NULL,
+	[DODFileNumber] [varchar](25) NULL,
+	[RESIDENCETYPE] [varchar](100) NULL,
+	[MedicaidId] [varchar](500) NULL,
+	[ABCPIN] [varchar](50) NULL,
+	[ReferralSource] [varchar](100) NULL,
+	[CBCFlag] [bit] NULL,
+	[ReferredToVR] [varchar](50) NULL,
+	[ANNUALINCOME] [numeric](19, 2) NULL,
+	[Competency] [varchar](50) NULL,
+	[Status] [varchar](10) NULL,
+	[DevelopmentalDisability] [varchar](max) NULL,
+	[FUNDCODE] [varchar](25) NULL,
+	[DISPOSITION] [varchar](100) NULL,
+	[DISPOSITIONDATE] [datetime] NULL,
+	[OPENDATE] [datetime] NULL,
+	[OPENREASON] [varchar](max) NULL,
+	[CLOSEDATE] [datetime] NULL,
+	[CLOSEREASON] [varchar](100) NULL,
+	[ApplicationReceivedDate] [datetime] NULL,
+	[ApplicationReceivedViaOAS] [varchar](50) NULL,
+	[ApplicantRequestingCWE] [varchar](50) NULL,
+	[RequiresSOPTReview] [varchar](10) NULL,
+	[DateAssignedToSOPT] [datetime] NULL,
+	[SOPTName] [varchar](100) NULL,
+	[DateSOPTCompletedReview] [datetime] NULL,
+	[OPENID] [bigint] NULL,
+	[PRIMARYWORKER] [varchar](100) NULL,
+	[PRIMARYWORKERID] [bigint] NULL,
+	[SECONDWORKER] [varchar](100) NULL,
+	[SECONDWORKERID] [bigint] NULL,
+	[PrimaryDiagnosis] [varchar](200) NULL,
+	[SecondaryDiagnosis] [varchar](200) NULL,
+	[OtherDiagnosis] [varchar](200) NULL,
+	[MentalHealthDiag1] [varchar](200) NULL,
+	[MentalHealthDiag2] [varchar](200) NULL,
+	[MentalHealthDiag3] [varchar](200) NULL,
+	[MentalHealthDiag4] [varchar](200) NULL,
+	[MentalHealthDiag_5_6] [varchar](100) NULL,
+	[REVIEW] [varchar](100) NULL,
+	[REVIEWDATE] [datetime] NULL,
+	[SSNMonthlyBenefitAmt] [varchar](50) NULL,
+	[3rdPartyHealthInsurance] [varchar](50) NULL,
+	[CompetitivelyEmployed] [varchar](50) NULL,
+	[HireDate] [varchar](50) NULL,
+	[AvgMonthlyEarnings] [varchar](50) NULL,
+	[WantsEmployment] [varchar](50) NULL,
+	[HourlyWage] [varchar](50) NULL,
+	[MinimumWage] [varchar](50) NULL,
+	[CONTACTID] [bigint] NOT NULL,
+	[DateTimeStamp] [datetime] NULL,
+	[UserStamp] [varchar](100) NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_Consumers] PRIMARY KEY CLUSTERED 
+(
+	[CASENO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Diagnosis]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Diagnosis](
+	[CASENO] [bigint] NOT NULL,
+	[FUNDCODE] [varchar](25) NOT NULL,
+	[PrimaryDiagnosis] [varchar](200) NULL,
+	[SecondaryDiagnosis] [varchar](200) NULL,
+	[TertiaryDiagnosis] [varchar](200) NULL,
+	[QuaternaryDiagnosis] [varchar](200) NULL,
+	[REVIEW] [varchar](100) NULL,
+	[REVIEWDATE] [datetime] NULL,
+	[STATUS] [varchar](100) NULL,
+	[DATETIMESTAMP] [datetime] NULL,
+	[UserStamp] [varchar](100) NULL,
+	[DiagnosisID] [bigint] NOT NULL,
+ CONSTRAINT [PK_Diagnosis] PRIMARY KEY CLUSTERED 
+(
+	[DiagnosisID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_EZBudget]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_EZBudget](
+	[CASENO] [bigint] NOT NULL,
+	[REVIEW] [varchar](100) NULL,
+	[Worker] [varchar](100) NULL,
+	[ReviewDate] [datetime] NULL,
+	[STATUS] [varchar](100) NULL,
+	[Division] [varchar](25) NULL,
+	[ApprovedBy] [varchar](100) NULL,
+	[ApprovedDate] [datetime] NULL,
+	[Region] [varchar](50) NULL,
+	[UpdateSituation] [varchar](50) NULL,
+	[LivingSetting] [varchar](50) NULL,
+	[CurrentAge] [varchar](50) NULL,
+	[PropFactor] [varchar](50) NULL,
+	[QSIBehavioralScore] [varchar](50) NULL,
+	[QSIFunctionalScore] [varchar](50) NULL,
+	[Q14] [varchar](50) NULL,
+	[Q15] [varchar](50) NULL,
+	[Q16] [varchar](50) NULL,
+	[Q17] [varchar](50) NULL,
+	[Q18] [varchar](50) NULL,
+	[Q19] [varchar](50) NULL,
+	[Q20] [varchar](50) NULL,
+	[Q21] [varchar](50) NULL,
+	[Q22] [varchar](50) NULL,
+	[Q23] [varchar](50) NULL,
+	[Q24] [varchar](50) NULL,
+	[Q25] [varchar](50) NULL,
+	[Q26] [varchar](50) NULL,
+	[Q27] [varchar](50) NULL,
+	[Q28] [varchar](50) NULL,
+	[Q29] [varchar](50) NULL,
+	[Q30] [varchar](50) NULL,
+	[Q33] [varchar](50) NULL,
+	[Q34] [varchar](50) NULL,
+	[Q36] [varchar](50) NULL,
+	[Q43] [varchar](50) NULL,
+	[Q44] [varchar](50) NULL,
+	[DATETIMESTAMP] [datetime] NOT NULL,
+	[UserStamp] [varchar](100) NULL,
+	[EZBudgetAssessId] [bigint] NOT NULL,
+	[AlgorithmAmt] [float] NULL,
+ CONSTRAINT [PK_EZBudget] PRIMARY KEY CLUSTERED 
+(
+	[EZBudgetAssessId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Model5b_Predictions]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Model5b_Predictions](
+	[PredictionID] [bigint] IDENTITY(1,1) NOT NULL,
+	[CaseNo] [bigint] NOT NULL,
+	[AssessID] [bigint] NOT NULL,
+	[ReviewDate] [datetime] NULL,
+	[LivingSetting] [varchar](10) NULL,
+	[Age] [int] NULL,
+	[AgeGroup] [varchar](20) NULL,
+	[BSum] [int] NULL,
+	[FSum] [int] NULL,
+	[PSum] [int] NULL,
+	[FHFSum] [int] NULL,
+	[SLFSum] [int] NULL,
+	[SLBSum] [int] NULL,
+	[SqrtPrediction] [decimal](19, 4) NULL,
+	[PredictedBudget] [decimal](19, 2) NULL,
+	[CalculationDate] [datetime] NULL,
+	[CreatedDate] [datetime] NULL,
+	[CreatedBy] [varchar](100) NULL,
+	[RunID] [bigint] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PredictionID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_PlannedServices]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_PlannedServices](
+	[CaseNo] [bigint] NOT NULL,
+	[Division] [varchar](25) NULL,
+	[FiscalYear] [int] NULL,
+	[STARTDATE] [datetime] NULL,
+	[ENDDATE] [datetime] NULL,
+	[IndexSubObjectCode] [varchar](100) NULL,
+	[ServiceRatio] [varchar](100) NULL,
+	[ConsumerCounty] [varchar](100) NULL,
+	[GeographicDifferential] [varchar](100) NULL,
+	[ProviderRateType] [varchar](100) NULL,
+	[ServiceCode] [varchar](25) NOT NULL,
+	[Service] [varchar](100) NOT NULL,
+	[UnitType] [varchar](100) NOT NULL,
+	[UnitsPer] [numeric](19, 2) NULL,
+	[UnitsOfMeasure] [varchar](25) NULL,
+	[TotalUnits] [numeric](19, 4) NULL,
+	[AnnualizedUnits] [int] NULL,
+	[VendorID] [bigint] NULL,
+	[ProviderName] [varchar](75) NOT NULL,
+	[ProviderMedcId] [varchar](20) NULL,
+	[Rate] [numeric](19, 4) NULL,
+	[MaxAmount] [numeric](19, 2) NULL,
+	[COMMENTS] [varchar](max) NULL,
+	[PlannedServiceStatus] [varchar](100) NULL,
+	[RegionStateReviewComments] [varchar](5000) NULL,
+	[AllowEVVDelivery] [bit] NULL,
+	[EVVComments] [varchar](500) NULL,
+	[DATETIMESTAMP] [datetime] NOT NULL,
+	[UserStamp] [varchar](100) NULL,
+	[PlannedServiceId] [bigint] NOT NULL,
+	[PlanId] [bigint] NOT NULL,
+	[ISComboCodeID] [bigint] NULL,
+	[VendorServicesId] [bigint] NULL,
+ CONSTRAINT [PK_PlannedServices] PRIMARY KEY CLUSTERED 
+(
+	[PlannedServiceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Plans]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Plans](
+	[CaseNo] [bigint] NOT NULL,
+	[Division] [varchar](25) NOT NULL,
+	[Program] [varchar](75) NULL,
+	[Worker] [varchar](100) NULL,
+	[CreationDate] [datetime] NULL,
+	[Comments] [varchar](max) NULL,
+	[Status] [varchar](100) NULL,
+	[BeginDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[Review] [varchar](50) NULL,
+	[ReviewRequestDate] [datetime] NULL,
+	[UserStamp] [varchar](100) NULL,
+	[DateTimeStamp] [datetime] NULL,
+	[PlanId] [bigint] NOT NULL,
+	[BudgetId] [bigint] NULL,
+	[OpenId] [bigint] NULL,
+	[EnrollID] [bigint] NULL,
+ CONSTRAINT [PK_Plans] PRIMARY KEY CLUSTERED 
+(
+	[PlanId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_QSIAssessments]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_QSIAssessments](
+	[CASENO] [bigint] NOT NULL,
+	[ABCPIN] [varchar](50) NULL,
+	[STATUS] [varchar](100) NULL,
+	[REVIEW] [varchar](100) NULL,
+	[REVIEWDATE] [datetime] NULL,
+	[RATER] [varchar](100) NULL,
+	[RaterID] [bigint] NULL,
+	[COMMENTS] [text] NULL,
+	[APPROVEDBY] [varchar](100) NULL,
+	[APPROVEDATE] [datetime] NULL,
+	[Q13a] [varchar](50) NULL,
+	[Q13b] [varchar](50) NULL,
+	[Q13c] [varchar](50) NULL,
+	[Q14] [varchar](50) NULL,
+	[Q15] [varchar](50) NULL,
+	[Q16] [varchar](50) NULL,
+	[Q17] [varchar](50) NULL,
+	[Q18] [varchar](50) NULL,
+	[Q19] [varchar](50) NULL,
+	[Q20] [varchar](50) NULL,
+	[Q21] [varchar](50) NULL,
+	[Q22] [varchar](50) NULL,
+	[Q23] [varchar](50) NULL,
+	[Q24] [varchar](50) NULL,
+	[Q25] [varchar](50) NULL,
+	[Q26] [varchar](50) NULL,
+	[Q27] [varchar](50) NULL,
+	[Q28] [varchar](50) NULL,
+	[Q29] [varchar](50) NULL,
+	[Q30] [varchar](50) NULL,
+	[Q31a] [varchar](50) NULL,
+	[Q31b] [varchar](50) NULL,
+	[Q32] [varchar](50) NULL,
+	[Q33] [varchar](50) NULL,
+	[Q34] [varchar](50) NULL,
+	[Q35] [varchar](50) NULL,
+	[Q36] [varchar](50) NULL,
+	[Q37] [varchar](50) NULL,
+	[Q38] [varchar](50) NULL,
+	[Q39] [varchar](50) NULL,
+	[Q40] [varchar](50) NULL,
+	[Q41] [varchar](50) NULL,
+	[Q42] [varchar](50) NULL,
+	[Q43] [varchar](50) NULL,
+	[Q44] [varchar](50) NULL,
+	[Q45] [varchar](50) NULL,
+	[Q46] [varchar](50) NULL,
+	[Q47] [varchar](50) NULL,
+	[Q48] [varchar](50) NULL,
+	[Q49] [varchar](50) NULL,
+	[Q50] [varchar](50) NULL,
+	[Q51a] [varchar](50) NULL,
+	[FLEVEL] [varchar](50) NULL,
+	[BLEVEL] [varchar](50) NULL,
+	[PLEVEL] [varchar](50) NULL,
+	[OLEVEL] [varchar](50) NULL,
+	[LOSRI] [varchar](50) NULL,
+	[DATETIMESTAMP] [datetime] NOT NULL,
+	[UserStamp] [varchar](100) NULL,
+	[AssessID] [bigint] NOT NULL,
+	[LegacyAssessID] [bigint] NULL,
+ CONSTRAINT [PK_QSIAssessments] PRIMARY KEY CLUSTERED 
+(
+	[AssessID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_QSIAssessmentsLegacy]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_QSIAssessmentsLegacy](
+	[ABCPIN] [varchar](10) NOT NULL,
+	[STATUS] [varchar](10) NOT NULL,
+	[REVIEW] [varchar](7) NOT NULL,
+	[REVIEWDATE] [datetime] NULL,
+	[RATER] [varchar](61) NULL,
+	[RATERID] [int] NULL,
+	[APPROVEDBY] [varchar](61) NULL,
+	[CompletedDate] [datetime] NULL,
+	[Q14] [int] NULL,
+	[Q15] [int] NULL,
+	[Q16] [int] NULL,
+	[Q17] [int] NULL,
+	[Q18] [int] NULL,
+	[Q19] [int] NULL,
+	[Q20] [int] NULL,
+	[Q21] [int] NULL,
+	[Q22] [int] NULL,
+	[Q23] [int] NULL,
+	[Q24] [int] NULL,
+	[Q25] [int] NULL,
+	[Q26] [int] NULL,
+	[Q27] [int] NULL,
+	[Q28] [int] NULL,
+	[Q29] [int] NULL,
+	[Q30] [int] NULL,
+	[Q30a] [int] NULL,
+	[Q30b] [int] NULL,
+	[Q30bOther] [varchar](50) NULL,
+	[Q31] [int] NULL,
+	[Q32] [int] NULL,
+	[Q33] [int] NULL,
+	[Q34] [int] NULL,
+	[Q35] [int] NULL,
+	[Q36] [int] NULL,
+	[Q37] [int] NULL,
+	[Q38] [int] NULL,
+	[Q39] [int] NULL,
+	[Q40] [int] NULL,
+	[Q41] [int] NULL,
+	[Q42] [int] NULL,
+	[Q43] [int] NULL,
+	[Q43txt] [varchar](200) NULL,
+	[Q44] [int] NULL,
+	[Q45] [int] NULL,
+	[Q46] [int] NULL,
+	[Q47] [int] NULL,
+	[Q48] [int] NULL,
+	[Q49] [int] NULL,
+	[Q49a] [int] NULL,
+	[FLEVEL] [int] NULL,
+	[BLEVEL] [int] NULL,
+	[PLEVEL] [int] NULL,
+	[OLEVEL] [varchar](9) NOT NULL,
+	[LOSRI] [int] NULL,
+	[ASSESSID] [int] NOT NULL,
+ CONSTRAINT [PK_QSIAssessmentsLegacy] PRIMARY KEY CLUSTERED 
+(
+	[ASSESSID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_QSIQuestions]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_QSIQuestions](
+	[QuestionID] [varchar](4) NOT NULL,
+	[Question] [varchar](50) NULL,
+	[QuestionAssoc] [int] NOT NULL,
+	[QuestionAssocDescr] [varchar](max) NULL,
+	[Descr] [varchar](max) NULL,
+ CONSTRAINT [PK_QSIQuestions] PRIMARY KEY CLUSTERED 
+(
+	[QuestionID] ASC,
+	[QuestionAssoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Rates]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Rates](
+	[ServiceCode] [varchar](8000) NULL,
+	[ServiceCodeiConnect] [varchar](25) NOT NULL,
+	[UnitCost] [numeric](10, 2) NOT NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[DateTimeStamp] [datetime] NOT NULL,
+	[AppType] [varchar](20) NULL,
+	[FundCode] [varchar](25) NULL,
+	[Credential] [varchar](50) NULL,
+	[RateType] [varchar](100) NULL,
+	[MaxUnits] [numeric](10, 2) NULL,
+	[Max1] [numeric](10, 2) NULL,
+	[Max2] [numeric](10, 2) NULL,
+	[UserStamp] [int] NOT NULL,
+	[BaseCost] [numeric](10, 2) NULL,
+	[ProviderRateType] [varchar](100) NULL,
+	[InternalProgram] [varchar](max) NULL,
+	[ConsumerCounty] [varchar](max) NULL,
+	[ServiceRatio] [varchar](500) NULL,
+	[ServiceCodeUnitCostID] [bigint] NOT NULL,
+	[ServiceCodesId] [bigint] NOT NULL,
+ CONSTRAINT [PK_Rates] PRIMARY KEY CLUSTERED 
+(
+	[ServiceCodeUnitCostID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_SANs]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_SANs](
+	[CaseNo] [bigint] NOT NULL,
+	[SanID] [bigint] NOT NULL,
+	[Division] [varchar](100) NULL,
+	[Type] [varchar](100) NULL,
+	[SANDueToUpdatedAlgorithm] [varchar](100) NULL,
+	[Reason] [varchar](100) NULL,
+	[Status] [varchar](100) NULL,
+	[PlanID] [bigint] NULL,
+	[WSC] [varchar](100) NULL,
+	[StateOfficeReviewer] [varchar](100) NULL,
+	[DateInitiated] [datetime] NULL,
+	[SubmissionDate] [datetime] NULL,
+	[RAIDate] [datetime] NULL,
+	[DueDate] [datetime] NULL,
+	[60DaysDate] [datetime] NULL,
+	[30DaysDate] [datetime] NULL,
+	[CurrentBudget] [numeric](19, 2) NULL,
+	[AlgorithmAmount] [numeric](19, 2) NULL,
+	[AmountUnAuthorized] [numeric](19, 2) NULL,
+	[BudgetSource] [varchar](500) NULL,
+	[LastRefresh] [varchar](100) NULL,
+	[WSCProposedBudget] [numeric](19, 2) NULL,
+	[WSCProposedProratedIncrease] [numeric](19, 2) NULL,
+	[WSCProposedAnnualizedBudget] [numeric](19, 2) NULL,
+	[WSCProposedAnnualizedIncrease] [numeric](19, 2) NULL,
+	[StateProposedProratedBudget] [numeric](19, 2) NULL,
+	[StateProposedProratedIncrease] [numeric](19, 2) NULL,
+	[StateProposedAnnualizedBudget] [numeric](19, 2) NULL,
+	[StateProposedAnnualizedIncrease] [numeric](19, 2) NULL,
+	[Recommendation] [varchar](100) NULL,
+	[PersonMakingRecommd] [varchar](100) NULL,
+	[RecommendationDate] [datetime] NULL,
+	[Decision] [varchar](100) NULL,
+	[Decisionby] [varchar](100) NULL,
+	[DateNoticeSent] [datetime] NULL,
+	[DateTimeStamp] [datetime] NULL,
+	[UserStamp] [varchar](100) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_ServiceCodes]    Script Date: 9/23/2025 2:32:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_ServiceCodes](
+	[ServiceCode] [varchar](25) NOT NULL,
+	[ServiceCodeiConnect] [varchar](25) NULL,
+	[UnitType] [varchar](100) NOT NULL,
+	[Service] [varchar](100) NOT NULL,
+	[SecondaryCode] [varchar](25) NOT NULL,
+	[ServiceCategory] [varchar](100) NULL,
+	[ServiceType] [varchar](100) NULL,
+	[Active] [bit] NOT NULL,
+	[EffectiveDate] [datetime] NULL,
+	[InvoiceGroup] [varchar](50) NULL,
+	[AuthRequ] [bit] NULL,
+	[AllowDuplicates] [bit] NULL,
+	[RequiresDiagnosis] [bit] NULL,
+	[AuthAllowed] [bit] NOT NULL,
+	[AllowPartialUnits] [bit] NOT NULL,
+	[HighAge] [float] NULL,
+	[LowAge] [float] NULL,
+	[TPLAction] [bit] NULL,
+	[MedicaidCovered] [bit] NULL,
+	[ServiceCodesId] [int] NOT NULL,
+	[MaxUnitLimit] [int] NULL,
+	[UnitLimitFrequency] [varchar](50) NULL,
+	[MaxAmountLimit] [numeric](9, 2) NULL,
+	[AmountLimitFrequency] [varchar](50) NULL,
+ CONSTRAINT [PK_ServiceCodes] PRIMARY KEY CLUSTERED 
+(
+	[ServiceCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[tbl_Model5b_Predictions] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO

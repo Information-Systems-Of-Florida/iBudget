@@ -45,7 +45,197 @@ The current Model 5b achieves an R-squared of 0.7998 using 22 QSI predictors wit
 
 \textbf{Model 10: Deep Learning Neural Network} achieves the highest accuracy with R-squared of 0.8456 through multiple hidden layers capturing complex non-linear relationships. However, neural networks epitomize the black-box algorithms explicitly prohibited by HB 1103. With 4,049 parameters interacting non-linearly, no meaningful explanation of individual decisions is possible. Implementation would trigger immediate legal challenges and violate due process requirements. The complete lack of interpretability makes appeals impossible and public trust unsustainable.
 
-\section{Regulatory Compliance Assessment}
+
+%============================================
+\section{Pertinent Regulatory Requirements}
+%============================================
+
+This section presents the statutory and regulatory requirements governing the iBudget algorithm. These provisions establish the legal framework for algorithm development, assessment, and implementation.
+
+While no enacted federal laws explicitly mandate algorithmic transparency for government services, the regulatory landscape reveals a complex interplay between proposed legislation, existing legal frameworks, and practical requirements that effectively push toward transparent, interpretable algorithms in government benefit systems. Multiple versions of the Algorithmic Accountability Act have been introduced in Congress since 2019, proposing requirements for impact assessments of high-risk automated decision systems and mandating "transparency, explainability, contestability, and opportunity for recourse" (H.R.6580, 117th Congress, 2022), though none have been enacted. At the federal level, existing legal principles create indirect transparency requirements through constitutional due process protections under the 14th Amendment and the Administrative Procedure Act's requirement that agencies provide reasoning for decisions, while federal agencies are already "applying existing civil rights laws to address discrimination in automated systems in housing, employment, and criminal justice" (Brookings, 2024). The White House AI Bill of Rights has highlighted "problems of bias in algorithms and called for transparency" (Brookings, 2024), though this remains policy guidance rather than binding law. In the specific context of Florida's iBudget system, while Chapter 393 of the Florida Statutes defines "algorithm" without mandating transparency, the statutory framework creates de facto transparency requirements through established due process rights (F.S. 393.125), appeals processes requiring explanations, and error correction mechanisms that allow individuals to challenge their assessment results (Rule 65G-4.0214, F.A.C.). The project's Request for Quotes explicitly calls for "alternative algorithms using multiple linear regression" (RFQ 2526-020, 2025) over "black box" approaches like neural networks, reflecting both anticipation of future regulations and practical necessities for a system where individuals must be able to understand and potentially appeal decisions affecting their disability benefits.
+
+Sources:
+- H.R.6580 - 117th Congress (2021-2022): Algorithmic Accountability Act of 2022
+- Brookings Institution. (2024, October 10). ``How privacy legislation can help address AI"
+- Florida Statutes Chapter 393: Developmental Disabilities
+- Rule 65G-4.0214, Florida Administrative Code: Allocation Algorithm
+- Florida Agency for Persons with Disabilities, RFQ 2526-020: iBudget Algorithm Study (2025)
+- White House AI Bill of Rights (2022)
+
+%---------------------------------------------
+\subsection{Florida Statutes Section 393.0662 - iBudget System Foundation}
+%---------------------------------------------
+
+Section 393.0662, Florida Statutes, establishes the fundamental requirements for the iBudget system and individual budget allocation methodology:
+
+\begin{quote}
+``The Legislature finds that improved financial management of the existing home and community-based Medicaid waiver program is necessary to avoid deficits that impede the provision of services to individuals who are on the waiting list for enrollment in the program. The Legislature further finds that clients and their families should have greater flexibility to choose the services that best allow them to live in their community within the limits of an established budget. Therefore, the Legislature intends that the agency, in consultation with the Agency for Health Care Administration, shall manage the service delivery system using individual budgets as the basis for allocating the funds appropriated for the home and community-based services Medicaid waiver program among eligible enrolled clients. The service delivery system that uses individual budgets shall be called the iBudget system''
+\end{quote}
+
+Section 393.0662(1)(a) specifically addresses the allocation algorithm:
+
+\begin{quote}
+``In developing each client's iBudget, the agency shall use the allocation methodology as defined in s. 393.063(4), in conjunction with an assessment instrument that the agency deems to be reliable and valid, including, but not limited to, the agency's Questionnaire for Situational Information. The allocation methodology shall determine the amount of funds allocated to a client's iBudget.''
+\end{quote}
+
+Section 393.0662(1)(b) defines extraordinary needs beyond the algorithm:
+
+\begin{quote}
+``An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{House Bill 1103 (2025) - Algorithm Study Mandate}
+%---------------------------------------------
+
+House Bill 1103, enacted in 2025, mandates a comprehensive algorithm study with specific requirements:
+
+\begin{quote}
+HB1103-03-ER 675-681: ``The Agency for Persons with Disabilities shall contract for a study to review, evaluate, and identify recommendations regarding the algorithm required under s. 393.0662, Florida Statutes. The individual contractor must possess or, if the contractor is a firm must include at least one lead team member who possesses, a doctorate in statistics and advanced knowledge of the development and selection of multiple linear regression models.''
+\end{quote}
+%
+The statute specifies detailed assessment requirements:
+%
+\begin{quote}
+HB1103-03-ER 682-695:  ``The study must, at a minimum, assess the performance of the current algorithm used by the agency and determine whether a different algorithm would better meet the requirements of that section. In conducting this assessment and determination, at a minimum, the study must also review the fit of recent expenditure data to the current algorithm, \textbf{determine and refine dependent and independent variables}, develop and apply a method for identifying and removing outliers, \textbf{develop alternative algorithms using multiple linear regression}, test the accuracy and reliability of the algorithms, provide recommendations for improving accuracy and reliability, recommend an algorithm for use by the agency, assess the robustness of the recommended algorithm, and provide suggestions for improving any recommended alternative algorithm, if appropriate.'' (emphasis added)
+\end{quote} 
+%
+HB1103-03-ER 695-699: The statute further requires assessment of service expansion:
+%
+\begin{quote}
+``The study must also consider whether any waiver services that are not currently funded through the algorithm can be funded through the current algorithm or an alternative algorithm, and the impact of doing so on that algorithm's fit and effectiveness.''
+\end{quote}
+%
+Required impact analysis provisions:
+%
+\begin{quote}
+HB1103-03-ER 699-707: ``
+The study must present for any recommended alternative algorithm, at a minimum, the estimated number and percent of waiver enrollees who would  require supplemental funding under s. 393.0662(1)(b), Florida Statutes, compared to the current algorithm; and the number and percent of waiver enrollees whose budgets are estimated to increase or decrease, categorized by level of increase or decrease, age, living setting, and current total individual budget amount.''
+\end{quote}
+%
+Reporting requirement:
+%
+\begin{quote}
+HB1103-03-ER 708-710: ``The agency shall report to the Governor, the President of the Senate, and the Speaker of the House of Representatives findings and recommendations by November 15, 2025.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Administrative Code Rule 65G-4.0214 - Current Algorithm Implementation}
+%---------------------------------------------
+
+Rule 65G-4.0214, F.A.C., codifies the current allocation algorithm structure:
+
+\begin{quote}
+65G-4.0213 Definitions: ``The Allocation Algorithm: The mathematical formula based upon statistically validated relationships between individual characteristics (variables) and the individual's level of need for services provided through the Waiver as set forth in Rule 65G-4.0214, F.A.C., and as provided in Section 393.0662(1)(a), F.S.''
+\end{quote}
+%
+The rule specifies the algorithm calculation methodology:
+%
+\begin{quote}
+65G-4.0214 Allocation Algorithm: ``The squared result of the sum of the applicable values of paragraphs (2)(a) through (v) above, then apportioned according to available funding, is the individual's Allocation Algorithm Amount.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Administrative Code Rule 65G-4.0216 - iBudget Amount Establishment}
+%---------------------------------------------
+
+Rule 65G-4.0216, F.A.C., governs the establishment of individual budget amounts:
+
+\begin{quote}
+``The iBudget Amount for an individual shall be the Allocation Algorithm Amount, as provided in Rule 65G-4.0214, F.A.C., plus any approved Significant Additional Needs funding as provided in Rule 65G-4.0218, F.A.C.''
+\end{quote}
+
+\begin{quote}
+``The Agency will determine the iBudget Amount consistent with the criteria and limitations contained in the following provisions: Sections 409.906 and 393.0662, F.S.; and Rules 59G-13.080, 59G-13.081, and 59G-13.070, F.A.C.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Administrative Code Rule 65G-4.0215 - General Provisions}
+%---------------------------------------------
+
+Rule 65G-4.0215, F.A.C., establishes service authorization requirements:
+
+\begin{quote}
+``Medical necessity alone is not sufficient to authorize a service under the waiver; in addition: (a) With the assistance of the WSC the individual must utilize all available State Plan Medicaid services, school-based services, private insurance, natural supports, and any other resources which''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Administrative Code Rule 65G-4.0217 - Cost Plan Requirements}
+%---------------------------------------------
+
+Rule 65G-4.0217, F.A.C., mandates person-centered planning integration:
+
+\begin{quote}
+``When an individual's iBudget Amount is determined, the WSC must submit a cost plan proposal that reflects the specific waiver services and supports (paid and unpaid) that will assist the individual to achieve identified goals, and the provider of those services and supports, including natural supports. The cost plan proposal is derived from person-centered planning.''
+\end{quote}
+
+\begin{quote}
+``Each individual's proposed iBudget cost plan shall be reviewed and approved by the Agency in conformance with the iBudget Rules and the Handbook. Any conflict between the Handbook and these iBudget Rules shall be resolved in favor of these rules.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Administrative Code Rule 65G-4.0218 - Significant Additional Needs}
+%---------------------------------------------
+
+Rule 65G-4.0218, F.A.C., defines criteria for funding beyond the algorithm:
+
+\begin{quote}
+``Supplemental funding for Significant Additional Needs (SANs) may be of a one-time, temporary, or long-term in nature including the loss of Medicaid State Plan or school system services due to a change in age. SANs funding requests must be based on at least one of the four categories, as follows: (a) An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Statutes Section 409.906 - Medicaid Waiver Authority}
+%---------------------------------------------
+
+Section 409.906, F.S., provides the Medicaid waiver framework:
+
+\begin{quote}
+``The home and community-based services Medicaid waiver program under Section 409.906, F.S., that consists of the waiver service delivery system utilizing individual budgets required pursuant to Section 393.0662, F.S. and under which the Agency for Persons with Disabilities operates the Developmental Disabilities Individual Budgeting Waiver.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Statutes Section 393.065 - Eligibility and Application Requirements}
+%---------------------------------------------
+
+Section 393.065, F.S., as amended by HB 1103, establishes application and eligibility provisions:
+
+\begin{quote}
+``The agency shall develop and implement an online application process that, at a minimum, supports paperless, electronic application submissions with immediate e-mail confirmation to each applicant to acknowledge receipt of application upon submission. The online application system must allow an applicant to review the status of a submitted application and respond to provide additional information.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Florida Statutes Section 393.501 - Rulemaking Authority}
+%---------------------------------------------
+
+Section 393.501(1), F.S., provides the Agency's rulemaking authority:
+
+\begin{quote}
+``Rulemaking Authority 393.501(1), 393.0662 FS. Law Implemented 393.0662, 409.906 FS.''
+\end{quote}
+
+%---------------------------------------------
+\subsection{Regulatory Compliance Analysis}
+%---------------------------------------------
+
+Based on these statutory and regulatory provisions, the current Model 5b algorithm faces the following compliance challenges:
+
+\begin{enumerate}
+    \item The algorithm's reliance on fiscal year 2013-14 data violates the HB 1103 requirement to ``review the fit of recent expenditure data to the current algorithm.''
+    
+    \item The absence of person-centered planning variables conflicts with Rule 65G-4.0217's mandate that ``the cost plan proposal is derived from person-centered planning.''
+    
+    \item The 9.40\% outlier exclusion rate may impair the algorithm's ability to meet Section 393.0662's requirement for ``statistically validated relationships between individual characteristics (variables) and the individual's level of need.''
+    
+    \item The static coefficient structure lacks provisions for adjustment when appropriations increase, as required by the statutory framework.
+    
+    \item The algorithm's limited scope fails to incorporate all waiver services, as HB 1103 requires consideration of ``whether any waiver services that are not currently funded through the algorithm can be funded.''
+\end{enumerate}
+
+These regulatory requirements establish clear standards for algorithm development and assessment, providing the legal foundation for recommendations regarding alternative algorithmic approaches.
+
+%---------------------------------------------
+\subsection{Summary of Regulatory Compliance Analysis of Current Algorithms}
+%---------------------------------------------
 
 \begin{table}[h]
 \centering

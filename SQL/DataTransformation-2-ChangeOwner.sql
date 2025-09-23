@@ -1,1 +1,3 @@
+use master 
+
 ALTER AUTHORIZATION ON DATABASE::[APD] TO [sa];

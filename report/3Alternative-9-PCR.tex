@@ -62,14 +62,14 @@ Q26 (Dressing) & 0.321 \\
 Q23 (Eating) & 0.298 \\
 Q27 (Grooming) & 0.287 \\
 Q17 (Transfers) & 0.276 \\
-Others & < 0.25 \\
+Others & $<$ 0.25 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \subsection{Fatal Interpretability Problem}
 
-Warning:  \textbf{Components lack direct QSI interpretability required for appeals}
+\yellowwarning  \textbf{Components lack direct QSI interpretability required for appeals}
 
 \section{Accuracy and Reliability}
 
@@ -131,10 +131,10 @@ Components & Bias$^2$ & Variance & MSE \\
 \subsection{Fatal Interpretability Issues}
 
 \begin{itemize}
-    \item \textbf{F.A.C. 65G-4.0214}: Failure.  Requires individual QSI coefficients
-    \item \textbf{HB 1103}: Failure.  Components not ``explainable"
-    \item \textbf{Appeals Process}: Failure.  Cannot explain PC contribution
-    \item \textbf{Transparency}: Failure.  Black-box transformation
+    \item[\redcross] \textbf{F.A.C. 65G-4.0214}: Requires individual QSI coefficients
+    \item[\redcross] \textbf{HB 1103}: Components not ``explainable"
+    \item[\redcross] \textbf{Appeals Process}: Cannot explain PC contribution
+    \item[\redcross] \textbf{Transparency}: Black-box transformation
 \end{itemize}
 
 \subsection{Legal Assessment}
@@ -251,7 +251,7 @@ Implementation failure & High & High & Unacceptable \\
 
 \subsection{Final Recommendation}
 
-\textbf{STRONGLY REJECT for All Purposes}
+\textbf{APPROVE ONLY FOR RESEARCH}
 
 Principal Components Regression is fundamentally incompatible with iBudget requirements. The transformation to abstract components destroys the required direct relationship between QSI questions and budget allocations.
 
@@ -261,6 +261,8 @@ Principal Components Regression is fundamentally incompatible with iBudget requi
 3. \textbf{Practical}: Appeals process becomes impossible
 4. \textbf{Ethical}: Removes transparency from public program
 
-\textbf{Research Value}: Minimal - only for understanding QSI correlation structure
+\textbf{Research Value}: Minimal - only for understanding QSI correlation structure.
+
+\textbf{Communication Value}: Potentially high, as it can uncover clusters and patterns. 
 
 \textbf{Alternative}: Use Ridge Regression (Model 5) for multicollinearity while maintaining interpretability.
