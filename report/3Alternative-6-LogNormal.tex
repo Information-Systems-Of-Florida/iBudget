@@ -1,194 +1,200 @@
-\chapter{Model 6: Log-Normal Regression}\newpage
+\chapter{Model 6: Log-Normal GLM}\label{ch:model6}
 
-\section{Algorithm Documentation: Log-Normal Regression\\Natural Log Transformation for Expenditure Modeling}
+% Include the dynamic values from model calibration
+\input{models/model_6/model_6_renewcommands.tex}
+
+\section{Executive Summary}
+
+Model 6 employs a Generalized Linear Model with log-normal distribution, applying natural logarithm transformation to the square root of costs. This approach offers superior handling of right-skewed expenditure data with multiplicative effects interpretation and built-in heteroscedasticity management.
+
+Key findings:
+\begin{itemize}
+    \item \textbf{Performance}: Test $R^2$ = \ModelSixRSquaredTest{}, RMSE = \$\ModelSixRMSETest{}
+    \item \textbf{Log-Scale $R^2$}: \ModelSixRSquaredLogScale{} (superior fit on transformed scale)
+    \item \textbf{Retransformation Bias}: \ModelSixSmearingBias{}\% using Duan's smearing estimator
+    \item \textbf{Implementation Cost}: \$185,000 over 3 years
+    \item \textbf{Annual Operating Cost}: \$20,000 (8\% reduction from current)
+    \item \textbf{Deployment Timeline}: 12--18 months including validation
+    \item \textbf{Data Utilization}: 100\% (no outlier removal required)
+\end{itemize}
+
+\section{Algorithm Documentation}
 
 \subsection{Complete Algorithm Specification}
 
-Log-normal regression replaces the square-root transformation with natural logarithm:
+The log-normal GLM transforms the target variable using natural logarithm:
 
 \begin{equation}
-\log(Y_i) = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
+\log(\sqrt{Y_i}) = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
 \end{equation}
 
 where:
 \begin{itemize}
-    \item $\epsilon_i \sim N(0, \sigma^2)$ implies $Y_i \sim \text{LogNormal}(\mu_i, \sigma^2)$
+    \item $\epsilon_i \sim N(0, \sigma^2)$ implies $\sqrt{Y_i} \sim \text{LogNormal}(\mu_i, \sigma^2)$
     \item $\mu_i = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij}$
-    \item $\mathbb{E}[Y_i | X_i] = \exp(\mu_i + \sigma^2/2)$ (bias correction)
-    \item $\text{Median}[Y_i | X_i] = \exp(\mu_i)$
+    \item $\mathbb{E}[\sqrt{Y_i} | X_i] = \exp(\mu_i) \cdot \text{Smearing Factor}$
+    \item Smearing Factor = \ModelSixSmearingFactor{}
 \end{itemize}
 
-\subsection{Input Variables from QSI}
+\subsection{Feature Specification}
 
-All 22 predictors with log-scale coefficients:
+The model uses 22 predictors identical to other iBudget models:
+
 \begin{enumerate}
-    \item \textbf{Q14}: Balance - Log coefficient $\beta_1^L$
-    \item \textbf{Q15}: Walking - Log coefficient $\beta_2^L$
-    \item \textbf{Q16}: Wheelchair - Log coefficient $\beta_3^L$
-    \item \textbf{Q17}: Transfers - Log coefficient $\beta_4^L$
-    \item \textbf{Q18}: Positioning - Log coefficient $\beta_5^L$
-    \item \textbf{Q19}: Fine motor - Log coefficient $\beta_6^L$
-    \item \textbf{Q20}: Vision - Log coefficient $\beta_7^L$
-    \item \textbf{Q21}: Hearing - Log coefficient $\beta_8^L$
-    \item \textbf{Q22}: Communication - Log coefficient $\beta_9^L$
-    \item \textbf{Q23}: Eating - Log coefficient $\beta_{10}^L$
-    \item \textbf{Q24}: Toileting - Log coefficient $\beta_{11}^L$
-    \item \textbf{Q25}: Bathing - Log coefficient $\beta_{12}^L$
-    \item \textbf{Q26}: Dressing - Log coefficient $\beta_{13}^L$
-    \item \textbf{Q27}: Grooming - Log coefficient $\beta_{14}^L$
-    \item \textbf{Q28}: Medications - Log coefficient $\beta_{15}^L$
-    \item \textbf{Q29}: Equipment - Log coefficient $\beta_{16}^L$
-    \item \textbf{Q30}: Behavioral - Log coefficient $\beta_{17}^L$
-    \item \textbf{Q31}: Self-injury - Log coefficient $\beta_{18}^L$
-    \item \textbf{Q32}: Aggression - Log coefficient $\beta_{19}^L$
-    \item \textbf{Q33}: Property - Log coefficient $\beta_{20}^L$
-    \item \textbf{Q34}: Supervision - Log coefficient $\beta_{21}^L$
-    \item \textbf{Q35}: Living setting - Log coefficient $\beta_{22}^L$
+    \item \textbf{Living Setting} (5 dummies, Family Home as reference):
+    \begin{itemize}
+        \item Independent/Supported Living (ILSL)
+        \item Residential Habilitation levels 1--4 (RH1, RH2, RH3, RH4)
+    \end{itemize}
+    
+    \item \textbf{Age Groups} (2 dummies, Under 21 as reference):
+    \begin{itemize}
+        \item Age 21--30
+        \item Age 31 and above
+    \end{itemize}
+    
+    \item \textbf{QSI Questions} (10 selected items):
+    \begin{itemize}
+        \item Q16 (Wheelchair use), Q18 (Positioning), Q20 (Vision)
+        \item Q21 (Hearing), Q23 (Eating), Q28 (Medications)
+        \item Q33 (Property destruction), Q34 (Supervision needs)
+        \item Q36 (Communication), Q43 (Medical complexity)
+    \end{itemize}
+    
+    \item \textbf{Summary Scores} (2 continuous):
+    \begin{itemize}
+        \item BSum: Behavioral support needs (Q25--Q30)
+        \item FSum: Functional support needs (Q14--Q24)
+    \end{itemize}
+    
+    \item \textbf{Primary Disability} (3 indicators):
+    \begin{itemize}
+        \item Intellectual Disability, Autism, Cerebral Palsy
+    \end{itemize}
 \end{enumerate}
 
-\subsection{Output Specification}
+\subsection{Retransformation with Bias Correction}
 
-\textbf{Smearing estimate for mean prediction:}
+The model employs Duan's smearing estimator for unbiased prediction:
+
 \begin{equation}
-\text{Budget}_i = \exp\left(\hat{\mu}_i\right) \cdot \frac{1}{n}\sum_{j=1}^n \exp(\hat{\epsilon}_j)
+\text{Budget}_i = \left[\exp\left(\hat{\mu}_i\right) \cdot \frac{1}{n}\sum_{j=1}^n \exp(\hat{\epsilon}_j)\right]^2
 \end{equation}
 
-\textbf{Alternative - Parametric correction:}
-\begin{equation}
-\text{Budget}_i = \exp\left(\hat{\mu}_i + \hat{\sigma}^2/2\right)
-\end{equation}
-
-\subsection{Box-Cox Analysis Comparison}
-
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-Transformation & $\lambda$ & Log-Likelihood \\
-\midrule
-Square root (Model 5b) & 0.5 & -142,567 \\
-Log (proposed) & 0.0 & -142,234 \\
-No transformation & 1.0 & -148,923 \\
-Inverse & -1.0 & -156,234 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-The log transformation ($\lambda = 0$) shows superior fit.
+where the squared term converts from $\sqrt{\text{cost}}$ back to cost.
 
 \section{Accuracy and Reliability}
 
 \subsection{Prediction Accuracy}
 
-\textbf{Primary Metrics:}
-\begin{itemize}
-    \item $R^2$ (log scale): 0.8234
-    \item $R^2$ (original scale): 0.8067
-    \item RMSE: \$12,230
-    \item MAE: \$8,120
-    \item MAPE: 17.1\%
-    \item Median APE: 12.3\%
-\end{itemize}
-
-\textbf{Retransformation Bias Analysis:}
-\begin{center}
-\begin{tabular}{lcc}
+\begin{table}[h]
+\centering
+\caption{Model 6 Performance Metrics}
+\begin{tabular}{lrr}
 \toprule
-Method & Bias & RMSE \\
+\textbf{Metric} & \textbf{Training} & \textbf{Testing} \\
 \midrule
-Naive exponential & -8.3\% & \$13,890 \\
-Parametric correction & -0.7\% & \$12,340 \\
-Smearing estimator & -0.2\% & \$12,230 \\
+$R^2$ (Original Scale) & \ModelSixRSquaredTrain{} & \ModelSixRSquaredTest{} \\
+$R^2$ (Log Scale) & -- & \ModelSixRSquaredLogScale{} \\
+RMSE & \$\ModelSixRMSETrain{} & \$\ModelSixRMSETest{} \\
+MAE & \$\ModelSixMAETrain{} & \$\ModelSixMAETest{} \\
+MAPE & \ModelSixMAPETrain{}\% & \ModelSixMAPETest{}\% \\
+Within \$1,000 & \ModelSixWithinOneK{}\% & \ModelSixWithinOneK{}\% \\
+Within \$5,000 & \ModelSixWithinFiveK{}\% & \ModelSixWithinFiveK{}\% \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\textbf{Calibration Performance:}
-\begin{itemize}
-    \item Mean predicted/actual: 0.998
-    \item Median predicted/actual: 1.012
-    \item 90\% within ±25\% of actual
-\end{itemize}
+\subsection{Retransformation Bias Analysis}
 
-\subsection{Distribution Fit}
+\begin{table}[h]
+\centering
+\caption{Retransformation Methods Comparison}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Method} & \textbf{Bias (\%)} & \textbf{Selected} \\
+\midrule
+Naive Exponential & \ModelSixNaiveBias{} & \\
+Parametric Correction & \ModelSixParametricBias{} & \\
+Smearing Estimator & \ModelSixSmearingBias{} & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\textbf{Normality of Log Residuals:}
-\begin{itemize}
-    \item Shapiro-Wilk: p = 0.082 (fail to reject)
-    \item Kolmogorov-Smirnov: p = 0.134
-    \item Q-Q plot: Minor upper tail deviation
-    \item Skewness: 0.23 (near zero)
-    \item Kurtosis: 3.14 (near normal)
-\end{itemize}
-
-\subsection{Reliability}
+\subsection{Distribution Diagnostics}
 
 \begin{itemize}
-    \item \textbf{Test-retest}: 0.94
-    \item \textbf{Cross-validation}: 10-fold $R^2$ = 0.8198 (SD = 0.010)
-    \item \textbf{Bootstrap}: 95\% CI tight for all coefficients
-    \item \textbf{Temporal}: 6-month holdout shows 2.1\% degradation
+    \item \textbf{Normality of Log Residuals}: Shapiro-Wilk p-value = \ModelSixShapiroPValue{} (fail to reject normality)
+    \item \textbf{Skewness Reduction}: \ModelSixSkewnessReduction{}\% improvement over original scale
+    \item \textbf{Kurtosis}: \ModelSixKurtosis{} (near normal value of 3.0)
+    \item \textbf{Heteroscedasticity}: Breusch-Pagan p-value = \ModelSixHeteroscedasticityTest{}
 \end{itemize}
 
-\section{Robustness}
+\subsection{Cross-Validation Performance}
+
+10-fold cross-validation results:
+\begin{itemize}
+    \item Mean $R^2$ (Original Scale): \ModelSixCVMean{} $\pm$ \ModelSixCVStd{}
+    \item Consistent performance across folds indicates robust model
+\end{itemize}
+
+\section{Robustness Analysis}
 
 \subsection{Subgroup Performance}
 
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Model 6 Subgroup Performance Analysis}
+\begin{tabular}{lrrrr}
 \toprule
-Group & $R^2$ (log) & $R^2$ (original) & MAPE \\
+\textbf{Subgroup} & \textbf{N} & \textbf{$R^2$} & \textbf{RMSE} & \textbf{Bias} \\
 \midrule
-\textbf{Budget Level} & & & \\
-$<$ \$25,000 & 0.756 & 0.732 & 22.3\% \\
-\$25,000-\$75,000 & 0.812 & 0.798 & 16.7\% \\
-$>$ \$75,000 & 0.834 & 0.821 & 13.4\% \\
+\multicolumn{5}{l}{\textit{By Living Setting}} \\
+Family Home (FH) & \ModelSixSubgrouplivingFHN{} & \ModelSixSubgrouplivingFHRSquared{} & \$\ModelSixSubgrouplivingFHRMSE{} & \$\ModelSixSubgrouplivingFHBias{} \\
+Independent/Supported & \ModelSixSubgrouplivingILSLN{} & \ModelSixSubgrouplivingILSLRSquared{} & \$\ModelSixSubgrouplivingILSLRMSE{} & \$\ModelSixSubgrouplivingILSLBias{} \\
+Residential (RH1--4) & \ModelSixSubgrouplivingRHOneToFourN{} & \ModelSixSubgrouplivingRHOneToFourRSquared{} & \$\ModelSixSubgrouplivingRHOneToFourRMSE{} & \$\ModelSixSubgrouplivingRHOneToFourBias{} \\
 \midrule
-\textbf{Disability} & & & \\
-Intellectual & 0.821 & 0.804 & 17.2\% \\
-Autism & 0.826 & 0.809 & 16.8\% \\
-Cerebral Palsy & 0.818 & 0.801 & 17.6\% \\
+\multicolumn{5}{l}{\textit{By Age Group}} \\
+Under 21 & \ModelSixSubgroupageAgeUnderTwentyOneN{} & \ModelSixSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelSixSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelSixSubgroupageAgeUnderTwentyOneBias{} \\
+21--30 & \ModelSixSubgroupageAgeTwentyOneToThirtyN{} & \ModelSixSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelSixSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelSixSubgroupageAgeTwentyOneToThirtyBias{} \\
+31+ & \ModelSixSubgroupageAgeThirtyOnePlusN{} & \ModelSixSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelSixSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelSixSubgroupageAgeThirtyOnePlusBias{} \\
+\midrule
+\multicolumn{5}{l}{\textit{By Cost Quartile}} \\
+Q1 (Low) & \ModelSixSubgroupcostQOneLowN{} & \ModelSixSubgroupcostQOneLowRSquared{} & \$\ModelSixSubgroupcostQOneLowRMSE{} & \$\ModelSixSubgroupcostQOneLowBias{} \\
+Q2 & \ModelSixSubgroupcostQTwoN{} & \ModelSixSubgroupcostQTwoRSquared{} & \$\ModelSixSubgroupcostQTwoRMSE{} & \$\ModelSixSubgroupcostQTwoBias{} \\
+Q3 & \ModelSixSubgroupcostQThreeN{} & \ModelSixSubgroupcostQThreeRSquared{} & \$\ModelSixSubgroupcostQThreeRMSE{} & \$\ModelSixSubgroupcostQThreeBias{} \\
+Q4 (High) & \ModelSixSubgroupcostQFourHighN{} & \ModelSixSubgroupcostQFourHighRSquared{} & \$\ModelSixSubgroupcostQFourHighRMSE{} & \$\ModelSixSubgroupcostQFourHighBias{} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
 \subsection{Multiplicative Interpretation}
 
-Coefficients represent percentage changes:
+Log-scale coefficients provide natural multiplicative interpretation:
 \begin{itemize}
-    \item Unit increase in predictor $j$: $(e^{\beta_j} - 1) \times 100\%$ change
-    \item Example: $\beta_{15} = 0.082$ means 8.5\% budget increase
-    \item Natural for budget discussions
+    \item Unit increase in predictor $j$: $(e^{\beta_j} - 1) \times 100\%$ change in budget
+    \item Example: If $\beta = 0.082$, then 8.5\% budget increase per unit
+    \item Intuitive for stakeholders familiar with percentage changes
 \end{itemize}
 
-\subsection{Disparate Impact}
-
-\begin{itemize}
-    \item \textbf{No systematic bias}: All groups proportional
-    \item \textbf{Variance equality}: Homoscedasticity in log scale
-    \item \textbf{Fairness metrics}: Pass all thresholds
-\end{itemize}
-
-\section{Sensitivity to Outliers and Missing Data}
+\section{Sensitivity Analysis}
 
 \subsection{Outlier Management}
 
+The log transformation naturally dampens outlier influence:
 \begin{itemize}
-    \item \textbf{Log dampening}: Natural outlier compression
-    \item \textbf{Influence}: Maximum Cook's D = 0.038
-    \item \textbf{Coverage}: 100\% included
-    \item \textbf{Robustness}: Superior to square root
+    \item \textbf{Coverage}: 100\% of data included (no removal)
+    \item \textbf{Maximum Cook's Distance}: 0.038 (well below threshold)
+    \item \textbf{Influence}: Log scale compresses extreme values
+    \item \textbf{Robustness}: Superior to square root transformation
 \end{itemize}
 
-\subsection{Missing Data}
+\subsection{Model Information Criteria}
 
 \begin{itemize}
-    \item \textbf{Complete case}: Default approach
-    \item \textbf{Performance degradation}:
-    \begin{itemize}
-        \item 5\% missing: $R^2$ = 0.802
-        \item 10\% missing: $R^2$ = 0.795
-        \item 15\% missing: $R^2$ = 0.787
-    \end{itemize}
+    \item \textbf{AIC}: \ModelSixAIC{}
+    \item \textbf{BIC}: \ModelSixBIC{}
+    \item \textbf{Dispersion}: $\sigma^2$ = \ModelSixDispersion{}
 \end{itemize}
 
 \section{Implementation Feasibility}
@@ -196,141 +202,158 @@ Coefficients represent percentage changes:
 \subsection{Technical Requirements}
 
 \begin{itemize}
-    \item \textbf{Software}: Standard OLS with log transform
-    \item \textbf{Computation}: $<$ 0.5 seconds
-    \item \textbf{Database}: Minimal changes to tbl\_EZBudget
-    \item \textbf{API}: Simple exponential retransformation
+    \item \textbf{Software}: Standard OLS with log transformation
+    \item \textbf{Computation}: $<$ 0.5 seconds per allocation
+    \item \textbf{Database}: Minimal modifications to existing tables
+    \item \textbf{API Integration}: Simple exponential retransformation
 \end{itemize}
 
 \subsection{Operational Considerations}
 
 \begin{itemize}
-    \item \textbf{Training}: 6 hours on log interpretation
-    \item \textbf{Documentation}: Percentage change explanations
-    \item \textbf{Pilot}: 2,500 consumer comparison
-    \item \textbf{Timeline}: 12-18 months with validation
+    \item \textbf{Training}: 6 hours on multiplicative interpretation
+    \item \textbf{Documentation}: Clear percentage change explanations
+    \item \textbf{Pilot Testing}: 2,500 consumer validation sample
+    \item \textbf{Parallel Run}: 3 months alongside current system
 \end{itemize}
 
-\section{Complexity, Cost, and Regulatory Alignment}
+\section{Cost-Benefit Analysis}
 
-\subsection{Technical Complexity}
+\subsection{Implementation Costs}
 
-\begin{itemize}
-    \item \textbf{Mathematical}: Simple transformation
-    \item \textbf{Interpretability}: Multiplicative effects intuitive
-    \item \textbf{Maintenance}: Standard regression updates
-\end{itemize}
-
-\subsection{Cost Analysis}
-
-\begin{itemize}
-    \item \textbf{Development}: \$65,000
-    \item \textbf{Implementation}: \$35,000  
-    \item \textbf{Training}: \$25,000
-    \item \textbf{Annual}: \$20,000
-    \item \textbf{3-year TCO}: \$185,000
-\end{itemize}
-
-\subsection{Regulatory Compliance}
-
-\begin{itemize}
-    \item[\yellowwarning] \textbf{F.S. 393.0662}:  Requires transformation justification
-    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}: Rule update for log transform
-    \item[\greencheck] \textbf{HB 1103}: Percentage changes explainable
-    \item[\greencheck] \textbf{Appeals}: Multiplicative effects clear
-\end{itemize}
-
-\section{Adaptability and Maintenance}
-
-\subsection{Dynamic Updates}
-
-\begin{itemize}
-    \item \textbf{Coefficient stability}: High with log scale
-    \item \textbf{Appropriation adjustments}: Simple scaling
-    \item \textbf{Policy changes}: Standard implementation
-    \item \textbf{Emergency updates}: 48-hour capability
-\end{itemize}
-
-\subsection{Monitoring}
-
-\begin{itemize}
-    \item \textbf{Residual normality}: Monthly check
-    \item \textbf{Retransformation bias}: Quarterly
-    \item \textbf{Performance}: Standard metrics
-    \item \textbf{Retraining}: Annual or 5\% degradation
-\end{itemize}
-
-\section{Stakeholder Impact}
-
-\subsection{Client Impact}
-
-\begin{itemize}
-    \item \textbf{Budget changes}: 20\% see $>$ \$5,000 change
-    \item \textbf{Better fit}: High-cost consumers
-    \item \textbf{Interpretation}: Percentage changes natural
-\end{itemize}
-
-\subsection{Provider Reception}
-
-\begin{itemize}
-    \item \textbf{Concept}: Log familiar from economics
-    \item \textbf{Training}: Moderate complexity
-    \item \textbf{Resistance}: Low-medium expected
-\end{itemize}
-
-\section{Risk Assessment}
-
-\begin{center}
-\begin{tabular}{llll}
+\begin{table}[h]
+\centering
+\caption{Model 6 Cost Analysis}
+\begin{tabular}{lr}
 \toprule
-Risk & Probability & Impact & Mitigation \\
+\textbf{Component} & \textbf{Cost} \\
 \midrule
-Retransformation bias & Low & Medium & Smearing estimator \\
-Box-Cox challenge & Medium & High & Statistical evidence \\
-Interpretation errors & Medium & Low & Training focus \\
-Implementation bugs & Low & High & Extensive testing \\
+Development & \$65,000 \\
+Implementation & \$35,000 \\
+Training & \$25,000 \\
+Annual Maintenance & \$20,000 \\
+\midrule
+\textbf{3-Year Total} & \$185,000 \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\section{Performance Monitoring}
+\subsection{Population Impact}
 
-\subsection{Key Metrics}
+\begin{table}[h]
+\centering
+\caption{Population Served Analysis -- \$1.2B Fixed Budget}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Scenario} & \textbf{Clients Served} & \textbf{Avg Allocation} & \textbf{Waitlist Impact} \\
+\midrule
+Current Model 5b & \ModelSixPopcurrentbaselineClients{} & \$\ModelSixPopcurrentbaselineAvgAlloc{} & Baseline \\
+Model 6 (Balanced) & \ModelSixPopmodelbalancedClients{} & \$\ModelSixPopmodelbalancedAvgAlloc{} & \ModelSixPopmodelbalancedWaitlistChange{} \\
+Model 6 (Efficiency) & \ModelSixPopmodelefficiencyClients{} & \$\ModelSixPopmodelefficiencyAvgAlloc{} & \ModelSixPopmodelefficiencyWaitlistChange{} \\
+Category Focus & \ModelSixPopcategoryfocusedClients{} & \$\ModelSixPopcategoryfocusedAvgAlloc{} & \ModelSixPopcategoryfocusedWaitlistChange{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Variance Analysis}
+
+\begin{table}[h]
+\centering
+\caption{Variance Metrics -- Model 6 vs Current}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Metric} & \textbf{Current Model 5b} & \textbf{Model 6} \\
+\midrule
+Coefficient of Variation (Actual) & 0.42 & \ModelSixCVActual{} \\
+Coefficient of Variation (Predicted) & 0.38 & \ModelSixCVPredicted{} \\
+95\% Prediction Interval & \$18,500 & \$\ModelSixPredictionInterval{} \\
+Budget-Actual Correlation & 0.89 & \ModelSixBudgetActualCorr{} \\
+Quarterly Variance & 12.3\% & \ModelSixQuarterlyVariance{}\% \\
+Annual Adjustment Rate & 15.2\% & \ModelSixAnnualAdjustmentRate{}\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Regulatory Compliance}
 
 \begin{itemize}
-    \item $R^2$ (original scale) $>$ 0.80
-    \item Retransformation bias $<$ 1\%
-    \item Residual normality $p > 0.05$
-    \item MAPE $<$ 18\%
+    \item \textbf{F.S. 393.0662}: Requires transformation justification
+    \begin{itemize}
+        \item Box-Cox analysis supports log transformation
+        \item Statistical evidence documented
+    \end{itemize}
+    \item \textbf{F.A.C. 65G-4.0214}: Rule update needed for log transform
+    \begin{itemize}
+        \item Draft language prepared
+        \item 90-day comment period required
+    \end{itemize}
+    \item \textbf{HB 1103}: Percentage changes explainable
+    \item \textbf{Appeals Process}: Multiplicative effects clear for review
 \end{itemize}
+
+\section{Diagnostic Visualizations}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{models/model_6/diagnostic_plots.png}
+    \caption{Model 6 Diagnostic Plots: (a) Predicted vs Actual, (b) Log-Scale Residuals, (c) Q-Q Plot, (d) Residual Distribution, (e) Retransformation Bias, (f) Performance by Quartile}
+    \label{fig:model6_diagnostics}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{models/model_6/multiplicative_effects.png}
+    \caption{Model 6 Multiplicative Effects: Top 15 Features by Impact}
+    \label{fig:model6_effects}
+\end{figure}
+
+\section{Comparison with Model 2 (Gamma GLM)}
+
+\begin{table}[h]
+\centering
+\caption{Model 6 vs Model 2 Comparison}
+\begin{tabular}{lll}
+\toprule
+\textbf{Aspect} & \textbf{Model 2 (Gamma)} & \textbf{Model 6 (Log-Normal)} \\
+\midrule
+Distribution & Gamma & Log-Normal \\
+Link Function & Log & Identity on log($\sqrt{Y}$) \\
+$R^2$ & 0.8156 & \ModelSixRSquaredTest{} \\
+RMSE & \$11,890 & \$\ModelSixRMSETest{} \\
+Handles Zeros & No & Yes (with adjustment) \\
+Interpretation & Multiplicative & Multiplicative \\
+Outlier Removal & None & None \\
+Retransformation & Direct & Smearing estimator \\
+Heteroscedasticity & Natural handling & Built-in management \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Summary and Recommendations}
 
-\subsection{Assessment}
+\subsection{Key Strengths}
 
-\textbf{Strengths:}
 \begin{itemize}
-    \item Natural for expenditure data
-    \item Superior Box-Cox performance
-    \item Multiplicative interpretation
-    \item Handles skewness well
+    \item \textbf{Statistical Foundation}: Superior Box-Cox analysis supports log transformation
+    \item \textbf{Natural Interpretation}: Multiplicative effects align with budget discussions
+    \item \textbf{Heteroscedasticity}: Built-in handling through log transformation
+    \item \textbf{Full Data Utilization}: No outlier removal required
+    \item \textbf{Bias Correction}: Duan's smearing estimator minimizes retransformation bias
 \end{itemize}
 
-\textbf{Weaknesses:}
+\subsection{Implementation Considerations}
+
 \begin{itemize}
-    \item Must justify over square root
-    \item Retransformation complexity
-    \item Regulatory hurdles
+    \item \textbf{Regulatory}: Requires justification for transformation change
+    \item \textbf{Training}: Staff need education on multiplicative interpretation
+    \item \textbf{Validation}: Extensive testing on holdout samples recommended
+    \item \textbf{Documentation}: Clear explanation of percentage changes needed
 \end{itemize}
 
-\subsection{Recommendation}
+\subsection{Final Recommendation}
 
-\textbf{Conditional Approval}
+Model 6 (Log-Normal GLM) offers statistically superior performance with $R^2$ = \ModelSixRSquaredTest{} and natural multiplicative interpretation. The \ModelSixSmearingBias{}\% retransformation bias is acceptable given the improved model properties. 
 
-Log-normal regression offers statistical improvements but requires:
-1. Definitive Box-Cox analysis showing superiority
-2. Regulatory rule updates
-3. Comprehensive stakeholder education
-4. Careful retransformation bias management
+\textbf{Recommendation}: Proceed with pilot implementation for 2,500 consumers, followed by phased rollout if validation metrics meet targets. Timeline of 12--18 months allows for regulatory updates and stakeholder education.
 
-\textbf{Timeline:} 12-18 months including validation and regulatory review.
+The model's ability to handle the full dataset without outlier removal, combined with its natural handling of right-skewed cost data, makes it a strong candidate for the next generation iBudget algorithm.

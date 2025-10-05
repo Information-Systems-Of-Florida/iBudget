@@ -349,7 +349,7 @@ class DatabaseMetadataExtractor:
         
         # Start LaTeX content (only sections, no document structure)
         latex_content = []
-        latex_content.append("\\section{Data Provided by ADP for Modeling}")
+        latex_content.append("\\section{Data Provided by APD for Modeling}")
         latex_content.append("\\begin{landscape}")
         latex_content.append("")
         

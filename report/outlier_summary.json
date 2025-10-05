@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-09-28T18:18:32.024085",
+  "overall_stats": {
+    "ReportSection": "Overall Statistics",
+    "TotalUniqueConsumers": 41285,
+    "TotalConsumerYears": 212924,
+    "TotalFiscalYears": 6,
+    "EarliestFiscalYear": 2019,
+    "LatestFiscalYear": 2024,
+    "AvgAnnualCost": 33986.654421,
+    "StDevAnnualCost": 40545.12991335356,
+    "MinAnnualCost": 0.0,
+    "MaxAnnualCost": 368147.58,
+    "Q1_Cost": 2178.6,
+    "Median_Cost": 15454.38,
+    "Q3_Cost": 56558.59,
+    "P95_Cost": 111753.26,
+    "P99_Cost": 175153.48
+  },
+  "consumer_summary": {
+    "ReportSection": "Consumer Level Summary",
+    "TotalConsumers": 41285,
+    "ConsumersWithUsableData": 25347,
+    "Pct_ConsumersUsable": 61.4,
+    "ConsumersWithMultiYear": 14995,
+    "Pct_ConsumersMultiYear": 36.32,
+    "AvgYearsPerConsumer": 5.157417948407412,
+    "AvgUsableYearsPerConsumer": 1.1925638851883251
+  },
+  "exclusion_summary": {
+    "ReportSection": "Exclusion Summary",
+    "Count_MidYearQSI": 957,
+    "Pct_MidYearQSI": 0.45,
+    "Count_LateEntry": 43102,
+    "Pct_LateEntry": 20.24,
+    "Count_EarlyExit": 14873,
+    "Pct_EarlyExit": 6.99,
+    "Count_NoCosts": 109,
+    "Pct_NoCosts": 0.05,
+    "Count_NegativeCosts": 0,
+    "Pct_NegativeCosts": 0.0,
+    "Count_InsufficientService": 81901,
+    "Pct_InsufficientService": 38.46,
+    "Count_NoQSI": 128791,
+    "Pct_NoQSI": 60.49
+  },
+  "cost_outliers": {
+    "lower_fence": -153230.77999999997,
+    "upper_fence": 261983.07499999998,
+    "n_below": "0",
+    "n_above": "111",
+    "pct_outliers": 0.22544937544429774
+  },
+  "consumer_trajectory": {
+    "total_consumers": 41285,
+    "consumers_with_trajectory": "14995",
+    "pct_with_trajectory": 36.320697589923704,
+    "consumers_with_gaps": "177",
+    "pct_with_gaps": 0.428727140607969
+  }
+}

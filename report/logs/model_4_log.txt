@@ -1,0 +1,245 @@
+2025-10-02 12:19:47 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:47 - MODEL 4 - INFO - INITIALIZING MODEL 4: WEIGHTED-LEAST-SQUARES
+2025-10-02 12:19:47 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:47 - MODEL 4 - INFO - Log file: models\..\..\report\logs\model_4_log.txt
+2025-10-02 12:19:47 - MODEL 4 - INFO - Output directory: models/model_4
+2025-10-02 12:19:47 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:47 - MODEL 4 - INFO - 
+2025-10-02 12:19:47 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:47 - MODEL 4 - INFO - STARTING PIPELINE: WEIGHTED-LEAST-SQUARES
+2025-10-02 12:19:47 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:47 - MODEL 4 - INFO - Model 4 loading data from FY2023-2024
+2025-10-02 12:19:47 - MODEL 4 - INFO - 
+2025-10-02 12:19:47 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:47 - MODEL 4 - INFO - LOADING DATA: FY2023-2024
+2025-10-02 12:19:47 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:47 - MODEL 4 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-02 12:19:47 - MODEL 4 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-02 12:19:48 - MODEL 4 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-02 12:19:48 - MODEL 4 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-02 12:19:49 - MODEL 4 - INFO - Loaded 67265 usable records
+2025-10-02 12:19:49 - MODEL 4 - INFO - Data split: 53812 training, 13453 test
+2025-10-02 12:19:49 - MODEL 4 - INFO - 
+2025-10-02 12:19:49 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:49 - MODEL 4 - INFO - FEATURE PREPARATION
+2025-10-02 12:19:49 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:49 - MODEL 4 - INFO - Model 4 using 22 robust features
+2025-10-02 12:19:50 - MODEL 4 - INFO - Features prepared: 22 features
+2025-10-02 12:19:50 - MODEL 4 - INFO - 
+2025-10-02 12:19:50 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:50 - MODEL 4 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-02 12:19:50 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:50 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:50 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Min: 0.2524
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Max: 10.1894
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights above 3.0: 139 (0.3%)
+2025-10-02 12:19:50 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Fold 1: R^2 = 0.2515
+2025-10-02 12:19:50 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:50 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Min: 0.2488
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Max: 10.1834
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights above 3.0: 312 (0.6%)
+2025-10-02 12:19:50 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Fold 2: R^2 = 0.2332
+2025-10-02 12:19:50 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:50 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Min: 0.2530
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Max: 10.0760
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Weights above 3.0: 141 (0.3%)
+2025-10-02 12:19:50 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:50 - MODEL 4 - INFO -   Fold 3: R^2 = 0.2338
+2025-10-02 12:19:50 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:50 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:51 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Min: 0.2521
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Max: 10.1374
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights above 3.0: 150 (0.3%)
+2025-10-02 12:19:51 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Fold 4: R^2 = 0.2337
+2025-10-02 12:19:51 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:51 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Min: 0.2529
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Max: 10.1200
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights above 3.0: 209 (0.4%)
+2025-10-02 12:19:51 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Fold 5: R^2 = 0.2365
+2025-10-02 12:19:51 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:51 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Min: 0.2541
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Max: 10.1768
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights above 3.0: 273 (0.6%)
+2025-10-02 12:19:51 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Fold 6: R^2 = 0.2493
+2025-10-02 12:19:51 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:51 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Min: 0.2627
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Max: 10.0503
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Weights above 3.0: 90 (0.2%)
+2025-10-02 12:19:51 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:51 - MODEL 4 - INFO -   Fold 7: R^2 = 0.2422
+2025-10-02 12:19:51 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:51 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:52 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Min: 0.2555
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Max: 10.1493
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights above 3.0: 118 (0.2%)
+2025-10-02 12:19:52 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Fold 8: R^2 = 0.2292
+2025-10-02 12:19:52 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:52 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Min: 0.2561
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Max: 10.1080
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights above 3.0: 118 (0.2%)
+2025-10-02 12:19:52 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Fold 9: R^2 = 0.2503
+2025-10-02 12:19:52 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:52 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Min: 0.2475
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Max: 10.1708
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights above 3.0: 278 (0.6%)
+2025-10-02 12:19:52 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Fold 10: R^2 = 0.2381
+2025-10-02 12:19:52 - MODEL 4 - INFO - Mean R^2: 0.2398
+2025-10-02 12:19:52 - MODEL 4 - INFO - Std R^2: 0.0076
+2025-10-02 12:19:52 - MODEL 4 - INFO - 
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - MODEL TRAINING
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - Starting two-stage WLS estimation...
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 1: OLS for variance estimation
+2025-10-02 12:19:52 - MODEL 4 - INFO - Stage 2: WLS with equity-capped weights
+2025-10-02 12:19:52 - MODEL 4 - INFO - Weight statistics:
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Min: 0.2525
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Max: 10.1472
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Mean: 1.0000
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights at min bound: 0 (0.0%)
+2025-10-02 12:19:52 - MODEL 4 - INFO -   Weights above 3.0: 155 (0.3%)
+2025-10-02 12:19:52 - MODEL 4 - INFO - Two-stage WLS estimation complete
+2025-10-02 12:19:52 - MODEL 4 - INFO - Model training complete
+2025-10-02 12:19:52 - MODEL 4 - INFO - 
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - MAKING PREDICTIONS
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - Predictions complete
+2025-10-02 12:19:52 - MODEL 4 - INFO - 
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - CALCULATING METRICS
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - 
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - Training R^2: 0.2403
+2025-10-02 12:19:52 - MODEL 4 - INFO - Test R^2: 0.2333
+2025-10-02 12:19:52 - MODEL 4 - INFO - RMSE: $38,497.74
+2025-10-02 12:19:52 - MODEL 4 - INFO - MAE: $27,642.83
+2025-10-02 12:19:52 - MODEL 4 - INFO - MAPE: 84.28%
+2025-10-02 12:19:52 - MODEL 4 - INFO - CV R^2 (mean +- std): 0.2398 +- 0.0076
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - 
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:52 - MODEL 4 - INFO - SUBGROUP ANALYSIS
+2025-10-02 12:19:52 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-02 12:19:53 - MODEL 4 - INFO - Calculated metrics for 10 subgroups
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - VARIANCE ANALYSIS
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - Variance metrics calculated
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - POPULATION SCENARIOS
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - Calculated 5 population scenarios
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - GENERATING OUTPUTS
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - LATEX GENERATION
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - LaTeX commands written to:
+2025-10-02 12:19:53 - MODEL 4 - INFO -   - ..\..\report\models\model_4\model_4_newcommands.tex
+2025-10-02 12:19:53 - MODEL 4 - INFO -   - ..\..\report\models\model_4\model_4_renewcommands.tex
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - SAVING RESULTS
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - Results saved successfully
+2025-10-02 12:19:53 - MODEL 4 - INFO - 
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:53 - MODEL 4 - INFO - GENERATING PLOTS
+2025-10-02 12:19:53 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:54 - MODEL 4 - INFO - Diagnostic plots saved to ..\..\report\models\model_4\diagnostic_plots.png
+2025-10-02 12:19:54 - MODEL 4 - INFO - 
+2025-10-02 12:19:54 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:54 - MODEL 4 - INFO - PIPELINE COMPLETE: WEIGHTED-LEAST-SQUARES
+2025-10-02 12:19:54 - MODEL 4 - INFO - ============================================================
+2025-10-02 12:19:54 - MODEL 4 - INFO - 
+2025-10-02 12:19:54 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:54 - MODEL 4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-02 12:19:54 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:54 - MODEL 4 - INFO - Training R^2: 0.2403
+2025-10-02 12:19:54 - MODEL 4 - INFO - Test R^2: 0.2333
+2025-10-02 12:19:54 - MODEL 4 - INFO - RMSE: $38,497.74
+2025-10-02 12:19:54 - MODEL 4 - INFO - MAE: $27,642.83
+2025-10-02 12:19:54 - MODEL 4 - INFO - MAPE: 84.28%
+2025-10-02 12:19:54 - MODEL 4 - INFO - CV R^2 (mean +- std): 0.2398 +- 0.0076
+2025-10-02 12:19:54 - MODEL 4 - INFO - ------------------------------------------------------------
+2025-10-02 12:19:54 - MODEL 4 - INFO - 
+2025-10-02 12:19:54 - MODEL 4 - INFO - Generated files:
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - diagnostic_plots.png
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - metrics.json
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - model_4_newcommands.tex
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - model_4_renewcommands.tex
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - predictions.csv
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - subgroup_metrics.json
+2025-10-02 12:19:54 - MODEL 4 - INFO -   - wls_diagnostics.png
+2025-10-02 12:19:54 - MODEL 4 - INFO - Calculating weighted performance metrics...
+2025-10-02 12:19:54 - MODEL 4 - INFO - Weighted R²: 0.2839
+2025-10-02 12:19:54 - MODEL 4 - INFO - Weighted RMSE: $38,498
+2025-10-02 12:19:54 - MODEL 4 - INFO - Efficiency ratio: 1.18
+2025-10-02 12:19:54 - MODEL 4 - INFO - Generating WLS-specific diagnostics...
+2025-10-02 12:19:55 - MODEL 4 - INFO - WLS diagnostic plots saved to ..\..\report\models\model_4\wls_diagnostics.png

@@ -1,22 +1,39 @@
-\chapter{Model 7: Quantile Regression}\newpage
+\chapter{Model 7: Quantile Regression}\label{ch:model7}
 
-\section{Algorithm Documentation: Quantile Regression\\ Multi-Percentile Modeling for Risk Stratification}
+% Include the dynamic values from model calibration
+\input{models/model_7/model_7_renewcommands.tex}
 
-\subsection{Complete Algorithm Specification}
+\section{Executive Summary}
 
-Quantile regression models multiple percentiles of the expenditure distribution:
+Model 7 employs quantile regression to model multiple percentiles of the expenditure distribution simultaneously. While this approach provides superior uncertainty quantification and complete robustness to outliers, it produces a \textbf{distribution of potential allocations rather than the single deterministic amount required by F.S. 393.0662 and F.A.C. 65G-4.0214}. Therefore, this model is \textbf{suitable for research and risk analysis only}, not for production budget allocation.
+
+\subsection{Key Findings}
+\begin{itemize}
+    \item Median regression achieves $R^2$ = \ModelSevenRSquaredTest{} with RMSE = \$\ModelSevenRMSETest{}
+    \item 10th percentile $R^2$ = \ModelSevenQuantileTenRSquared{}
+    \item 90th percentile $R^2$ = \ModelSevenQuantileNinetyRSquared{}
+    \item Average 80\% prediction interval width: \$\ModelSevenPredictionIntervalWidth{}
+    \item Quantile monotonicity maintained in \ModelSevenQuantileMonotonicity{}\% of cases
+    \item \textcolor{red}{Regulatory Compliant: \ModelSevenRegulatoryCompliant{}}
+\end{itemize}
+
+\section{Algorithm Documentation}
+
+\subsection{Mathematical Specification}
+
+Quantile regression models the $\tau$-th conditional quantile of the response variable:
 
 For quantile $\tau \in (0,1)$:
 \begin{equation}
 Q_{\tau}(\sqrt{Y_i} | X_i) = \beta_0(\tau) + \sum_{j=1}^{22} \beta_j(\tau) X_{ij}
 \end{equation}
 
-Minimizing the check function:
+The model minimizes the asymmetric check function:
 \begin{equation}
 \min_{\beta(\tau)} \sum_{i=1}^n \rho_\tau\left(\sqrt{Y_i} - \beta_0(\tau) - \sum_{j=1}^{22} \beta_j(\tau) X_{ij}\right)
 \end{equation}
 
-where:
+where the check function is defined as:
 \begin{equation}
 \rho_\tau(u) = u(\tau - \mathbb{I}(u < 0)) = \begin{cases}
 \tau u & \text{if } u \geq 0 \\
@@ -26,265 +43,383 @@ where:
 
 \subsection{Multiple Quantile Estimation}
 
-Primary quantiles modeled:
+The model estimates five primary quantiles:
 \begin{itemize}
-    \item $\tau = 0.10$: 10th percentile (minimum needs)
+    \item $\tau = 0.10$: 10th percentile (minimum needs baseline)
     \item $\tau = 0.25$: 25th percentile (lower quartile)
-    \item $\tau = 0.50$: 50th percentile (median)
+    \item $\tau = 0.50$: 50th percentile (median, primary estimate)
     \item $\tau = 0.75$: 75th percentile (upper quartile)
-    \item $\tau = 0.90$: 90th percentile (high needs)
+    \item $\tau = 0.90$: 90th percentile (high needs ceiling)
 \end{itemize}
 
-\subsection{Input Variables}
+\subsection{Feature Set}
 
-All 22 QSI predictors with quantile-specific coefficients:
-\begin{enumerate}
-    \item \textbf{Q14-Q35}: Each with coefficients $\beta_j(0.10), \beta_j(0.25), \beta_j(0.50), \beta_j(0.75), \beta_j(0.90)$
-\end{enumerate}
-
-Total parameters: $23 \times 5 = 115$ coefficients
-
-\subsection{Output Specification}
-
-\textbf{Distribution of potential allocations:}
-\begin{equation}
-\text{Budget Distribution}_i = \{Q_{0.10}^2, Q_{0.25}^2, Q_{0.50}^2, Q_{0.75}^2, Q_{0.90}^2\}
-\end{equation}
-
-\textbf{Risk-adjusted allocation (research use):}
-\begin{equation}
-\text{Budget}_i = w_{0.50} \cdot Q_{0.50}^2 + w_{0.75} \cdot Q_{0.75}^2 + w_{0.90} \cdot Q_{0.90}^2
-\end{equation}
-
-\subsection{Fatal Regulatory Flaw}
-
-Warning: \textbf{F.S. 393.0662 requires a SINGLE deterministic allocation amount, not a distribution}
+Model 7 uses the standard 22-feature configuration:
+\begin{itemize}
+    \item 5 living setting indicators (ILSL, RH1--RH4; FH as reference)
+    \item 2 age group indicators (21--30, 31+; under 21 as reference)
+    \item 10 individual QSI questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
+    \item 2 summary scores (BSum, FSum)
+    \item 3 primary disability indicators
+\end{itemize}
 
 \section{Accuracy and Reliability}
 
-\subsection{Prediction Accuracy by Quantile}
+\subsection{Core Performance Metrics}
 
-\begin{center}
-\begin{tabular}{lccc}
-\toprule
-Quantile & Pseudo-$R^2$ & Check Loss & Coverage \\
-\midrule
-0.10 & 0.523 & 4,234 & 10.2\% \\
-0.25 & 0.612 & 8,456 & 25.1\% \\
-0.50 & 0.734 & 12,340 & 49.8\% \\
-0.75 & 0.698 & 18,920 & 74.9\% \\
-0.90 & 0.645 & 28,450 & 89.7\% \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Distribution Modeling Quality}
-
-\begin{itemize}
-    \item \textbf{Calibration}: Each quantile properly calibrated
-    \item \textbf{Monotonicity}: 98.7\% satisfy $Q_{0.10} < Q_{0.25} < ... < Q_{0.90}$
-    \item \textbf{Spread accuracy}: IQR prediction $R^2$ = 0.76
-\end{itemize}
-
-\subsection{Comparison with OLS}
-
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{Model 7 Performance -- Median Regression Focus}
 \begin{tabular}{lcc}
 \toprule
-Metric & OLS (Mean) & Quantile (Median) \\
+\textbf{Metric} & \textbf{Training} & \textbf{Test} \\
 \midrule
-Central tendency $R^2$ & 0.7998 & 0.734 \\
-Robustness to outliers & Low & High \\
-Distribution information & No & Yes \\
-Uncertainty quantification & No & Yes \\
+$R^2$ Score & \ModelSevenRSquaredTrain{} & \ModelSevenRSquaredTest{} \\
+RMSE & \$\ModelSevenRMSETrain{} & \$\ModelSevenRMSETest{} \\
+MAE & \$\ModelSevenMAETrain{} & \$\ModelSevenMAETest{} \\
+MAPE & \ModelSevenMAPETrain{}\% & \ModelSevenMAPETest{}\% \\
+Cross-Validation $R^2$ & \multicolumn{2}{c}{\ModelSevenCVMean{} $\pm$ \ModelSevenCVStd{}} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\section{Robustness}
+\subsection{Quantile-Specific Performance}
 
-\subsection{Heterogeneous Effects Analysis}
-
-\textbf{Coefficient variation across quantiles:}
-\begin{center}
-\begin{tabular}{lccccc}
+\begin{table}[h]
+\centering
+\caption{Performance Across Quantiles}
+\begin{tabular}{lccc}
 \toprule
-Predictor & $\beta(0.10)$ & $\beta(0.25)$ & $\beta(0.50)$ & $\beta(0.75)$ & $\beta(0.90)$ \\
+\textbf{Quantile} & \textbf{Pseudo-$R^2$} & \textbf{Interpretation} \\
 \midrule
-Behavioral (Q30) & 12.3 & 23.4 & 45.6 & 78.9 & 123.4 \\
-Medical (Q29) & 8.7 & 15.2 & 24.3 & 31.2 & 38.9 \\
-ADL composite & 34.5 & 48.2 & 67.8 & 89.3 & 112.4 \\
+0.10 (10th percentile) & \ModelSevenQuantileTenRSquared{} & Minimum needs \\
+0.50 (Median) & \ModelSevenRSquaredTest{} & Central tendency \\
+0.90 (90th percentile) & \ModelSevenQuantileNinetyRSquared{} & High needs \\
 \bottomrule
 \end{tabular}
+\end{table}
+
+\subsection{Prediction Accuracy Thresholds}
+
+\begin{table}[h]
+\centering
+\caption{Percentage Within Dollar Thresholds -- Test Set}
+\begin{tabular}{lc}
+\toprule
+\textbf{Threshold} & \textbf{Percentage Within} \\
+\midrule
+Within \$1,000 & \ModelSevenWithinOneK{}\% \\
+Within \$2,000 & \ModelSevenWithinTwoK{}\% \\
+Within \$5,000 & \ModelSevenWithinFiveK{}\% \\
+Within \$10,000 & \ModelSevenWithinTenK{}\% \\
+Within \$20,000 & \ModelSevenWithinTwentyK{}\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Robustness Analysis}
+
+\subsection{Complete Outlier Robustness}
+
+Quantile regression, particularly median regression, is \textbf{completely robust} to outliers:
+\begin{itemize}
+    \item No outlier removal required (uses 100\% of data)
+    \item Median regression has 50\% breakdown point
+    \item Influence of extreme values naturally bounded
+    \item Training samples used: \ModelSevenTrainingSamples{}
+    \item Test samples used: \ModelSevenTestSamples{}
+\end{itemize}
+
+\subsection{Heteroscedasticity Handling}
+
+\begin{itemize}
+    \item Average 80\% prediction interval width: \$\ModelSevenPredictionIntervalWidth{}
+    \item Quantile spread ratio (Q90/Q10): \ModelSevenQuantileSpread{}
+    \item Naturally adapts interval width to cost level
+    \item No constant variance assumption required
+\end{itemize}
+
+\section{Subgroup Performance Analysis}
+
+\begin{table}[h]
+\centering
+\caption{Median Regression Performance by Subgroup}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Subgroup} & \textbf{N} & \textbf{$R^2$} & \textbf{RMSE} & \textbf{Bias} \\
+\midrule
+\multicolumn{5}{l}{\textit{By Living Setting}} \\
+Family Home & \ModelSevenSubgrouplivingFHN{} & \ModelSevenSubgrouplivingFHRSquared{} & \$\ModelSevenSubgrouplivingFHRMSE{} & \$\ModelSevenSubgrouplivingFHBias{} \\
+ILSL & \ModelSevenSubgrouplivingILSLN{} & \ModelSevenSubgrouplivingILSLRSquared{} & \$\ModelSevenSubgrouplivingILSLRMSE{} & \$\ModelSevenSubgrouplivingILSLBias{} \\
+RH (1-4) & \ModelSevenSubgrouplivingRHOneToFourN{} & \ModelSevenSubgrouplivingRHOneToFourRSquared{} & \$\ModelSevenSubgrouplivingRHOneToFourRMSE{} & \$\ModelSevenSubgrouplivingRHOneToFourBias{} \\
+\midrule
+\multicolumn{5}{l}{\textit{By Age Group}} \\
+Under 21 & \ModelSevenSubgroupageAgeUnderTwentyOneN{} & \ModelSevenSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelSevenSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelSevenSubgroupageAgeUnderTwentyOneBias{} \\
+21--30 & \ModelSevenSubgroupageAgeTwentyOneToThirtyN{} & \ModelSevenSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelSevenSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelSevenSubgroupageAgeTwentyOneToThirtyBias{} \\
+31+ & \ModelSevenSubgroupageAgeThirtyOnePlusN{} & \ModelSevenSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelSevenSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelSevenSubgroupageAgeThirtyOnePlusBias{} \\
+\midrule
+\multicolumn{5}{l}{\textit{By Cost Quartile}} \\
+Q1 (Lowest) & \ModelSevenSubgroupcostQOneLowN{} & \ModelSevenSubgroupcostQOneLowRSquared{} & \$\ModelSevenSubgroupcostQOneLowRMSE{} & \$\ModelSevenSubgroupcostQOneLowBias{} \\
+Q2 & \ModelSevenSubgroupcostQTwoN{} & \ModelSevenSubgroupcostQTwoRSquared{} & \$\ModelSevenSubgroupcostQTwoRMSE{} & \$\ModelSevenSubgroupcostQTwoBias{} \\
+Q3 & \ModelSevenSubgroupcostQThreeN{} & \ModelSevenSubgroupcostQThreeRSquared{} & \$\ModelSevenSubgroupcostQThreeRMSE{} & \$\ModelSevenSubgroupcostQThreeBias{} \\
+Q4 (Highest) & \ModelSevenSubgroupcostQFourHighN{} & \ModelSevenSubgroupcostQFourHighRSquared{} & \$\ModelSevenSubgroupcostQFourHighRMSE{} & \$\ModelSevenSubgroupcostQFourHighBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Variance and Stability Metrics}
+
+\begin{table}[h]
+\centering
+\caption{Variance Metrics -- Model 7 vs Current}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Current Model 5b} & \textbf{Model 7 (Median)} \\
+\midrule
+Coefficient of Variation (Actual) & [baseline] & \ModelSevenCVActual{} \\
+Coefficient of Variation (Predicted) & [baseline] & \ModelSevenCVPredicted{} \\
+80\% Prediction Interval & N/A & \$\ModelSevenPredictionInterval{} \\
+Budget-Actual Correlation & [baseline] & \ModelSevenBudgetActualCorr{} \\
+Quarterly Variance & [baseline] & \ModelSevenQuarterlyVariance{} \\
+Annual Adjustment Rate & [baseline] & \ModelSevenAnnualAdjustmentRate{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Fatal Regulatory Flaw}
+
+\subsection{Legal Non-Compliance}
+
+\begin{center}
+\colorbox{yellow}{
+\begin{minipage}{0.9\textwidth}
+\textbf{\textcolor{red}{ CRITICAL WARNING }}
+
+This model is \textbf{NOT} compliant with Florida statutes:
+
+\begin{itemize}
+    \item \textbf{F.S. 393.0662}: Requires a SINGLE deterministic allocation amount
+    \item \textbf{F.A.C. 65G-4.0214}: No provision for probabilistic allocations
+    \item \textbf{HB 1103}: Distribution not explainable for individual appeals
+    \item \textbf{CMS Requirements}: Deterministic budget required for federal matching
+    \item \textbf{Appeals Process}: Cannot appeal a distribution of values
+\end{itemize}
+
+\textbf{Regulatory Compliant}: \ModelSevenRegulatoryCompliant{}
+\end{minipage}
+}
 \end{center}
 
-Shows increasing impact at higher quantiles (appropriate for risk).
+\subsection{Why This Matters}
 
-\subsection{Subgroup Performance}
-
+Quantile regression produces a \textbf{distribution} of potential allocations:
 \begin{itemize}
-    \item \textbf{Median regression}: Uniform performance across demographics
-    \item \textbf{Extreme quantiles}: Higher variance but unbiased
-    \item \textbf{No disparate impact}: Quantile-specific fairness maintained
+    \item 10th percentile: ``Minimum reasonable allocation''
+    \item 50th percentile: ``Most likely allocation''
+    \item 90th percentile: ``Maximum reasonable allocation''
 \end{itemize}
 
-\section{Sensitivity Analysis}
+Florida law requires a \textbf{single number} for each consumer's budget. The appeals process, provider contracting, and federal reporting all depend on deterministic allocations.
 
-\subsection{Outlier Robustness}
+\section{Research Value and Applications}
 
-\begin{itemize}
-    \item \textbf{Median regression}: Completely robust to outliers
-    \item \textbf{Extreme quantiles}: Natural outlier accommodation
-    \item \textbf{No exclusions}: 100\% of sample used
-    \item \textbf{Influence bounded}: By construction
-\end{itemize}
+\subsection{Valid Research Uses}
 
-\subsection{Missing Data}
+Despite regulatory incompatibility, Model 7 provides valuable insights:
 
 \begin{itemize}
-    \item Complete case analysis required
-    \item Performance stable with up to 10\% missing
-    \item Multiple imputation compatible
+    \item \textbf{Risk Stratification}: Identify consumers with high allocation uncertainty
+    \item \textbf{Appeals Support}: Quantify uncertainty in contested cases
+    \item \textbf{Reserve Planning}: Estimate budget reserve requirements
+    \item \textbf{Policy Analysis}: Understand distributional impacts
+    \item \textbf{Model Validation}: Benchmark other models' uncertainty handling
+    \item \textbf{Heteroscedasticity Analysis}: Understand variance patterns
 \end{itemize}
 
-\section{Implementation Feasibility}
-
-\subsection{Technical Requirements}
+\subsection{Implementation as Parallel Analysis Tool}
 
 \begin{itemize}
-    \item \textbf{Software}: R (quantreg), Python (statsmodels), SAS (QUANTREG)
-    \item \textbf{Computation}: 5-10 seconds for all quantiles
-    \item \textbf{Memory}: 1GB for full model storage
-    \item \textbf{Optimization}: Linear programming or interior point
+    \item Run alongside production model for insights
+    \item Flag cases with prediction interval $>$ \$50,000 for review
+    \item Use 80\% interval width: \$\ModelSevenPredictionIntervalWidth{} as baseline
+    \item Inform enhanced review protocols
+    \item Never use for actual budget allocation
 \end{itemize}
 
-\subsection{Operational Challenges}
+\section{Population Impact Analysis (Hypothetical)}
 
-\begin{itemize}
-    \item Failure:  \textbf{Cannot produce single allocation}
-    \item Failure:  \textbf{Distribution output violates regulations}
-    \item Failure:  \textbf{Appeals process impossible}
-    \item OK.  Research value only
-\end{itemize}
+\begin{table}[h]
+\centering
+\caption{Population Scenarios -- \$1.2B Fixed Budget (Research Only)}
+\begin{tabular}{lrrc}
+\toprule
+\textbf{Scenario} & \textbf{Clients} & \textbf{Avg Allocation} & \textbf{Waitlist Change} \\
+\midrule
+Current Baseline & \ModelSevenPopcurrentbaselineClients{} & \$\ModelSevenPopcurrentbaselineAvgAlloc{} & Baseline \\
+Model 7 Balanced & \ModelSevenPopmodelbalancedClients{} & \$\ModelSevenPopmodelbalancedAvgAlloc{} & \ModelSevenPopmodelbalancedWaitlistChange{} (\ModelSevenPopmodelbalancedWaitlistPct{}\%) \\
+Efficiency Focus & \ModelSevenPopmodelefficiencyClients{} & \$\ModelSevenPopmodelefficiencyAvgAlloc{} & \ModelSevenPopmodelefficiencyWaitlistChange{} (\ModelSevenPopmodelefficiencyWaitlistPct{}\%) \\
+Category Focus & \ModelSevenPopcategoryfocusedClients{} & \$\ModelSevenPopcategoryfocusedAvgAlloc{} & \ModelSevenPopcategoryfocusedWaitlistChange{} (\ModelSevenPopcategoryfocusedWaitlistPct{}\%) \\
+Population Max & \ModelSevenPoppopulationmaximizedClients{} & \$\ModelSevenPoppopulationmaximizedAvgAlloc{} & \ModelSevenPoppopulationmaximizedWaitlistChange{} (\ModelSevenPoppopulationmaximizedWaitlistPct{}\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\section{Regulatory Non-Compliance}
+\textit{Note: These scenarios use median predictions only and are for research comparison. Actual implementation would violate regulations.}
 
-\subsection{Fatal Flaws}
+\section{Diagnostic Analysis}
 
-\begin{itemize}
-    \item[\redcross] \textbf{F.S. 393.0662}: Failure.  Requires single amount, not distribution
-    \item[\redcross] \textbf{F.A.C. 65G-4.0214}: Failure.  No provision for probabilistic allocations
-    \item[\redcross] \textbf{HB 1103}: Failure.  Distribution not "explainable" for individual
-    \item[\redcross] \textbf{CMS Requirements}: Failure.  Deterministic budget required
-    \item[\redcross] \textbf{Appeals Process}: Failure.  Cannot appeal a distribution
-\end{itemize}
+\subsection{Model Diagnostic Plots}
 
-\subsection{Legal Assessment}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{models/model_7/diagnostic_plots.png}
+\caption{Model 7 Diagnostic Plots -- Including Fan Chart}
+\label{fig:model7_diagnostics}
+\end{figure}
 
-"Quantile regression fundamentally incompatible with current statutory framework requiring deterministic, single-point budget allocations."
+Figure \ref{fig:model7_diagnostics} shows comprehensive diagnostics including the signature ``fan chart'' visualization demonstrating how prediction intervals widen at higher cost levels.
 
-\section{Research Applications}
+\subsection{Quantile Analysis Plots}
 
-\subsection{Valid Use Cases}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{models/model_7/quantile_analysis.png}
+\caption{Model 7 Quantile-Specific Analysis}
+\label{fig:model7_quantile_analysis}
+\end{figure}
 
-\begin{itemize}
-    \item \textbf{Risk stratification}: Identify high-variance consumers
-    \item \textbf{Appeals support}: Show allocation uncertainty
-    \item \textbf{Policy analysis}: Understand distributional impacts
-    \item \textbf{Validation tool}: Assess Model 5b predictions
-    \item \textbf{Planning}: Budget reserve requirements
-\end{itemize}
-
-\subsection{Parallel Analysis Value}
-
-\begin{itemize}
-    \item Run alongside Model 5b for insight
-    \item Identify consumers with wide prediction intervals
-    \item Flag for enhanced review: IQR $>$ \$50,000
-    \item Inform reserve fund allocation
-\end{itemize}
+Figure \ref{fig:model7_quantile_analysis} presents quantile-specific analyses including coverage probability, crossing violations, and heteroscedasticity patterns.
 
 \section{Cost-Benefit Analysis}
 
-\subsection{Costs}
+\subsection{Implementation Costs (Research System Only)}
 
 \begin{itemize}
     \item \textbf{Development}: \$125,000
-    \item \textbf{Implementation}: \$85,000 (research system)
-    \item \textbf{Training}: \$45,000
-    \item \textbf{Annual}: \$60,000
-    \item \textbf{3-year TCO}: \$435,000
+    \item \textbf{Research System Implementation}: \$85,000
+    \item \textbf{Training (Research Staff)}: \$45,000
+    \item \textbf{Annual Maintenance}: \$60,000
+    \item \textbf{3-Year Total Cost}: \$435,000
 \end{itemize}
 
-\subsection{Benefits (Research Only)}
+\subsection{Research Benefits}
 
 \begin{itemize}
-    \item Better understanding of uncertainty
-    \item Improved risk management
-    \item Enhanced appeals support
-    \item Policy simulation capability
+    \item Better understanding of allocation uncertainty
+    \item Improved risk management strategies
+    \item Enhanced appeals documentation
+    \item Policy simulation capabilities
+    \item Validation of robust alternatives (e.g., Model 3 Huber)
 \end{itemize}
 
-\section{Stakeholder Impact}
+\subsection{Why Not Production Benefits?}
 
-\subsection{Confusion Risk}
+Production implementation would require:
+\begin{itemize}
+    \item Complete statutory overhaul
+    \item Redesign of appeals process
+    \item New provider contracting framework
+    \item Federal waiver negotiations
+    \item Stakeholder re-education
+\end{itemize}
+
+These changes are infeasible under current law.
+
+\section{Stakeholder Impact Assessment}
+
+\subsection{Confusion and Complexity}
 
 \begin{itemize}
-    \item \textbf{Clients}: Would not understand distribution
-    \item \textbf{Providers}: Training burden excessive
-    \item \textbf{Legal}: Incompatible with framework
-    \item \textbf{Political}: Appears indecisive
+    \item \textbf{Consumers}: Would not understand receiving a ``range'' instead of an amount
+    \item \textbf{Families}: Cannot plan with uncertain allocations
+    \item \textbf{Providers}: Cannot contract based on distributions
+    \item \textbf{APD Staff}: Training burden would be excessive
+    \item \textbf{Legal Teams}: Appeals framework would collapse
+    \item \textbf{Legislature}: Would appear indecisive and arbitrary
 \end{itemize}
 
-\section{Risk Assessment}
+\section{Comparison with Alternative Robust Methods}
 
-\begin{center}
-\begin{tabular}{llll}
+\subsection{Why Model 3 (Huber) is Superior for Production}
+
+\begin{table}[h]
+\centering
+\caption{Quantile Regression vs Huber Regression}
+\begin{tabular}{lcc}
 \toprule
-Risk & Probability & Impact & Status \\
+\textbf{Criterion} & \textbf{Model 7 (Quantile)} & \textbf{Model 3 (Huber)} \\
 \midrule
-Legal challenge & Certain & Fatal & Blocked \\
-Implementation failure & Certain & Fatal & Blocked \\
-Stakeholder rejection & Certain & Fatal & Blocked \\
-Research value capture & High & Positive & Pursue \\
+Outlier Robustness & Excellent & Excellent \\
+Single Allocation & No (\textcolor{red}{Fatal}) & Yes \\
+Regulatory Compliant & No & Yes \\
+Interpretability & Complex & Simple \\
+Implementation Cost & High & Moderate \\
+Appeals Compatible & No & Yes \\
+Stakeholder Acceptance & Low & High \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
+
+Model 3 (Huber Regression) provides similar robustness benefits while maintaining the single deterministic allocation required by law.
 
 \section{Summary and Recommendations}
 
-\subsection{Overall Assessment}
+\subsection{Technical Assessment}
 
-\textbf{Strengths (Research):}
+\textbf{Strengths (Technical)}:
 \begin{itemize}
-    \item Superior uncertainty quantification
-    \item Robust to outliers
-    \item Rich distributional information
-    \item Valuable for risk analysis
+    \item Superior uncertainty quantification via prediction intervals
+    \item Complete robustness to outliers without data exclusion
+    \item Natural handling of heteroscedasticity
+    \item Rich distributional information for risk analysis
+    \item No assumptions about error distribution
 \end{itemize}
 
-\textbf{Fatal Weaknesses (Production):}
+\textbf{Fatal Weaknesses (Regulatory)}:
 \begin{itemize}
-    \item Failure:  Cannot produce required single allocation
-    \item Failure:  Violates all regulatory requirements
-    \item Failure:  Incompatible with appeals process
-    \item Failure:  Would require complete legal framework change
+    \item \textcolor{red}{Cannot produce required single allocation}
+    \item \textcolor{red}{Violates F.S. 393.0662 and F.A.C. 65G-4.0214}
+    \item \textcolor{red}{Incompatible with existing appeals process}
+    \item \textcolor{red}{Would require complete legal framework overhaul}
+    \item \textcolor{red}{Creates confusion rather than transparency}
 \end{itemize}
 
 \subsection{Final Recommendation}
 
-\textbf{REJECT for Budget Allocation}\\
-\textbf{APPROVE for Research/Validation Only}
+\begin{center}
+\colorbox{red!20}{
+\begin{minipage}{0.9\textwidth}
+\centering
+\textbf{\Large REJECT for Budget Allocation}\\[0.5em]
+\textbf{\large APPROVE for Research/Validation Only}\\[0.5em]
 
 Quantile regression is fundamentally incompatible with Florida's iBudget regulatory framework. The requirement for a single, deterministic allocation amount makes this approach legally impossible under current law.
 
-\textbf{Research Implementation:}
-\begin{itemize}
-    \item Deploy as parallel analysis tool
-    \item Use for risk stratification
-    \item Support appeals with uncertainty estimates
-    \item Inform policy decisions
-    \item Never use for actual allocations
-\end{itemize}
+\textbf{For production use}: Implement Model 3 (Huber Regression) which provides robust estimation with regulatory compliance.
 
-\textbf{Future Consideration:} If Florida law changes to allow probabilistic allocations or confidence intervals, quantile regression should be reconsidered.
+\textbf{For research use}: Deploy Model 7 as a parallel analysis tool to understand uncertainty and validate other models.
+\end{minipage}
+}
+\end{center}
+
+\section{Implementation Notes for Research System}
+
+If implementing for research purposes:
+
+\begin{enumerate}
+    \item Clearly label all outputs as ``RESEARCH ONLY -- NOT FOR ALLOCATION''
+    \item Never provide quantile predictions to consumers or providers
+    \item Use only for internal APD analysis and planning
+    \item Document all research findings for policy development
+    \item Consider insights when evaluating production models
+    \item Maintain clear separation from production systems
+\end{enumerate}
+
+\section{Conclusion}
+
+Model 7 (Quantile Regression) demonstrates the importance of understanding prediction uncertainty in budget allocation. While technically sophisticated and statistically robust, it fails the fundamental requirement of producing a single allocation amount. This model's value lies not in production use but in highlighting why simpler robust methods like Model 3 (Huber Regression) represent the optimal balance between statistical sophistication and regulatory compliance.
+
+The clear lesson: \textit{The best statistical model is not always the best policy solution.}
+
+\textbf{Regulatory Compliance Status}: \ModelSevenRegulatoryCompliant{}\\
+\textbf{Compliance Warning}: \ModelSevenRegulatoryWarning{}

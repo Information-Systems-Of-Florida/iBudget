@@ -1,0 +1,38 @@
+============================================================
+MODEL 3: Robust Linear Regression
+============================================================
+
+CONFIGURATION
+----------------------------------------
+Epsilon parameter: 1.345
+Max iterations: 100
+Transformation: None (direct dollar scale)
+Number of features: 22
+
+PERFORMANCE METRICS
+----------------------------------------
+Training R²: 0.1447
+Test R²: 0.1552
+Test RMSE: $29,713.60
+Test MAE: $21,463.85
+Test MAPE: 163.4%
+
+ROBUST REGRESSION SPECIFICS
+----------------------------------------
+Outliers detected: 8,189 (34.4%)
+Scale estimate: 16963.4654
+Iterations to converge: 38
+Mean weight: 0.887
+
+WEIGHT DISTRIBUTION
+----------------------------------------
+full_weight: 15,601 (65.6%)
+high_weight: 1,375 (5.8%)
+medium_weight: 2,843 (12.0%)
+low_weight: 2,060 (8.7%)
+very_low_weight: 1,911 (8.0%)
+
+CROSS-VALIDATION RESULTS
+----------------------------------------
+Mean R²: 0.1429
+Std R²: 0.0123

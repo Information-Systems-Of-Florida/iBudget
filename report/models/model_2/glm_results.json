@@ -1,0 +1,17 @@
+{
+  "model_type": "GLM-Gamma",
+  "distribution": "Gamma",
+  "link_function": "Log",
+  "converged": true,
+  "iterations": 21,
+  "dispersion": 0.9645817405498635,
+  "deviance": 37800.629770665495,
+  "null_deviance": 46954.991194116796,
+  "deviance_r2": 0.1949603479980695,
+  "mcfadden_r2": 0.013612796853923026,
+  "aic": 631270.9698630909,
+  "bic": -241251.30952771567,
+  "num_parameters": 34,
+  "feature_selection": true,
+  "fiscal_years": "2024"
+}

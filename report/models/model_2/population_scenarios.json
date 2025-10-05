@@ -1,0 +1,32 @@
+{
+  "current_baseline": {
+    "clients_served": 35000,
+    "avg_allocation": 31542.25439044897,
+    "waitlist_change": 0,
+    "waitlist_pct": 0
+  },
+  "model_balanced": {
+    "clients_served": 37373,
+    "avg_allocation": 32108.286819693032,
+    "waitlist_change": 2373,
+    "waitlist_pct": 6.781512443341469
+  },
+  "model_efficiency": {
+    "clients_served": 39340,
+    "avg_allocation": 30502.872478708377,
+    "waitlist_change": 4340,
+    "waitlist_pct": 12.40159204562261
+  },
+  "category_focused": {
+    "clients_served": 33975,
+    "avg_allocation": 35319.11550166234,
+    "waitlist_change": -1025,
+    "waitlist_pct": -2.9258977787804907
+  },
+  "population_maximized": {
+    "clients_served": 43968,
+    "avg_allocation": 27292.043796739075,
+    "waitlist_change": 8968,
+    "waitlist_pct": 25.62530875687234
+  }
+}

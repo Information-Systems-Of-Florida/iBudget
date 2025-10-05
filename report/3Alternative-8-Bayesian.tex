@@ -1,16 +1,33 @@
-\chapter{Model 8: Bayesian Linear Regression}\newpage
+\chapter{Model 8: Bayesian Linear Regression}\label{ch:model8}
 
-\section{Algorithm Documentation: Bayesian Linear Regression\\Probabilistic Framework with Uncertainty Quantification}
+% Include the dynamic values from model calibration
+\input{models/model_8/model_8_renewcommands.tex}
+
+\section{Executive Summary}
+
+Model 8 employs Bayesian Linear Regression with full posterior distributions to quantify uncertainty in budget predictions. This probabilistic framework provides comprehensive uncertainty quantification through credible intervals and posterior predictive distributions.
+
+Key findings:
+\begin{itemize}
+    \item \textbf{Performance}: Test R² = \ModelEightRSquaredTest{}, RMSE = \$\ModelEightRMSETest{}
+    \item \textbf{Implementation Cost}: \$490,000 over 3 years (specialized expertise required)
+    \item \textbf{Annual Operating Cost}: \$75,000 (computational resources for MCMC)
+    \item \textbf{Deployment Timeline}: Not deployable (violates Florida law)
+    \item \textbf{Data Utilization}: \ModelEightTrainingSamples{} training, \ModelEightTestSamples{} test samples
+    \item \textbf{Regulatory Status}: \ModelEightRegulatoryCompliant{} -- Incompatible with F.S. 393.0662
+\end{itemize}
+
+\section{Algorithm Documentation}
 
 \subsection{Complete Algorithm Specification}
 
-Bayesian regression treats coefficients as probability distributions:
+Bayesian regression treats coefficients as probability distributions rather than point estimates:
 
 \begin{equation}
 \sqrt{Y_i} = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
 \end{equation}
 
-With priors:
+With prior distributions:
 \begin{align}
 \beta_j &\sim \text{Normal}(\mu_{\beta_j}, \sigma^2_{\beta_j}) \quad \text{for } j = 0, 1, ..., 22 \\
 \epsilon_i &\sim \text{Normal}(0, \sigma^2) \\
@@ -24,144 +41,194 @@ p(\beta, \sigma^2 | Y, X) \propto p(Y | X, \beta, \sigma^2) \cdot p(\beta) \cdot
 
 \subsection{Prior Specification}
 
-\textbf{Informed priors based on Model 5b:}
+\textbf{Informed priors based on Model 5b estimates:}
 \begin{itemize}
-    \item \textbf{Coefficient means}: $\mu_{\beta_j}$ = Model 5b estimates
-    \item \textbf{Coefficient variance}: $\sigma^2_{\beta_j}$ = 2 $\times$ Model 5b SE$^2$
-    \item \textbf{Error variance}: $\alpha = 3$, $\beta = 2\sigma^2_{OLS}$
+    \item \textbf{Coefficient means}: $\mu_{\beta_j}$ = Model 5b coefficient estimates
+    \item \textbf{Coefficient variance}: $\sigma^2_{\beta_j}$ = 2 $\times$ Model 5b standard errors$^2$
+    \item \textbf{Error variance prior}: $\alpha = 3$, $\beta = 2\sigma^2_{\text{OLS}}$
 \end{itemize}
 
 \subsection{Input Variables}
 
 All 22 QSI predictors with posterior distributions:
-\begin{enumerate}
-    \item Each predictor has posterior $p(\beta_j | \text{Data})$
-    \item Full posterior covariance matrix $\Sigma_{\beta}$
-    \item Uncertainty propagated through predictions
-\end{enumerate}
+\begin{itemize}
+    \item Living setting indicators (5 features): ILSL, RH1--RH4 (FH as reference)
+    \item Age group indicators (2 features): Ages 21--30, 31+ (Ages 3--20 as reference)
+    \item Behavioral sum (BSum): 1 feature
+    \item Interaction terms (3 features): FHFSum, SLFSum, SLBSum
+    \item Individual QSI questions (10 features): Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43
+\end{itemize}
 
 \subsection{Output Specification}
 
 \textbf{Posterior predictive distribution:}
 \begin{equation}
-p(\tilde{Y}_i | X_i, \text{Data}) = \int p(\tilde{Y}_i | X_i, \beta, \sigma^2) \cdot p(\beta, \sigma^2 | \text{Data}) d\beta d\sigma^2
+p(\tilde{Y}_i | X_i, \text{Data}) = \int p(\tilde{Y}_i | X_i, \beta, \sigma^2) \cdot p(\beta, \sigma^2 | \text{Data}) \, d\beta \, d\sigma^2
 \end{equation}
 
-\textbf{Point estimates and intervals:}
+\textbf{Point estimates and uncertainty intervals:}
 \begin{itemize}
     \item Mean: $\mathbb{E}[\text{Budget}_i] = \mathbb{E}[(\tilde{Y}_i)^2]$
     \item Median: $\text{Median}[(\tilde{Y}_i)^2]$
     \item 95\% Credible Interval: $[\text{Budget}_{0.025}, \text{Budget}_{0.975}]$
 \end{itemize}
 
-\subsection{Fatal Regulatory Flaw}
-
-Medicaid requires deterministic budgets, not probability distributions. Florida Statute 393.0662 mandates a single allocation amount, making probabilistic outputs legally impossible.
-
 \section{Accuracy and Reliability}
 
 \subsection{Prediction Accuracy}
 
-\textbf{Point Estimate Performance:}
-\begin{itemize}
-    \item Posterior mean $R^2$: 0.8012
-    \item RMSE: \$12,340
-    \item MAE: \$8,190
-    \item DIC: 158,234
-    \item WAIC: 158,456
-\end{itemize}
-
-\textbf{Uncertainty Calibration:}
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{Model 8 Performance Metrics}
 \begin{tabular}{lcc}
 \toprule
-Credible Interval & Nominal Coverage & Actual Coverage \\
+\textbf{Metric} & \textbf{Training Set} & \textbf{Test Set} \\
 \midrule
-50\% & 50\% & 51.2\% \\
-80\% & 80\% & 79.8\% \\
-95\% & 95\% & 94.6\% \\
-99\% & 99\% & 98.9\% \\
+R² & \ModelEightRSquaredTrain{} & \ModelEightRSquaredTest{} \\
+RMSE & \$\ModelEightRMSETrain{} & \$\ModelEightRMSETest{} \\
+MAE & \$\ModelEightMAETrain{} & \$\ModelEightMAETest{} \\
+MAPE & \ModelEightMAPETrain{}\% & \ModelEightMAPETest{}\% \\
+DIC & \multicolumn{2}{c}{\ModelEightDIC{}} \\
+WAIC & \multicolumn{2}{c}{\ModelEightWAIC{}} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{Posterior Distributions}
+\subsection{Uncertainty Calibration}
 
-\textbf{Coefficient Uncertainty:}
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Credible Interval Coverage}
+\begin{tabular}{lcc}
 \toprule
-Predictor & Posterior Mean & Posterior SD & 95\% CI Width \\
+\textbf{Credible Interval} & \textbf{Nominal Coverage} & \textbf{Actual Coverage} \\
 \midrule
-Behavioral (Q30) & 67.8 & 4.32 & 17.1 \\
-Medical (Q29) & 28.9 & 2.14 & 8.4 \\
-ADL composite & 78.4 & 5.67 & 22.3 \\
-Living setting & 45.2 & 3.89 & 15.3 \\
+50\% & 50\% & \ModelEightCoverageFifty{}\% \\
+80\% & 80\% & \ModelEightCoverageEighty{}\% \\
+95\% & 95\% & \ModelEightCoverageNinetyFive{}\% \\
+99\% & 99\% & \ModelEightCoverageNinetyNine{}\% \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{MCMC Convergence}
+\subsection{MCMC Convergence Diagnostics}
 
 \begin{itemize}
     \item \textbf{Chains}: 4 parallel chains, 10,000 iterations each
     \item \textbf{Burn-in}: 2,000 iterations
     \item \textbf{Thinning}: Every 5th iteration retained
-    \item \textbf{Gelman-Rubin $\hat{R}$}: All parameters $<$ 1.01
-    \item \textbf{Effective sample size}: $>$ 4,000 for all parameters
+    \item \textbf{Gelman-Rubin $\hat{R}$}: \ModelEightMaxRhat{} (all parameters $<$ 1.01 required)
+    \item \textbf{Effective sample size}: \ModelEightMinESS{} (minimum across parameters)
+    \item \textbf{Convergence Status}: \ModelEightConverged{}
 \end{itemize}
 
-\section{Robustness}
+\section{Performance by Subgroup}
 
-\subsection{Prior Sensitivity Analysis}
+\subsection{Living Setting Analysis}
 
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Performance by Living Setting}
+\begin{tabular}{lcccc}
 \toprule
-Prior Type & Posterior Mean $R^2$ & CI Width & Shrinkage \\
+\textbf{Setting} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Mean Bias} \\
 \midrule
-Informative (Model 5b) & 0.8012 & Narrow & Moderate \\
-Weakly informative & 0.7998 & Medium & Low \\
-Non-informative & 0.7991 & Wide & None \\
-Skeptical & 0.7923 & Narrow & High \\
+Family Home & \ModelEightSubgrouplivingFHN{} & \ModelEightSubgrouplivingFHRSquared{} & \$\ModelEightSubgrouplivingFHRMSE{} & \$\ModelEightSubgrouplivingFHBias{} \\
+ILSL & \ModelEightSubgrouplivingILSLN{} & \ModelEightSubgrouplivingILSLRSquared{} & \$\ModelEightSubgrouplivingILSLRMSE{} & \$\ModelEightSubgrouplivingILSLBias{} \\
+RH 1--4 & \ModelEightSubgrouplivingRHOneToFourN{} & \ModelEightSubgrouplivingRHOneToFourRSquared{} & \$\ModelEightSubgrouplivingRHOneToFourRMSE{} & \$\ModelEightSubgrouplivingRHOneToFourBias{} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{Model Averaging}
+\subsection{Age Group Analysis}
+
+\begin{table}[h]
+\centering
+\caption{Performance by Age Group}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Mean Bias} \\
+\midrule
+Under 21 & \ModelEightSubgroupageAgeUnderTwentyOneN{} & \ModelEightSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelEightSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelEightSubgroupageAgeUnderTwentyOneBias{} \\
+21--30 & \ModelEightSubgroupageAgeTwentyOneToThirtyN{} & \ModelEightSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelEightSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelEightSubgroupageAgeTwentyOneToThirtyBias{} \\
+31+ & \ModelEightSubgroupageAgeThirtyOnePlusN{} & \ModelEightSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelEightSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelEightSubgroupageAgeThirtyOnePlusBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cost Quartile Analysis}
+
+\begin{table}[h]
+\centering
+\caption{Performance by Cost Quartile}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Quartile} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Mean Bias} \\
+\midrule
+Q1 (Low) & \ModelEightSubgroupcostQOneLowN{} & \ModelEightSubgroupcostQOneLowRSquared{} & \$\ModelEightSubgroupcostQOneLowRMSE{} & \$\ModelEightSubgroupcostQOneLowBias{} \\
+Q2 & \ModelEightSubgroupcostQTwoN{} & \ModelEightSubgroupcostQTwoRSquared{} & \$\ModelEightSubgroupcostQTwoRMSE{} & \$\ModelEightSubgroupcostQTwoBias{} \\
+Q3 & \ModelEightSubgroupcostQThreeN{} & \ModelEightSubgroupcostQThreeRSquared{} & \$\ModelEightSubgroupcostQThreeRMSE{} & \$\ModelEightSubgroupcostQThreeBias{} \\
+Q4 (High) & \ModelEightSubgroupcostQFourHighN{} & \ModelEightSubgroupcostQFourHighRSquared{} & \$\ModelEightSubgroupcostQFourHighRMSE{} & \$\ModelEightSubgroupcostQFourHighBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Cross-Validation Results}
 
 \begin{itemize}
-    \item \textbf{BMA over transformations}: Log vs sqrt
-    \item \textbf{Posterior model probabilities}: Sqrt (0.62), Log (0.38)
-    \item \textbf{Averaged predictions}: Improved calibration
+    \item \textbf{CV Method}: 10-fold cross-validation with Bayesian fitting
+    \item \textbf{Mean CV R²}: \ModelEightCVMean{}
+    \item \textbf{CV R² Std Dev}: \ModelEightCVStd{}
+    \item \textbf{Computational Time}: 30--60 seconds per fold
 \end{itemize}
 
-\subsection{Stress Testing}
+\section{Diagnostic Plots}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{models/model_8/diagnostic_plots.png}
+\caption{Model 8 Diagnostic Plots}
+\label{fig:model8_diagnostics}
+\end{figure}
+
+Figure \ref{fig:model8_diagnostics} shows standard diagnostic plots for Model 8.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{models/model_8/bayesian_diagnostic_plots.png}
+\caption{Bayesian-Specific Diagnostic Plots}
+\label{fig:model8_bayesian}
+\end{figure}
+
+Figure \ref{fig:model8_bayesian} presents Bayesian-specific diagnostics:
 \begin{itemize}
-    \item \textbf{Prior-data conflict}: Detected via posterior predictive checks
-    \item \textbf{Influence analysis}: No single observation dominates
-    \item \textbf{Cross-validation}: LOO-CV shows stable performance
+    \item \textbf{Panel A}: Posterior distributions for top 5 features
+    \item \textbf{Panel B}: MCMC trace plot showing convergence
+    \item \textbf{Panel C}: Predictive uncertainty with 95\% credible intervals
+    \item \textbf{Panel D}: Uncertainty calibration plot
+    \item \textbf{Panel E}: Parameter correlation matrix
+    \item \textbf{Panel F}: Regulatory compliance status
 \end{itemize}
 
 \section{Sensitivity to Outliers and Missing Data}
 
 \subsection{Robust Bayesian Extensions}
 
+The model can be extended with Student-t distributed errors for automatic outlier accommodation:
 \begin{itemize}
     \item \textbf{Student-t errors}: $\epsilon_i \sim t_\nu(0, \sigma^2)$
     \item \textbf{Degrees of freedom}: $\nu \sim \text{Gamma}(2, 0.1)$
-    \item \textbf{Automatic outlier accommodation}: Via heavy tails
-    \item \textbf{Coverage}: 100\% of observations
+    \item \textbf{Heavy tails}: Automatic down-weighting of outliers
+    \item \textbf{Coverage}: 100\% of observations retained
 \end{itemize}
 
-\subsection{Missing Data}
+\subsection{Missing Data Handling}
 
 \begin{itemize}
-    \item \textbf{Natural handling}: Missing data as parameters
-    \item \textbf{Joint inference}: Data and parameters together
+    \item \textbf{Natural framework}: Missing data treated as parameters
+    \item \textbf{Joint inference}: Data imputation and parameter estimation simultaneously
     \item \textbf{No exclusions}: Full sample retained
-    \item \textbf{Imputation uncertainty}: Propagated through posterior
+    \item \textbf{Imputation uncertainty}: Propagated through posterior distributions
 \end{itemize}
 
 \section{Implementation Feasibility}
@@ -169,21 +236,21 @@ Skeptical & 0.7923 & Narrow & High \\
 \subsection{Technical Requirements}
 
 \begin{itemize}
-    \item \textbf{Software}: Stan, JAGS, PyMC3, brms
-    \item \textbf{Computation}: 30-60 seconds for full posterior
-    \item \textbf{Memory}: 2GB for posterior samples
-    \item \textbf{Hardware}: GPU acceleration beneficial
+    \item \textbf{Software}: PyMC3, Stan, JAGS, or similar MCMC framework
+    \item \textbf{Computation}: 30--60 seconds for full posterior sampling
+    \item \textbf{Memory}: 2GB for posterior samples storage
+    \item \textbf{Hardware}: GPU acceleration beneficial but not required
     \item \textbf{Storage}: 500MB per model with full posterior
 \end{itemize}
 
 \subsection{Operational Barriers}
 
 \begin{itemize}
-    \item Cannot provide single allocation required by law
-    \item Probability distributions not allowed in regulations
-    \item Appeals cannot handle uncertainty ranges
-    \item Staff would require PhD-level Bayesian training
-    \item Research and validation only
+    \item Cannot provide single allocation amount required by law
+    \item Probability distributions not allowed in current regulations
+    \item Appeals process cannot handle uncertainty ranges
+    \item Staff would require PhD-level Bayesian statistics training
+    \item Limited to research and validation purposes only
 \end{itemize}
 
 \section{Complexity, Cost, Resources, and Regulatory Alignment}
@@ -191,54 +258,66 @@ Skeptical & 0.7923 & Narrow & High \\
 \subsection{Technical Complexity}
 
 \begin{itemize}
-    \item[\yellowwarning] \textbf{Mathematical sophistication}: Very high
-    \item[\yellowwarning] \textbf{Interpretability}: Requires statistical expertise
-    \item[\yellowwarning] \textbf{Maintenance}: Complex MCMC diagnostics
-    \item[\yellowwarning] \textbf{Updates}: Full posterior re-estimation
+    \item \textbf{Mathematical sophistication}: Very high (requires Bayesian expertise)
+    \item \textbf{Interpretability}: Requires advanced statistical knowledge
+    \item \textbf{Maintenance}: Complex MCMC diagnostics and monitoring
+    \item \textbf{Updates}: Full posterior re-estimation required
 \end{itemize}
 
 \subsection{Cost Analysis}
 
-\begin{itemize}
-    \item \textbf{Development}: \$145,000 (specialized expertise)
-    \item \textbf{Infrastructure}: \$65,000 (computing resources)
-    \item \textbf{Training}: \$55,000 (Bayesian concepts)
-    \item \textbf{Annual}: \$75,000 (maintenance)
-    \item \textbf{3-year TCO}: \$490,000
-\end{itemize}
+\begin{table}[h]
+\centering
+\caption{Implementation Cost Breakdown}
+\begin{tabular}{lr}
+\toprule
+\textbf{Component} & \textbf{Cost} \\
+\midrule
+Development (specialized expertise) & \$145,000 \\
+Infrastructure (computing resources) & \$65,000 \\
+Training (Bayesian statistics) & \$55,000 \\
+Annual maintenance & \$75,000 \\
+\textbf{3-year Total Cost of Ownership} & \$490,000 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Regulatory Non-Compliance}
 
-\begin{itemize}
-    \item[\redcross] \textbf{F.S. 393.0662}: Requires deterministic amount
-    \item[\redcross] \textbf{F.A.C. 65G-4.0214}: No probabilistic provisions
-    \item[\redcross] \textbf{HB 1103}: Posterior distributions not "explainable"
-    \item[\redcross] \textbf{CMS}: Budget must be fixed, not range
-    \item[\redcross] \textbf{Due Process}: Cannot appeal probability
-\end{itemize}
-
-\subsection{Legal Assessment}
-
-Bayesian methods produce probability distributions fundamentally incompatible with statutory requirement for single, deterministic budget amounts. Implementation would violate Florida law.
+\begin{table}[h]
+\centering
+\caption{Regulatory Compliance Issues}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Regulation} & \textbf{Issue} \\
+\midrule
+F.S. 393.0662 & Requires deterministic budget amount, not probability distribution \\
+F.A.C. 65G-4.0214 & No provisions for probabilistic allocations \\
+HB 1103 & Posterior distributions not "explainable" to consumers \\
+CMS Requirements & Budget must be fixed amount, not range \\
+Due Process & Cannot appeal a probability distribution \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Adaptability and Maintenance}
 
 \subsection{Dynamic Updates}
 
 \begin{itemize}
-    \item \textbf{Prior updating}: Sequential Bayesian learning
-    \item \textbf{Online learning}: Real-time posterior updates
-    \item \textbf{Hyperparameter tuning}: Empirical Bayes
-    \item \textbf{Model expansion}: Natural framework for complexity
+    \item \textbf{Prior updating}: Sequential Bayesian learning from new data
+    \item \textbf{Online learning}: Real-time posterior updates possible
+    \item \textbf{Hyperparameter tuning}: Empirical Bayes methods available
+    \item \textbf{Model expansion}: Natural framework for increasing complexity
 \end{itemize}
 
 \subsection{Monitoring Requirements}
 
 \begin{itemize}
-    \item \textbf{Convergence diagnostics}: Every run
-    \item \textbf{Posterior predictive checks}: Monthly
-    \item \textbf{Prior-posterior overlap}: Quarterly
-    \item \textbf{Model comparison}: DIC, WAIC tracking
+    \item \textbf{Convergence diagnostics}: Required for every run
+    \item \textbf{Posterior predictive checks}: Monthly validation
+    \item \textbf{Prior-posterior overlap}: Quarterly assessment
+    \item \textbf{Model comparison}: DIC/WAIC tracking over time
 \end{itemize}
 
 \section{Stakeholder Impact and Acceptance}
@@ -246,28 +325,48 @@ Bayesian methods produce probability distributions fundamentally incompatible wi
 \subsection{Comprehension Barriers}
 
 \begin{itemize}
-    \item \textbf{Clients}: Would not understand distributions
-    \item \textbf{Staff}: Requires statistical sophistication
-    \item \textbf{Legal}: Incompatible with framework
-    \item \textbf{Political}: Appears indecisive/uncertain
-    \item \textbf{Public}: Loss of trust in "uncertain" allocations
+    \item \textbf{Clients}: Would not understand probability distributions
+    \item \textbf{Staff}: Requires statistical sophistication beyond current capacity
+    \item \textbf{Legal}: Fundamentally incompatible with statutory framework
+    \item \textbf{Political}: Appears indecisive/uncertain to policymakers
+    \item \textbf{Public}: Loss of trust in "uncertain" budget allocations
 \end{itemize}
 
 \subsection{Communication Challenges}
 
 \begin{itemize}
     \item Cannot explain "Your budget is probably between X and Y"
-    \item Credible intervals meaningless to consumers
+    \item Credible intervals meaningless to most consumers
     \item Appeals impossible with probabilistic allocations
-    \item Media would portray as government uncertainty
+    \item Media would portray as government uncertainty/incompetence
 \end{itemize}
 
-\section{Risk Assessment and Mitigation}
+\section{Population Capacity Scenarios}
 
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{Population Capacity Under Different Scenarios}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Scenario} & \textbf{Clients Served} & \textbf{Avg Allocation} & \textbf{Waitlist Change} \\
+\midrule
+Current Baseline & \ModelEightPopcurrentbaselineClients{} & \$\ModelEightPopcurrentbaselineAvgAlloc{} & \ModelEightPopcurrentbaselineWaitlistChange{} \\
+Model Balanced & \ModelEightPopmodelbalancedClients{} & \$\ModelEightPopmodelbalancedAvgAlloc{} & \ModelEightPopmodelbalancedWaitlistChange{} \\
+Model Efficiency & \ModelEightPopmodelefficiencyClients{} & \$\ModelEightPopmodelefficiencyAvgAlloc{} & \ModelEightPopmodelefficiencyWaitlistChange{} \\
+Category Focused & \ModelEightPopcategoryfocusedClients{} & \$\ModelEightPopcategoryfocusedAvgAlloc{} & \ModelEightPopcategoryfocusedWaitlistChange{} \\
+Population Max & \ModelEightPoppopulationmaximizedClients{} & \$\ModelEightPoppopulationmaximizedAvgAlloc{} & \ModelEightPoppopulationmaximizedWaitlistChange{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Risk Assessment}
+
+\begin{table}[h]
+\centering
+\caption{Risk Matrix}
 \begin{tabular}{llll}
 \toprule
-Risk Category & Probability & Impact & Status \\
+\textbf{Risk Category} & \textbf{Probability} & \textbf{Impact} & \textbf{Status} \\
 \midrule
 Regulatory rejection & Certain & Fatal & Blocked \\
 Stakeholder confusion & Certain & High & Blocked \\
@@ -276,18 +375,18 @@ Research value loss & Low & Medium & Acceptable \\
 Legal challenge & Certain & Fatal & Blocked \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
 \section{Performance Monitoring Plan}
 
-\subsection{Bayesian Diagnostics}
+\subsection{Bayesian-Specific Diagnostics}
 
 \begin{itemize}
-    \item \textbf{Convergence}: $\hat{R} < 1.01$ all parameters
-    \item \textbf{ESS}: $>$ 1000 per parameter
-    \item \textbf{Posterior predictive}: p-values centered
-    \item \textbf{Prior-posterior overlap}: Moderate
-    \item \textbf{MCMC efficiency}: $> 0.1$
+    \item \textbf{Convergence}: $\hat{R} < 1.01$ for all parameters
+    \item \textbf{Effective Sample Size}: $>$ 1000 per parameter
+    \item \textbf{Posterior predictive}: p-values properly centered
+    \item \textbf{Prior-posterior overlap}: Moderate (not too informative/vague)
+    \item \textbf{MCMC efficiency}: $>$ 0.1
 \end{itemize}
 
 \subsection{Quality Metrics}
@@ -295,52 +394,55 @@ Legal challenge & Certain & Fatal & Blocked \\
 \begin{itemize}
     \item \textbf{Calibration}: Coverage probability accuracy
     \item \textbf{Sharpness}: Prediction interval width
-    \item \textbf{Bias}: Posterior mean vs actual
+    \item \textbf{Bias}: Posterior mean vs actual values
     \item \textbf{Information criteria}: DIC, WAIC trends
 \end{itemize}
 
 \section{Research Value}
 
-\subsection{Valid Applications}
+\subsection{Valid Research Applications}
 
+Despite regulatory incompatibility, Model 8 offers significant research value:
 \begin{itemize}
-    \item \textbf{Uncertainty quantification}: Know precision of estimates
+    \item \textbf{Uncertainty quantification}: Know precision of all estimates
     \item \textbf{Risk assessment}: Identify high-uncertainty cases
-    \item \textbf{Policy simulation}: Posterior predictive checks
-    \item \textbf{Model validation}: Compare with frequentist
-    \item \textbf{Decision support}: Not decision making
+    \item \textbf{Policy simulation}: Posterior predictive checks for scenarios
+    \item \textbf{Model validation}: Compare with frequentist approaches
+    \item \textbf{Decision support}: Inform but not replace decision making
 \end{itemize}
 
 \subsection{Parallel Analysis Benefits}
 
 \begin{itemize}
-    \item Coefficient stability assessment
+    \item Coefficient stability assessment across models
     \item Prediction interval validation
     \item Prior-data conflict detection
-    \item Outlier identification via posterior
-    \item Model comparison framework
+    \item Outlier identification via posterior analysis
+    \item Model comparison framework (DIC, WAIC, LOO)
 \end{itemize}
 
 \section{Summary and Recommendations}
 
 \subsection{Overall Assessment}
 
-\textbf{Strengths (Research):}
+\textbf{Strengths (Research Context):}
 \begin{itemize}
     \item Complete uncertainty quantification
     \item Principled handling of all uncertainty sources
     \item Natural missing data accommodation
     \item Rich inferential framework
     \item Coherent probability statements
+    \item Robust to outliers with t-distribution extension
 \end{itemize}
 
-\textbf{Fatal Weaknesses (Production):}
+\textbf{Fatal Weaknesses (Production Context):}
 \begin{itemize}
-    \item Cannot produce required single allocation
-    \item Probability distributions violate all regulations
+    \item Cannot produce required single allocation amount
+    \item Probability distributions violate all current regulations
     \item Incompatible with appeals process
     \item Would require complete statutory rewrite
-    \item Stakeholder comprehension insurmountable
+    \item Stakeholder comprehension barriers insurmountable
+    \item Training requirements exceed organizational capacity
 \end{itemize}
 
 \subsection{Final Recommendation}
@@ -349,18 +451,17 @@ Legal challenge & Certain & Fatal & Blocked \\
 
 \textbf{APPROVE for Research Only}
 
-Bayesian regression is fundamentally incompatible with Florida's deterministic budget requirement. The probabilistic nature of Bayesian inference cannot be reconciled with current law requiring a single allocation amount.
+Bayesian regression is fundamentally incompatible with Florida's deterministic budget requirement under F.S. 393.0662. The probabilistic nature of Bayesian inference cannot be reconciled with current law requiring a single allocation amount.
 
 \textbf{Research Implementation Strategy:}
 \begin{itemize}
-    \item Deploy as uncertainty quantification tool
+    \item Deploy as uncertainty quantification tool only
     \item Use for coefficient stability analysis
     \item Support model validation efforts
     \item Inform policy stress testing
-    \item Never use for actual allocations
+    \item Never use for actual budget allocations
 \end{itemize}
 
-\textbf{Future Consideration:} If regulations evolve to allow uncertainty ranges or probabilistic allocations, Bayesian methods would provide the most principled framework for implementation.
+\textbf{Future Consideration:} If regulations evolve to allow uncertainty ranges or probabilistic allocations, Bayesian methods would provide the most principled framework for implementation. Until then, this approach must remain strictly in the research domain.
 
-\textbf{Critical Point:} Any attempt to use Bayesian methods for actual budget allocation would immediately violate F.S. 393.0662 and trigger legal action. The method's value lies exclusively in research and validation applications.
- 
+\textbf{Critical Warning:} Any attempt to use Bayesian methods for actual budget allocation would immediately violate F.S. 393.0662 and trigger legal action. The method's value lies exclusively in research and validation applications, not operational deployment.

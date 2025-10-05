@@ -1,3 +1,7 @@
+# Ignore data
+*.xlsx
+*.pyc
+*.pkl
 # Ignore the local configuration for Visual Studio Code
 .vscode/*
 # Ignore the local configuration for Visual Studio

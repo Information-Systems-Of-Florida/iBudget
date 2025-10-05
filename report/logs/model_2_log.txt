@@ -1,0 +1,118 @@
+2025-10-02 12:04:28 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:28 - MODEL 2 - INFO - INITIALIZING MODEL 2: GLM-GAMMA
+2025-10-02 12:04:28 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:28 - MODEL 2 - INFO - Log file: models\..\..\report\logs\model_2_log.txt
+2025-10-02 12:04:28 - MODEL 2 - INFO - Output directory: models/model_2
+2025-10-02 12:04:28 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:28 - MODEL 2 - INFO - 
+2025-10-02 12:04:28 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:28 - MODEL 2 - INFO - STARTING PIPELINE: GLM-GAMMA
+2025-10-02 12:04:28 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:28 - MODEL 2 - INFO - 
+2025-10-02 12:04:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:28 - MODEL 2 - INFO - LOADING DATA: FY2023-2024
+2025-10-02 12:04:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:28 - MODEL 2 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-02 12:04:29 - MODEL 2 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-02 12:04:29 - MODEL 2 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-02 12:04:30 - MODEL 2 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-02 12:04:31 - MODEL 2 - INFO - Loaded 67265 usable records
+2025-10-02 12:04:31 - MODEL 2 - INFO - 
+2025-10-02 12:04:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:31 - MODEL 2 - INFO - DATA SPLIT
+2025-10-02 12:04:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:31 - MODEL 2 - INFO - Training samples: 53812
+2025-10-02 12:04:31 - MODEL 2 - INFO - Test samples: 13453
+2025-10-02 12:04:31 - MODEL 2 - INFO - Split ratio: 20.0%
+2025-10-02 12:04:31 - MODEL 2 - INFO - 
+2025-10-02 12:04:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:31 - MODEL 2 - INFO - FEATURE PREPARATION
+2025-10-02 12:04:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:31 - MODEL 2 - INFO - Prepared 33 features for 53812 records
+2025-10-02 12:04:31 - MODEL 2 - INFO - Prepared 33 features for 13453 records
+2025-10-02 12:04:31 - MODEL 2 - INFO - Features prepared: 33 features
+2025-10-02 12:04:31 - MODEL 2 - INFO - Performing 10-fold cross-validation...
+2025-10-02 12:04:32 - MODEL 2 - INFO -   Fold 1: R^2=0.2274, RMSE=$39,287
+2025-10-02 12:04:32 - MODEL 2 - INFO -   Fold 2: R^2=0.2216, RMSE=$38,516
+2025-10-02 12:04:33 - MODEL 2 - INFO -   Fold 3: R^2=0.2267, RMSE=$39,131
+2025-10-02 12:04:34 - MODEL 2 - INFO -   Fold 4: R^2=0.2464, RMSE=$38,208
+2025-10-02 12:04:35 - MODEL 2 - INFO -   Fold 5: R^2=0.2167, RMSE=$38,451
+2025-10-02 12:04:35 - MODEL 2 - INFO -   Fold 6: R^2=0.2451, RMSE=$37,888
+2025-10-02 12:04:36 - MODEL 2 - INFO -   Fold 7: R^2=0.2360, RMSE=$38,618
+2025-10-02 12:04:37 - MODEL 2 - INFO -   Fold 8: R^2=0.2479, RMSE=$38,739
+2025-10-02 12:04:38 - MODEL 2 - INFO -   Fold 9: R^2=0.2376, RMSE=$38,206
+2025-10-02 12:04:39 - MODEL 2 - INFO -   Fold 10: R^2=0.2579, RMSE=$38,569
+2025-10-02 12:04:39 - MODEL 2 - INFO - CV Results: Mean R^2=0.2363 +- 0.0125
+2025-10-02 12:04:39 - MODEL 2 - INFO - 
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - MODEL TRAINING
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-02 12:04:39 - MODEL 2 - INFO - Training samples: 53812, Features: 33
+2025-10-02 12:04:39 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-02 12:04:39 - MODEL 2 - INFO -   Converged: True
+2025-10-02 12:04:39 - MODEL 2 - INFO -   Iterations: 22
+2025-10-02 12:04:39 - MODEL 2 - INFO -   Dispersion: 0.9937
+2025-10-02 12:04:39 - MODEL 2 - INFO -   Deviance R^2: 0.1981
+2025-10-02 12:04:39 - MODEL 2 - INFO -   McFadden R^2: 0.0139
+2025-10-02 12:04:39 - MODEL 2 - INFO -   AIC: 1238487.2, BIC: -510733.0
+2025-10-02 12:04:39 - MODEL 2 - INFO - Model training complete
+2025-10-02 12:04:39 - MODEL 2 - INFO - 
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - MAKING PREDICTIONS
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - Predictions complete
+2025-10-02 12:04:39 - MODEL 2 - INFO - 
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - CALCULATING METRICS
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - 
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:39 - MODEL 2 - INFO - Training R^2: 0.2373
+2025-10-02 12:04:39 - MODEL 2 - INFO - Test R^2: 0.2103
+2025-10-02 12:04:39 - MODEL 2 - INFO - RMSE: $38,810.19
+2025-10-02 12:04:39 - MODEL 2 - INFO - MAE: $28,568.80
+2025-10-02 12:04:39 - MODEL 2 - INFO - MAPE: 89.59%
+2025-10-02 12:04:39 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:40 - MODEL 2 - INFO - Calculated metrics for 13 subgroups
+2025-10-02 12:04:40 - MODEL 2 - INFO - 
+2025-10-02 12:04:40 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:40 - MODEL 2 - INFO - GENERATING OUTPUTS
+2025-10-02 12:04:40 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:40 - MODEL 2 - INFO - LaTeX commands written to ..\..\report\models\model_2\model_2_newcommands.tex and ..\..\report\models\model_2\model_2_renewcommands.tex
+2025-10-02 12:04:40 - MODEL 2 - INFO - 
+2025-10-02 12:04:40 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:40 - MODEL 2 - INFO - SAVING RESULTS
+2025-10-02 12:04:40 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:40 - MODEL 2 - INFO - Results saved successfully
+2025-10-02 12:04:40 - MODEL 2 - INFO - GLM-specific results saved to ..\..\report\models\model_2
+2025-10-02 12:04:41 - MODEL 2 - INFO - Diagnostic plots saved to ..\..\report\models\model_2\diagnostic_plots.png
+2025-10-02 12:04:42 - MODEL 2 - INFO - GLM-specific plots saved to ..\..\report\models\model_2\glm_specific_plots.png
+2025-10-02 12:04:42 - MODEL 2 - INFO - 
+2025-10-02 12:04:42 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:42 - MODEL 2 - INFO - PIPELINE COMPLETE: GLM-GAMMA
+2025-10-02 12:04:42 - MODEL 2 - INFO - ============================================================
+2025-10-02 12:04:42 - MODEL 2 - INFO - 
+2025-10-02 12:04:42 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:42 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-02 12:04:42 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:42 - MODEL 2 - INFO - Training R^2: 0.2373
+2025-10-02 12:04:42 - MODEL 2 - INFO - Test R^2: 0.2103
+2025-10-02 12:04:42 - MODEL 2 - INFO - RMSE: $38,810.19
+2025-10-02 12:04:42 - MODEL 2 - INFO - MAE: $28,568.80
+2025-10-02 12:04:42 - MODEL 2 - INFO - MAPE: 89.59%
+2025-10-02 12:04:42 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-02 12:04:42 - MODEL 2 - INFO - 
+2025-10-02 12:04:42 - MODEL 2 - INFO - Generated files:
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - coefficients.json
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - diagnostic_plots.png
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - feature_importance.json
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - glm_results.json
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - glm_specific_plots.png
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - metrics.json
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - model_2_newcommands.tex
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - model_2_renewcommands.tex
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - predictions.csv
+2025-10-02 12:04:42 - MODEL 2 - INFO -   - subgroup_metrics.json

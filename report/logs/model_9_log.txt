@@ -1,0 +1,19 @@
+2025-10-02 15:28:13 - MODEL 9 - INFO - ============================================================
+2025-10-02 15:28:13 - MODEL 9 - INFO - INITIALIZING MODEL 9: RANDOM FOREST
+2025-10-02 15:28:13 - MODEL 9 - INFO - ============================================================
+2025-10-02 15:28:13 - MODEL 9 - INFO - Log file: models\..\..\report\logs\model_9_log.txt
+2025-10-02 15:28:13 - MODEL 9 - INFO - Output directory: models/model_9
+2025-10-02 15:28:13 - MODEL 9 - INFO - ============================================================
+2025-10-02 15:28:13 - MODEL 9 - INFO - Model 9 initialized with 500 trees, max_depth=20
+2025-10-02 15:28:13 - MODEL 9 - INFO - 
+2025-10-02 15:28:13 - MODEL 9 - INFO - ============================================================
+2025-10-02 15:28:13 - MODEL 9 - INFO - STARTING PIPELINE: RANDOM FOREST
+2025-10-02 15:28:13 - MODEL 9 - INFO - ============================================================
+2025-10-02 15:28:13 - MODEL 9 - INFO - 
+2025-10-02 15:28:13 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-02 15:28:13 - MODEL 9 - INFO - LOADING DATA: FY2023-2024
+2025-10-02 15:28:13 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-02 15:28:13 - MODEL 9 - WARNING - Pickle file not found: data\cached\fy2023.pkl
+2025-10-02 15:28:13 - MODEL 9 - WARNING - Pickle file not found: data\cached\fy2024.pkl
+2025-10-02 15:28:13 - MODEL 9 - INFO - Loaded 0 usable records
+2025-10-02 15:28:13 - MODEL 9 - ERROR - No records loaded! Check data loading.

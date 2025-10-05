@@ -1,0 +1,167 @@
+% File: Model-Common-Report.tex
+% Template for standardized model reporting
+% This file uses commands defined in individual model calibration files
+
+\section{Alternative \ModelAlternativeNumber: \ModelName}
+
+\subsection{Algorithm Specification}
+
+The \ModelName\ algorithm implements the following mathematical formulation:
+
+\begin{equation}
+    \ModelEquation
+\end{equation}
+
+\noindent\textbf{Input Variables:}
+\begin{itemize}
+    \item Living Setting: \ModelLivingSettingLevels
+    \item Age Groups: \ModelAgeGroups
+    \item QSI Variables: \ModelQSIVariables
+    \item Sum Scores: \ModelSumScores
+\end{itemize}
+
+\noindent\textbf{Transformation Applied:} \ModelTransformation
+
+\noindent\textbf{Model-Specific Parameters:}
+\begin{itemize}
+    \ModelSpecificParametersList
+\end{itemize}
+
+\subsection{Accuracy and Reliability}
+
+\subsubsection{Prediction Accuracy}
+
+\begin{table}[h]
+\centering
+\caption{Model \ModelAlternativeNumber\ Performance Metrics}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Training Set} & \textbf{Test Set} \\
+\midrule
+$R^2$ & \ModelRSquaredTrain & \ModelRSquaredTest \\
+Adjusted $R^2$ & \ModelAdjustedRSquaredTrain & \ModelAdjustedRSquaredTest \\
+RMSE & \ModelRMSETrain & \ModelRMSETest \\
+MAE & \ModelMAETrain & \ModelMAETest \\
+MAPE (\%) & \ModelMAPETrain & \ModelMAPETest \\
+Residual Std Error & \ModelResidualStdTrain & \ModelResidualStdTest \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Cross-Validation Results}
+
+\begin{itemize}
+    \item \textbf{10-Fold CV $R^2$:} \ModelRSquaredCV
+    \item \textbf{10-Fold CV RMSE:} \ModelRMSECV
+    \item \textbf{10-Fold CV MAE:} \ModelMAECV
+\end{itemize}
+
+\subsubsection{Diagnostic Plots}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\ModelDiagnosticPlot}
+    \caption{Diagnostic plots for Alternative \ModelAlternativeNumber}
+    \label{fig:diag_\ModelAlternativeNumber}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{\ModelCVPlot}
+    \caption{Cross-validation performance for Alternative \ModelAlternativeNumber}
+    \label{fig:cv_\ModelAlternativeNumber}
+\end{figure}
+
+\subsection{Robustness Analysis}
+
+\subsubsection{Subgroup Performance}
+
+\begin{table}[h]
+\centering
+\caption{Performance by Demographic Subgroups}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Subgroup} & \textbf{$R^2$} & \textbf{RMSE} & \textbf{MAPE (\%)} \\
+\midrule
+\ModelSubgroupPerformanceTable
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Sensitivity Analysis}
+
+\begin{itemize}
+    \item \textbf{Bootstrap CI for $R^2$:} \ModelBootstrapCIR2
+    \item \textbf{Parameter Stability:} \ModelParameterStability
+    \item \textbf{Performance under budget constraints:} \ModelBudgetConstraintPerformance
+\end{itemize}
+
+\subsection{Outlier and Missing Data Handling}
+
+\begin{itemize}
+    \item \textbf{Outlier Detection Method:} \ModelOutlierMethod
+    \item \textbf{Outliers Identified:} \ModelOutlierCount\ (\ModelOutlierPercentage\%)
+    \item \textbf{Missing Data Strategy:} \ModelMissingDataStrategy
+    \item \textbf{Missing Data Impact:} \ModelMissingDataImpact
+\end{itemize}
+
+\subsection{Feature Importance}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{\ModelFeatureImportancePlot}
+    \caption{Feature importance for Alternative \ModelAlternativeNumber}
+    \label{fig:feat_\ModelAlternativeNumber}
+\end{figure}
+
+\subsection{Implementation Feasibility}
+
+\subsubsection{System Compatibility}
+\begin{itemize}
+    \item \textbf{Data Requirements:} \ModelDataRequirements
+    \item \textbf{Computational Complexity:} \ModelComputationalComplexity
+    \item \textbf{Integration Effort:} \ModelIntegrationEffort
+\end{itemize}
+
+\subsubsection{Training Requirements}
+\begin{itemize}
+    \item \textbf{Staff Training Needed:} \ModelStaffTraining
+    \item \textbf{Documentation Complexity:} \ModelDocumentationComplexity
+    \item \textbf{Maintenance Requirements:} \ModelMaintenanceRequirements
+\end{itemize}
+
+\subsection{Regulatory Compliance}
+
+\begin{itemize}
+    \item \textbf{Compliance with 393.0662 F.S.:} \ModelRegulatoryCompliance
+    \item \textbf{Transparency Score:} \ModelTransparencyScore
+    \item \textbf{Auditability:} \ModelAuditability
+    \item \textbf{Appeals Process Compatibility:} \ModelAppealsCompatibility
+\end{itemize}
+
+\subsection{Model Calibration Details}
+
+\begin{itemize}
+    \item \textbf{Training Sample Size:} \TrainingSampleSize
+    \item \textbf{Test Sample Size:} \TestSampleSize
+    \item \textbf{Calibration Date:} \CalibrationDate
+    \item \textbf{Data Period:} \DataPeriod
+\end{itemize}
+
+\subsection{Summary and Recommendation}
+
+\ModelSummaryText
+
+\noindent\textbf{Strengths:}
+\begin{itemize}
+    \ModelStrengthsList
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+    \ModelLimitationsList
+\end{itemize}
+
+\noindent\textbf{Overall Assessment:} \ModelOverallAssessment
+
+\noindent\textbf{Recommendation:} \ModelRecommendation

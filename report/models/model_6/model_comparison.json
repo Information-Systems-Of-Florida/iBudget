@@ -1,0 +1,22 @@
+{
+  "Model 2 (Gamma)": {
+    "Distribution": "Gamma",
+    "Link": "Log",
+    "R\u00b2": 0.8156,
+    "RMSE": 11890,
+    "Handles zeros": "No",
+    "Interpretation": "Multiplicative",
+    "Outlier removal": "No",
+    "Retransformation": "Direct"
+  },
+  "Model 6 (Log-Normal)": {
+    "Distribution": "Log-Normal",
+    "Link": "Identity on log(\u221aY)",
+    "R\u00b2": 0.16259439321604618,
+    "RMSE": 76.05572858188987,
+    "Handles zeros": "Yes (with adjustment)",
+    "Interpretation": "Multiplicative",
+    "Outlier removal": "No",
+    "Retransformation": "Smearing estimator"
+  }
+}

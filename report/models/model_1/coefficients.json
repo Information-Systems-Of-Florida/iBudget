@@ -1,0 +1,110 @@
+{
+  "intercept": {
+    "value": -109.04640889090683,
+    "transformed": true
+  },
+  "Age": {
+    "value": 1.579408264515255,
+    "transformed": true
+  },
+  "Age21_30": {
+    "value": 93.72402100490184,
+    "transformed": true
+  },
+  "Age31Plus": {
+    "value": 97.79827301620554,
+    "transformed": true
+  },
+  "Gender_Male": {
+    "value": -1.7419602033354054,
+    "transformed": true
+  },
+  "ILSL": {
+    "value": 35.56739087223035,
+    "transformed": true
+  },
+  "RH1": {
+    "value": -5.684341886080802e-14,
+    "transformed": true
+  },
+  "RH2": {
+    "value": 5.684341886080802e-14,
+    "transformed": true
+  },
+  "RH3": {
+    "value": 0.0,
+    "transformed": true
+  },
+  "RH4": {
+    "value": 2.1316282072803006e-14,
+    "transformed": true
+  },
+  "LOSRI": {
+    "value": 1.2911458426263969,
+    "transformed": true
+  },
+  "OLEVEL": {
+    "value": 7.993605777301127e-15,
+    "transformed": true
+  },
+  "BSum": {
+    "value": 9.685387676024503,
+    "transformed": true
+  },
+  "BLEVEL": {
+    "value": -2.2201948798104905,
+    "transformed": true
+  },
+  "FSum": {
+    "value": -1.733538177638798,
+    "transformed": true
+  },
+  "FLEVEL": {
+    "value": 9.53150414094693,
+    "transformed": true
+  },
+  "PSum": {
+    "value": -0.28769071981441957,
+    "transformed": true
+  },
+  "PLEVEL": {
+    "value": 1.7979004393577747,
+    "transformed": true
+  },
+  "Q20": {
+    "value": 10.491535716555065,
+    "transformed": true
+  },
+  "Q21": {
+    "value": 8.708829368902954,
+    "transformed": true
+  },
+  "Q23": {
+    "value": 12.420800143218996,
+    "transformed": true
+  },
+  "Q25": {
+    "value": -8.733222994072392,
+    "transformed": true
+  },
+  "Q26": {
+    "value": -0.7804047473364175,
+    "transformed": true
+  },
+  "Q27": {
+    "value": -2.7431320857675043,
+    "transformed": true
+  },
+  "Q30": {
+    "value": -10.400221035051487,
+    "transformed": true
+  },
+  "Q36": {
+    "value": 16.59720254737104,
+    "transformed": true
+  },
+  "Q44": {
+    "value": 1.413014147943183,
+    "transformed": true
+  }
+}

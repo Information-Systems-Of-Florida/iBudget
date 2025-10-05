@@ -1,0 +1,415 @@
+Found cache directory: models\data\cached
+Found 6 pickle files
+
+Inspecting: models\data\cached\fy2020.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 42677
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -121.44
+  Age                            : int        = 75
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 0.00
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 0.00
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 70
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 366
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2020-08-31
+  FY_StartDate                   : str        = 2019-09-01
+  FirstServiceDate               : str        = 2020-07-01T00:00:00
+  FiscalYear                     : int        = 2020
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 0
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2020-08-31T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 1
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 9196 / 42677
+
+Cost fields check:
+  'TotalCost': 9257.54
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 9378.98
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 97
+  Min cost: $149
+  Max cost: $21,224
+  Avg cost: $4,737
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2020
+
+record_count: 42677
+
+extraction_date: 2025-09-29T22:21:25.377461
+
+Inspecting: models\data\cached\fy2021.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 43968
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -8408.22
+  Age                            : int        = 76
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 56144.28
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 59317.56
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 612
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 365
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2021-08-31
+  FY_StartDate                   : str        = 2020-09-01
+  FirstServiceDate               : str        = 2020-09-01T00:00:00
+  FiscalYear                     : int        = 2021
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 0
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2021-08-31T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 1
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 20541 / 43968
+
+Cost fields check:
+  'TotalCost': 45462.65
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 53870.87
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 97
+  Min cost: $669
+  Max cost: $120,397
+  Avg cost: $36,551
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2021
+
+record_count: 43968
+
+extraction_date: 2025-09-29T22:28:04.488115
+
+Inspecting: models\data\cached\fy2022.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 45270
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -19432.60
+  Age                            : int        = 77
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 61283.64
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 64005.64
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 787
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 365
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2022-08-31
+  FY_StartDate                   : str        = 2021-09-01
+  FirstServiceDate               : str        = 2021-09-01T00:00:00
+  FiscalYear                     : int        = 2022
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 0
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2022-08-31T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 1
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 21063 / 45270
+
+Cost fields check:
+  'TotalCost': 48493.19
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 67925.79
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 97
+  Min cost: $744
+  Max cost: $126,961
+  Avg cost: $36,589
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2022
+
+record_count: 45270
+
+extraction_date: 2025-09-29T22:35:10.267196
+
+Inspecting: models\data\cached\fy2023.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 46193
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -21326.58
+  Age                            : int        = 78
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 78666.08
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 78666.08
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 890
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 365
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2023-08-31
+  FY_StartDate                   : str        = 2022-09-01
+  FirstServiceDate               : str        = 2022-09-01T00:00:00
+  FiscalYear                     : int        = 2023
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 0
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2023-08-31T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 1
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 22293 / 46193
+
+Cost fields check:
+  'TotalCost': 67326.17
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 88652.75
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 95
+  Min cost: $907
+  Max cost: $149,900
+  Avg cost: $47,070
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2023
+
+record_count: 46193
+
+extraction_date: 2025-09-29T22:42:43.489796
+
+Inspecting: models\data\cached\fy2024.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 47259
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -3036.90
+  Age                            : int        = 79
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 78844.52
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 78844.52
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 348
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 366
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2024-08-31
+  FY_StartDate                   : str        = 2023-09-01
+  FirstServiceDate               : str        = 2023-09-01T00:00:00
+  FiscalYear                     : int        = 2024
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 0
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2024-08-31T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 1
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 23251 / 47259
+
+Cost fields check:
+  'TotalCost': 57763.61
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 60800.51
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 93
+  Min cost: $836
+  Max cost: $179,968
+  Avg cost: $49,963
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2024
+
+record_count: 47259
+
+extraction_date: 2025-09-29T22:50:29.160886
+
+Inspecting: models\data\cached\fy2025.pkl
+============================================================
+Top-level type: Dictionary
+Keys: ['fiscal_year', 'fiscal_year_range', 'date_range', 'columns', 'data', 'record_count', 'extraction_time', 'extraction_date']
+
+Number of records in 'data': 47797
+
+First record type: <class 'dict'>
+First record keys (87 total):
+  Adjustments                    : str        = -4139.33
+  Age                            : int        = 80
+  AgeGroup                       : str        = Age31Plus
+  AnnualizedBudget               : str        = 84523.52
+  BLEVEL                         : str        = 2
+  BSum                           : int        = 5
+  BudgetAmount                   : str        = 84523.52
+  CASENO                         : int        = 10184
+  ClaimLines                     : int        = 263
+  ConsumerID                     : int        = 1
+  County                         : str        = LEON
+  DaysInSystem                   : int        = 365
+  DevelopmentalDisability        : str        = Intellectual Disability
+  District                       : str        = 02
+  EarlyExit                      : int        = 0
+  Ethnicity                      : str        = USA
+  FLEVEL                         : str        = 4
+  FSum                           : int        = 19
+  FY_EndDate                     : str        = 2025-08-31
+  FY_StartDate                   : str        = 2024-09-01
+  FirstServiceDate               : str        = 2024-09-01T00:00:00
+  FiscalYear                     : int        = 2025
+  GENDER                         : str        = Female
+  HasMultipleQSI                 : int        = 1
+  InsufficientDays               : int        = 0
+  LOSRI                          : str        = 4
+  LastServiceDate                : str        = 2025-08-21T00:00:00
+  LateEntry                      : int        = 0
+  LivingSetting                  : str        = FH
+  MentalHealthDiag1              : None
+  ... and 57 more keys
+
+Usable flag check:
+  'Usable': 0
+  'usable': NOT FOUND
+  'USABLE': NOT FOUND
+
+Usable records (Usable=1): 23792 / 47797
+
+Cost fields check:
+  'TotalCost': 68333.12
+  'TotalPaidClaims': NOT FOUND
+  'PositiveCost': 72472.45
+
+TotalCost distribution (first 100 records):
+  Records with positive cost: 93
+  Min cost: $1,089
+  Max cost: $192,310
+  Avg cost: $54,143
+
+columns: ['CASENO', 'ConsumerID', 'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 'District', 'Region', 'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI', 'TotalCost', 'PositiveCost', 'Adjustments', 'ServiceDays', 'UniqueProcedures', 'UniqueProviders', 'ClaimLines', 'BudgetAmount', 'AnnualizedBudget', 'DaysInSystem', 'LateEntry', 'EarlyExit', 'MissingQSI', 'HasMultipleQSI', 'NoPositiveCost', 'InsufficientDays', 'Usable', 'FY_StartDate', 'FY_EndDate', 'QSI_ApprovalDate', 'FirstServiceDate', 'LastServiceDate']
+
+fiscal_year: FY2025
+
+record_count: 47797
+
+extraction_date: 2025-09-29T22:57:56.519334
+
+============================================================
+Inspection complete!
+============================================================
+
+Summary:
+--------
+If you're seeing 'Usable records: 0', check that:
+1. The stored procedure is setting Usable=1 correctly
+2. The data extraction included the Usable flag
+3. The data quality criteria in the stored procedure are not too strict

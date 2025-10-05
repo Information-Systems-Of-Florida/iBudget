@@ -1,5 +1,4 @@
-\section{Metadata}
-
+\section{Data Provided by APD for Modeling}
 \begin{landscape}
 
 \subsection{sysdiagrams}
@@ -66,43 +65,43 @@ definition & varbinary(-1) &  & 0 & All NULL values \\
 \endfoot
 \hline
 \endlastfoot
-CaseNo & bigint(19) & Consumer iConnect ID & 42093 & Range: [10184.00, 100198.00], Avg: 39353.87, Median: 35849.00 \\
+CaseNo & bigint(19) &  & 42093 & Range: [10184.00, 100198.00], Avg: 39353.87, Median: 35849.00 \\
 \hline
-BudgetID & bigint(19) & Budget ID & 219457 & Range: [66.00, 219554.00], Avg: 109819.48, Median: 109821.00 \\
+BudgetID & bigint(19) &  & 219457 & Range: [66.00, 219554.00], Avg: 109819.48, Median: 109821.00 \\
 \hline
-BudgetType & varchar(100) & Budget Type & 2 & \{CDC+, iBudget\} \\
+BudgetType & varchar(100) &  & 2 & \{CDC+, iBudget\} \\
 \hline
-BudgetStatus & varchar(100) & Budget Status & 4 & \{Approved, Budget Approved, Draft, Terminated\} \\
+BudgetStatus & varchar(100) &  & 4 & \{Budget Approved, Approved, Terminated, Draft\} \\
 \hline
-FiscalYear & varchar(100) & FiscalYear & 6 & \{2021, 2022, 2023, 2024, 2025, 2026\} \\
+FiscalYear & varchar(100) &  & 6 & \{2026, 2024, 2021, 2022, 2025, 2023\} \\
 \hline
-Programs & varchar(75) & Program Consumer Enrolled into & 2 & \{APD Waiver, CDC+\} \\
+Programs & varchar(75) &  & 2 & \{CDC+, APD Waiver\} \\
 \hline
-WSC & varchar(100) & Waiver Support Coordinator Name & 1031 & ... \\
+WSC & varchar(100) &  & 1031 & ... \\
 \hline
-ApprovedBy & int(10) & Approved By APD Staff Name & 6 & Range: [1182.00, 34038.00], Avg: 9428.56, Median: 2487.00 \\
+ApprovedBy & int(10) &  & 6 & Range: [1182.00, 34038.00], Avg: 9428.56, Median: 2487.00 \\
 \hline
-ApprovalDate & datetime & Approval Date & 15 & Range: [2020-05-22, 2025-05-21] \\
+ApprovalDate & datetime &  & 15 & Range: [2020-05-22, 2025-05-21] \\
 \hline
-StartDate & datetime & Start Date & 271 & Range: [2020-07-01, 2025-07-22] \\
+StartDate & datetime &  & 271 & Range: [2020-07-01, 2025-07-22] \\
 \hline
-EndDate & datetime & End Date & 6 & Range: [2021-06-30, 2026-06-30] \\
+EndDate & datetime &  & 6 & Range: [2021-06-30, 2026-06-30] \\
 \hline
-BudgetAmount & numeric(19,2) & Budget Amount & 146839 & Range: [-28280.29, 894542.33], Avg: 58144.60, Median: 49936.11 \\
+BudgetAmount & numeric(19,2) &  & 146839 & Range: [-28280.29, 894542.33], Avg: 58144.60, Median: 49936.11 \\
 \hline
-AnnualizedAmount & numeric(19,2) & Annualized Budget Amount & 131128 & Range: [-54617.64, 485174942.72], Avg: 61506.63, Median: 51322.04 \\
+AnnualizedAmount & numeric(19,2) &  & 131128 & Range: [-54617.64, 485174942.72], Avg: 61506.63, Median: 51322.04 \\
 \hline
-AmountEncumbered & numeric(19,2) & Amount Encumbered & 147533 & Range: [0.00, 1236377.20], Avg: 50557.89, Median: 41775.08 \\
+AmountEncumbered & numeric(19,2) &  & 147533 & Range: [0.00, 1236377.20], Avg: 50557.89, Median: 41775.08 \\
 \hline
-AmountUnauthorized & numeric(19,2) & Amount Unauthorized & 121870 & Range: [-1073148.93, 850693.76], Avg: 9621.87, Median: 1882.51 \\
+AmountUnauthorized & numeric(19,2) &  & 121870 & Range: [-1073148.93, 850693.76], Avg: 9621.87, Median: 1882.51 \\
 \hline
-PrioriBudgetAmount & numeric(19,2) & Priori Budget Amount & 150649 & Range: [0.00, 1144471.65], Avg: 52194.31, Median: 43875.48 \\
+PrioriBudgetAmount & numeric(19,2) &  & 150649 & Range: [0.00, 1144471.65], Avg: 52194.31, Median: 43875.48 \\
 \hline
-Comments & varchar(-1) & Comments & 121 & ... \\
+Comments & varchar(-1) &  & 121 & ... \\
 \hline
-UserStamp & varchar(100) & UserStamp & 61 & ... \\
+UserStamp & varchar(100) &  & 61 & ... \\
 \hline
-DateTimeStamp & datetime & DateTimeStamp & 49148 & Range: [2020-05-25, 2025-09-11] \\
+DateTimeStamp & datetime &  & 49148 & Range: [2020-05-25, 2025-09-11] \\
 \hline
 \end{longtable}
 
@@ -132,45 +131,45 @@ DateTimeStamp & datetime & DateTimeStamp & 49148 & Range: [2020-05-25, 2025-09-1
 \endfoot
 \hline
 \endlastfoot
-CaseNo & bigint(19) & Consumer iConnect ID & 41285 & Range: [10184.00, 99376.00], Avg: 36590.87, Median: 33566.00 \\
+CaseNo & bigint(19) &  & 41285 & Range: [10184.00, 99376.00], Avg: 36590.87, Median: 33566.00 \\
 \hline
-PIN & varchar(20) & Legacy ABC PIN & 41267 & ... \\
+PIN & varchar(20) &  & 41267 & ... \\
 \hline
-ProviderName & varchar(500) & Provider Name & 5249 & ... \\
+ProviderName & varchar(500) &  & 5249 & ... \\
 \hline
-ProviderMedcId & varchar(20) & Provider Medicaid ID & 5004 & ... \\
+ProviderMedcId & varchar(20) &  & 5004 & ... \\
 \hline
-ProcCode & varchar(20) & Service Procedure Code & 156 & ... \\
+ProcCode & varchar(20) &  & 156 & ... \\
 \hline
-ServiceDate & datetime & Date Service Provided & 1886 & Range: [2020-07-01, 2025-08-29] \\
+ServiceDate & datetime &  & 1886 & Range: [2020-07-01, 2025-08-29] \\
 \hline
-Units & int(10) & Units & 1958 & Range: [-98112.00, 98112.00], Avg: 17.94, Median: 15.00 \\
+Units & int(10) &  & 1958 & Range: [-98112.00, 98112.00], Avg: 17.94, Median: 15.00 \\
 \hline
-BilledAmt & numeric(9,2) & Billed Amount & 47855 & Range: [-25270.05, 36622.37], Avg: 191.90, Median: 101.40 \\
+BilledAmt & numeric(9,2) &  & 47855 & Range: [-25270.05, 36622.37], Avg: 191.90, Median: 101.40 \\
 \hline
-PaidAmt & numeric(9,2) & Paid Amount & 46066 & Range: [-21173.51, 26975.48], Avg: 191.69, Median: 101.40 \\
+PaidAmt & numeric(9,2) &  & 46066 & Range: [-21173.51, 26975.48], Avg: 191.69, Median: 101.40 \\
 \hline
-PaidDate & datetime & Paid Date & 541 & Range: [2020-07-03, 2025-09-03] \\
+PaidDate & datetime &  & 541 & Range: [2020-07-03, 2025-09-03] \\
 \hline
-ICN & varchar(100) & ICN - Claim Number in FMMIS & 11172269 & ... \\
+ICN & varchar(100) &  & 11172269 & ... \\
 \hline
-AdjustICN & varchar(100) & AdjustICN & 407203 & ... \\
+AdjustICN & varchar(100) &  & 407203 & ... \\
 \hline
-TreatingProvMedcId & varchar(20) & WSC Treating Provider Medicaid ID & 1869 & ... \\
+TreatingProvMedcId & varchar(20) &  & 1869 & ... \\
 \hline
-TransType & char(1) & Transaction Type (X-Cancel, A-ADD, C-Change) & 0 & All NULL values \\
+TransType & char(1) &  & 0 & All NULL values \\
 \hline
-LineNmbr & varchar(20) & Line Number & 51 & ... \\
+LineNmbr & varchar(20) &  & 51 & ... \\
 \hline
-PA & varchar(20) & PA-Prior Authorization & 811384 & ... \\
+PA & varchar(20) &  & 811384 & ... \\
 \hline
-ClaimType & char(1) & Claim Type & 2 & \{P, V\} \\
+ClaimType & char(1) &  & 2 & \{P, V\} \\
 \hline
-ClaimSubType & char(1) & Claim Sub Type & 3 & \{A, O, R\} \\
+ClaimSubType & char(1) &  & 3 & \{R, O, A\} \\
 \hline
-CreateDate & datetime & Create Date & 276 & Range: [2020-07-17, 2025-09-08] \\
+CreateDate & datetime &  & 276 & Range: [2020-07-17, 2025-09-08] \\
 \hline
-Id & bigint(19) & Claim ID & 37750736 & Range: [1.00, 37750736.00], Avg: 18875368.50, Median: 18875369.00 \\
+Id & bigint(19) &  & 37750736 & Range: [1.00, 37750736.00], Avg: 18875368.50, Median: 18875369.00 \\
 \hline
 \end{longtable}
 
@@ -200,27 +199,27 @@ Id & bigint(19) & Claim ID & 37750736 & Range: [1.00, 37750736.00], Avg: 1887536
 \endfoot
 \hline
 \endlastfoot
-CONTACTID & bigint(19) & Contact ID & 262802 & Range: [10468.00, 444197.00], Avg: 219587.19, Median: 208125.00 \\
+CONTACTID & bigint(19) &  & 262802 & Range: [10468.00, 444197.00], Avg: 219587.19, Median: 208125.00 \\
 \hline
-FIRSTNAME & varchar(30) & Legal Representative FIRST NAME & 61717 & ... \\
+FIRSTNAME & varchar(30) &  & 61717 & ... \\
 \hline
-LASTNAME & varchar(30) & Legal Representative LAST NAME & 82349 & ... \\
+LASTNAME & varchar(30) &  & 82349 & ... \\
 \hline
-GENDER & varchar(100) & GENDER & 3 & \{, Female, Male\} \\
+GENDER & varchar(100) &  & 3 & \{, Female, Male\} \\
 \hline
-CASENO & bigint(19) & Consumer iConnect ID & 73402 & Range: [10184.00, 101016.00], Avg: 41002.77, Median: 36889.00 \\
+CASENO & bigint(19) &  & 73402 & Range: [10184.00, 101016.00], Avg: 41002.77, Median: 36889.00 \\
 \hline
-RELATIONSHIP & varchar(100) & RELATIONSHIP & 85 & ... \\
+RELATIONSHIP & varchar(100) &  & 85 & ... \\
 \hline
-Multirelationship & varchar(-1) & Multiple relationship & 5236 & ... \\
+Multirelationship & varchar(-1) &  & 5236 & ... \\
 \hline
-Active & int(10) & Active & 2 & Range: [0.00, 1.00], Avg: 0.87, Median: 1.00 \\
+Active & int(10) &  & 2 & Range: [0.00, 1.00], Avg: 0.87, Median: 1.00 \\
 \hline
-DateTimeStamp & datetime2 & DateTimeStamp & 409847 & Range: [2018-11-27, 2025-09-12] \\
+DateTimeStamp & datetime2 &  & 409847 & Range: [2018-11-27, 2025-09-12] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 3437 & ... \\
+UserStamp & varchar(100) &  & 3437 & ... \\
 \hline
-RECID & bigint(19) & Record ID & 433650 & Range: [10174.00, 504002.00], Avg: 252246.06, Median: 267038.00 \\
+RECID & bigint(19) &  & 433650 & Range: [10174.00, 504002.00], Avg: 252246.06, Median: 267038.00 \\
 \hline
 \end{longtable}
 
@@ -250,137 +249,137 @@ RECID & bigint(19) & Record ID & 433650 & Range: [10174.00, 504002.00], Avg: 252
 \endfoot
 \hline
 \endlastfoot
-CASENO & bigint(19) & Consumer iConnect ID & 60821 & Range: [10184.00, 100986.00], Avg: 49458.02, Median: 48467.00 \\
+CASENO & bigint(19) &  & 60821 & Range: [10184.00, 100986.00], Avg: 49458.02, Median: 48467.00 \\
 \hline
-DOB & datetime & DOB & 21369 & Range: [1926-11-08, 2022-07-16] \\
+DOB & datetime &  & 21369 & Range: [1926-11-08, 2022-07-16] \\
 \hline
-GENDER & varchar(100) & GENDER & 2 & \{Female, Male\} \\
+GENDER & varchar(100) &  & 2 & \{Male, Female\} \\
 \hline
-RACE & varchar(100) & RACE & 7 & \{, African American, Alaska Native, Asian/Pacific Islander, Caucasian, Native American, Other\} \\
+RACE & varchar(100) &  & 7 & \{Asian/Pacific Islander, Other, , Alaska Native, Native American, Caucasian, African American\} \\
 \hline
-PLANGUAGE & varchar(100) & Written Language & 18 & ... \\
+PLANGUAGE & varchar(100) &  & 18 & ... \\
 \hline
-SLANGUAGE & varchar(100) & Spoken Language & 21 & ... \\
+SLANGUAGE & varchar(100) &  & 21 & ... \\
 \hline
-TITLE & varchar(50) & TITLE & 51 & ... \\
+TITLE & varchar(50) &  & 51 & ... \\
 \hline
-ETHNICITYLOOKUP & varchar(30) & ETHNICITY LOOKUP & 17 & ... \\
+ETHNICITYLOOKUP & varchar(30) &  & 17 & ... \\
 \hline
-County & varchar(100) & County & 119 & ... \\
+County & varchar(100) &  & 119 & ... \\
 \hline
-District & varchar(25) & District & 39 & ... \\
+District & varchar(25) &  & 39 & ... \\
 \hline
-Region & varchar(100) & Region & 25 & ... \\
+Region & varchar(100) &  & 25 & ... \\
 \hline
-DOD & datetime & DOD-Date of Death & 161 & Range: [2018-12-29, 2025-09-09] \\
+DOD & datetime &  & 161 & Range: [2018-12-29, 2025-09-09] \\
 \hline
-CauseOfDeath & varchar(1000) & Cause Of Death & 171 & ... \\
+CauseOfDeath & varchar(1000) &  & 171 & ... \\
 \hline
-DODAction & varchar(50) & DOD Action & 2 & \{, Verified Alive\} \\
+DODAction & varchar(50) &  & 2 & \{Verified Alive, \} \\
 \hline
-DODFileNumber & varchar(25) & DOD FileNumber & 181 & ... \\
+DODFileNumber & varchar(25) &  & 181 & ... \\
 \hline
-RESIDENCETYPE & varchar(100) & Living Setting & 28 & ... \\
+RESIDENCETYPE & varchar(100) &  & 28 & ... \\
 \hline
-MedicaidId & varchar(500) & Medicaid ID & 54141 & ... \\
+MedicaidId & varchar(500) &  & 54141 & ... \\
 \hline
-ABCPIN & varchar(50) & Legacy ABC PIN & 49469 & ... \\
+ABCPIN & varchar(50) &  & 49469 & ... \\
 \hline
-ReferralSource & varchar(100) & Referral Source & 25 & ... \\
+ReferralSource & varchar(100) &  & 25 & ... \\
 \hline
-CBCFlag & bit & CBC Flag- Identifies if the Consumer has enrolled in CBC Program & 2 & Range: [0.00, 1.00], Avg: 0.00, Median: 0.00 \\
+CBCFlag & bit &  & 2 & Range: [0.00, 1.00], Avg: 0.00, Median: 0.00 \\
 \hline
-ReferredToVR & varchar(50) & ReferredToVR & 4 & \{, NA, No, Yes\} \\
+ReferredToVR & varchar(50) &  & 4 & \{Yes, No, NA, \} \\
 \hline
-ANNUALINCOME & numeric(19,2) & ANNUAL INCOME & 1879 & Range: [0.00, 86400.00], Avg: 1884.71, Median: 0.00 \\
+ANNUALINCOME & numeric(19,2) &  & 1879 & Range: [0.00, 86400.00], Avg: 1884.71, Median: 0.00 \\
 \hline
-Competency & varchar(50) & Competency & 12 & ... \\
+Competency & varchar(50) &  & 12 & ... \\
 \hline
-Status & varchar(10) & Status & 1 & \{Active\} \\
+Status & varchar(10) &  & 1 & \{Active\} \\
 \hline
-DevelopmentalDisability & varchar(-1) & Developmental Disability & 87 & ... \\
+DevelopmentalDisability & varchar(-1) &  & 87 & ... \\
 \hline
-FUNDCODE & varchar(25) & FUND CODE (Division) & 1 & \{APD\} \\
+FUNDCODE & varchar(25) &  & 1 & \{APD\} \\
 \hline
-DISPOSITION & varchar(100) & DISPOSITION & 9 & \{APD Eligible - Bypass PE, APD Eligible - DDMC, APD Eligible - High Risk, APD Eligible - ICF/IID, APD Eligible - ICF/SNF Transition, APD Eligible - NonWaiver, APD Eligible - PESC Assigned, APD Eligible - Pre-enrollment, APD Eligible - Waiver\} \\
+DISPOSITION & varchar(100) &  & 9 & \{APD Eligible - Bypass PE, APD Eligible - PESC Assigned, APD Eligible - ICF/SNF Transition, APD Eligible - Pre-enrollment, APD Eligible - DDMC, APD Eligible - High Risk, APD Eligible - Waiver, APD Eligible - NonWaiver, APD Eligible - ICF/IID\} \\
 \hline
-DISPOSITIONDATE & datetime & DISPOSITION DATE & 7089 & Range: [1948-03-15, 2025-09-11] \\
+DISPOSITIONDATE & datetime &  & 7089 & Range: [1948-03-15, 2025-09-11] \\
 \hline
-OPENDATE & datetime & OPEN DATE & 11324 & Range: [1948-03-15, 2025-09-10] \\
+OPENDATE & datetime &  & 11324 & Range: [1948-03-15, 2025-09-10] \\
 \hline
-OPENREASON & varchar(-1) & OPEN REASON & 3 & \{, 0, 1\} \\
+OPENREASON & varchar(-1) &  & 3 & \{, 1, 0\} \\
 \hline
-CLOSEDATE & datetime & CLOSE DATE & 14 & Range: [2022-07-09, 2025-08-26] \\
+CLOSEDATE & datetime &  & 14 & Range: [2022-07-09, 2025-08-26] \\
 \hline
-CLOSEREASON & varchar(100) & CLOSE REASON & 6 & \{, Deceased, Loss of Contact, Not Eligible, Services No Longer Appropriate, Services No Longer Needed\} \\
+CLOSEREASON & varchar(100) &  & 6 & \{Deceased, Loss of Contact, Not Eligible, Services No Longer Appropriate, , Services No Longer Needed\} \\
 \hline
-ApplicationReceivedDate & datetime & Application Received Date & 10621 & Range: [1889-07-11, 2025-09-11] \\
+ApplicationReceivedDate & datetime &  & 10621 & Range: [1889-07-11, 2025-09-11] \\
 \hline
-ApplicationReceivedViaOAS & varchar(50) & Application Received Via OAS & 2 & \{Yes, No\} \\
+ApplicationReceivedViaOAS & varchar(50) &  & 2 & \{Yes, No\} \\
 \hline
-ApplicantRequestingCWE & varchar(50) & Applicant Requesting CWE & 2 & \{Yes, No\} \\
+ApplicantRequestingCWE & varchar(50) &  & 2 & \{Yes, No\} \\
 \hline
-RequiresSOPTReview & varchar(10) & Requires SOPT Review & 2 & \{Yes, No\} \\
+RequiresSOPTReview & varchar(10) &  & 2 & \{Yes, No\} \\
 \hline
-DateAssignedToSOPT & datetime & Date Assigned To SOPT & 72 & Range: [2024-10-02, 2025-09-10] \\
+DateAssignedToSOPT & datetime &  & 72 & Range: [2024-10-02, 2025-09-10] \\
 \hline
-SOPTName & varchar(100) & SOPTName & 53 & ... \\
+SOPTName & varchar(100) &  & 53 & ... \\
 \hline
-DateSOPTCompletedReview & datetime & Date SOPT Completed Review & 71 & Range: [2024-11-19, 2025-09-11] \\
+DateSOPTCompletedReview & datetime &  & 71 & Range: [2024-11-19, 2025-09-11] \\
 \hline
-OPENID & bigint(19) & Open ID & 60816 & Range: [10211.00, 106665.00], Avg: 50706.64, Median: 49173.00 \\
+OPENID & bigint(19) &  & 60816 & Range: [10211.00, 106665.00], Avg: 50706.64, Median: 49173.00 \\
 \hline
-PRIMARYWORKER & varchar(100) & PRIMARY WORKER & 1296 & ... \\
+PRIMARYWORKER & varchar(100) &  & 1296 & ... \\
 \hline
-PRIMARYWORKERID & bigint(19) & Primary Worker ID & 1329 & Range: [330.00, 52864.00], Avg: 16773.24, Median: 3881.00 \\
+PRIMARYWORKERID & bigint(19) &  & 1329 & Range: [330.00, 52864.00], Avg: 16773.24, Median: 3881.00 \\
 \hline
-SECONDWORKER & varchar(100) & SECONDARY WORKER & 89 & ... \\
+SECONDWORKER & varchar(100) &  & 89 & ... \\
 \hline
-SECONDWORKERID & bigint(19) & Secondary Worker ID & 89 & Range: [359.00, 51214.00], Avg: 1442.13, Median: 1182.00 \\
+SECONDWORKERID & bigint(19) &  & 89 & Range: [359.00, 51214.00], Avg: 1442.13, Median: 1182.00 \\
 \hline
-PrimaryDiagnosis & varchar(200) & Primary Diagnosis & 15 & ... \\
+PrimaryDiagnosis & varchar(200) &  & 15 & ... \\
 \hline
-SecondaryDiagnosis & varchar(200) & Secondary Diagnosis & 14 & ... \\
+SecondaryDiagnosis & varchar(200) &  & 14 & ... \\
 \hline
-OtherDiagnosis & varchar(200) & Other Diagnosis & 23 & ... \\
+OtherDiagnosis & varchar(200) &  & 23 & ... \\
 \hline
-MentalHealthDiag1 & varchar(200) & Mental Health Diagnosis1 & 56 & ... \\
+MentalHealthDiag1 & varchar(200) &  & 56 & ... \\
 \hline
-MentalHealthDiag2 & varchar(200) & Mental Health Diagnosis 2 & 52 & ... \\
+MentalHealthDiag2 & varchar(200) &  & 52 & ... \\
 \hline
-MentalHealthDiag3 & varchar(200) & Mental Health Diagnosis 3 & 43 & ... \\
+MentalHealthDiag3 & varchar(200) &  & 43 & ... \\
 \hline
-MentalHealthDiag4 & varchar(200) & Mental Health Diagnosis 4 & 27 & ... \\
+MentalHealthDiag4 & varchar(200) &  & 27 & ... \\
 \hline
-MentalHealthDiag\_5\_6 & varchar(100) & Mental Health Diagnosis 5\_6 & 75 & ... \\
+MentalHealthDiag\_5\_6 & varchar(100) &  & 75 & ... \\
 \hline
-REVIEW & varchar(100) & REVIEW & 8 & \{Annual, As Needed, Initial, Initial Application, Monthly, Other, Quarterly, Update/Amended \} \\
+REVIEW & varchar(100) &  & 8 & \{Initial Application, Initial, As Needed, Other, Monthly, Update/Amended , Quarterly, Annual\} \\
 \hline
-REVIEWDATE & datetime & REVIEW DATE & 6168 & Range: [1976-07-01, 2025-09-11] \\
+REVIEWDATE & datetime &  & 6168 & Range: [1976-07-01, 2025-09-11] \\
 \hline
-SSNMonthlyBenefitAmt & varchar(50) & SSN Monthly Benefit Amount & 3147 & ... \\
+SSNMonthlyBenefitAmt & varchar(50) &  & 3147 & ... \\
 \hline
-3rdPartyHealthInsurance & varchar(50) & 3rd Party Health Insurance & 3 & \{, No, Yes\} \\
+3rdPartyHealthInsurance & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-CompetitivelyEmployed & varchar(50) & Competitively Employed & 3 & \{, No, Yes\} \\
+CompetitivelyEmployed & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-HireDate & varchar(50) & Hire Date & 1632 & ... \\
+HireDate & varchar(50) &  & 1632 & ... \\
 \hline
-AvgMonthlyEarnings & varchar(50) & Average Monthly Earnings & 1083 & ... \\
+AvgMonthlyEarnings & varchar(50) &  & 1083 & ... \\
 \hline
-WantsEmployment & varchar(50) & Wants Employment & 3 & \{, No, Yes\} \\
+WantsEmployment & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-HourlyWage & varchar(50) & Hourly Wage & 259 & ... \\
+HourlyWage & varchar(50) &  & 259 & ... \\
 \hline
-MinimumWage & varchar(50) & Minimum Wage & 3 & \{, No, Yes\} \\
+MinimumWage & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-CONTACTID & bigint(19) & Contact ID & 60821 & Range: [10467.00, 443946.00], Avg: 102913.53, Median: 79348.00 \\
+CONTACTID & bigint(19) &  & 60821 & Range: [10467.00, 443946.00], Avg: 102913.53, Median: 79348.00 \\
 \hline
-DateTimeStamp & datetime & DateTimeStamp & 58726 & Range: [2018-11-27, 2025-09-12] \\
+DateTimeStamp & datetime &  & 58726 & Range: [2018-11-27, 2025-09-12] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 1641 & ... \\
+UserStamp & varchar(100) &  & 1641 & ... \\
 \hline
-Id & int(10) & Id & 60821 & Range: [1.00, 96453.00], Avg: 40810.13, Median: 39363.00 \\
+Id & int(10) &  & 60821 & Range: [1.00, 96453.00], Avg: 40810.13, Median: 39363.00 \\
 \hline
 \end{longtable}
 
@@ -410,29 +409,29 @@ Id & int(10) & Id & 60821 & Range: [1.00, 96453.00], Avg: 40810.13, Median: 3936
 \endfoot
 \hline
 \endlastfoot
-CASENO & bigint(19) & Consumer iConnect ID & 74330 & Range: [10184.00, 100986.00], Avg: 48488.48, Median: 47484.00 \\
+CASENO & bigint(19) &  & 74330 & Range: [10184.00, 100986.00], Avg: 48488.48, Median: 47484.00 \\
 \hline
-FUNDCODE & varchar(25) & FUNDCODE & 3 & \{APD, INC, FOR\} \\
+FUNDCODE & varchar(25) &  & 3 & \{APD, INC, FOR\} \\
 \hline
-PrimaryDiagnosis & varchar(200) & Primary Diagnosis & 19 & ... \\
+PrimaryDiagnosis & varchar(200) &  & 19 & ... \\
 \hline
-SecondaryDiagnosis & varchar(200) & Secondary Diagnosis & 21 & ... \\
+SecondaryDiagnosis & varchar(200) &  & 21 & ... \\
 \hline
-TertiaryDiagnosis & varchar(200) & Tertiary Diagnosis & 27 & ... \\
+TertiaryDiagnosis & varchar(200) &  & 27 & ... \\
 \hline
-QuaternaryDiagnosis & varchar(200) & Quaternary Diagnosis & 27 & ... \\
+QuaternaryDiagnosis & varchar(200) &  & 27 & ... \\
 \hline
-REVIEW & varchar(100) & REVIEW & 8 & \{Initial Application, Initial, As Needed, Other, Monthly, Update/Amended , Quarterly, Annual\} \\
+REVIEW & varchar(100) &  & 8 & \{Initial Application, Initial, As Needed, Other, Monthly, Update/Amended , Quarterly, Annual\} \\
 \hline
-REVIEWDATE & datetime & REVIEW DATE & 6597 & Range: [1976-07-01, 2025-09-11] \\
+REVIEWDATE & datetime &  & 6597 & Range: [1976-07-01, 2025-09-11] \\
 \hline
-STATUS & varchar(100) & STATUS & 4 & \{Pending, Open, Complete, Draft\} \\
+STATUS & varchar(100) &  & 4 & \{Pending, Open, Complete, Draft\} \\
 \hline
-DATETIMESTAMP & datetime & DATETIMESTAMP & 11325 & Range: [2018-12-06, 2025-09-11] \\
+DATETIMESTAMP & datetime &  & 11325 & Range: [2018-12-06, 2025-09-11] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 140 & ... \\
+UserStamp & varchar(100) &  & 140 & ... \\
 \hline
-DiagnosisID & bigint(19) & Diagnosis ID & 74826 & Range: [79.00, 74922.00], Avg: 37494.67, Median: 37493.00 \\
+DiagnosisID & bigint(19) &  & 74826 & Range: [79.00, 74922.00], Avg: 37494.67, Median: 37493.00 \\
 \hline
 \end{longtable}
 
@@ -462,87 +461,153 @@ DiagnosisID & bigint(19) & Diagnosis ID & 74826 & Range: [79.00, 74922.00], Avg:
 \endfoot
 \hline
 \endlastfoot
-CASENO & bigint(19) & Consumer iConnect ID & 29004 & Range: [10184.00, 100397.00], Avg: 46922.21, Median: 45362.00 \\
+CASENO & bigint(19) &  & 29004 & Range: [10184.00, 100397.00], Avg: 46922.21, Median: 45362.00 \\
 \hline
-REVIEW & varchar(100) & REVIEW & 7 & \{Initial Application, Initial, As Needed, Other, Update/Amended, Quarterly, Annual\} \\
+REVIEW & varchar(100) &  & 7 & \{Initial Application, Initial, As Needed, Other, Update/Amended, Quarterly, Annual\} \\
 \hline
-Worker & varchar(100) & Worker Name & 640 & ... \\
+Worker & varchar(100) &  & 640 & ... \\
 \hline
-ReviewDate & datetime & Review Date & 1927 & Range: [2017-12-27, 2025-09-05] \\
+ReviewDate & datetime &  & 1927 & Range: [2017-12-27, 2025-09-05] \\
 \hline
-STATUS & varchar(100) & STATUS & 6 & \{Signature Complete, Pending, Open, Submitted, Complete, Draft\} \\
+STATUS & varchar(100) &  & 6 & \{Signature Complete, Pending, Open, Submitted, Complete, Draft\} \\
 \hline
-Division & varchar(25) & Division & 1 & \{APD\} \\
+Division & varchar(25) &  & 1 & \{APD\} \\
 \hline
-ApprovedBy & varchar(100) & Approved By- APD State Office Staff & 280 & ... \\
+ApprovedBy & varchar(100) &  & 280 & ... \\
 \hline
-ApprovedDate & datetime & Approved Date & 2070 & Range: [2018-12-06, 2025-09-05] \\
+ApprovedDate & datetime &  & 2070 & Range: [2018-12-06, 2025-09-05] \\
 \hline
-Region & varchar(50) & Region & 7 & \{Northeast, Southeast, Central, , Southern, Suncoast, Northwest\} \\
+Region & varchar(50) &  & 7 & \{Northeast, Southeast, Central, , Southern, Suncoast, Northwest\} \\
 \hline
-UpdateSituation & varchar(50) & Update Situation & 6 & \{Change in age, Change in living setting, When SANs is requested, At the time of waiver enrollment for new waiver en, , Change in QSI\} \\
+UpdateSituation & varchar(50) &  & 6 & \{Change in age, Change in living setting, When SANs is requested, At the time of waiver enrollment for new waiver en, , Change in QSI\} \\
 \hline
-LivingSetting & varchar(50) & Living Setting & 7 & \{Family Home, CTEP or Special Medical Home Care, Standard or Live-In Residential Habilitatio, , Behavior Focus Residential Habilitation, Intensive Behavior Residential Habilitation, Independent Living, Supported Living, or Licensed \} \\
+LivingSetting & varchar(50) &  & 7 & \{Family Home, CTEP or Special Medical Home Care, Standard or Live-In Residential Habilitatio, , Behavior Focus Residential Habilitation, Intensive Behavior Residential Habilitation, Independent Living, Supported Living, or Licensed \} \\
 \hline
-CurrentAge & varchar(50) & Current Age of the Consumer & 89 & ... \\
+CurrentAge & varchar(50) &  & 89 & ... \\
 \hline
-PropFactor & varchar(50) & PropFactor & 1 & \{1.00288\} \\
+PropFactor & varchar(50) &  & 1 & \{1.00288\} \\
 \hline
-AlgorithmAmt & varchar(50) & Algorithm Amount & 33513 & ... \\
+QSIBehavioralScore & varchar(50) &  & 25 & ... \\
 \hline
-QSIBehavioralScore & varchar(50) & QSI Behavioral Score & 25 & ... \\
+QSIFunctionalScore & varchar(50) &  & 45 & ... \\
 \hline
-QSIFunctionalScore & varchar(50) & QSI Functional Score & 45 & ... \\
+Q14 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q14 & varchar(50) & QSI Question 14 & 5 & \{3, 2, 1, 0, 4\} \\
+Q15 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q15 & varchar(50) & QSI Question 15 & 5 & \{3, 2, 1, 0, 4\} \\
+Q16 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q16 & varchar(50) & QSI Question 16 & 5 & \{3, 2, 1, 0, 4\} \\
+Q17 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q17 & varchar(50) & QSI Question 17 & 5 & \{3, 2, 1, 0, 4\} \\
+Q18 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q18 & varchar(50) & QSI Question 18 & 5 & \{3, 2, 1, 0, 4\} \\
+Q19 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q19 & varchar(50) & QSI Question 19 & 5 & \{3, 2, 1, 0, 4\} \\
+Q20 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q20 & varchar(50) & QSI Question 20 & 5 & \{3, 2, 1, 0, 4\} \\
+Q21 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q21 & varchar(50) & QSI Question 21 & 5 & \{3, 2, 1, 0, 4\} \\
+Q22 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q22 & varchar(50) & QSI Question 22 & 5 & \{3, 2, 1, 0, 4\} \\
+Q23 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q23 & varchar(50) & QSI Question 23 & 5 & \{3, 2, 1, 0, 4\} \\
+Q24 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q24 & varchar(50) & QSI Question 24 & 5 & \{3, 2, 1, 0, 4\} \\
+Q25 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q25 & varchar(50) & QSI Question 25 & 5 & \{3, 2, 1, 0, 4\} \\
+Q26 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q26 & varchar(50) & QSI Question 26 & 5 & \{3, 2, 1, 0, 4\} \\
+Q27 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q27 & varchar(50) & QSI Question 27 & 5 & \{3, 2, 1, 0, 4\} \\
+Q28 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q28 & varchar(50) & QSI Question 28 & 5 & \{3, 2, 1, 0, 4\} \\
+Q29 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q29 & varchar(50) & QSI Question 29 & 5 & \{3, 2, 1, 0, 4\} \\
+Q30 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q30 & varchar(50) & QSI Question 30 & 5 & \{3, 2, 1, 0, 4\} \\
+Q33 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q33 & varchar(50) & QSI Question 33 & 5 & \{3, 2, 1, 0, 4\} \\
+Q34 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q34 & varchar(50) & QSI Question 34 & 5 & \{3, 2, 1, 0, 4\} \\
+Q36 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q36 & varchar(50) & QSI Question 36 & 5 & \{3, 2, 1, 0, 4\} \\
+Q43 & varchar(50) &  & 2 & \{0, 4\} \\
 \hline
-Q43 & varchar(50) & QSI Question 43 & 2 & \{0, 4\} \\
+Q44 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q44 & varchar(50) & QSI Question 44 & 5 & \{3, 2, 1, 0, 4\} \\
+DATETIMESTAMP & datetime &  & 43207 & Range: [2018-12-07, 2025-09-05] \\
 \hline
-DATETIMESTAMP & datetime & DATETIMESTAMP & 43207 & Range: [2018-12-07, 2025-09-05] \\
+UserStamp & varchar(100) &  & 328 & ... \\
 \hline
-UserStamp & varchar(100) & UserStamp & 328 & ... \\
+EZBudgetAssessId & bigint(19) &  & 43213 & Range: [72383.00, 1396021.00], Avg: 651351.83, Median: 584652.00 \\
 \hline
-EZBudgetAssessId & bigint(19) & EZ iBudget Calculator Form ID & 43213 & Range: [72383.00, 1396021.00], Avg: 651351.83, Median: 584652.00 \\
+AlgorithmAmt & float(53) &  & 33513 & Range: [762.41, 203765.83], Avg: 33179.24, Median: 25468.61 \\
+\hline
+\end{longtable}
+
+\subsection{tbl\_Model5b\_Predictions}
+
+\subsubsection{Table Overview}
+\begin{itemize}
+\item \textbf{Table Name:} tbl\_Model5b\_Predictions
+\item \textbf{Schema:} dbo
+\item \textbf{Number of Records:} 0
+\item \textbf{Number of Columns:} 19
+\end{itemize}
+
+\subsubsection{Column Details}
+\begin{longtable}{|l|l|l|r|p{6cm}|}
+\hline
+\textbf{Column Name} & \textbf{Data Type} & \textbf{Description} & \textbf{N} & \textbf{Statistics/Values} \\
+\hline
+\endfirsthead
+\multicolumn{5}{c}{\textit{Continued from previous page}} \\
+\hline
+\textbf{Column Name} & \textbf{Data Type} & \textbf{Description} & \textbf{N} & \textbf{Statistics/Values} \\
+\hline
+\endhead
+\hline
+\multicolumn{5}{c}{\textit{Continued on next page}} \\
+\endfoot
+\hline
+\endlastfoot
+PredictionID & bigint(19) &  & 0 & All NULL values \\
+\hline
+CaseNo & bigint(19) &  & 0 & All NULL values \\
+\hline
+AssessID & bigint(19) &  & 0 & All NULL values \\
+\hline
+ReviewDate & datetime &  & 0 & All NULL values \\
+\hline
+LivingSetting & varchar(10) &  & 0 & All NULL values \\
+\hline
+Age & int(10) &  & 0 & All NULL values \\
+\hline
+AgeGroup & varchar(20) &  & 0 & All NULL values \\
+\hline
+BSum & int(10) &  & 0 & All NULL values \\
+\hline
+FSum & int(10) &  & 0 & All NULL values \\
+\hline
+PSum & int(10) &  & 0 & All NULL values \\
+\hline
+FHFSum & int(10) &  & 0 & All NULL values \\
+\hline
+SLFSum & int(10) &  & 0 & All NULL values \\
+\hline
+SLBSum & int(10) &  & 0 & All NULL values \\
+\hline
+SqrtPrediction & decimal(19,4) &  & 0 & All NULL values \\
+\hline
+PredictedBudget & decimal(19,2) &  & 0 & All NULL values \\
+\hline
+CalculationDate & datetime &  & 0 & All NULL values \\
+\hline
+CreatedDate & datetime &  & 0 & All NULL values \\
+\hline
+CreatedBy & varchar(100) &  & 0 & All NULL values \\
+\hline
+RunID & bigint(19) &  & 0 & All NULL values \\
 \hline
 \end{longtable}
 
@@ -572,71 +637,71 @@ EZBudgetAssessId & bigint(19) & EZ iBudget Calculator Form ID & 43213 & Range: [
 \endfoot
 \hline
 \endlastfoot
-CaseNo & bigint(19) & Consumer iConnect ID & 41919 & Range: [10184.00, 100198.00], Avg: 37730.16, Median: 34374.00 \\
+CaseNo & bigint(19) &  & 41919 & Range: [10184.00, 100198.00], Avg: 37730.16, Median: 34374.00 \\
 \hline
-Division & varchar(25) & Division & 1 & \{APD\} \\
+Division & varchar(25) &  & 1 & \{APD\} \\
 \hline
-FiscalYear & int(10) & FiscalYear & 6 & Range: [2021.00, 2026.00], Avg: 2023.44, Median: 2023.00 \\
+FiscalYear & int(10) &  & 6 & Range: [2021.00, 2026.00], Avg: 2023.44, Median: 2023.00 \\
 \hline
-STARTDATE & datetime & START DATE & 1961 & Range: [2020-07-01, 2026-06-20] \\
+STARTDATE & datetime &  & 1961 & Range: [2020-07-01, 2026-06-20] \\
 \hline
-ENDDATE & datetime & END DATE & 2140 & Range: [2020-07-01, 2026-06-30] \\
+ENDDATE & datetime &  & 2140 & Range: [2020-07-01, 2026-06-30] \\
 \hline
-IndexSubObjectCode & varchar(100) & Index Sub Object Code & 12 & ... \\
+IndexSubObjectCode & varchar(100) &  & 12 & ... \\
 \hline
-ServiceRatio & varchar(100) & Service Ratio & 11 & ... \\
+ServiceRatio & varchar(100) &  & 11 & ... \\
 \hline
-ConsumerCounty & varchar(100) & Consumer County & 67 & ... \\
+ConsumerCounty & varchar(100) &  & 67 & ... \\
 \hline
-GeographicDifferential & varchar(100) & Geographic Differential & 3 & \{Geographic, Monroe, Non-Geographic\} \\
+GeographicDifferential & varchar(100) &  & 3 & \{Geographic, Monroe, Non-Geographic\} \\
 \hline
-ProviderRateType & varchar(100) & Provider Rate Type & 2 & \{Agency, Solo\} \\
+ProviderRateType & varchar(100) &  & 2 & \{Agency, Solo\} \\
 \hline
-ServiceCode & varchar(25) & ServiceCode & 135 & ... \\
+ServiceCode & varchar(25) &  & 135 & ... \\
 \hline
-Service & varchar(100) & Service & 135 & ... \\
+Service & varchar(100) &  & 135 & ... \\
 \hline
-UnitType & varchar(100) & UnitType & 8 & \{15 mins, Day, Hour, Item, Mile, Month, Trip, Units\} \\
+UnitType & varchar(100) &  & 8 & \{15 mins, Day, Hour, Item, Mile, Month, Trip, Units\} \\
 \hline
-UnitsPer & numeric(19,2) & UnitsPer & 4264 & Range: [0.00, 30816.00], Avg: 224.27, Median: 24.00 \\
+UnitsPer & numeric(19,2) &  & 4264 & Range: [0.00, 30816.00], Avg: 224.27, Median: 24.00 \\
 \hline
-UnitsOfMeasure & varchar(25) & Units Of Measure (Day, Week, Month) & 7 & \{, Business Day, Calendar Day, Month - Round Up, Quarter, Week, Year\} \\
+UnitsOfMeasure & varchar(25) &  & 7 & \{, Business Day, Calendar Day, Month - Round Up, Quarter, Week, Year\} \\
 \hline
-TotalUnits & numeric(19,4) & Total Units & 12525 & Range: [0.00, 35136.00], Avg: 1168.33, Median: 96.00 \\
+TotalUnits & numeric(19,4) &  & 12525 & Range: [0.00, 35136.00], Avg: 1168.33, Median: 96.00 \\
 \hline
-AnnualizedUnits & int(10) & Annualized Units & 10424 & Range: [0.00, 74887844.00], Avg: 2285.11, Median: 21.00 \\
+AnnualizedUnits & int(10) &  & 10424 & Range: [0.00, 74887844.00], Avg: 2285.11, Median: 21.00 \\
 \hline
-VendorID & bigint(19) & Vendor ID (Provider iConnect ID) & 5550 & Range: [10055.00, 26323.00], Avg: 14224.89, Median: 13638.00 \\
+VendorID & bigint(19) &  & 5550 & Range: [10055.00, 26323.00], Avg: 14224.89, Median: 13638.00 \\
 \hline
-ProviderName & varchar(75) & Provider Name & 5518 & ... \\
+ProviderName & varchar(75) &  & 5518 & ... \\
 \hline
-ProviderMedcId & varchar(20) & Provider Medicaid ID & 5524 & ... \\
+ProviderMedcId & varchar(20) &  & 5524 & ... \\
 \hline
-Rate & numeric(19,4) & Rate & 9296 & Range: [0.00, 135497.45], Avg: 429.10, Median: 14.51 \\
+Rate & numeric(19,4) &  & 9296 & Range: [0.00, 135497.45], Avg: 429.10, Median: 14.51 \\
 \hline
-MaxAmount & numeric(19,2) & MaxAmount & 102179 & Range: [0.00, 323705.76], Avg: 10655.39, Median: 2178.60 \\
+MaxAmount & numeric(19,2) &  & 102179 & Range: [0.00, 323705.76], Avg: 10655.39, Median: 2178.60 \\
 \hline
-COMMENTS & varchar(-1) & COMMENTS & 578178 & ... \\
+COMMENTS & varchar(-1) &  & 578178 & ... \\
 \hline
-PlannedServiceStatus & varchar(100) & Planned Service Status & 10 & \{, Approved, Proposed, Region Review Approved, Region Review Denied, Region Review Partially Approved, State Review Approved, State Review Denied, State Review Partially Approved, Terminated\} \\
+PlannedServiceStatus & varchar(100) &  & 10 & \{, Approved, Proposed, Region Review Approved, Region Review Denied, Region Review Partially Approved, State Review Approved, State Review Denied, State Review Partially Approved, Terminated\} \\
 \hline
-RegionStateReviewComments & varchar(5000) & Region State Review Comments & 310592 & ... \\
+RegionStateReviewComments & varchar(5000) &  & 310592 & ... \\
 \hline
-AllowEVVDelivery & bit & Allow EVV Delivery & 2 & Range: [0.00, 1.00], Avg: 0.15, Median: 0.00 \\
+AllowEVVDelivery & bit &  & 2 & Range: [0.00, 1.00], Avg: 0.15, Median: 0.00 \\
 \hline
-EVVComments & varchar(500) & EVV Comments & 33 & ... \\
+EVVComments & varchar(500) &  & 33 & ... \\
 \hline
-DATETIMESTAMP & datetime & DATETIMESTAMP & 468520 & Range: [2020-06-01, 2025-09-12] \\
+DATETIMESTAMP & datetime &  & 468520 & Range: [2020-06-01, 2025-09-12] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 1726 & ... \\
+UserStamp & varchar(100) &  & 1726 & ... \\
 \hline
-PlannedServiceId & bigint(19) & Planned Service ID & 1066576 & Range: [501.00, 1238183.00], Avg: 635362.07, Median: 640598.00 \\
+PlannedServiceId & bigint(19) &  & 1066576 & Range: [501.00, 1238183.00], Avg: 635362.07, Median: 640598.00 \\
 \hline
-PlanId & bigint(19) & Plan ID & 220989 & Range: [1.00, 232993.00], Avg: 116411.38, Median: 117959.00 \\
+PlanId & bigint(19) &  & 220989 & Range: [1.00, 232993.00], Avg: 116411.38, Median: 117959.00 \\
 \hline
-ISComboCodeID & bigint(19) & IS Combo CodeID & 14 & Range: [71.00, 110.00], Avg: 93.19, Median: 95.00 \\
+ISComboCodeID & bigint(19) &  & 14 & Range: [71.00, 110.00], Avg: 93.19, Median: 95.00 \\
 \hline
-VendorServicesId & bigint(19) & Vendor Services ID & 54897 & Range: [46092.00, 1278384.00], Avg: 964743.70, Median: 944077.00 \\
+VendorServicesId & bigint(19) &  & 54897 & Range: [46092.00, 1278384.00], Avg: 964743.70, Median: 944077.00 \\
 \hline
 \end{longtable}
 
@@ -666,39 +731,39 @@ VendorServicesId & bigint(19) & Vendor Services ID & 54897 & Range: [46092.00, 1
 \endfoot
 \hline
 \endlastfoot
-CaseNo & bigint(19) & Consumer iConnect ID & 41975 & Range: [10184.00, 100198.00], Avg: 39451.24, Median: 35976.00 \\
+CaseNo & bigint(19) &  & 41975 & Range: [10184.00, 100198.00], Avg: 39451.24, Median: 35976.00 \\
 \hline
-Division & varchar(25) & Division & 1 & \{APD\} \\
+Division & varchar(25) &  & 1 & \{APD\} \\
 \hline
-Program & varchar(75) & Program & 5 & \{APD Waiver, CDC+, DDMC, ICF/IID, Non-Waiver\} \\
+Program & varchar(75) &  & 5 & \{Non-Waiver, CDC+, ICF/IID, APD Waiver, DDMC\} \\
 \hline
-Worker & varchar(100) & Worker Name & 2011 & ... \\
+Worker & varchar(100) &  & 2011 & ... \\
 \hline
-CreationDate & datetime & Creation Date & 1646 & Range: [2004-05-14, 2026-06-30] \\
+CreationDate & datetime &  & 1646 & Range: [2004-05-14, 2026-06-30] \\
 \hline
-Comments & varchar(-1) & Comments & 4685 & ... \\
+Comments & varchar(-1) &  & 4685 & ... \\
 \hline
-Status & varchar(100) & Status & 5 & \{Approved, Complete, Draft, No Review Required, Pending\} \\
+Status & varchar(100) &  & 5 & \{No Review Required, Pending, Approved, Complete, Draft\} \\
 \hline
-BeginDate & datetime & Begin Date & 1396 & Range: [2019-07-01, 2025-09-11] \\
+BeginDate & datetime &  & 1396 & Range: [2019-07-01, 2025-09-11] \\
 \hline
-EndDate & datetime & End Date & 811 & Range: [2020-06-30, 2026-07-01] \\
+EndDate & datetime &  & 811 & Range: [2020-06-30, 2026-07-01] \\
 \hline
-Review & varchar(50) & Review & 8 & \{Northeast, Southeast, State Office, Central, , Southern, Suncoast, Northwest\} \\
+Review & varchar(50) &  & 8 & \{Northeast, Southeast, State Office, Central, , Southern, Suncoast, Northwest\} \\
 \hline
-ReviewRequestDate & datetime & Review Request Date & 1932 & Range: [2002-03-23, 8202-08-14] \\
+ReviewRequestDate & datetime &  & 1932 & Range: [2002-03-23, 8202-08-14] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 1286 & ... \\
+UserStamp & varchar(100) &  & 1286 & ... \\
 \hline
-DateTimeStamp & datetime & DateTimeStamp & 166735 & Range: [2020-05-25, 2025-09-12] \\
+DateTimeStamp & datetime &  & 166735 & Range: [2020-05-25, 2025-09-12] \\
 \hline
-PlanId & bigint(19) & Plan ID & 221814 & Range: [1.00, 232993.00], Avg: 120111.93, Median: 121818.00 \\
+PlanId & bigint(19) &  & 221814 & Range: [1.00, 232993.00], Avg: 120111.93, Median: 121818.00 \\
 \hline
-BudgetId & bigint(19) & Budget ID & 215902 & Range: [66.00, 219548.00], Avg: 110245.49, Median: 110512.00 \\
+BudgetId & bigint(19) &  & 215902 & Range: [66.00, 219548.00], Avg: 110245.49, Median: 110512.00 \\
 \hline
-OpenId & bigint(19) & Open ID & 41988 & Range: [10211.00, 105804.00], Avg: 40108.08, Median: 36479.00 \\
+OpenId & bigint(19) &  & 41988 & Range: [10211.00, 105804.00], Avg: 40108.08, Median: 36479.00 \\
 \hline
-EnrollID & bigint(19) & Enrollment ID (Program ID) & 44473 & Range: [10459.00, 298912.00], Avg: 57207.99, Median: 35547.00 \\
+EnrollID & bigint(19) &  & 44473 & Range: [10459.00, 298912.00], Avg: 57207.99, Median: 35547.00 \\
 \hline
 \end{longtable}
 
@@ -728,127 +793,127 @@ EnrollID & bigint(19) & Enrollment ID (Program ID) & 44473 & Range: [10459.00, 2
 \endfoot
 \hline
 \endlastfoot
-CASENO & bigint(19) & Consumer iConnect ID & 53022 & Range: [10184.00, 100332.00], Avg: 43620.79, Median: 40795.00 \\
+CASENO & bigint(19) &  & 53022 & Range: [10184.00, 100332.00], Avg: 43620.79, Median: 40795.00 \\
 \hline
-ABCPIN & varchar(50) & Legacy ABC PIN & 45269 & ... \\
+ABCPIN & varchar(50) &  & 45269 & ... \\
 \hline
-STATUS & varchar(100) & STATUS & 5 & \{Pending, Open, Submitted, Complete, Draft\} \\
+STATUS & varchar(100) &  & 5 & \{Pending, Open, Submitted, Complete, Draft\} \\
 \hline
-REVIEW & varchar(100) & REVIEW & 8 & \{Initial Application, Initial, As Needed, Other, Monthly, Update/Amended, Quarterly, Annual\} \\
+REVIEW & varchar(100) &  & 8 & \{Initial Application, Initial, As Needed, Other, Monthly, Update/Amended, Quarterly, Annual\} \\
 \hline
-REVIEWDATE & datetime & REVIEWDATE & 2668 & Range: [2000-01-01, 2025-09-05] \\
+REVIEWDATE & datetime &  & 2668 & Range: [2000-01-01, 2025-09-05] \\
 \hline
-RATER & varchar(100) & RATER & 198 & ... \\
+RATER & varchar(100) &  & 198 & ... \\
 \hline
-RaterID & bigint(19) & Rater ID & 199 & Range: [344.00, 51822.00], Avg: 7479.66, Median: 2123.00 \\
+RaterID & bigint(19) &  & 199 & Range: [344.00, 51822.00], Avg: 7479.66, Median: 2123.00 \\
 \hline
-COMMENTS & text(2147483647) & COMMENTS & 0 & All NULL values \\
+COMMENTS & text(2147483647) &  & 0 & All NULL values \\
 \hline
-APPROVEDBY & varchar(100) & APPROVED BY & 205 & ... \\
+APPROVEDBY & varchar(100) &  & 205 & ... \\
 \hline
-APPROVEDATE & datetime & APPROVE DATE & 2315 & Range: [2018-12-04, 2025-09-05] \\
+APPROVEDATE & datetime &  & 2315 & Range: [2018-12-04, 2025-09-05] \\
 \hline
-Q13a & varchar(50) & QSI Question 13a & 3 & \{Yes, No, \} \\
+Q13a & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-Q13b & varchar(50) & QSI Question 13b & 3 & \{Yes, No, \} \\
+Q13b & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-Q13c & varchar(50) & QSI Question 13c & 3 & \{Yes, No, \} \\
+Q13c & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-Q14 & varchar(50) & QSI Question 14 & 5 & \{3, 2, 1, 0, 4\} \\
+Q14 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q15 & varchar(50) & QSI Question 15 & 5 & \{3, 2, 1, 0, 4\} \\
+Q15 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q16 & varchar(50) & QSI Question 16 & 5 & \{3, 2, 1, 0, 4\} \\
+Q16 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q17 & varchar(50) & QSI Question 17 & 5 & \{3, 2, 1, 0, 4\} \\
+Q17 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q18 & varchar(50) & QSI Question 18 & 5 & \{3, 2, 1, 0, 4\} \\
+Q18 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q19 & varchar(50) & QSI Question 19 & 5 & \{3, 2, 1, 0, 4\} \\
+Q19 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q20 & varchar(50) & QSI Question 20 & 5 & \{3, 2, 1, 0, 4\} \\
+Q20 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q21 & varchar(50) & QSI Question 21 & 5 & \{3, 2, 1, 0, 4\} \\
+Q21 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q22 & varchar(50) & QSI Question 22 & 5 & \{3, 2, 1, 0, 4\} \\
+Q22 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q23 & varchar(50) & QSI Question 23 & 5 & \{3, 2, 1, 0, 4\} \\
+Q23 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q24 & varchar(50) & QSI Question 24 & 5 & \{3, 2, 1, 0, 4\} \\
+Q24 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q25 & varchar(50) & QSI Question 25 & 5 & \{3, 2, 1, 0, 4\} \\
+Q25 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q26 & varchar(50) & QSI Question 26 & 5 & \{3, 2, 1, 0, 4\} \\
+Q26 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q27 & varchar(50) & QSI Question 27 & 5 & \{3, 2, 1, 0, 4\} \\
+Q27 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q28 & varchar(50) & QSI Question 28 & 5 & \{3, 2, 1, 0, 4\} \\
+Q28 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q29 & varchar(50) & QSI Question 29 & 5 & \{3, 2, 1, 0, 4\} \\
+Q29 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q30 & varchar(50) & QSI Question 30 & 5 & \{3, 2, 1, 0, 4\} \\
+Q30 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q31a & varchar(50) & QSI Question 31a & 3 & \{Yes, No, \} \\
+Q31a & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-Q31b & varchar(50) & QSI Question 31b & 35 & ... \\
+Q31b & varchar(50) &  & 35 & ... \\
 \hline
-Q32 & varchar(50) & QSI Question 32 & 5 & \{3, 2, 1, 0, 4\} \\
+Q32 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q33 & varchar(50) & QSI Question 33 & 6 & \{3, 2, , 1, 0, 4\} \\
+Q33 & varchar(50) &  & 6 & \{3, 2, , 1, 0, 4\} \\
 \hline
-Q34 & varchar(50) & QSI Question 34 & 5 & \{3, 2, 1, 0, 4\} \\
+Q34 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q35 & varchar(50) & QSI Question 35 & 5 & \{3, 2, 1, 0, 4\} \\
+Q35 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q36 & varchar(50) & QSI Question 36 & 5 & \{3, 2, 1, 0, 4\} \\
+Q36 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q37 & varchar(50) & QSI Quesiton 37 & 5 & \{3, 2, 1, 0, 4\} \\
+Q37 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q38 & varchar(50) & QSI Question 38 & 5 & \{3, 2, 1, 0, 4\} \\
+Q38 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q39 & varchar(50) & QSI Question 39 & 5 & \{3, 2, 1, 0, 4\} \\
+Q39 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q40 & varchar(50) & QSI Question 40 & 5 & \{3, 2, 1, 0, 4\} \\
+Q40 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q41 & varchar(50) & QSI Question 41 & 5 & \{3, 2, 1, 0, 4\} \\
+Q41 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q42 & varchar(50) & QSI Question 42 & 5 & \{3, 2, 1, 0, 4\} \\
+Q42 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q43 & varchar(50) & QSI Question 43 & 2 & \{0, 4\} \\
+Q43 & varchar(50) &  & 2 & \{0, 4\} \\
 \hline
-Q44 & varchar(50) & QSI Question 44 & 5 & \{3, 2, 1, 0, 4\} \\
+Q44 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q45 & varchar(50) & QSI Question 45 & 5 & \{3, 2, 1, 0, 4\} \\
+Q45 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q46 & varchar(50) & QSI Question 46 & 5 & \{3, 2, 1, 0, 4\} \\
+Q46 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q47 & varchar(50) & QSI Question 47 & 5 & \{3, 2, 1, 0, 4\} \\
+Q47 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q48 & varchar(50) & QSI Question 48 & 5 & \{3, 2, 1, 0, 4\} \\
+Q48 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q49 & varchar(50) & QSI Question 49 & 5 & \{3, 2, 1, 0, 4\} \\
+Q49 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q50 & varchar(50) & QSI Question 50 & 5 & \{3, 2, 1, 0, 4\} \\
+Q50 & varchar(50) &  & 5 & \{3, 2, 1, 0, 4\} \\
 \hline
-Q51a & varchar(50) & QSI Question 51a & 3 & \{Yes, No, \} \\
+Q51a & varchar(50) &  & 3 & \{Yes, No, \} \\
 \hline
-FLEVEL & varchar(50) & Functional Level & 7 & \{3, 2, 6, , 1, 5, 4\} \\
+FLEVEL & varchar(50) &  & 7 & \{3, 2, 6, , 1, 5, 4\} \\
 \hline
-BLEVEL & varchar(50) & Behavioral Level & 7 & \{3, 2, 6, , 1, 5, 4\} \\
+BLEVEL & varchar(50) &  & 7 & \{3, 2, 6, , 1, 5, 4\} \\
 \hline
-PLEVEL & varchar(50) & Physical Level & 7 & \{3, 2, 6, , 1, 5, 4\} \\
+PLEVEL & varchar(50) &  & 7 & \{3, 2, 6, , 1, 5, 4\} \\
 \hline
-OLEVEL & varchar(50) & Overall Level & 6 & \{Minimal, Intensive, , Moderate, Extensive, Basic\} \\
+OLEVEL & varchar(50) &  & 6 & \{Minimal, Intensive, , Moderate, Extensive, Basic\} \\
 \hline
-LOSRI & varchar(50) & Level of Support Rating & 6 & \{3, 2, , 1, 5, 4\} \\
+LOSRI & varchar(50) &  & 6 & \{3, 2, , 1, 5, 4\} \\
 \hline
-DATETIMESTAMP & datetime & DATETIMESTAMP & 87317 & Range: [2018-12-04, 2025-09-05] \\
+DATETIMESTAMP & datetime &  & 87317 & Range: [2018-12-04, 2025-09-05] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 216 & ... \\
+UserStamp & varchar(100) &  & 216 & ... \\
 \hline
-AssessID & bigint(19) & QSI Assessment Form ID & 90467 & Range: [72322.00, 1396019.00], Avg: 633710.68, Median: 603107.00 \\
+AssessID & bigint(19) &  & 90467 & Range: [72322.00, 1396019.00], Avg: 633710.68, Median: 603107.00 \\
 \hline
-LegacyAssessID & bigint(19) & Legacy QSI Assessment ID & 41912 & Range: [1.00, 171589.00], Avg: 44866.57, Median: 29605.00 \\
+LegacyAssessID & bigint(19) &  & 41912 & Range: [1.00, 171589.00], Avg: 44866.57, Median: 29605.00 \\
 \hline
 \end{longtable}
 
@@ -858,7 +923,7 @@ LegacyAssessID & bigint(19) & Legacy QSI Assessment ID & 41912 & Range: [1.00, 1
 \begin{itemize}
 \item \textbf{Table Name:} tbl\_QSIAssessmentsLegacy
 \item \textbf{Schema:} dbo
-\item \textbf{Number of Records:} 171,360
+\item \textbf{Number of Records:} 171,358
 \item \textbf{Number of Columns:} 55
 \end{itemize}
 
@@ -878,115 +943,115 @@ LegacyAssessID & bigint(19) & Legacy QSI Assessment ID & 41912 & Range: [1.00, 1
 \endfoot
 \hline
 \endlastfoot
-ABCPIN & varchar(10) & Legacy ABC PIN & 63886 & ... \\
+ABCPIN & varchar(10) &  & 63886 & ... \\
 \hline
-STATUS & varchar(10) & STATUS & 2 & \{Complete, Incomplete\} \\
+STATUS & varchar(10) &  & 2 & \{Incomplete, Complete\} \\
 \hline
-REVIEW & varchar(7) & REVIEW & 3 & \{Annual, Initial, Unknown\} \\
+REVIEW & varchar(7) &  & 2 & \{Initial, Annual\} \\
 \hline
-REVIEWDATE & datetime & REVIEW DATE & 171358 & Range: [2008-01-22, 2018-11-30] \\
+REVIEWDATE & datetime &  & 171358 & Range: [2008-01-22, 2018-11-30] \\
 \hline
-RATER & varchar(61) & RATER & 440 & ... \\
+RATER & varchar(61) &  & 440 & ... \\
 \hline
-RATERID & int(10) & Rater ID & 432 & Range: [104.00, 3051.00], Avg: 749.33, Median: 354.00 \\
+RATERID & int(10) &  & 432 & Range: [104.00, 3051.00], Avg: 749.33, Median: 354.00 \\
 \hline
-APPROVEDBY & varchar(61) & APPROVED BY & 429 & ... \\
+APPROVEDBY & varchar(61) &  & 429 & ... \\
 \hline
-CompletedDate & datetime & Completed Date & 168640 & Range: [2008-01-22, 2018-12-18] \\
+CompletedDate & datetime &  & 168640 & Range: [2008-01-22, 2018-12-18] \\
 \hline
-Q14 & int(10) & QSI Question 14 & 5 & Range: [0.00, 4.00], Avg: 0.32, Median: 0.00 \\
+Q14 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.32, Median: 0.00 \\
 \hline
-Q15 & int(10) & QSI Question 15 & 5 & Range: [0.00, 4.00], Avg: 0.17, Median: 0.00 \\
+Q15 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.17, Median: 0.00 \\
 \hline
-Q16 & int(10) & QSI Question 16 & 5 & Range: [0.00, 4.00], Avg: 0.82, Median: 0.00 \\
+Q16 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.82, Median: 0.00 \\
 \hline
-Q17 & int(10) & QSI Question 17 & 5 & Range: [0.00, 4.00], Avg: 0.72, Median: 0.00 \\
+Q17 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.72, Median: 0.00 \\
 \hline
-Q18 & int(10) & QSI Question 18 & 5 & Range: [0.00, 4.00], Avg: 0.60, Median: 0.00 \\
+Q18 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.60, Median: 0.00 \\
 \hline
-Q19 & int(10) & QSI Question 19 & 5 & Range: [0.00, 4.00], Avg: 1.40, Median: 1.00 \\
+Q19 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.40, Median: 1.00 \\
 \hline
-Q20 & int(10) & QSI Question 20 & 5 & Range: [0.00, 4.00], Avg: 1.98, Median: 2.00 \\
+Q20 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.98, Median: 2.00 \\
 \hline
-Q21 & int(10) & QSI Question 21 & 5 & Range: [0.00, 4.00], Avg: 1.63, Median: 1.00 \\
+Q21 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.63, Median: 1.00 \\
 \hline
-Q22 & int(10) & QSI Question 22 & 5 & Range: [0.00, 4.00], Avg: 1.28, Median: 1.00 \\
+Q22 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.28, Median: 1.00 \\
 \hline
-Q23 & int(10) & QSI Question 23 & 5 & Range: [0.00, 4.00], Avg: 2.59, Median: 3.00 \\
+Q23 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 2.59, Median: 3.00 \\
 \hline
-Q24 & int(10) & QSI Question 24 & 5 & Range: [0.00, 4.00], Avg: 1.92, Median: 2.00 \\
+Q24 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.92, Median: 2.00 \\
 \hline
-Q25 & int(10) & QSI Question 25 & 5 & Range: [0.00, 4.00], Avg: 0.92, Median: 0.00 \\
+Q25 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.92, Median: 0.00 \\
 \hline
-Q26 & int(10) & QSI Question 26 & 5 & Range: [0.00, 4.00], Avg: 1.05, Median: 0.00 \\
+Q26 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.05, Median: 0.00 \\
 \hline
-Q27 & int(10) & QSI Question 27 & 5 & Range: [0.00, 4.00], Avg: 0.80, Median: 0.00 \\
+Q27 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.80, Median: 0.00 \\
 \hline
-Q28 & int(10) & QSI Question 28 & 5 & Range: [0.00, 4.00], Avg: 0.36, Median: 0.00 \\
+Q28 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.36, Median: 0.00 \\
 \hline
-Q29 & int(10) & QSI Question 29 & 5 & Range: [0.00, 4.00], Avg: 0.50, Median: 0.00 \\
+Q29 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.50, Median: 0.00 \\
 \hline
-Q30 & int(10) & QSI Question 30 & 5 & Range: [0.00, 4.00], Avg: 1.29, Median: 1.00 \\
+Q30 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.29, Median: 1.00 \\
 \hline
-Q30a & int(10) & QSI Question 30a & 2 & Range: [0.00, 1.00], Avg: 0.10, Median: 0.00 \\
+Q30a & int(10) &  & 2 & Range: [0.00, 1.00], Avg: 0.10, Median: 0.00 \\
 \hline
-Q30b & int(10) & QSI Question 30b & 6 & Range: [0.00, 5.00], Avg: 1.33, Median: 1.00 \\
+Q30b & int(10) &  & 6 & Range: [0.00, 5.00], Avg: 1.33, Median: 1.00 \\
 \hline
-Q30bOther & varchar(50) & QSI Question 30bOther & 441 & ... \\
+Q30bOther & varchar(50) &  & 441 & ... \\
 \hline
-Q31 & int(10) & QSI Question 31 & 5 & Range: [0.00, 4.00], Avg: 0.52, Median: 0.00 \\
+Q31 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.52, Median: 0.00 \\
 \hline
-Q32 & int(10) & QSI Question 32 & 5 & Range: [0.00, 4.00], Avg: 0.30, Median: 0.00 \\
+Q32 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.30, Median: 0.00 \\
 \hline
-Q33 & int(10) & QSI Question 33 & 5 & Range: [0.00, 4.00], Avg: 0.12, Median: 0.00 \\
+Q33 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.12, Median: 0.00 \\
 \hline
-Q34 & int(10) & QSI Question 34 & 5 & Range: [0.00, 4.00], Avg: 0.26, Median: 0.00 \\
+Q34 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.26, Median: 0.00 \\
 \hline
-Q35 & int(10) & QSI Question 35 & 5 & Range: [0.00, 4.00], Avg: 0.97, Median: 0.00 \\
+Q35 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.97, Median: 0.00 \\
 \hline
-Q36 & int(10) & QSI Question 36 & 5 & Range: [0.00, 4.00], Avg: 0.71, Median: 0.00 \\
+Q36 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.71, Median: 0.00 \\
 \hline
-Q37 & int(10) & QSI Quesiton 37 & 5 & Range: [0.00, 4.00], Avg: 0.61, Median: 0.00 \\
+Q37 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.61, Median: 0.00 \\
 \hline
-Q38 & int(10) & QSI Question 38 & 5 & Range: [0.00, 4.00], Avg: 0.48, Median: 0.00 \\
+Q38 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.48, Median: 0.00 \\
 \hline
-Q39 & int(10) & QSI Question 39 & 5 & Range: [0.00, 4.00], Avg: 0.19, Median: 0.00 \\
+Q39 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.19, Median: 0.00 \\
 \hline
-Q40 & int(10) & QSI Question 40 & 5 & Range: [0.00, 4.00], Avg: 0.80, Median: 0.00 \\
+Q40 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.80, Median: 0.00 \\
 \hline
-Q41 & int(10) & QSI Question 41 & 5 & Range: [0.00, 4.00], Avg: 1.08, Median: 1.00 \\
+Q41 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 1.08, Median: 1.00 \\
 \hline
-Q42 & int(10) & QSI Question 42 & 2 & Range: [0.00, 4.00], Avg: 0.28, Median: 0.00 \\
+Q42 & int(10) &  & 2 & Range: [0.00, 4.00], Avg: 0.28, Median: 0.00 \\
 \hline
-Q43 & int(10) & QSI Question 43 & 5 & Range: [0.00, 4.00], Avg: 2.05, Median: 2.00 \\
+Q43 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 2.05, Median: 2.00 \\
 \hline
-Q43txt & varchar(200) & QSI Question 43txt & 0 & All NULL values \\
+Q43txt & varchar(200) &  & 0 & All NULL values \\
 \hline
-Q44 & int(10) & QSI Question 44 & 5 & Range: [0.00, 4.00], Avg: 0.18, Median: 0.00 \\
+Q44 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.18, Median: 0.00 \\
 \hline
-Q45 & int(10) & QSI Question 45 & 5 & Range: [0.00, 4.00], Avg: 0.44, Median: 0.00 \\
+Q45 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.44, Median: 0.00 \\
 \hline
-Q46 & int(10) & QSI Question 46 & 5 & Range: [0.00, 4.00], Avg: 0.89, Median: 1.00 \\
+Q46 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.89, Median: 1.00 \\
 \hline
-Q47 & int(10) & QSI Question 47 & 5 & Range: [0.00, 4.00], Avg: 0.86, Median: 0.00 \\
+Q47 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.86, Median: 0.00 \\
 \hline
-Q48 & int(10) & QSI Question 48 & 5 & Range: [0.00, 4.00], Avg: 0.42, Median: 0.00 \\
+Q48 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.42, Median: 0.00 \\
 \hline
-Q49 & int(10) & QSI Question 49 & 5 & Range: [0.00, 4.00], Avg: 0.79, Median: 0.00 \\
+Q49 & int(10) &  & 5 & Range: [0.00, 4.00], Avg: 0.79, Median: 0.00 \\
 \hline
-Q49a & int(10) & QSI Question 49a & 2 & Range: [0.00, 1.00], Avg: 0.03, Median: 0.00 \\
+Q49a & int(10) &  & 2 & Range: [0.00, 1.00], Avg: 0.03, Median: 0.00 \\
 \hline
-FLEVEL & int(10) & Functional Level & 7 & Range: [0.00, 6.00], Avg: 3.35, Median: 3.00 \\
+FLEVEL & int(10) &  & 7 & Range: [0.00, 6.00], Avg: 3.35, Median: 3.00 \\
 \hline
-BLEVEL & int(10) & Behavioral Level & 7 & Range: [0.00, 6.00], Avg: 2.82, Median: 2.00 \\
+BLEVEL & int(10) &  & 7 & Range: [0.00, 6.00], Avg: 2.82, Median: 2.00 \\
 \hline
-PLEVEL & int(10) & Physical Level & 7 & Range: [0.00, 6.00], Avg: 2.08, Median: 2.00 \\
+PLEVEL & int(10) &  & 7 & Range: [0.00, 6.00], Avg: 2.08, Median: 2.00 \\
 \hline
-OLEVEL & varchar(9) & Overall Level & 6 & \{Basic, Extensive, Intensive, Minimal, Moderate, Unknown\} \\
+OLEVEL & varchar(9) &  & 6 & \{Unknown, Minimal, Intensive, Moderate, Extensive, Basic\} \\
 \hline
-LOSRI & int(10) & Level of Support Rating & 6 & Range: [0.00, 5.00], Avg: 3.45, Median: 4.00 \\
+LOSRI & int(10) &  & 6 & Range: [0.00, 5.00], Avg: 3.45, Median: 4.00 \\
 \hline
-ASSESSID & int(10) & Assessment ID & 171358 & Range: [1.00, 171591.00], Avg: 85890.84, Median: 85894.00 \\
+ASSESSID & int(10) &  & 171358 & Range: [1.00, 171591.00], Avg: 85890.84, Median: 85894.00 \\
 \hline
 \end{longtable}
 
@@ -1016,15 +1081,15 @@ ASSESSID & int(10) & Assessment ID & 171358 & Range: [1.00, 171591.00], Avg: 858
 \endfoot
 \hline
 \endlastfoot
-QuestionID & varchar(4) & Question ID & 42 & ... \\
+QuestionID & varchar(4) &  & 42 & ... \\
 \hline
-Question & varchar(50) & Question & 41 & ... \\
+Question & varchar(50) &  & 41 & ... \\
 \hline
-QuestionAssoc & int(10) & Question Association & 7 & Range: [0.00, 6.00], Avg: 1.96, Median: 2.00 \\
+QuestionAssoc & int(10) &  & 7 & Range: [0.00, 6.00], Avg: 1.96, Median: 2.00 \\
 \hline
-QuestionAssocDescr & varchar(-1) & Question Association Description & 3 & \{NO, Select, YES\} \\
+QuestionAssocDescr & varchar(-1) &  & 3 & \{NO, Select, YES\} \\
 \hline
-Descr & varchar(-1) & QSI Question (actual text) & 172 & ... \\
+Descr & varchar(-1) &  & 172 & ... \\
 \hline
 \end{longtable}
 
@@ -1124,79 +1189,79 @@ ServiceCodesId & bigint(19) &  & 373 & Range: [3038.00, 5987.00], Avg: 5828.04, 
 \endfoot
 \hline
 \endlastfoot
-CaseNo & bigint(19) & Consumer iConnect ID & 22521 & Range: [10184.00, 100198.00], Avg: 43455.59, Median: 41284.00 \\
+CaseNo & bigint(19) &  & 22521 & Range: [10184.00, 100198.00], Avg: 43455.59, Median: 41284.00 \\
 \hline
-SanID & bigint(19) & SAN ID & 44750 & Range: [47.00, 45349.00], Avg: 22846.22, Median: 22840.00 \\
+SanID & bigint(19) &  & 44750 & Range: [47.00, 45349.00], Avg: 22846.22, Median: 22840.00 \\
 \hline
-Division & varchar(100) & Division & 1 & \{APD\} \\
+Division & varchar(100) &  & 1 & \{APD\} \\
 \hline
-Type & varchar(100) & Type & 2 & \{Permanent, Temporary\} \\
+Type & varchar(100) &  & 2 & \{Temporary, Permanent\} \\
 \hline
-SANDueToUpdatedAlgorithm & varchar(100) & SAN Due To Updated Algorithm & 3 & \{, No, Yes\} \\
+SANDueToUpdatedAlgorithm & varchar(100) &  & 3 & \{Yes, No, \} \\
 \hline
-Reason & varchar(100) & Reason & 4 & \{, Algorithm for New Waiver Enrollee, Algorithm Recalculated due to a SAN Request, New algorithm recalculated for Annual Support Plan\} \\
+Reason & varchar(100) &  & 4 & \{, Algorithm Recalculated due to a SAN Request, New algorithm recalculated for Annual Support Plan, Algorithm for New Waiver Enrollee\} \\
 \hline
-Status & varchar(100) & Status & 19 & ... \\
+Status & varchar(100) &  & 19 & ... \\
 \hline
-PlanID & bigint(19) & Plan ID & 33265 & Range: [2.00, 232901.00], Avg: 112026.47, Median: 110887.00 \\
+PlanID & bigint(19) &  & 33265 & Range: [2.00, 232901.00], Avg: 112026.47, Median: 110887.00 \\
 \hline
-WSC & varchar(100) & WSC & 1544 & ... \\
+WSC & varchar(100) &  & 1544 & ... \\
 \hline
-StateOfficeReviewer & varchar(100) & State Office Reviewer & 47 & ... \\
+StateOfficeReviewer & varchar(100) &  & 47 & ... \\
 \hline
-DateInitiated & datetime & Date Initiated & 44746 & Range: [2020-06-08, 2025-09-11] \\
+DateInitiated & datetime &  & 44746 & Range: [2020-06-08, 2025-09-11] \\
 \hline
-SubmissionDate & datetime & Submission Date & 1899 & Range: [2020-06-10, 2025-09-11] \\
+SubmissionDate & datetime &  & 1899 & Range: [2020-06-10, 2025-09-11] \\
 \hline
-RAIDate & datetime & Request for Additional InformationDate & 1039 & Range: [2020-09-17, 2025-09-11] \\
+RAIDate & datetime &  & 1039 & Range: [2020-09-17, 2025-09-11] \\
 \hline
-DueDate & datetime & Due Date & 1899 & Range: [2020-07-10, 2025-10-11] \\
+DueDate & datetime &  & 1899 & Range: [2020-07-10, 2025-10-11] \\
 \hline
-60DaysDate & datetime & Date 30 Days From Request Date & 1899 & Range: [2020-08-09, 2025-11-10] \\
+60DaysDate & datetime &  & 1899 & Range: [2020-08-09, 2025-11-10] \\
 \hline
-30DaysDate & datetime & Date 60 Days From Request Date & 1899 & Range: [2020-07-10, 2025-10-11] \\
+30DaysDate & datetime &  & 1899 & Range: [2020-07-10, 2025-10-11] \\
 \hline
-CurrentBudget & numeric(19,2) & Current Budget & 32500 & Range: [396.62, 371016.28], Avg: 56883.32, Median: 49648.08 \\
+CurrentBudget & numeric(19,2) &  & 32500 & Range: [396.62, 371016.28], Avg: 56883.32, Median: 49648.08 \\
 \hline
-AlgorithmAmount & numeric(19,2) & Algorithm Amount & 21766 & Range: [0.00, 38767319.00], Avg: 28917.36, Median: 21058.28 \\
+AlgorithmAmount & numeric(19,2) &  & 21766 & Range: [0.00, 38767319.00], Avg: 28917.36, Median: 21058.28 \\
 \hline
-AmountUnAuthorized & numeric(19,2) & Amoun tUnAuthorized & 31078 & Range: [-195961.44, 361590.28], Avg: 8242.85, Median: 1080.72 \\
+AmountUnAuthorized & numeric(19,2) &  & 31078 & Range: [-195961.44, 361590.28], Avg: 8242.85, Median: 1080.72 \\
 \hline
-BudgetSource & varchar(500) & Budget Source & 43692 & ... \\
+BudgetSource & varchar(500) &  & 43692 & ... \\
 \hline
-LastRefresh & varchar(100) & Last Refresh Of Current Budget Info & 36411 & ... \\
+LastRefresh & varchar(100) &  & 36411 & ... \\
 \hline
-WSCProposedBudget & numeric(19,2) & WSC Proposed Budget & 33344 & Range: [0.00, 77596065.79], Avg: 89286.18, Median: 59138.52 \\
+WSCProposedBudget & numeric(19,2) &  & 33344 & Range: [0.00, 77596065.79], Avg: 89286.18, Median: 59138.52 \\
 \hline
-WSCProposedProratedIncrease & numeric(19,2) & WSC Proposed Prorated Increase & 33086 & Range: [-326322.43, 77579761.18], Avg: 32423.61, Median: 4518.22 \\
+WSCProposedProratedIncrease & numeric(19,2) &  & 33086 & Range: [-326322.43, 77579761.18], Avg: 32423.61, Median: 4518.22 \\
 \hline
-WSCProposedAnnualizedBudget & numeric(19,2) & WSC Proposed Annualized Budget & 29171 & Range: [0.00, 1383845675.78], Avg: 325457.09, Median: 73083.00 \\
+WSCProposedAnnualizedBudget & numeric(19,2) &  & 29171 & Range: [0.00, 1383845675.78], Avg: 325457.09, Median: 73083.00 \\
 \hline
-WSCProposedAnnualizedIncrease & numeric(19,2) & WSC Proposed Annualized Increase & 32244 & Range: [-281998.92, 1383814722.32], Avg: 268594.53, Median: 16191.20 \\
+WSCProposedAnnualizedIncrease & numeric(19,2) &  & 32244 & Range: [-281998.92, 1383814722.32], Avg: 268594.53, Median: 16191.20 \\
 \hline
-StateProposedProratedBudget & numeric(19,2) & State Proposed Prorated Budget & 27557 & Range: [0.00, 371016.28], Avg: 53778.63, Median: 48264.74 \\
+StateProposedProratedBudget & numeric(19,2) &  & 27557 & Range: [0.00, 371016.28], Avg: 53778.63, Median: 48264.74 \\
 \hline
-StateProposedProratedIncrease & numeric(19,2) & State Proposed Prorated Increase & 34028 & Range: [-371016.28, 308564.92], Avg: -3083.93, Median: 1392.20 \\
+StateProposedProratedIncrease & numeric(19,2) &  & 34028 & Range: [-371016.28, 308564.92], Avg: -3083.93, Median: 1392.20 \\
 \hline
-StateProposedAnnualizedBudget & numeric(19,2) & State Proposed Annualized Budget & 22686 & Range: [0.00, 375679.24], Avg: 59522.81, Median: 56647.32 \\
+StateProposedAnnualizedBudget & numeric(19,2) &  & 22686 & Range: [0.00, 375679.24], Avg: 59522.81, Median: 56647.32 \\
 \hline
-StateProposedAnnualizedIncrease & numeric(19,2) & State Proposed Annualized Increase & 33474 & Range: [-371016.28, 303929.97], Avg: 2660.25, Median: 3266.64 \\
+StateProposedAnnualizedIncrease & numeric(19,2) &  & 33474 & Range: [-371016.28, 303929.97], Avg: 2660.25, Median: 3266.64 \\
 \hline
-Recommendation & varchar(100) & Recommendation & 4 & \{, Approved, Denied, Partial Approval\} \\
+Recommendation & varchar(100) &  & 4 & \{, Partial Approval, Approved, Denied\} \\
 \hline
-PersonMakingRecommd & varchar(100) & Person Making Recommendation & 31 & ... \\
+PersonMakingRecommd & varchar(100) &  & 31 & ... \\
 \hline
-RecommendationDate & datetime & Recommendation Date & 1428 & Range: [2020-07-10, 2025-09-11] \\
+RecommendationDate & datetime &  & 1428 & Range: [2020-07-10, 2025-09-11] \\
 \hline
-Decision & varchar(100) & Decision & 5 & \{, Approved, Denied, Partially Approved, Pending\} \\
+Decision & varchar(100) &  & 5 & \{Pending, , Approved, Partially Approved, Denied\} \\
 \hline
-Decisionby & varchar(100) & Decision by & 17 & ... \\
+Decisionby & varchar(100) &  & 17 & ... \\
 \hline
-DateNoticeSent & datetime & Date Notice Sent & 1292 & Range: [2020-05-22, 2025-09-11] \\
+DateNoticeSent & datetime &  & 1292 & Range: [2020-05-22, 2025-09-11] \\
 \hline
-DateTimeStamp & datetime & DateTimeStamp & 44750 & Range: [2020-06-08, 2025-09-11] \\
+DateTimeStamp & datetime &  & 44750 & Range: [2020-06-08, 2025-09-11] \\
 \hline
-UserStamp & varchar(100) & UserStamp & 1253 & ... \\
+UserStamp & varchar(100) &  & 1253 & ... \\
 \hline
 \end{longtable}
 
@@ -1278,11 +1343,9 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 
 \end{landscape}
 
-
 \newpage \section{Histograms}
 
 \subsection{tbl\_Budgets.CaseNo}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1291,7 +1354,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.BudgetID}
-\textit{Budget ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1300,7 +1362,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.ApprovedBy}
-\textit{Approved By APD Staff Name}
 
 \begin{figure}[htbp]
 \centering
@@ -1309,7 +1370,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.BudgetAmount}
-\textit{Budget Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -1318,7 +1378,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.AnnualizedAmount}
-\textit{Annualized Budget Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -1327,7 +1386,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.AmountEncumbered}
-\textit{Amount Encumbered}
 
 \begin{figure}[htbp]
 \centering
@@ -1336,7 +1394,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.AmountUnauthorized}
-\textit{Amount Unauthorized}
 
 \begin{figure}[htbp]
 \centering
@@ -1345,7 +1402,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Budgets.PrioriBudgetAmount}
-\textit{Priori Budget Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -1354,7 +1410,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Claims\_MMIS.CaseNo}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1363,7 +1418,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Claims\_MMIS.Units}
-\textit{Units}
 
 \begin{figure}[htbp]
 \centering
@@ -1372,7 +1426,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Claims\_MMIS.BilledAmt}
-\textit{Billed Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -1381,7 +1434,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Claims\_MMIS.PaidAmt}
-\textit{Paid Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -1390,7 +1442,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Claims\_MMIS.Id}
-\textit{Claim ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1399,7 +1450,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_ConsumerContacts.CONTACTID}
-\textit{Contact ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1408,7 +1458,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_ConsumerContacts.CASENO}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1417,7 +1466,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_ConsumerContacts.Active}
-\textit{Active}
 
 \begin{figure}[htbp]
 \centering
@@ -1426,7 +1474,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_ConsumerContacts.RECID}
-\textit{Record ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1435,7 +1482,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.CASENO}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1444,7 +1490,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.CBCFlag}
-\textit{CBC Flag- Identifies if the Consumer has enrolled in CBC Program}
 
 \begin{figure}[htbp]
 \centering
@@ -1453,7 +1498,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.ANNUALINCOME}
-\textit{ANNUAL INCOME}
 
 \begin{figure}[htbp]
 \centering
@@ -1462,7 +1506,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.OPENID}
-\textit{Open ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1471,7 +1514,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.PRIMARYWORKERID}
-\textit{Primary Worker ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1480,7 +1522,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.SECONDWORKERID}
-\textit{Secondary Worker ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1489,7 +1530,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.CONTACTID}
-\textit{Contact ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1498,7 +1538,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Consumers.Id}
-\textit{Id}
 
 \begin{figure}[htbp]
 \centering
@@ -1507,7 +1546,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Diagnosis.CASENO}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1516,7 +1554,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Diagnosis.DiagnosisID}
-\textit{Diagnosis ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1525,7 +1562,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_EZBudget.CASENO}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1534,7 +1570,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_EZBudget.EZBudgetAssessId}
-\textit{EZ iBudget Calculator Form ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1542,8 +1577,15 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \caption{Distribution of EZBudgetAssessId in tbl\_EZBudget}
 \end{figure}\newpage
 
+\subsection{tbl\_EZBudget.AlgorithmAmt}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/dbo_tbl_EZBudget_AlgorithmAmt.pdf}
+\caption{Distribution of AlgorithmAmt in tbl\_EZBudget}
+\end{figure}\newpage
+
 \subsection{tbl\_PlannedServices.CaseNo}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1552,7 +1594,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.FiscalYear}
-\textit{FiscalYear}
 
 \begin{figure}[htbp]
 \centering
@@ -1561,7 +1602,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.UnitsPer}
-\textit{UnitsPer}
 
 \begin{figure}[htbp]
 \centering
@@ -1570,7 +1610,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.TotalUnits}
-\textit{Total Units}
 
 \begin{figure}[htbp]
 \centering
@@ -1579,7 +1618,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.AnnualizedUnits}
-\textit{Annualized Units}
 
 \begin{figure}[htbp]
 \centering
@@ -1588,7 +1626,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.VendorID}
-\textit{Vendor ID (Provider iConnect ID)}
 
 \begin{figure}[htbp]
 \centering
@@ -1597,7 +1634,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.Rate}
-\textit{Rate}
 
 \begin{figure}[htbp]
 \centering
@@ -1606,7 +1642,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.MaxAmount}
-\textit{MaxAmount}
 
 \begin{figure}[htbp]
 \centering
@@ -1615,7 +1650,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.AllowEVVDelivery}
-\textit{Allow EVV Delivery}
 
 \begin{figure}[htbp]
 \centering
@@ -1624,7 +1658,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.PlannedServiceId}
-\textit{Planned Service ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1633,7 +1666,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.PlanId}
-\textit{Plan ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1642,7 +1674,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.ISComboCodeID}
-\textit{IS Combo CodeID}
 
 \begin{figure}[htbp]
 \centering
@@ -1651,7 +1682,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_PlannedServices.VendorServicesId}
-\textit{Vendor Services ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1660,7 +1690,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Plans.CaseNo}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1669,7 +1698,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Plans.PlanId}
-\textit{Plan ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1678,7 +1706,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Plans.BudgetId}
-\textit{Budget ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1687,7 +1714,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Plans.OpenId}
-\textit{Open ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1696,7 +1722,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_Plans.EnrollID}
-\textit{Enrollment ID (Program ID)}
 
 \begin{figure}[htbp]
 \centering
@@ -1705,7 +1730,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessments.CASENO}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1714,7 +1738,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessments.RaterID}
-\textit{Rater ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1723,7 +1746,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessments.AssessID}
-\textit{QSI Assessment Form ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1732,7 +1754,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessments.LegacyAssessID}
-\textit{Legacy QSI Assessment ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1741,7 +1762,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.RATERID}
-\textit{Rater ID}
 
 \begin{figure}[htbp]
 \centering
@@ -1750,7 +1770,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q14}
-\textit{QSI Question 14}
 
 \begin{figure}[htbp]
 \centering
@@ -1759,7 +1778,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q15}
-\textit{QSI Question 15}
 
 \begin{figure}[htbp]
 \centering
@@ -1768,7 +1786,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q16}
-\textit{QSI Question 16}
 
 \begin{figure}[htbp]
 \centering
@@ -1777,7 +1794,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q17}
-\textit{QSI Question 17}
 
 \begin{figure}[htbp]
 \centering
@@ -1786,7 +1802,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q18}
-\textit{QSI Question 18}
 
 \begin{figure}[htbp]
 \centering
@@ -1795,7 +1810,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q19}
-\textit{QSI Question 19}
 
 \begin{figure}[htbp]
 \centering
@@ -1804,7 +1818,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q20}
-\textit{QSI Question 20}
 
 \begin{figure}[htbp]
 \centering
@@ -1813,7 +1826,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q21}
-\textit{QSI Question 21}
 
 \begin{figure}[htbp]
 \centering
@@ -1822,7 +1834,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q22}
-\textit{QSI Question 22}
 
 \begin{figure}[htbp]
 \centering
@@ -1831,7 +1842,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q23}
-\textit{QSI Question 23}
 
 \begin{figure}[htbp]
 \centering
@@ -1840,7 +1850,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q24}
-\textit{QSI Question 24}
 
 \begin{figure}[htbp]
 \centering
@@ -1849,7 +1858,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q25}
-\textit{QSI Question 25}
 
 \begin{figure}[htbp]
 \centering
@@ -1858,7 +1866,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q26}
-\textit{QSI Question 26}
 
 \begin{figure}[htbp]
 \centering
@@ -1867,7 +1874,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q27}
-\textit{QSI Question 27}
 
 \begin{figure}[htbp]
 \centering
@@ -1876,7 +1882,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q28}
-\textit{QSI Question 28}
 
 \begin{figure}[htbp]
 \centering
@@ -1885,7 +1890,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q29}
-\textit{QSI Question 29}
 
 \begin{figure}[htbp]
 \centering
@@ -1894,7 +1898,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q30}
-\textit{QSI Question 30}
 
 \begin{figure}[htbp]
 \centering
@@ -1903,7 +1906,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q30a}
-\textit{QSI Question 30a}
 
 \begin{figure}[htbp]
 \centering
@@ -1912,7 +1914,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q30b}
-\textit{QSI Question 30b}
 
 \begin{figure}[htbp]
 \centering
@@ -1921,7 +1922,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q31}
-\textit{QSI Question 31}
 
 \begin{figure}[htbp]
 \centering
@@ -1930,7 +1930,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q32}
-\textit{QSI Question 32}
 
 \begin{figure}[htbp]
 \centering
@@ -1939,7 +1938,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q33}
-\textit{QSI Question 33}
 
 \begin{figure}[htbp]
 \centering
@@ -1948,7 +1946,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q34}
-\textit{QSI Question 34}
 
 \begin{figure}[htbp]
 \centering
@@ -1957,7 +1954,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q35}
-\textit{QSI Question 35}
 
 \begin{figure}[htbp]
 \centering
@@ -1966,7 +1962,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q36}
-\textit{QSI Question 36}
 
 \begin{figure}[htbp]
 \centering
@@ -1975,7 +1970,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q37}
-\textit{QSI Quesiton 37}
 
 \begin{figure}[htbp]
 \centering
@@ -1984,7 +1978,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q38}
-\textit{QSI Question 38}
 
 \begin{figure}[htbp]
 \centering
@@ -1993,7 +1986,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q39}
-\textit{QSI Question 39}
 
 \begin{figure}[htbp]
 \centering
@@ -2002,7 +1994,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q40}
-\textit{QSI Question 40}
 
 \begin{figure}[htbp]
 \centering
@@ -2011,7 +2002,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q41}
-\textit{QSI Question 41}
 
 \begin{figure}[htbp]
 \centering
@@ -2020,7 +2010,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q42}
-\textit{QSI Question 42}
 
 \begin{figure}[htbp]
 \centering
@@ -2029,7 +2018,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q43}
-\textit{QSI Question 43}
 
 \begin{figure}[htbp]
 \centering
@@ -2038,7 +2026,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q44}
-\textit{QSI Question 44}
 
 \begin{figure}[htbp]
 \centering
@@ -2047,7 +2034,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q45}
-\textit{QSI Question 45}
 
 \begin{figure}[htbp]
 \centering
@@ -2056,7 +2042,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q46}
-\textit{QSI Question 46}
 
 \begin{figure}[htbp]
 \centering
@@ -2065,7 +2050,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q47}
-\textit{QSI Question 47}
 
 \begin{figure}[htbp]
 \centering
@@ -2074,7 +2058,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q48}
-\textit{QSI Question 48}
 
 \begin{figure}[htbp]
 \centering
@@ -2083,7 +2066,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q49}
-\textit{QSI Question 49}
 
 \begin{figure}[htbp]
 \centering
@@ -2092,7 +2074,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.Q49a}
-\textit{QSI Question 49a}
 
 \begin{figure}[htbp]
 \centering
@@ -2101,7 +2082,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.FLEVEL}
-\textit{Functional Level}
 
 \begin{figure}[htbp]
 \centering
@@ -2110,7 +2090,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.BLEVEL}
-\textit{Behavioral Level}
 
 \begin{figure}[htbp]
 \centering
@@ -2119,7 +2098,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.PLEVEL}
-\textit{Physical Level}
 
 \begin{figure}[htbp]
 \centering
@@ -2128,7 +2106,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.LOSRI}
-\textit{Level of Support Rating}
 
 \begin{figure}[htbp]
 \centering
@@ -2137,7 +2114,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIAssessmentsLegacy.ASSESSID}
-\textit{Assessment ID}
 
 \begin{figure}[htbp]
 \centering
@@ -2146,7 +2122,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_QSIQuestions.QuestionAssoc}
-\textit{Question Association}
 
 \begin{figure}[htbp]
 \centering
@@ -2187,7 +2162,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.CaseNo}
-\textit{Consumer iConnect ID}
 
 \begin{figure}[htbp]
 \centering
@@ -2196,7 +2170,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.SanID}
-\textit{SAN ID}
 
 \begin{figure}[htbp]
 \centering
@@ -2205,7 +2178,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.PlanID}
-\textit{Plan ID}
 
 \begin{figure}[htbp]
 \centering
@@ -2214,7 +2186,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.CurrentBudget}
-\textit{Current Budget}
 
 \begin{figure}[htbp]
 \centering
@@ -2223,7 +2194,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.AlgorithmAmount}
-\textit{Algorithm Amount}
 
 \begin{figure}[htbp]
 \centering
@@ -2232,7 +2202,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.AmountUnAuthorized}
-\textit{Amoun tUnAuthorized}
 
 \begin{figure}[htbp]
 \centering
@@ -2241,7 +2210,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.WSCProposedBudget}
-\textit{WSC Proposed Budget}
 
 \begin{figure}[htbp]
 \centering
@@ -2250,7 +2218,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.WSCProposedProratedIncrease}
-\textit{WSC Proposed Prorated Increase}
 
 \begin{figure}[htbp]
 \centering
@@ -2259,7 +2226,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.WSCProposedAnnualizedBudget}
-\textit{WSC Proposed Annualized Budget}
 
 \begin{figure}[htbp]
 \centering
@@ -2268,7 +2234,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.WSCProposedAnnualizedIncrease}
-\textit{WSC Proposed Annualized Increase}
 
 \begin{figure}[htbp]
 \centering
@@ -2277,7 +2242,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.StateProposedProratedBudget}
-\textit{State Proposed Prorated Budget}
 
 \begin{figure}[htbp]
 \centering
@@ -2286,7 +2250,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.StateProposedProratedIncrease}
-\textit{State Proposed Prorated Increase}
 
 \begin{figure}[htbp]
 \centering
@@ -2295,7 +2258,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.StateProposedAnnualizedBudget}
-\textit{State Proposed Annualized Budget}
 
 \begin{figure}[htbp]
 \centering
@@ -2304,7 +2266,6 @@ AmountLimitFrequency & varchar(50) &  & 4 & \{, Day, Fiscal Year, Month\} \\
 \end{figure}\newpage
 
 \subsection{tbl\_SANs.StateProposedAnnualizedIncrease}
-\textit{State Proposed Annualized Increase}
 
 \begin{figure}[htbp]
 \centering

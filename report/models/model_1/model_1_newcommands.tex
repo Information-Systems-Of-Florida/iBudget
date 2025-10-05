@@ -1,0 +1,107 @@
+% Model 1 Command Definitions
+% Generated: 2025-10-02 09:06:46.483896
+% Model: Linear with Outlier Removal
+
+% Core Metrics
+\newcommand{\ModelOneRSquaredTrain}{\WarningRunPipeline}
+\newcommand{\ModelOneRSquaredTest}{\WarningRunPipeline}
+\newcommand{\ModelOneRMSETrain}{\WarningRunPipeline}
+\newcommand{\ModelOneRMSETest}{\WarningRunPipeline}
+\newcommand{\ModelOneMAETrain}{\WarningRunPipeline}
+\newcommand{\ModelOneMAETest}{\WarningRunPipeline}
+\newcommand{\ModelOneMAPETrain}{\WarningRunPipeline}
+\newcommand{\ModelOneMAPETest}{\WarningRunPipeline}
+\newcommand{\ModelOneCVMean}{\WarningRunPipeline}
+\newcommand{\ModelOneCVStd}{\WarningRunPipeline}
+\newcommand{\ModelOneWithinOneK}{\WarningRunPipeline}
+\newcommand{\ModelOneWithinTwoK}{\WarningRunPipeline}
+\newcommand{\ModelOneWithinFiveK}{\WarningRunPipeline}
+\newcommand{\ModelOneWithinTenK}{\WarningRunPipeline}
+\newcommand{\ModelOneWithinTwentyK}{\WarningRunPipeline}
+\newcommand{\ModelOneTrainingSamples}{\WarningRunPipeline}
+\newcommand{\ModelOneTestSamples}{\WarningRunPipeline}
+
+% Subgroup Metrics
+\newcommand{\ModelOneSubgrouplivingFHN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingFHRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingFHRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingFHBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingILSLN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingILSLRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingILSLRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingILSLBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingRHOneToFourN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingRHOneToFourRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingRHOneToFourRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgrouplivingRHOneToFourBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeUnderTwentyOneN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeUnderTwentyOneRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeUnderTwentyOneRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeUnderTwentyOneBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeTwentyOneToThirtyN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeTwentyOneToThirtyRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeTwentyOneToThirtyRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeTwentyOneToThirtyBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeThirtyOnePlusN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeThirtyOnePlusRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeThirtyOnePlusRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupageAgeThirtyOnePlusBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQOneLowN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQOneLowRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQOneLowRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQOneLowBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQTwoN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQTwoRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQTwoRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQTwoBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQThreeN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQThreeRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQThreeRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQThreeBias}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQFourHighN}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQFourHighRSquared}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQFourHighRMSE}{\WarningRunPipeline}
+\newcommand{\ModelOneSubgroupcostQFourHighBias}{\WarningRunPipeline}
+
+% Variance Metrics
+\newcommand{\ModelOneCVActual}{\WarningRunPipeline}
+\newcommand{\ModelOneCVPredicted}{\WarningRunPipeline}
+\newcommand{\ModelOnePredictionInterval}{\WarningRunPipeline}
+\newcommand{\ModelOneBudgetActualCorr}{\WarningRunPipeline}
+\newcommand{\ModelOneQuarterlyVariance}{\WarningRunPipeline}
+\newcommand{\ModelOneAnnualAdjustmentRate}{\WarningRunPipeline}
+
+% Population Scenarios
+\newcommand{\ModelOnePopcurrentbaselineClients}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcurrentbaselineAvgAlloc}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcurrentbaselineWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcurrentbaselineWaitlistPct}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelbalancedClients}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelbalancedAvgAlloc}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelbalancedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelbalancedWaitlistPct}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelefficiencyClients}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelefficiencyAvgAlloc}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelefficiencyWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelOnePopmodelefficiencyWaitlistPct}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcategoryfocusedClients}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcategoryfocusedAvgAlloc}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcategoryfocusedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelOnePopcategoryfocusedWaitlistPct}{\WarningRunPipeline}
+\newcommand{\ModelOnePoppopulationmaximizedClients}{\WarningRunPipeline}
+\newcommand{\ModelOnePoppopulationmaximizedAvgAlloc}{\WarningRunPipeline}
+\newcommand{\ModelOnePoppopulationmaximizedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelOnePoppopulationmaximizedWaitlistPct}{\WarningRunPipeline}
+
+% Model 1 Specific Commands
+\newcommand{\ModelOneOutliersRemoved}{\WarningRunPipeline}
+\newcommand{\ModelOneOutlierPercentage}{\WarningRunPipeline}
+\newcommand{\ModelOneTransformation}{\WarningRunPipeline}
+\newcommand{\ModelOneNumFeatures}{\WarningRunPipeline}
+\newcommand{\ModelOnePredictionFloor}{\WarningRunPipeline}
+
+% Feature Selection Specific Commands
+\newcommand{\ModelOneFeatureSelection}{\WarningRunPipeline}
+\newcommand{\ModelOneFiscalYears}{\WarningRunPipeline}
+\newcommand{\ModelOneMIScoreTop}{\WarningRunPipeline}
+\newcommand{\ModelOneVarianceExplained}{\WarningRunPipeline}

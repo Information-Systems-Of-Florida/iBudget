@@ -1,0 +1,98 @@
+2025-10-02 12:34:53 - MODEL 5 - INFO - ============================================================
+2025-10-02 12:34:53 - MODEL 5 - INFO - INITIALIZING MODEL 5: RIDGE REGRESSION
+2025-10-02 12:34:53 - MODEL 5 - INFO - ============================================================
+2025-10-02 12:34:53 - MODEL 5 - INFO - Log file: models\..\..\report\logs\model_5_log.txt
+2025-10-02 12:34:53 - MODEL 5 - INFO - Output directory: models/model_5
+2025-10-02 12:34:53 - MODEL 5 - INFO - ============================================================
+2025-10-02 12:34:53 - MODEL 5 - INFO - Model 5 Ridge Regression initialized
+2025-10-02 12:34:53 - MODEL 5 - INFO - ================================================================================
+2025-10-02 12:34:53 - MODEL 5 - INFO - Starting Model 5: Ridge Regression
+2025-10-02 12:34:53 - MODEL 5 - INFO - ================================================================================
+2025-10-02 12:34:53 - MODEL 5 - INFO - 
+2025-10-02 12:34:53 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:34:53 - MODEL 5 - INFO - LOADING DATA: FY2023-2024
+2025-10-02 12:34:53 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:34:53 - MODEL 5 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-02 12:34:53 - MODEL 5 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-02 12:34:53 - MODEL 5 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-02 12:34:54 - MODEL 5 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-02 12:34:54 - MODEL 5 - INFO - Loaded 67265 usable records
+2025-10-02 12:34:54 - MODEL 5 - INFO - Loaded 67265 records
+2025-10-02 12:34:55 - MODEL 5 - INFO - Prepared 22 features for 53812 records
+2025-10-02 12:34:55 - MODEL 5 - INFO - Prepared 22 features for 13453 records
+2025-10-02 12:34:55 - MODEL 5 - INFO - Data split: 53812 training, 13453 test
+2025-10-02 12:34:55 - MODEL 5 - INFO - Fitting Ridge Regression with cross-validated alpha...
+2025-10-02 12:34:55 - MODEL 5 - INFO - Condition number before regularization: N/A (skipped due to singularity)
+2025-10-02 12:35:05 - MODEL 5 - INFO - Optimal alpha selected: 14.849683
+2025-10-02 12:35:05 - MODEL 5 - INFO - Condition number after regularization: 16688.81
+2025-10-02 12:35:05 - MODEL 5 - INFO - Condition number after regularization: 16688.81
+2025-10-02 12:35:05 - MODEL 5 - INFO - Effective degrees of freedom: 16.98 (out of 22)
+2025-10-02 12:35:05 - MODEL 5 - INFO - Average coefficient shrinkage: 15.4%
+2025-10-02 12:35:05 - MODEL 5 - INFO - Ridge Regression fitted successfully
+2025-10-02 12:35:05 - MODEL 5 - INFO - 
+2025-10-02 12:35:05 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:05 - MODEL 5 - INFO - CALCULATING METRICS
+2025-10-02 12:35:05 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:05 - MODEL 5 - INFO - 
+2025-10-02 12:35:05 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:05 - MODEL 5 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-02 12:35:05 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:05 - MODEL 5 - INFO - Training R^2: 0.2391
+2025-10-02 12:35:05 - MODEL 5 - INFO - Test R^2: 0.2129
+2025-10-02 12:35:05 - MODEL 5 - INFO - RMSE: $38,745.05
+2025-10-02 12:35:05 - MODEL 5 - INFO - MAE: $27,892.44
+2025-10-02 12:35:05 - MODEL 5 - INFO - MAPE: 86.12%
+2025-10-02 12:35:05 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:05 - MODEL 5 - INFO - Performing cross-validation...
+2025-10-02 12:35:06 - MODEL 5 - INFO - Calculating subgroup metrics...
+2025-10-02 12:35:06 - MODEL 5 - INFO - 
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - INFO - SUBGROUP ANALYSIS
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-02 12:35:06 - MODEL 5 - INFO - Calculated metrics for 10 subgroups
+2025-10-02 12:35:06 - MODEL 5 - INFO - Calculating variance metrics...
+2025-10-02 12:35:06 - MODEL 5 - INFO - 
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - INFO - VARIANCE ANALYSIS
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - INFO - Variance metrics calculated
+2025-10-02 12:35:06 - MODEL 5 - INFO - Calculating population scenarios...
+2025-10-02 12:35:06 - MODEL 5 - INFO - 
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - INFO - POPULATION SCENARIOS
+2025-10-02 12:35:06 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:06 - MODEL 5 - INFO - Calculated 5 population scenarios
+2025-10-02 12:35:06 - MODEL 5 - INFO - Generating Ridge-specific plots...
+2025-10-02 12:35:06 - MODEL 5 - INFO - Generating regularization path plot...
+2025-10-02 12:35:07 - MODEL 5 - INFO - Regularization path saved to ..\..\report\models\model_5\regularization_path.png
+2025-10-02 12:35:07 - MODEL 5 - INFO - Generating CV curve...
+2025-10-02 12:35:18 - MODEL 5 - INFO - CV curve saved to ..\..\report\models\model_5\cv_curve.png
+2025-10-02 12:35:18 - MODEL 5 - INFO - Generating coefficient shrinkage comparison...
+2025-10-02 12:35:19 - MODEL 5 - INFO - Coefficient shrinkage plot saved to ..\..\report\models\model_5\coefficient_shrinkage.png
+2025-10-02 12:35:19 - MODEL 5 - INFO - Generating VIF analysis...
+2025-10-02 12:35:20 - MODEL 5 - INFO - VIF analysis saved to ..\..\report\models\model_5\vif_analysis.png
+2025-10-02 12:35:20 - MODEL 5 - INFO - Generating diagnostic plots...
+2025-10-02 12:35:20 - MODEL 5 - INFO - 
+2025-10-02 12:35:20 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:20 - MODEL 5 - INFO - GENERATING PLOTS
+2025-10-02 12:35:20 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:21 - MODEL 5 - INFO - Diagnostic plots saved to ..\..\report\models\model_5\diagnostic_plots.png
+2025-10-02 12:35:21 - MODEL 5 - INFO - Saving results...
+2025-10-02 12:35:21 - MODEL 5 - INFO - 
+2025-10-02 12:35:21 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:21 - MODEL 5 - INFO - SAVING RESULTS
+2025-10-02 12:35:21 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:21 - MODEL 5 - INFO - Results saved successfully
+2025-10-02 12:35:21 - MODEL 5 - INFO - Generating LaTeX commands...
+2025-10-02 12:35:21 - MODEL 5 - INFO - 
+2025-10-02 12:35:21 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:21 - MODEL 5 - INFO - LATEX GENERATION
+2025-10-02 12:35:21 - MODEL 5 - INFO - ------------------------------------------------------------
+2025-10-02 12:35:21 - MODEL 5 - INFO - LaTeX commands written to:
+2025-10-02 12:35:21 - MODEL 5 - INFO -   - ..\..\report\models\model_5\model_5_newcommands.tex
+2025-10-02 12:35:21 - MODEL 5 - INFO -   - ..\..\report\models\model_5\model_5_renewcommands.tex
+2025-10-02 12:35:22 - MODEL 5 - INFO - Ridge-specific LaTeX commands generated
+2025-10-02 12:35:22 - MODEL 5 - INFO - ================================================================================
+2025-10-02 12:35:22 - MODEL 5 - INFO - Model 5 Ridge Regression pipeline complete!
+2025-10-02 12:35:22 - MODEL 5 - INFO - ================================================================================

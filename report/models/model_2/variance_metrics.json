@@ -1,0 +1,8 @@
+{
+  "cv_actual": 1.0249175541843543,
+  "cv_predicted": 0.476748029970971,
+  "prediction_interval_95": 58795.13075828043,
+  "budget_actual_correlation": 0.38352162256902445,
+  "quarterly_variance": 94.91894844403075,
+  "annual_adjustment_rate": 93.12258281486464
+}

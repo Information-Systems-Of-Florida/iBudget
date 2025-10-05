@@ -1,0 +1,7 @@
+{
+  "mean_depth": 20.0,
+  "min_depth": 20,
+  "max_depth": 20,
+  "std_depth": 0.0,
+  "n_trees": 500
+}

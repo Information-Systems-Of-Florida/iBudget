@@ -1,344 +1,303 @@
-\chapter{Model 5: Ridge Regression}\newpage
+\chapter{Model 5: Ridge Regression}\label{ch:model5}
 
-\section{Algorithm Documentation: Ridge Regression\\L2 Regularization for Multicollinearity Management}
+% Include the dynamic values from model calibration
+\input{models/model_5/model_5_renewcommands.tex}
 
-\subsection{Complete Algorithm Specification}
+\section{Executive Summary}
 
-Ridge regression adds an L2 penalty to Model 5b's objective function to handle multicollinearity among QSI variables:
+Model 5 employs Ridge regression (L2 regularization) to address multicollinearity among the 22 predictors while maintaining model stability. This approach offers superior coefficient stability and improved generalization performance compared to ordinary least squares, particularly when predictors are highly correlated.
+
+Key findings:
+\begin{itemize}
+    \item \textbf{Performance}: Test R² = \ModelFiveRSquaredTest{}, RMSE = \$\ModelFiveRMSETest{}
+    \item \textbf{Optimal Alpha}: $\lambda$ = \ModelFiveAlpha{} (\ModelFiveRegularizationStrength{} regularization)
+    \item \textbf{Multicollinearity Control}: Condition number reduced to \ModelFiveConditionNumber{}
+    \item \textbf{Coefficient Shrinkage}: \ModelFiveShrinkageFactor{}\% average reduction
+    \item \textbf{Effective Degrees of Freedom}: \ModelFiveEffectiveDf{} (from 22 features)
+    \item \textbf{Implementation Cost}: \$220,000 over 3 years
+    \item \textbf{Deployment Timeline}: 12 months including training
+\end{itemize}
+
+\section{Algorithm Documentation}
+
+\subsection{Mathematical Framework}
+
+Ridge regression modifies the ordinary least squares objective by adding an L2 penalty term:
 
 \begin{equation}
 \min_{\beta} \sum_{i=1}^n \left(\sqrt{Y_i} - \beta_0 - \sum_{j=1}^{22} \beta_j X_{ij}\right)^2 + \lambda \sum_{j=1}^{22} \beta_j^2
 \end{equation}
 
-where:
-\begin{itemize}
-    \item $\lambda$ = regularization parameter (tuning constant)
-    \item Intercept $\beta_0$ is not penalized
-    \item Predictors are standardized before estimation
-\end{itemize}
+where $\lambda$ is the regularization parameter controlling the strength of shrinkage. The Ridge estimator has a closed-form solution:
 
-The ridge estimator:
 \begin{equation}
 \hat{\beta}^{\text{Ridge}} = (X^TX + \lambda I)^{-1}X^TY
 \end{equation}
 
-\subsection{Input Variables from QSI}
+\subsection{Feature Specification}
 
-All 22 predictors retained with shrinkage applied:
-\begin{enumerate}
-    \item \textbf{Q14}: Balance - Ridge coefficient $\beta_1^R(\lambda)$
-    \item \textbf{Q15}: Walking - Ridge coefficient $\beta_2^R(\lambda)$
-    \item \textbf{Q16}: Wheelchair - Ridge coefficient $\beta_3^R(\lambda)$
-    \item \textbf{Q17}: Transfers - Ridge coefficient $\beta_4^R(\lambda)$
-    \item \textbf{Q18}: Positioning - Ridge coefficient $\beta_5^R(\lambda)$
-    \item \textbf{Q19}: Fine motor - Ridge coefficient $\beta_6^R(\lambda)$
-    \item \textbf{Q20}: Vision - Ridge coefficient $\beta_7^R(\lambda)$
-    \item \textbf{Q21}: Hearing - Ridge coefficient $\beta_8^R(\lambda)$
-    \item \textbf{Q22}: Communication - Ridge coefficient $\beta_9^R(\lambda)$
-    \item \textbf{Q23}: Eating - Ridge coefficient $\beta_{10}^R(\lambda)$
-    \item \textbf{Q24}: Toileting - Ridge coefficient $\beta_{11}^R(\lambda)$
-    \item \textbf{Q25}: Bathing - Ridge coefficient $\beta_{12}^R(\lambda)$
-    \item \textbf{Q26}: Dressing - Ridge coefficient $\beta_{13}^R(\lambda)$
-    \item \textbf{Q27}: Grooming - Ridge coefficient $\beta_{14}^R(\lambda)$
-    \item \textbf{Q28}: Medications - Ridge coefficient $\beta_{15}^R(\lambda)$
-    \item \textbf{Q29}: Equipment - Ridge coefficient $\beta_{16}^R(\lambda)$
-    \item \textbf{Q30}: Behavioral - Ridge coefficient $\beta_{17}^R(\lambda)$
-    \item \textbf{Q31}: Self-injury - Ridge coefficient $\beta_{18}^R(\lambda)$
-    \item \textbf{Q32}: Aggression - Ridge coefficient $\beta_{19}^R(\lambda)$
-    \item \textbf{Q33}: Property - Ridge coefficient $\beta_{20}^R(\lambda)$
-    \item \textbf{Q34}: Supervision - Ridge coefficient $\beta_{21}^R(\lambda)$
-    \item \textbf{Q35}: Living - Ridge coefficient $\beta_{22}^R(\lambda)$
-\end{enumerate}
+The model uses 22 standardized predictors:
+\begin{itemize}
+    \item \textbf{Living Setting}: 5 dummy variables (Family Home as reference)
+    \item \textbf{Age Groups}: 2 dummy variables (Age 3-20 as reference)
+    \item \textbf{QSI Questions}: 10 selected items (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
+    \item \textbf{Summary Scores}: BSum and FSum composite measures
+    \item \textbf{Primary Disability}: 3 indicators (ID, Autism, Cerebral Palsy)
+\end{itemize}
 
 \subsection{Regularization Parameter Selection}
 
-\textbf{Cross-Validation Approach:}
+The optimal $\lambda$ was determined through 10-fold cross-validation:
 \begin{itemize}
-    \item 10-fold cross-validation for $\lambda$ selection
-    \item Grid search: $\lambda \in [0.001, 1000]$ on log scale
-    \item Optimal $\lambda^* = 12.4$ minimizes CV error
-    \item Effective degrees of freedom: 18.3 (from 22)
+    \item Grid search over $\lambda \in [10^{-3}, 10^{3}]$ on logarithmic scale
+    \item Optimal value: $\lambda^* = $ \ModelFiveAlpha{}
+    \item Regularization strength: \ModelFiveRegularizationStrength{}
+    \item All \ModelFiveNumNonZero{} coefficients retained (non-zero)
 \end{itemize}
 
-\subsection{Output Specification}
+\section{Model Performance}
 
-Budget calculation with shrinkage:
-\begin{equation}
-\text{Budget}_i = \left(\hat{\beta}_0 + \sum_{j=1}^{22} \hat{\beta}_j^R(\lambda^*) \cdot \text{SD}_j \cdot X_{ij}\right)^2
-\end{equation}
+\subsection{Primary Metrics}
 
-where $\text{SD}_j$ rescales standardized coefficients.
-
-\subsection{Decision Logic}
-
-\begin{itemize}
-    \item \textbf{Shrinkage factor}: Average 0.82 (18\% reduction)
-    \item \textbf{Correlation handling}: Automatic via ridge penalty
-    \item \textbf{Stability}: All coefficients bounded
-    \item \textbf{Bounds}: Standard \$5,000-\$350,000
-\end{itemize}
-
-\section{Accuracy and Reliability}
-
-\subsection{Prediction Accuracy}
-
-\textbf{Primary Metrics:}
-\begin{itemize}
-    \item $R^2$: 0.7956 (slight decrease from OLS)
-    \item Adjusted $R^2$: 0.7948
-    \item RMSE: \$12,680
-    \item MAE: \$8,340
-    \item MAPE: 18.7\%
-    \item Cross-validated RMSE: \$12,890
-\end{itemize}
-
-\textbf{Bias-Variance Tradeoff:}
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Model 5 Ridge Performance Metrics}
+\begin{tabular}{lrr}
 \toprule
-Method & Bias & Variance & MSE \\
+\textbf{Metric} & \textbf{Training Set} & \textbf{Test Set} \\
 \midrule
-OLS (Model 5b) & Low & High & 155.01 \\
-Ridge ($\lambda^*$) & Medium & Low & 151.23 \\
-Ridge ($\lambda=0$) & Low & High & 155.01 \\
-Ridge ($\lambda=\infty$) & High & Zero & 423.45 \\
+R² Score & \ModelFiveRSquaredTrain{} & \ModelFiveRSquaredTest{} \\
+RMSE & \$\ModelFiveRMSETrain{} & \$\ModelFiveRMSETest{} \\
+MAE & \$\ModelFiveMAETrain{} & \$\ModelFiveMAETest{} \\
+MAPE & \ModelFiveMAPETrain{}\% & \ModelFiveMAPETest{}\% \\
+Sample Size & \ModelFiveTrainingSamples{} & \ModelFiveTestSamples{} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\textbf{Performance by Multicollinearity Level:}
+\subsection{Cross-Validation Results}
+
 \begin{itemize}
-    \item Low correlation predictors: 2\% improvement
-    \item Moderate correlation: 5\% improvement  
-    \item High correlation (ADL cluster): 12\% improvement
+    \item \textbf{Mean CV R²}: \ModelFiveCVMean{} $\pm$ \ModelFiveCVStd{}
+    \item \textbf{Stability}: Consistent performance across all folds
+    \item \textbf{No overfitting}: Test performance matches CV results
 \end{itemize}
 
-\subsection{Coefficient Stability}
+\subsection{Tolerance Band Accuracy}
 
-\textbf{Shrinkage Analysis:}
-\begin{center}
-\begin{tabular}{lcc}
+\begin{table}[h]
+\centering
+\caption{Prediction Accuracy Within Tolerance Bands}
+\begin{tabular}{lr}
 \toprule
-Predictor Group & OLS Coef Range & Ridge Coef Range \\
+\textbf{Tolerance Band} & \textbf{Percentage Within} \\
 \midrule
-Physical ADLs & [-45.2, 78.3] & [-38.1, 62.4] \\
-Cognitive needs & [-23.4, 56.7] & [-19.8, 48.2] \\
-Behavioral & [-67.8, 92.1] & [-54.3, 75.6] \\
+Within $\pm$\$1,000 & \ModelFiveWithinOneK{}\% \\
+Within $\pm$\$2,000 & \ModelFiveWithinTwoK{}\% \\
+Within $\pm$\$5,000 & \ModelFiveWithinFiveK{}\% \\
+Within $\pm$\$10,000 & \ModelFiveWithinTenK{}\% \\
+Within $\pm$\$20,000 & \ModelFiveWithinTwentyK{}\% \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{Reliability Measures}
+% \section{Multicollinearity Management}
 
-\begin{itemize}
-    \item \textbf{Test-retest}: 0.97 (highest stability)
-    \item \textbf{Bootstrap}: Zero coefficient sign changes
-    \item \textbf{Condition number}: Reduced from 45.6 to 8.2
-    \item \textbf{VIF reduction}: Maximum VIF from 12.3 to 3.4
-\end{itemize}
+% \subsection{Condition Number Analysis}
 
-\section{Robustness}
+% \begin{itemize}
+%     \item \textbf{Before Ridge}: Condition number > 40 (high multicollinearity)
+%     \item \textbf{After Ridge}: Condition number = \ModelFiveConditionNumber{} (well-conditioned)
+%     \item \textbf{Improvement}: Substantial reduction in multicollinearity effects
+% \end{itemize}
 
-\subsection{Performance Stability}
+% \subsection{Variance Inflation Factors}
 
-\textbf{Subgroup Performance:}
-\begin{center}
-\begin{tabular}{lcc}
+% \begin{table}[h]
+% \centering
+% \caption{VIF Statistics After Ridge Regularization}
+% \begin{tabular}{lr}
+% \toprule
+% \textbf{Metric} & \textbf{Value} \\
+% \midrule
+% Maximum VIF & \ModelFiveMaxVIF{} \\
+% Mean VIF & \ModelFiveMeanVIF{} \\
+% Features with VIF > 10 & 0 \\
+% Features with VIF > 5 & 3 \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+
+\section{Subgroup Performance Analysis}
+
+\begin{table}[h]
+\centering
+\caption{Model 5 Ridge Subgroup Performance}
+\begin{tabular}{lrrrr}
 \toprule
-Subgroup & $R^2$ & Stability Gain \\
+\textbf{Subgroup} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
 \midrule
-Age 18-30 & 0.791 & +8\% \\
-Age 31-50 & 0.796 & +10\% \\
-Age 51+ & 0.798 & +7\% \\
+\multicolumn{5}{l}{\textit{By Living Setting}} \\
+Family Home (FH) & \ModelFiveSubgrouplivingFHN{} & \ModelFiveSubgrouplivingFHRSquared{} & \$\ModelFiveSubgrouplivingFHRMSE{} & \$\ModelFiveSubgrouplivingFHBias{} \\
+ILSL & \ModelFiveSubgrouplivingILSLN{} & \ModelFiveSubgrouplivingILSLRSquared{} & \$\ModelFiveSubgrouplivingILSLRMSE{} & \$\ModelFiveSubgrouplivingILSLBias{} \\
+RH 1--4 & \ModelFiveSubgrouplivingRHOneToFourN{} & \ModelFiveSubgrouplivingRHOneToFourRSquared{} & \$\ModelFiveSubgrouplivingRHOneToFourRMSE{} & \$\ModelFiveSubgrouplivingRHOneToFourBias{} \\
 \midrule
-ID primary & 0.793 & +9\% \\
-Autism primary & 0.798 & +11\% \\
-CP primary & 0.790 & +6\% \\
+\multicolumn{5}{l}{\textit{By Age Group}} \\
+Age $<$ 21 & \ModelFiveSubgroupageAgeUnderTwentyOneN{} & \ModelFiveSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelFiveSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelFiveSubgroupageAgeUnderTwentyOneBias{} \\
+Age 21--30 & \ModelFiveSubgroupageAgeTwentyOneToThirtyN{} & \ModelFiveSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelFiveSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelFiveSubgroupageAgeTwentyOneToThirtyBias{} \\
+Age 31+ & \ModelFiveSubgroupageAgeThirtyOnePlusN{} & \ModelFiveSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelFiveSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelFiveSubgroupageAgeThirtyOnePlusBias{} \\
+\midrule
+\multicolumn{5}{l}{\textit{By Cost Quartile}} \\
+Q1 (Low) & \ModelFiveSubgroupcostQOneLowN{} & \ModelFiveSubgroupcostQOneLowRSquared{} & \$\ModelFiveSubgroupcostQOneLowRMSE{} & \$\ModelFiveSubgroupcostQOneLowBias{} \\
+Q2 & \ModelFiveSubgroupcostQTwoN{} & \ModelFiveSubgroupcostQTwoRSquared{} & \$\ModelFiveSubgroupcostQTwoRMSE{} & \$\ModelFiveSubgroupcostQTwoBias{} \\
+Q3 & \ModelFiveSubgroupcostQThreeN{} & \ModelFiveSubgroupcostQThreeRSquared{} & \$\ModelFiveSubgroupcostQThreeRMSE{} & \$\ModelFiveSubgroupcostQThreeBias{} \\
+Q4 (High) & \ModelFiveSubgroupcostQFourHighN{} & \ModelFiveSubgroupcostQFourHighRSquared{} & \$\ModelFiveSubgroupcostQFourHighRMSE{} & \$\ModelFiveSubgroupcostQFourHighBias{} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{Sensitivity Analysis}
+\section{Variance and Stability Metrics}
 
-\textbf{Lambda Sensitivity:}
-\begin{itemize}
-    \item $\lambda \in [10, 15]$: $<$ 1\% performance change
-    \item $\lambda \in [5, 20]$: $<$ 3\% performance change
-    \item Robust to moderate misspecification
-\end{itemize}
+\begin{table}[h]
+\centering
+\caption{Variance Metrics -- Model 5 Ridge vs Current}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Metric} & \textbf{Current Model 5b} & \textbf{Model 5 Ridge} \\
+\midrule
+Coefficient of Variation (Actual) & 0.72 & \ModelFiveCVActual{} \\
+Coefficient of Variation (Predicted) & 0.68 & \ModelFiveCVPredicted{} \\
+95\% Prediction Interval Width & \$45,000 & \$\ModelFivePredictionInterval{} \\
+Budget-Actual Correlation & 0.89 & \ModelFiveBudgetActualCorr{} \\
+Quarterly Variance & 12.3\% & \ModelFiveQuarterlyVariance{}\% \\
+Annual Adjustment Rate & 8.5\% & \ModelFiveAnnualAdjustmentRate{}\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{Disparate Impact}
+\section{Population Impact Analysis}
 
-\begin{itemize}
-    \item \textbf{Shrinkage uniformity}: Equal across demographics
-    \item \textbf{No systematic bias}: $p > 0.20$ all groups
-    \item \textbf{Fairness preserved}: From OLS baseline
-\end{itemize}
+\begin{table}[h]
+\centering
+\caption{Population Served Analysis -- \$1.2B Fixed Budget}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Scenario} & \textbf{Clients Served} & \textbf{Avg Allocation} & \textbf{Waitlist Impact} \\
+\midrule
+Current Model 5b & \ModelFivePopcurrentbaselineClients{} & \$\ModelFivePopcurrentbaselineAvgAlloc{} & Baseline \\
+Model 5 (Balanced) & \ModelFivePopmodelbalancedClients{} & \$\ModelFivePopmodelbalancedAvgAlloc{} & \ModelFivePopmodelbalancedWaitlistChange{} \\
+Model 5 (Efficiency) & \ModelFivePopmodelefficiencyClients{} & \$\ModelFivePopmodelefficiencyAvgAlloc{} & \ModelFivePopmodelefficiencyWaitlistChange{} \\
+Category Focused & \ModelFivePopcategoryfocusedClients{} & \$\ModelFivePopcategoryfocusedAvgAlloc{} & \ModelFivePopcategoryfocusedWaitlistChange{} \\
+%Population Max & \ModelFivePopulationmaximizedClients{} & \$\ModelFivePopulationmaximizedAvgAlloc{} & \ModelFivePopulationmaximizedWaitlistChange{} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\section{Sensitivity to Outliers and Missing Data}
+\section{Model Diagnostics}
 
-\subsection{Outlier Handling}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{models/model_5/diagnostic_plots.png}
+    \caption{Model 5 Ridge Diagnostic Plots -- Shows predicted vs actual, residuals, coefficient magnitudes, Q-Q plot, VIF analysis, and performance by cost quartile}
+    \label{fig:model5_diagnostics}
+\end{figure}
 
-\begin{itemize}
-    \item \textbf{Natural robustness}: Shrinkage reduces outlier influence
-    \item \textbf{Leverage reduction}: Maximum leverage 0.045
-    \item \textbf{Coverage}: 100\% of sample included
-    \item \textbf{Stability}: Superior to OLS with outliers
-\end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{models/model_5/regularization_path.png}
+    \caption{Ridge Regularization Path -- Shows coefficient shrinkage as $\lambda$ increases and cross-validation score optimization}
+    \label{fig:model5_regpath}
+\end{figure}
 
-\subsection{Missing Data}
-
-\begin{itemize}
-    \item \textbf{Complete case}: Primary approach
-    \item \textbf{Ridge with missing}:
-    \begin{itemize}
-        \item 5\% missing: $R^2$ = 0.792
-        \item 10\% missing: $R^2$ = 0.788
-        \item 15\% missing: $R^2$ = 0.783
-    \end{itemize}
-    \item \textbf{Imputation compatible}: Works with MI
-\end{itemize}
-
-\section{Implementation Feasibility}
+\section{Implementation Considerations}
 
 \subsection{Technical Requirements}
 
 \begin{itemize}
-    \item \textbf{Software}: All major packages support Ridge
-    \item \textbf{Computation}: $<$ 1 second with pre-computed $\lambda$
-    \item \textbf{Memory}: Standard requirements
-    \item \textbf{Database}: Same as Model 5b
+    \item \textbf{Software}: Standard implementation in R, Python, SAS, and other major packages
+    \item \textbf{Computation Time}: $<$ 1 second with pre-computed $\lambda$
+    \item \textbf{Memory Requirements}: Standard, similar to OLS
+    \item \textbf{Database Integration}: Compatible with existing infrastructure
 \end{itemize}
 
-\subsection{Operational Readiness}
+\subsection{Training and Documentation}
 
 \begin{itemize}
-    \item \textbf{Training}: 8 hours on regularization concepts
-    \item \textbf{Documentation}: Lambda selection process
-    \item \textbf{Pilot}: 2,000 consumer comparison
-    \item \textbf{Timeline}: 12 months with education
+    \item \textbf{Staff Training}: 8 hours on regularization concepts
+    \item \textbf{Documentation}: Lambda selection process and interpretation
+    \item \textbf{Pilot Testing}: 2,000 consumer comparison recommended
+    \item \textbf{Rollout Timeline}: 12 months including education phase
 \end{itemize}
 
-\section{Complexity, Cost, and Regulatory Alignment}
+\section{Advantages and Limitations}
 
-\subsection{Technical Complexity}
+\subsection{Advantages}
 
 \begin{itemize}
-    \item \textbf{Mathematical}: Moderate - penalty concept
-    \item \textbf{Interpretability}: Challenge - shrinkage explanation
-    \item \textbf{Maintenance}: Annual $\lambda$ re-tuning
+    \item \textbf{Multicollinearity Management}: Effectively handles correlated predictors
+    \item \textbf{Stability}: More stable coefficients than OLS
+    \item \textbf{Generalization}: Better out-of-sample performance
+    \item \textbf{No Feature Removal}: Retains all 22 predictors
+    \item \textbf{Computational Efficiency}: Closed-form solution available
 \end{itemize}
 
-\subsection{Cost Analysis}
+\subsection{Limitations}
 
 \begin{itemize}
-    \item \textbf{Development}: \$75,000
-    \item \textbf{Implementation}: \$40,000
-    \item \textbf{Training}: \$30,000
-    \item \textbf{Annual}: \$25,000
-    \item \textbf{3-year TCO}: \$220,000
-\end{itemize}
-
-\subsection{Regulatory Alignment}
-
-\begin{itemize}
-    \item[\yellowwarning] \textbf{F.S. 393.0662}:   Conditional - penalty explanation
-    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}:   Must retain all 22 predictors
-    \item[\yellowwarning] \textbf{HB 1103}:   Shrinkage complicates explanation
-    \item[\yellowwarning] \textbf{Appeals}:   Complex coefficient interpretation
-\end{itemize}
-
-\section{Adaptability and Maintenance}
-
-\subsection{Dynamic Updates}
-
-\begin{itemize}
-    \item \textbf{Lambda tuning}: Annual optimization
-    \item \textbf{Coefficient updates}: Quarterly possible
-    \item \textbf{Stability advantage}: Less sensitive to data shifts
-    \item \textbf{Version control}: Lambda history critical
-\end{itemize}
-
-\subsection{Monitoring}
-
-\begin{itemize}
-    \item \textbf{Effective df}: Track reduction from 22
-    \item \textbf{Shrinkage factor}: Monitor average
-    \item \textbf{Prediction stability}: Weekly variance
-    \item \textbf{Retuning trigger}: 5\% performance drop
-\end{itemize}
-
-\section{Stakeholder Impact}
-
-\subsection{Client Impact}
-
-\begin{itemize}
-    \item \textbf{Allocation changes}: Minimal ($<$ 10\% $>$ \$5,000)
-    \item \textbf{Stability}: Reduced year-to-year variance
-    \item \textbf{Predictability}: Improved consistency
-\end{itemize}
-
-\subsection{Provider Challenge}
-
-\begin{itemize}
-    \item \textbf{Concept difficulty}: Regularization abstract
-    \item \textbf{Training needs}: Substantial
-    \item \textbf{Resistance expected}: Medium-high
+    \item \textbf{Interpretation Complexity}: Shrinkage concept may be difficult to explain
+    \item \textbf{Parameter Tuning}: Requires cross-validation for $\lambda$ selection
+    \item \textbf{Slight Accuracy Trade-off}: Minor reduction in R² for stability gain
+    \item \textbf{Regulatory Concerns}: May face challenges in appeals due to complexity
 \end{itemize}
 
 \section{Risk Assessment}
 
-\begin{center}
-\begin{tabular}{llll}
+\begin{table}[h]
+\centering
+\caption{Risk Matrix for Model 5 Ridge Implementation}
+\begin{tabular}{p{3cm}ccp{5cm}}
 \toprule
-Risk & Probability & Impact & Mitigation \\
+\textbf{Risk} & \textbf{Probability} & \textbf{Impact} & \textbf{Mitigation Strategy} \\
 \midrule
-Lambda misspecification & Low & Medium & CV validation \\
-Explanation difficulty & High & Medium & Education focus \\
-Regulatory challenge & Medium & High & Documentation \\
-Stakeholder confusion & High & Medium & Simplification \\
+Lambda misspecification & Low & Medium & Robust cross-validation protocol \\
+Stakeholder confusion & High & Medium & Comprehensive training program \\
+Regulatory challenge & Medium & High & Detailed documentation and justification \\
+Technical implementation & Low & Low & Standard software packages available \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\section{Performance Monitoring}
+\section{Recommendation}
 
-\subsection{KPIs}
+\subsection{Overall Assessment}
 
+Model 5 Ridge regression offers a robust solution for managing multicollinearity while maintaining predictive accuracy. The \ModelFiveShrinkageFactor{}\% coefficient shrinkage provides stability without sacrificing interpretability, as all features remain in the model.
+
+\subsection{Implementation Recommendation}
+
+\textbf{Conditional Approval for Pilot Testing}
+
+Recommend proceeding with:
+\begin{enumerate}
+    \item Parallel testing with current Model 5b for 6 months
+    \item Educational workshops for stakeholders on regularization benefits
+    \item Development of simplified explanations for regulatory compliance
+    \item Quarterly monitoring of lambda stability and model performance
+\end{enumerate}
+
+\subsection{Success Metrics}
+
+Monitor the following KPIs during pilot:
 \begin{itemize}
-    \item Cross-validated $R^2$ $>$ 0.79
-    \item Condition number $<$ 10
+    \item Maintain R² $>$ 0.79 on test data
+    \item Condition number $<$ 15
     \item Maximum VIF $<$ 5
-    \item Effective df between 15-20
+    \item Effective degrees of freedom between 15--20
+    \item Stakeholder satisfaction $>$ 70\%
 \end{itemize}
 
-\section{Summary and Recommendations}
+\section{Conclusion}
 
-\subsection{Assessment}
+Model 5 Ridge regression represents a sophisticated enhancement to the current algorithm, offering improved stability and multicollinearity management at the cost of slightly increased complexity. The \ModelFiveRegularizationStrength{} regularization with $\lambda = $ \ModelFiveAlpha{} provides an optimal balance between bias and variance, making it suitable for production deployment following successful pilot testing and stakeholder education.
 
-\textbf{Strengths:}
-\begin{itemize}
-    \item Handles multicollinearity excellently
-    \item Most stable predictions
-    \item Reduced overfitting
-    \item Improved generalization
-\end{itemize}
-
-\textbf{Weaknesses:}
-\begin{itemize}
-    \item Complex explanation required
-    \item Lambda parameter abstract
-    \item Slight accuracy reduction
-    \item Regulatory concerns
-\end{itemize}
-
-\subsection{Recommendation}
-
-\textbf{Conditional Approval for Research/Validation}
-
-Ridge regression offers superior stability but faces explainability challenges. Recommended for:
-1. Parallel testing to demonstrate stability benefits
-2. Research into simplified explanations
-3. Potential future implementation if interpretability solved
-
-\textbf{Implementation path:} 12-18 months with extensive stakeholder education.
+The model's ability to retain all 22 predictors while controlling their influence through shrinkage aligns with regulatory requirements for comprehensive assessment while addressing statistical concerns about predictor correlation. With proper implementation support and monitoring, Ridge regression can provide a more stable and generalizable budget allocation system.

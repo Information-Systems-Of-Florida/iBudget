@@ -8,23 +8,10 @@
 \usepackage{morefloats}
 \usepackage{enumitem}
 \usepackage{xcolor}
+%\usepackage{tcolorbox}
 \usepackage{totpages}
 \usepackage{pdflscape}
-%\usepackage{fontspec}
-%\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support
-\usepackage{fontawesome5}
-
-\usepackage[fontsize=10pt]{scrextend} 
-\setmargins{3.5cm}%			% left edge
-		   {2.5cm}%     % top edge
-           {14.7cm}%		% text width
-           {21.42cm}%   % text hight
-           {14pt}%			% header hight
-           {3cm}%   	  % header distance
-           {0pt}%				% footer hight
-           {2cm}%    	  % footer distance         
-
-
+\usepackage{minted}
 \usepackage{listings}
 % Code listing settings
 \lstset{
@@ -39,8 +26,26 @@
     numbers=left,
     numberstyle=\tiny\color{gray}
 }
+\usepackage{listingsutf8}
 
 % ********* Font definiton ************
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{pmboxdraw}  % For box drawing characters
+%\usepackage{fontspec}
+%\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support
+\usepackage{fontawesome5}
+
+\usepackage[fontsize=10pt]{scrextend} 
+\setmargins{3.5cm}%			% left edge
+		   {2.5cm}%     % top edge
+           {14.7cm}%		% text width
+           {21.42cm}%   % text hight
+           {14pt}%			% header hight
+           {3cm}%   	  % header distance
+           {0pt}%				% footer hight
+           {2cm}%    	  % footer distance         
+
 %\usepackage{t1enc} % as usual
 %\usepackage[latin1]{inputenc} % as usual
 %\usepackage{times}		
@@ -226,4 +231,80 @@ contents={
 \newenvironment{EQA}[1][]{\refstepcounter{QaA} \color{HW} Record your explanation as answer \#\theQaA. #1 }{\medskip}
 \newcommand\QA{\begin{EQA} \end{EQA}} 
 
+\newcommand{\WarningRunPiepeline}{WARNING: Value undefined. Run the analysis pipeline}
+
+% Outlier analysis commands
+
+% Overall statistics
+\newcommand{\TheTotalNumberCustomers}{\WarningRunPiepelinee}
+\newcommand{\TheInitialYear}{\WarningRunPiepeline}
+\newcommand{\TheFinalYear}{\WarningRunPiepeline}
+\newcommand{\TheTotalCustomerYears}{\WarningRunPiepeline}
+
+% Customer data availability
+\newcommand{\CustomerNumberOneYear}{\WarningRunPiepeline}
+\newcommand{\CustomerPctOneYear}{\WarningRunPiepeline}
+\newcommand{\CustomerNumberTwoPlusYear}{\WarningRunPiepeline}
+\newcommand{\CustomerPctTwoPlusYear}{\WarningRunPiepeline}
+\newcommand{\CustomerNumberNoData}{\WarningRunPiepeline}
+\newcommand{\CustomerPctNoData}{\WarningRunPiepeline}
+
+% Exclusion statistics
+\newcommand{\ExclusionMidYearQSICount}{\WarningRunPiepeline}
+\newcommand{\ExclusionMidYearQSIPct}{\WarningRunPiepeline}
+\newcommand{\ExclusionLateEntryCount}{\WarningRunPiepeline}
+\newcommand{\ExclusionLateEntryPct}{\WarningRunPiepeline}
+\newcommand{\ExclusionEarlyExitCount}{\WarningRunPiepeline}
+\newcommand{\ExclusionEarlyExitPct}{\WarningRunPiepeline}
+\newcommand{\ExclusionNoCostsCount}{\WarningRunPiepeline}
+\newcommand{\ExclusionNoCostsPct}{\WarningRunPiepeline}
+\newcommand{\ExclusionInsufficientServiceCount}{\WarningRunPiepeline}
+\newcommand{\ExclusionInsufficientServicePct}{\WarningRunPiepeline}
+\newcommand{\ExclusionNoQSICount}{\WarningRunPiepeline}
+\newcommand{\ExclusionNoQSIPct}{\WarningRunPiepeline}
+
+% Cost statistics
+\newcommand{\AvgAnnualCost}{\WarningRunPiepeline}
+\newcommand{\MedianAnnualCost}{\WarningRunPiepeline}
+\newcommand{\StdevAnnualCost}{\WarningRunPiepeline}
+
+% Trajectory analysis
+\newcommand{\CustomersWithTrajectory}{\WarningRunPiepeline}
+\newcommand{\PctWithTrajectory}{\WarningRunPiepeline}
+\newcommand{\CustomersWithGaps}{\WarningRunPiepeline}
+\newcommand{\PctWithGaps}{\WarningRunPiepeline}
+
+% Outlier statistics
+\newcommand{\OutlierLowerFence}{\WarningRunPiepeline}
+\newcommand{\OutlierUpperFence}{\WarningRunPiepeline}
+\newcommand{\OutliersBelow}{\WarningRunPiepeline}
+\newcommand{\OutliersAbove}{\WarningRunPiepeline}
+\newcommand{\OutlierRate}{\WarningRunPiepeline}
+
+% Proration Analysis Commands 
+
+\newcommand{\ProrationFullYearPct}{\WarningRunPipeline}
+\newcommand{\ProrationHighCoveragePct}{\WarningRunPipeline}
+\newcommand{\ProrationMedianRFull}{\WarningRunPipeline}
+\newcommand{\ProrationMedianRLow}{\WarningRunPipeline}
+\newcommand{\ProrationTotalCustomerYears}{\WarningRunPipeline}
+\newcommand{\ProrationFullYearCount}{\WarningRunPipeline}
+\newcommand{\ProrationHighCoverageCount}{\WarningRunPipeline}
+
+% Command definition for all models
+\newcommand{\WarningRunPipeline}{\textcolor{red}{[RUN PIPELINE]}}
+
+
+% Load variable definitions per model
+
+\IfFileExists{models/model_1/model_1_newcommands.tex}{\input{models/model_1/model_1_newcommands.tex}}{}
+\IfFileExists{models/model_2/model_2_newcommands.tex}{\input{models/model_2/model_2_newcommands.tex}}{}
+\IfFileExists{models/model_3/model_3_newcommands.tex}{\input{models/model_3/model_3_newcommands.tex}}{}
+\IfFileExists{models/model_4/model_4_newcommands.tex}{\input{models/model_4/model_4_newcommands.tex}}{}
+\IfFileExists{models/model_5/model_5_newcommands.tex}{\input{models/model_5/model_5_newcommands.tex}}{}
+\IfFileExists{models/model_6/model_6_newcommands.tex}{\input{models/model_6/model_6_newcommands.tex}}{}
+\IfFileExists{models/model_7/model_7_newcommands.tex}{\input{models/model_7/model_7_newcommands.tex}}{}
+\IfFileExists{models/model_8/model_8_newcommands.tex}{\input{models/model_8/model_8_newcommands.tex}}{}
+\IfFileExists{models/model_9/model_9_newcommands.tex}{\input{models/model_9/model_9_newcommands.tex}}{}
+\IfFileExists{models/model_10/model_10_newcommands.tex}{\input{models/model_10/model_10_newcommands.tex}}{}
 

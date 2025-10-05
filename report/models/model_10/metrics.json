@@ -1,0 +1,23 @@
+{
+  "r2_train": 0.21601626384225514,
+  "rmse_train": 97.47924614479199,
+  "mae_train": 80.50111480180982,
+  "mape_train": 0,
+  "r2_test": 0.21160396009044635,
+  "rmse_test": 97.2483012180413,
+  "mae_test": 80.53715723961524,
+  "mape_test": 0,
+  "within_1k": 100.0,
+  "within_2k": 100.0,
+  "within_5k": 100.0,
+  "within_10k": 100.0,
+  "within_20k": 100.0,
+  "training_samples": 53812,
+  "test_samples": 13453,
+  "mean_prediction": 175.6493714869276,
+  "std_prediction": 51.66683489403564,
+  "mean_actual": 176.5887311050072,
+  "std_actual": 109.52412859869601,
+  "cv_mean": 0.21045375275455047,
+  "cv_std": 0.008987846160176234
+}

@@ -1,0 +1,8 @@
+% Proration Analysis Commands (add to master config)
+\newcommand{\ProrationFullYearPct}{\WarningRunPipeline}
+\newcommand{\ProrationHighCoveragePct}{\WarningRunPipeline}
+\newcommand{\ProrationMedianRFull}{\WarningRunPipeline}
+\newcommand{\ProrationMedianRLow}{\WarningRunPipeline}
+\newcommand{\ProrationTotalCustomerYears}{\WarningRunPipeline}
+\newcommand{\ProrationFullYearCount}{\WarningRunPipeline}
+\newcommand{\ProrationHighCoverageCount}{\WarningRunPipeline}

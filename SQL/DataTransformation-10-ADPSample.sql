@@ -1,0 +1,185 @@
+USE [APD]
+GO
+
+/****** Object:  Table [dbo].[ADPSample]    Script Date: Generated DDL ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ADPSample](
+	[CaseNo] [bigint] NOT NULL,
+	[FiscalYear] [int] NULL,
+	[BeginDate] [datetime] NULL,
+	[ENDDATE] [datetime] NULL,
+	[IndexSubObjectCode] [varchar](100) NULL,
+	[ConsumerCounty] [varchar](100) NULL,
+	[GeographicDifferential] [varchar](100) NULL,
+	[ProviderRateType] [varchar](100) NULL,
+	[PROC] [varchar](25) NULL,
+	[Service] [varchar](200) NULL,
+	[UnitType] [varchar](100) NULL,
+	[UnitsPer] [numeric](19, 2) NULL,
+	[UnitsOfMeasure] [varchar](50) NULL,
+	[TotalUnits] [numeric](19, 4) NULL,
+	[VendorId] [bigint] NULL,
+	[ProviderName] [varchar](200) NULL,
+	[ProviderMedcId] [varchar](20) NULL,
+	[Rate] [numeric](19, 4) NULL,
+	[TotalAmount] [numeric](19, 2) NULL,
+	[PlannedServiceId] [bigint] NULL,
+	[PlanId] [bigint] NULL,
+	[RH1] [numeric](19, 2) NULL,
+	[RH2] [numeric](19, 2) NULL,
+	[RH3] [numeric](19, 2) NULL,
+	[RH4] [numeric](19, 2) NULL,
+	[PIN] [varchar](20) NULL,
+	[SSN] [varchar](20) NULL,
+	[iConnect_Category] [varchar](100) NULL,
+	[SBPG_C1] [varchar](50) NULL,
+	[Region2] [varchar](50) NULL,
+	[MedicaidId] [varchar](20) NULL,
+	[LNAME] [varchar](50) NULL,
+	[FNAME] [varchar](50) NULL,
+	[MI] [varchar](10) NULL,
+	[SFX] [varchar](10) NULL,
+	[RACE] [varchar](50) NULL,
+	[SEX] [varchar](10) NULL,
+	[DOB] [datetime] NULL,
+	[MEDC_ID] [varchar](20) NULL,
+	[CNTY_RECMD] [varchar](50) NULL,
+	[CNTY_RESID] [varchar](50) NULL,
+	[REGION_NAME] [varchar](100) NULL,
+	[CNTY_RESID_NAME] [varchar](100) NULL,
+	[PrimDisabilityDescription] [varchar](200) NULL,
+	[SecondaryDisabilityDescription] [varchar](200) NULL,
+	[OtherDisabilityDescription] [varchar](200) NULL,
+	[Status_Description] [varchar](200) NULL,
+	[Category] [varchar](100) NULL,
+	[GroupedProgCompDescript] [varchar](200) NULL,
+	[ProgCompDesc] [varchar](200) NULL,
+	[Worker_Dist] [varchar](50) NULL,
+	[Worker_SD] [varchar](50) NULL,
+	[Worker_Unit] [varchar](50) NULL,
+	[Worker_Code] [varchar](50) NULL,
+	[Worker_First_Name] [varchar](100) NULL,
+	[Worker_Last_Name] [varchar](100) NULL,
+	[Worker_SSN] [varchar](20) NULL,
+	[WSC_File] [varchar](50) NULL,
+	[WL_Priority] [varchar](100) NULL,
+	[CurrentAge] [int] NULL,
+	[AGE50P] [numeric](19, 2) NULL,
+	[AGE60P] [numeric](19, 2) NULL,
+	[AGE70P] [numeric](19, 2) NULL,
+	[DUPLICATE] [varchar](10) NULL,
+	[CLIENTID] [bigint] NULL,
+	[CompletedDate] [datetime] NULL,
+	[FuncationalStatus] [int] NULL,
+	[BehavioralStatus] [int] NULL,
+	[PhysicalStatus] [int] NULL,
+	[EstLevel] [int] NULL,
+	[FunctSum] [int] NULL,
+	[BehavSum] [int] NULL,
+	[PhysSum] [int] NULL,
+	[Q14] [int] NULL,
+	[Q15] [int] NULL,
+	[Q16] [int] NULL,
+	[Q17] [int] NULL,
+	[Q18] [int] NULL,
+	[Q19] [int] NULL,
+	[Q20] [int] NULL,
+	[Q21] [int] NULL,
+	[Q22] [int] NULL,
+	[Q23] [int] NULL,
+	[Q24] [int] NULL,
+	[Q25] [int] NULL,
+	[Q26] [int] NULL,
+	[Q27] [int] NULL,
+	[Q28] [int] NULL,
+	[Q29] [int] NULL,
+	[Q30] [int] NULL,
+	[Q31a] [int] NULL,
+	[Q31b] [int] NULL,
+	[Q32] [int] NULL,
+	[Q33] [int] NULL,
+	[Q34] [int] NULL,
+	[Q35] [int] NULL,
+	[Q36] [int] NULL,
+	[Q37] [int] NULL,
+	[Q38] [int] NULL,
+	[Q39] [int] NULL,
+	[Q40] [int] NULL,
+	[Q41] [int] NULL,
+	[Q42] [int] NULL,
+	[Q43] [int] NULL,
+	[Q44] [int] NULL,
+	[Q45] [int] NULL,
+	[Q46] [int] NULL,
+	[Q47] [int] NULL,
+	[Q48] [int] NULL,
+	[Q49] [int] NULL,
+	[Q50] [int] NULL,
+	[Q51A] [int] NULL,
+	[Q13a] [int] NULL,
+	[Q13b] [int] NULL,
+	[Q13c] [int] NULL,
+	[RATERID] [bigint] NULL,
+	[Days_Since_QSI] [int] NULL,
+	[ResHabFlag] [numeric](19, 2) NULL,
+	[FamilyHome] [numeric](19, 2) NULL,
+	[IndLiving_SuppLvg] [numeric](19, 2) NULL,
+	[ResHabSrvcPlan_notResHabLivSetting_Flag] [numeric](19, 2) NULL,
+	[Intercept] [numeric](19, 2) NULL,
+	[Live2ILSL] [numeric](19, 2) NULL,
+	[Live2RH1] [numeric](19, 2) NULL,
+	[Live2RH2] [numeric](19, 2) NULL,
+	[Live2RH3] [numeric](19, 2) NULL,
+	[Live2RH4] [numeric](19, 2) NULL,
+	[Age21_30] [numeric](19, 2) NULL,
+	[Age30plus] [numeric](19, 2) NULL,
+	[BSum] [numeric](19, 2) NULL,
+	[FHFSum] [numeric](19, 2) NULL,
+	[SLFSum] [numeric](19, 2) NULL,
+	[SLBSum] [numeric](19, 2) NULL,
+	[Q_16] [numeric](19, 2) NULL,
+	[Q_18] [numeric](19, 2) NULL,
+	[Q_20] [numeric](19, 2) NULL,
+	[Q_21] [numeric](19, 2) NULL,
+	[Q_23] [numeric](19, 2) NULL,
+	[Q_28] [numeric](19, 2) NULL,
+	[Q_33] [numeric](19, 2) NULL,
+	[Q_34] [numeric](19, 2) NULL,
+	[Q_36] [numeric](19, 2) NULL,
+	[Q_43] [numeric](19, 2) NULL,
+	[CoefficientsSum] [numeric](19, 2) NULL,
+	[AlgorithmAmtModel5b] [numeric](19, 2) NULL,
+	[CALCULATE] [varchar](50) NULL,
+	[InvalidAlgorithmLivingSetting] [numeric](19, 2) NULL,
+	[ClientLivingSetting] [varchar](50) NULL,
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_ADPSample] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+-- Create indexes for better performance
+CREATE NONCLUSTERED INDEX [IX_ADPSample_CaseNo] ON [dbo].[ADPSample]
+(
+	[CaseNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [IX_ADPSample_FiscalYear] ON [dbo].[ADPSample]
+(
+	[FiscalYear] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [IX_ADPSample_PlannedServiceId] ON [dbo].[ADPSample]
+(
+	[PlannedServiceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO

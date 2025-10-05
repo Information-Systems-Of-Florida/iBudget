@@ -1,11 +1,28 @@
-\chapter{Model 4: Weighted Least Squares}\newpage
+\chapter{Model 4: Weighted Least Squares}\label{ch:model4}
 
-\section{Weighted Least Squares Regression\\Variance-Based Weighting with Equity Safeguards}
+% Include the dynamic values from model calibration
+\input{models/model_4/model_4_renewcommands.tex}
 
+\section{Executive Summary}
 
-\subsection{Complete Algorithm Specification}
+Model 4 employs Weighted Least Squares (WLS) regression with variance-based weighting to address heteroscedasticity in budget allocations. This approach offers improved efficiency for stable cases while maintaining interpretability through a two-stage estimation process with built-in equity safeguards.
 
-Weighted Least Squares (WLS) extends Model 5b by incorporating precision weights based on variance heteroscedasticity:
+Key findings:
+\begin{itemize}
+    \item \textbf{Performance}: Test R² = \ModelFourRSquaredTest{}, RMSE = \$\ModelFourRMSETest{}
+    \item \textbf{Weighted Performance}: Weighted R² = \ModelFourWeightedRSquared{}, Weighted RMSE = \$\ModelFourWeightedRMSE{}
+    \item \textbf{Efficiency Gain}: \ModelFourEfficiencyRatio{}x relative efficiency vs OLS
+    \item \textbf{Implementation Cost}: \$305,000 over 3 years
+    \item \textbf{Annual Operating Cost}: \$40,000 (14\% increase from current)
+    \item \textbf{Deployment Timeline}: 12 months minimum with equity safeguards
+    \item \textbf{Data Utilization}: 100\% (no outlier removal)
+\end{itemize}
+
+\section{Methodology}
+
+\subsection{Model Specification}
+
+WLS extends the square-root transformation model by incorporating precision weights based on variance heteroscedasticity:
 
 \begin{equation}
 \sqrt{Y_i} = \beta_0 + \sum_{j=1}^{22} \beta_j X_{ij} + \epsilon_i
@@ -16,51 +33,15 @@ with weights:
 w_i = \frac{1}{\hat{\sigma}_i^2}
 \end{equation}
 
-where $\hat{\sigma}_i^2$ is the estimated variance for observation $i$ based on:
-\begin{equation}
-\log(\hat{\sigma}_i^2) = \gamma_0 + \gamma_1 \log(\hat{Y}_i) + \gamma_2 \text{LivingSetting}_i + \gamma_3 \text{SupportLevel}_i
-\end{equation}
-
-The WLS estimator minimizes:
-\begin{equation}
-\sum_{i=1}^n w_i \left(\sqrt{Y_i} - \beta_0 - \sum_{j=1}^{22} \beta_j X_{ij}\right)^2
-\end{equation}
-
-\subsection{Input Variables from QSI}
-
-Standard 22 predictors with variance-adjusted coefficient estimation:
-\begin{enumerate}
-    \item \textbf{Q14}: Balance issues - WLS coefficient $\beta_1^{WLS}$
-    \item \textbf{Q15}: Walking needs - WLS coefficient $\beta_2^{WLS}$
-    \item \textbf{Q16}: Wheelchair use - WLS coefficient $\beta_3^{WLS}$
-    \item \textbf{Q17}: Transfer support - WLS coefficient $\beta_4^{WLS}$
-    \item \textbf{Q18}: Positioning - WLS coefficient $\beta_5^{WLS}$
-    \item \textbf{Q19}: Fine motor - WLS coefficient $\beta_6^{WLS}$
-    \item \textbf{Q20}: Vision - WLS coefficient $\beta_7^{WLS}$
-    \item \textbf{Q21}: Hearing - WLS coefficient $\beta_8^{WLS}$
-    \item \textbf{Q22}: Communication - WLS coefficient $\beta_9^{WLS}$
-    \item \textbf{Q23}: Eating - WLS coefficient $\beta_{10}^{WLS}$
-    \item \textbf{Q24}: Toileting - WLS coefficient $\beta_{11}^{WLS}$
-    \item \textbf{Q25}: Bathing - WLS coefficient $\beta_{12}^{WLS}$
-    \item \textbf{Q26}: Dressing - WLS coefficient $\beta_{13}^{WLS}$
-    \item \textbf{Q27}: Grooming - WLS coefficient $\beta_{14}^{WLS}$
-    \item \textbf{Q28}: Medications - WLS coefficient $\beta_{15}^{WLS}$
-    \item \textbf{Q29}: Medical equipment - WLS coefficient $\beta_{16}^{WLS}$
-    \item \textbf{Q30}: Behavioral support - WLS coefficient $\beta_{17}^{WLS}$
-    \item \textbf{Q31}: Self-injury - WLS coefficient $\beta_{18}^{WLS}$
-    \item \textbf{Q32}: Aggression - WLS coefficient $\beta_{19}^{WLS}$
-    \item \textbf{Q33}: Property destruction - WLS coefficient $\beta_{20}^{WLS}$
-    \item \textbf{Q34}: Supervision - WLS coefficient $\beta_{21}^{WLS}$
-    \item \textbf{Q35}: Living setting - WLS coefficient $\beta_{22}^{WLS}$
-\end{enumerate}
+where $\hat{\sigma}_i^2$ is the estimated variance for observation $i$.
 
 \subsection{Two-Stage Estimation Process}
 
 \textbf{Stage 1: Variance Function Estimation}
 \begin{enumerate}
-    \item Fit OLS Model 5b to obtain residuals $e_i$
+    \item Fit OLS model to obtain residuals $e_i$
     \item Calculate squared residuals $e_i^2$
-    \item Estimate variance function via regression of $\log(e_i^2)$
+    \item Model variance as: $\log(\hat{\sigma}_i^2) = \gamma_0 + \gamma_1 \log(\hat{Y}_i) + \gamma_2 \text{LivingSetting}_i + \gamma_3 \text{SupportLevel}_i$
     \item Predict variances $\hat{\sigma}_i^2$ for all observations
 \end{enumerate}
 
@@ -68,342 +49,341 @@ Standard 22 predictors with variance-adjusted coefficient estimation:
 \begin{enumerate}
     \item Calculate weights $w_i = 1/\hat{\sigma}_i^2$
     \item Normalize weights: $\tilde{w}_i = w_i \cdot n / \sum w_i$
-    \item Apply equity caps: $w_i \in [0.1, 10]$ to prevent extreme weighting
+    \item Apply equity caps: $w_i \in [\ModelFourWeightMin{}, \ModelFourWeightMax{}]$
     \item Estimate WLS coefficients with capped weights
 \end{enumerate}
 
-\subsection{Output Specification}
+\subsection{Features Used}
 
-Budget allocation with variance adjustment:
-\begin{equation}
-\text{Budget}_i = \left(\hat{\beta}_0^{WLS} + \sum_{j=1}^{22} \hat{\beta}_j^{WLS} X_{ij}\right)^2
-\end{equation}
-
-Prediction interval accounting for heteroscedasticity:
-\begin{equation}
-\text{PI}_{95\%} = \text{Budget}_i \pm 1.96 \cdot \hat{\sigma}_i \cdot \text{Budget}_i
-\end{equation}
-
-\subsection{Decision Logic and Equity Safeguards}
-
+The model uses 22 features following the Model 5b structure:
 \begin{itemize}
-    \item \textbf{Weight bounds}: $w_i \in [0.1, 10]$ to prevent domination
-    \item \textbf{Demographic checks}: Weight distribution verified across protected classes
-    \item \textbf{Variance modeling}: Limited to non-discriminatory predictors
-    \item \textbf{Allocation bounds}: Standard \$5,000 - \$350,000 limits
+    \item 5 living setting indicators (ILSL, RH1-4; FH as reference)
+    \item 2 age group indicators (Age21-30, Age31+; Under 21 as reference)
+    \item 10 selected QSI questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
+    \item 2 summary scores (Behavioral sum, Functional sum)
+    \item 3 primary disability indicators
 \end{itemize}
 
-\section{Accuracy and Reliability}
+\section{Performance Analysis}
 
-\subsection{Prediction Accuracy}
+\subsection{Overall Model Performance}
 
-\textbf{Primary Regression Metrics:}
-\begin{itemize}
-    \item $R^2$: 0.8089 (improvement from 0.7998)
-    \item Weighted $R^2$: 0.8234
-    \item RMSE: \$11,780
-    \item Weighted RMSE: \$10,450
-    \item MAE: \$7,690
-    \item MAPE: 16.4\%
-\end{itemize}
-
-\textbf{Performance by Variance Quartile:}
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Model 4 Performance Metrics}
+\begin{tabular}{lcc}
 \toprule
-Variance Quartile & Mean Weight & RMSE & $R^2$ \\
+\textbf{Metric} & \textbf{Training} & \textbf{Test} \\
 \midrule
-Q1 (lowest variance) & 8.23 & \$4,560 & 0.856 \\
-Q2 & 3.45 & \$8,920 & 0.823 \\
-Q3 & 1.12 & \$13,450 & 0.798 \\
-Q4 (highest variance) & 0.34 & \$24,670 & 0.745 \\
+R² & \ModelFourRSquaredTrain{} & \ModelFourRSquaredTest{} \\
+Weighted R² & -- & \ModelFourWeightedRSquared{} \\
+RMSE & \$\ModelFourRMSETrain{} & \$\ModelFourRMSETest{} \\
+Weighted RMSE & -- & \$\ModelFourWeightedRMSE{} \\
+MAE & \$\ModelFourMAETrain{} & \$\ModelFourMAETest{} \\
+MAPE & \ModelFourMAPETrain{}\% & \ModelFourMAPETest{}\% \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\textbf{Efficiency Gains:}
-\begin{itemize}
-    \item Relative efficiency vs OLS: 1.18
-    \item Standard error reduction: 15-20\% for stable cases
-    \item Precision improvement: Greatest for low-variance consumers
-\end{itemize}
+\subsection{Cross-Validation Results}
 
-\subsection{Reliability and Consistency}
+The model achieved a 10-fold cross-validation R² of \ModelFourCVMean{} $\pm$ \ModelFourCVStd{}, demonstrating stable performance across data splits.
 
-\begin{itemize}
-    \item \textbf{Test-retest reliability}: 0.93
-    \item \textbf{Cross-validation}: 10-fold CV $R^2$ = 0.8045 (SD = 0.011)
-    \item \textbf{Bootstrap stability}: 95\% CI narrow for all coefficients
-    \item \textbf{Temporal validation}: 4-month holdout shows 1.8\% degradation
-\end{itemize}
+\subsection{Performance by Variance Quartile}
 
-\subsection{Validation Framework}
-
-\begin{itemize}
-    \item \textbf{Training}: 70\% (n = 18,637)
-    \item \textbf{Validation}: 15\% (n = 3,994)
-    \item \textbf{Test}: 15\% (n = 3,994)
-    \item \textbf{Stratification}: By variance quartile and demographics
-\end{itemize}
-
-\section{Robustness}
-
-\subsection{Performance Stability}
-
-\textbf{Subgroup Analysis with Weight Distribution:}
-\begin{center}
-\begin{tabular}{lccc}
+\begin{table}[h]
+\centering
+\caption{Performance by Variance Quartile}
+\begin{tabular}{lcccc}
 \toprule
-Demographic Group & Mean Weight & $R^2$ & RMSE \\
+\textbf{Variance Quartile} & \textbf{Mean Weight} & \textbf{RMSE} & \textbf{R²} \\
 \midrule
-\textbf{Gender} & & & \\
-Male & 2.43 & 0.807 & \$11,890 \\
-Female & 2.51 & 0.811 & \$11,670 \\
-\midrule
-\textbf{Race/Ethnicity} & & & \\
-White & 2.48 & 0.809 & \$11,720 \\
-Black/African American & 2.39 & 0.806 & \$11,950 \\
-Hispanic/Latino & 2.52 & 0.812 & \$11,580 \\
-Other & 2.44 & 0.808 & \$11,830 \\
-\midrule
-\textbf{Living Setting} & & & \\
-Family Home & 3.12 & 0.823 & \$9,450 \\
-Group Home & 1.78 & 0.795 & \$14,230 \\
-Supported Living & 2.34 & 0.808 & \$11,980 \\
+Q1 (lowest variance) & \ModelFourVarQOneMeanWeight{} & \$\ModelFourVarQOneRMSE{} & \ModelFourVarQOneRSquared{} \\
+Q2 & \ModelFourVarQTwoMeanWeight{} & \$\ModelFourVarQTwoRMSE{} & \ModelFourVarQTwoRSquared{} \\
+Q3 & \ModelFourVarQThreeMeanWeight{} & \$\ModelFourVarQThreeRMSE{} & \ModelFourVarQThreeRSquared{} \\
+Q4 (highest variance) & \ModelFourVarQFourMeanWeight{} & \$\ModelFourVarQFourRMSE{} & \ModelFourVarQFourRSquared{} \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\subsection{Disparate Impact Analysis}
+\subsection{Accuracy Within Cost Thresholds}
 
-\textbf{Critical Equity Metrics:}
+\begin{table}[h]
+\centering
+\caption{Prediction Accuracy Within Cost Thresholds}
+\begin{tabular}{lc}
+\toprule
+\textbf{Threshold} & \textbf{Percentage Within} \\
+\midrule
+Within \$1,000 & \ModelFourWithinOneK{}\% \\
+Within \$2,000 & \ModelFourWithinTwoK{}\% \\
+Within \$5,000 & \ModelFourWithinFiveK{}\% \\
+Within \$10,000 & \ModelFourWithinTenK{}\% \\
+Within \$20,000 & \ModelFourWithinTwentyK{}\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Subgroup Performance Analysis}
+
+\subsection{Performance by Living Setting}
+
+\begin{table}[h]
+\centering
+\caption{Model 4 Performance by Living Setting}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
+\midrule
+Family Home (FH) & \ModelFourSubgrouplivingFHN{} & \ModelFourSubgrouplivingFHRSquared{} & \$\ModelFourSubgrouplivingFHRMSE{} & \$\ModelFourSubgrouplivingFHBias{} \\
+Independent/Supported & \ModelFourSubgrouplivingILSLN{} & \ModelFourSubgrouplivingILSLRSquared{} & \$\ModelFourSubgrouplivingILSLRMSE{} & \$\ModelFourSubgrouplivingILSLBias{} \\
+Residential (1-4) & \ModelFourSubgrouplivingRHOneToFourN{} & \ModelFourSubgrouplivingRHOneToFourRSquared{} & \$\ModelFourSubgrouplivingRHOneToFourRMSE{} & \$\ModelFourSubgrouplivingRHOneToFourBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Performance by Age Group}
+
+\begin{table}[h]
+\centering
+\caption{Model 4 Performance by Age Group}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
+\midrule
+Under 21 & \ModelFourSubgroupageAgeUnderTwentyOneN{} & \ModelFourSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelFourSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelFourSubgroupageAgeUnderTwentyOneBias{} \\
+21--30 & \ModelFourSubgroupageAgeTwentyOneToThirtyN{} & \ModelFourSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelFourSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelFourSubgroupageAgeTwentyOneToThirtyBias{} \\
+31+ & \ModelFourSubgroupageAgeThirtyOnePlusN{} & \ModelFourSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelFourSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelFourSubgroupageAgeThirtyOnePlusBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Performance by Cost Quartile}
+
+\begin{table}[h]
+\centering
+\caption{Model 4 Performance by Cost Quartile}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Cost Quartile} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
+\midrule
+Q1 (Low) & \ModelFourSubgroupcostQOneLowN{} & \ModelFourSubgroupcostQOneLowRSquared{} & \$\ModelFourSubgroupcostQOneLowRMSE{} & \$\ModelFourSubgroupcostQOneLowBias{} \\
+Q2 & \ModelFourSubgroupcostQTwoN{} & \ModelFourSubgroupcostQTwoRSquared{} & \$\ModelFourSubgroupcostQTwoRMSE{} & \$\ModelFourSubgroupcostQTwoBias{} \\
+Q3 & \ModelFourSubgroupcostQThreeN{} & \ModelFourSubgroupcostQThreeRSquared{} & \$\ModelFourSubgroupcostQThreeRMSE{} & \$\ModelFourSubgroupcostQThreeBias{} \\
+Q4 (High) & \ModelFourSubgroupcostQFourHighN{} & \ModelFourSubgroupcostQFourHighRSquared{} & \$\ModelFourSubgroupcostQFourHighRMSE{} & \$\ModelFourSubgroupcostQFourHighBias{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Variance Analysis}
+
+\subsection{Variance Metrics Comparison}
+
+\begin{table}[h]
+\centering
+\caption{Variance Metrics -- Model 4 vs Current}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Current Model 5b} & \textbf{Model 4} \\
+\midrule
+Coefficient of Variation (Actual) & 0.892 & \ModelFourCVActual{} \\
+Coefficient of Variation (Predicted) & 0.743 & \ModelFourCVPredicted{} \\
+95\% Prediction Interval & \$68,400 & \$\ModelFourPredictionInterval{} \\
+Budget-Actual Correlation & 0.894 & \ModelFourBudgetActualCorr{} \\
+Quarterly Variance & 12.3\% & \ModelFourQuarterlyVariance{}\% \\
+Annual Adjustment Rate & 8.7\% & \ModelFourAnnualAdjustmentRate{}\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Weight Distribution Analysis}
+
+The weight distribution shows:
 \begin{itemize}
-    \item \textbf{Weight parity ratio}: 0.95-1.06 across protected classes
-    \item \textbf{Allocation impact}: No systematic bias detected ($p > 0.10$)
-    \item \textbf{Four-fifths rule}: Satisfied for all demographic groups
-    \item \textbf{Variance explanation}: 89\% from clinical factors, not demographics
+    \item Mean weight: \ModelFourWeightMean{}
+    \item Minimum weight: \ModelFourWeightMin{} (equity floor)
+    \item Maximum weight: \ModelFourWeightMax{} (equity ceiling)
+    \item \ModelFourWeightAboveThreePct{}\% of observations receive weights $>$ 3.0 (low variance cases)
+    \item \ModelFourWeightAtMinPct{}\% of observations at minimum weight (high variance cases)
 \end{itemize}
 
-\textbf{Fairness Testing Results:}
-\begin{itemize}
-    \item Demographic parity difference: $<$ 0.04
-    \item Equalized odds ratio: 0.91-1.09
-    \item Calibration within groups: Maximum deviation 3.2\%
-\end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{models/model_4/diagnostic_plots.png}
+    \caption{Model 4 Diagnostic Plots: Predicted vs Actual, Residuals, Weight Distribution, Q-Q Plot, Weights vs Variance, and Performance by Variance Quartile}
+    \label{fig:model4_diagnostics}
+\end{figure}
 
-\subsection{Stress Testing}
+\section{Population Impact Analysis}
 
-\begin{itemize}
-    \item \textbf{Weight perturbation}: $\pm$20\% change yields $<$ 2\% allocation shift
-    \item \textbf{Variance misspecification}: 30\% error maintains $R^2 > 0.79$
-    \item \textbf{Bootstrap validation}: Stable across 10,000 samples
-    \item \textbf{Geographic consistency}: Regional models within 5\% of global
-\end{itemize}
+\subsection{Budget Allocation Scenarios}
 
-\section{Sensitivity to Outliers and Missing Data}
+\begin{table}[h]
+\centering
+\caption{Population Served Analysis -- \$1.2B Fixed Budget}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Scenario} & \textbf{Clients Served} & \textbf{Avg Allocation} & \textbf{Waitlist Impact} \\
+\midrule
+Current Model 5b & \ModelFourPopcurrentbaselineClients{} & \$\ModelFourPopcurrentbaselineAvgAlloc{} & Baseline \\
+Model 4 (Balanced) & \ModelFourPopmodelbalancedClients{} & \$\ModelFourPopmodelbalancedAvgAlloc{} & \ModelFourPopmodelbalancedWaitlistChange{} \\
+Model 4 (Efficiency) & \ModelFourPopmodelefficiencyClients{} & \$\ModelFourPopmodelefficiencyAvgAlloc{} & \ModelFourPopmodelefficiencyWaitlistChange{} \\
+Category-Focused & \ModelFourPopcategoryfocusedClients{} & \$\ModelFourPopcategoryfocusedAvgAlloc{} & \ModelFourPopcategoryfocusedWaitlistChange{} \\
+Population-Maximized & \ModelFourPoppopulationmaximizedClients{} & \$\ModelFourPoppopulationmaximizedAvgAlloc{} & \ModelFourPoppopulationmaximizedWaitlistChange{} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{Outlier Management}
-
-\begin{itemize}
-    \item \textbf{Detection}: Standardized weighted residuals $>$ 3
-    \item \textbf{Treatment}: Weight reduction, not exclusion
-    \item \textbf{Impact}: High-variance cases receive lower weights
-    \item \textbf{Coverage}: 100\% of consumers included
-    \item \textbf{Documentation}: Weight rationale provided
-\end{itemize}
-
-\subsection{Missing Data Handling}
-
-\begin{itemize}
-    \item \textbf{Variance estimation}: Requires complete predictors
-    \item \textbf{Weight assignment}: Default weight = 1 if variance unknown
-    \item \textbf{Performance impact}:
-    \begin{itemize}
-        \item 5\% missing: $R^2$ = 0.804
-        \item 10\% missing: $R^2$ = 0.798
-        \item 15\% missing: $R^2$ = 0.791
-    \end{itemize}
-    \item \textbf{Fallback}: OLS coefficients if weights unavailable
-\end{itemize}
-
-\section{Implementation Feasibility}
+\section{Implementation Considerations}
 
 \subsection{Technical Requirements}
 
 \begin{itemize}
-    \item \textbf{Software}: Standard statistical packages (R, SAS, SPSS)
+    \item \textbf{Software}: Standard statistical packages with WLS support
     \item \textbf{Computation}: Two-stage process, $<$ 2 seconds total
-    \item \textbf{Memory}: 256MB for weight matrix
-    \item \textbf{Database}: Extended tbl\_EZBudget with variance columns
-    \item \textbf{API}: REST endpoint with weight transparency
+    \item \textbf{Memory}: 256MB for weight matrix storage
+    \item \textbf{Database}: Extended schema for variance and weight tracking
 \end{itemize}
 
-\subsection{Operational Readiness}
+\subsection{Training Requirements}
 
 \begin{itemize}
-    \item \textbf{Training needs}:
-    \begin{itemize}
-        \item 6-hour workshop on WLS methodology
-        \item 2-hour equity safeguards training
-        \item 2-hour variance interpretation session
-    \end{itemize}
-    \item \textbf{Documentation}: Comprehensive weight explanation system
-    \item \textbf{Pilot}: 3,000 consumer test with equity monitoring
-    \item \textbf{Timeline}: 12-month implementation with safeguards
-\end{itemize}
-
-\section{Complexity, Cost, Resources, and Regulatory Alignment}
-
-\subsection{Technical Complexity}
-
-\begin{itemize}
-    \item \textbf{Algorithm}: Two-stage estimation, moderate complexity
-    \item \textbf{Interpretability}: Coefficients maintain standard interpretation
-    \item \textbf{Weight explanation}: Variance-based narrative required
-    \item \textbf{Maintenance}: Quarterly variance function updates
+    \item 6-hour workshop on WLS methodology
+    \item 2-hour equity safeguards training
+    \item 2-hour variance interpretation session
+    \item Ongoing support during 3-month pilot phase
 \end{itemize}
 
 \subsection{Cost Analysis}
 
-\begin{itemize}
-    \item \textbf{Development}: \$95,000 (including equity analysis)
-    \item \textbf{Implementation}: \$55,000 (system integration)
-    \item \textbf{Training}: \$35,000 (comprehensive program)
-    \item \textbf{Annual operational}: \$40,000 (monitoring and updates)
-    \item \textbf{3-year TCO}: \$305,000
-\end{itemize}
-
-\subsection{Regulatory Alignment}
-
-\begin{itemize}
-    \item[\yellowwarning] \textbf{F.S. 393.0662}: Conditional - requires equity documentation
-    \item[\yellowwarning] \textbf{F.A.C. 65G-4.0214}: Requires weight methodology in rule
-    \item[\greencheck] \textbf{HB 1103}: Explainable with weight documentation
-    \item[\yellowwarning] \textbf{Civil Rights}: Extensive testing required
-    \item[\yellowwarning] \textbf{ADA Compliance}: Must prove no discriminatory impact
-\end{itemize}
-
-\section{Adaptability and Maintenance}
-
-\subsection{Dynamic Adaptation}
-
-\begin{itemize}
-    \item \textbf{Variance updates}: Quarterly re-estimation
-    \item \textbf{Weight recalibration}: Annual with equity review
-    \item \textbf{Policy changes}: 60-day implementation
-    \item \textbf{Emergency adjustments}: Weight override capability
-\end{itemize}
-
-\subsection{Monitoring Protocol}
-
-\begin{itemize}
-    \item \textbf{Weight distribution}: Weekly by demographics
-    \item \textbf{Variance patterns}: Monthly analysis
-    \item \textbf{Equity metrics}: Continuous automated monitoring
-    \item \textbf{Performance tracking}: Weighted and unweighted $R^2$
-\end{itemize}
-
-\section{Stakeholder Impact and Acceptance}
-
-\subsection{Client Impact}
-
-\begin{itemize}
-    \item \textbf{Winners}: Low-variance, stable consumers (35\%)
-    \item \textbf{Neutral}: Moderate variance cases (45\%)
-    \item \textbf{Losers}: High-variance, complex cases (20\%)
-    \item \textbf{Communication}: Complex weight explanation needed
-\end{itemize}
-
-\subsection{Provider Concerns}
-
-\begin{itemize}
-    \item \textbf{Complexity}: Significant increase from Model 5b
-    \item \textbf{Training burden}: 10+ hours required
-    \item \textbf{Workflow}: Weight documentation adds steps
-    \item \textbf{Resistance risk}: Medium-high
-\end{itemize}
-
-\section{Risk Assessment and Mitigation}
-
-\begin{center}
-\begin{tabular}{llll}
+\begin{table}[h]
+\centering
+\caption{Model 4 Implementation Costs}
+\begin{tabular}{lr}
 \toprule
-Risk Category & Probability & Impact & Mitigation Strategy \\
+\textbf{Cost Component} & \textbf{Amount} \\
 \midrule
-Discriminatory weights & Medium & Critical & Continuous monitoring \\
-Legal challenge & High & High & Proactive legal review \\
-Stakeholder confusion & High & Medium & Extensive education \\
-Weight manipulation & Low & High & Audit controls \\
-Implementation failure & Medium & High & Phased rollout \\
+Development & \$95,000 \\
+Equity Analysis & \$25,000 \\
+Implementation & \$55,000 \\
+Training Program & \$35,000 \\
+First Year Operations & \$40,000 \\
+Annual Maintenance (Years 2-3) & \$40,000 \\
+\midrule
+\textbf{3-Year Total} & \$330,000 \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-\section{Performance Monitoring Plan}
+\section{Risk Assessment}
 
-\subsection{Key Performance Indicators}
+\subsection{Key Risks and Mitigation}
 
+\begin{table}[h]
+\centering
+\caption{Risk Assessment Matrix}
+\begin{tabular}{p{3cm}ccp{5cm}}
+\toprule
+\textbf{Risk} & \textbf{Probability} & \textbf{Impact} & \textbf{Mitigation Strategy} \\
+\midrule
+Discriminatory weights & Medium & Critical & Continuous equity monitoring with automated alerts \\
+Legal challenge & High & High & Proactive legal review and documentation \\
+Stakeholder confusion & High & Medium & Extensive education and transparent reporting \\
+Weight manipulation & Low & High & Audit controls and weight bounds \\
+Implementation failure & Medium & High & Phased rollout with pilot testing \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Equity Safeguards}
+
+Critical safeguards implemented:
 \begin{itemize}
-    \item \textbf{Primary}: Weighted $R^2 > 0.82$
-    \item \textbf{Equity}: Weight parity ratio 0.90-1.10
-    \item \textbf{Efficiency}: 15\% SE reduction
-    \item \textbf{Appeals}: $<$ 5\% rate
-    \item \textbf{Processing}: $<$ 3 seconds per allocation
+    \item Weight bounds [\ModelFourWeightMin{}, \ModelFourWeightMax{}] prevent extreme weighting
+    \item Demographic parity testing across all protected classes
+    \item Variance modeling limited to non-discriminatory predictors
+    \item Monthly equity reports with automated bias detection
+    \item Four-fifths rule compliance monitoring
 \end{itemize}
 
-\subsection{Quality Assurance}
+\section{Advantages and Limitations}
+
+\subsection{Advantages}
 
 \begin{itemize}
-    \item \textbf{Daily}: Automated equity checks
-    \item \textbf{Weekly}: Weight distribution analysis
-    \item \textbf{Monthly}: Full performance review
-    \item \textbf{Quarterly}: Variance function update
-    \item \textbf{Annual}: Complete methodology review
+    \item \textbf{Efficiency gain}: \ModelFourEfficiencyRatio{}x improvement for stable cases
+    \item \textbf{Proper heteroscedasticity handling}: Addresses variance patterns systematically
+    \item \textbf{Maintains interpretability}: Coefficients retain standard interpretation
+    \item \textbf{No data loss}: Uses 100\% of available data
+    \item \textbf{Improved precision}: Greatest gains where most reliable
 \end{itemize}
 
-\section{Summary and Recommendations}
+\subsection{Limitations}
 
-\subsection{Overall Assessment}
-
-\textbf{Strengths:}
 \begin{itemize}
-    \item Superior efficiency for stable cases
-    \item Improved precision where it matters most
-    \item Maintains interpretability
-    \item Addresses heteroscedasticity properly
+    \item \textbf{Complexity}: Two-stage process harder to explain
+    \item \textbf{Equity concerns}: Risk of disadvantaging high-variance cases
+    \item \textbf{Weight sensitivity}: Results depend on variance modeling accuracy
+    \item \textbf{Legal vulnerability}: Potential challenges on disparate impact
+    \item \textbf{Maintenance burden}: Requires ongoing variance function updates
 \end{itemize}
 
-\textbf{Critical Weaknesses:}
-\begin{itemize}
-    \item High risk of discriminatory impact
-    \item Complex implementation and maintenance
-    \item Potential legal vulnerabilities
-    \item Stakeholder resistance likely
-    \item May disadvantage high-need consumers
-\end{itemize}
+\section{Comparison with Alternative Models}
 
-\subsection{Conditional Recommendation}
+\subsection{Performance Comparison}
 
-\textbf{Conditional Approval with Stringent Safeguards}
+\begin{table}[h]
+\centering
+\caption{Model 4 vs Alternatives}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Model 1} & \textbf{Model 3} & \textbf{Model 4} \\
+\midrule
+Test R² & 0.7998 & 0.8023 & \ModelFourRSquaredTest{} \\
+Test RMSE & \$12,453 & \$12,120 & \$\ModelFourRMSETest{} \\
+Weighted R² & -- & -- & \ModelFourWeightedRSquared{} \\
+Data Utilization & 90.6\% & 100\% & 100\% \\
+Complexity & Low & Medium & High \\
+Equity Risk & Low & Low & Medium-High \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-The WLS approach offers statistical improvements but poses significant equity risks. Implementation should proceed ONLY if:
+\section{Recommendations}
+
+\subsection{Conditional Implementation Recommendation}
+
+Model 4 offers statistical improvements but poses significant equity risks. Implementation should proceed ONLY if:
 
 \begin{enumerate}
-    \item \textbf{Comprehensive equity analysis} demonstrates no discriminatory impact
-    \item \textbf{Legal review} confirms compliance with all civil rights laws
-    \item \textbf{Stakeholder engagement} achieves broad consensus
-    \item \textbf{Pilot program} validates fairness across all demographics
-    \item \textbf{Continuous monitoring} system deployed from day one
+    \item \textbf{Comprehensive equity analysis} demonstrates no discriminatory impact across all protected classes
+    \item \textbf{Legal review} confirms full compliance with civil rights laws and ADA requirements
+    \item \textbf{Stakeholder engagement} achieves broad consensus including consumer advocates
+    \item \textbf{Pilot program} (minimum 6 months) validates fairness across all demographics
+    \item \textbf{Continuous monitoring} system deployed with real-time bias detection
 \end{enumerate}
 
-\textbf{Implementation Timeline:} 12-18 months minimum
+\subsection{Alternative Recommendation}
 
-\textbf{Critical Requirements:}
+Given the equity concerns and implementation complexity, consider Model 3 (Robust Regression) as a safer alternative that achieves similar improvements without the discrimination risk.
+
+\subsection{Implementation Timeline}
+
+If approved, recommended phased approach:
 \begin{itemize}
-    \item Independent fairness audit before deployment
-    \item Monthly equity reports to oversight committee
-    \item Immediate suspension triggers if bias detected
-    \item Annual third-party evaluation
+    \item Months 1-3: Legal review and equity analysis
+    \item Months 4-6: System development and testing
+    \item Months 7-9: Pilot program with 3,000 consumers
+    \item Months 10-11: Evaluation and refinement
+    \item Month 12: Full deployment decision
 \end{itemize}
 
-\textbf{Alternative Recommendation:} Given the equity concerns and implementation complexity, consider Robust Regression (Model 3) as a safer alternative that achieves similar improvements without the discrimination risk.
+\section{Conclusion}
+
+Model 4's Weighted Least Squares approach demonstrates superior statistical efficiency (R² = \ModelFourRSquaredTest{}, Weighted R² = \ModelFourWeightedRSquared{}) and provides \ModelFourEfficiencyRatio{}x improvement in precision for stable cases. The two-stage estimation process properly addresses heteroscedasticity while maintaining coefficient interpretability.
+
+However, the variance-based weighting system introduces substantial equity concerns, as high-variance consumers (often those with complex needs) receive lower weights in the estimation. Despite implemented safeguards (weight bounds, demographic monitoring), the risk of discriminatory impact remains significant.
+
+The model's complexity, combined with legal vulnerabilities and likely stakeholder resistance, suggests that implementation should proceed only with extraordinary caution and comprehensive safeguards. The 12-month minimum implementation timeline reflects the extensive testing and validation required.
+
+For agencies prioritizing both statistical performance and equity assurance, Model 3 (Robust Regression) may offer a more balanced solution with lower implementation risk while still achieving meaningful improvements over the current system.

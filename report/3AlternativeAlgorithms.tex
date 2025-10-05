@@ -17,34 +17,107 @@ The Florida Agency for Persons with Disabilities (APD) iBudget algorithm, curren
 
 The current Model 5b achieves an R-squared of 0.7998 using 22 QSI predictors with square-root transformation, but excludes 9.4 percent of consumers as outliers. Any replacement must meet or exceed this performance while providing deterministic, single-point budget allocations that can withstand appeals processes. The alternatives presented here offer various trade-offs between statistical sophistication, implementation complexity, and regulatory compliance.
 
-\subsection{Tier 1: Direct Replacement Candidates}
+\section{Model Summary}
 
-\textbf{Model 1: Re-estimated Linear Regression} maintains the exact Model 5b structure while updating coefficients with current data. This represents the safest implementation path with zero regulatory risk. Performance improves marginally to R-squared of 0.8012, with implementation possible within 2 weeks. The primary advantage is complete regulatory compliance with minimal stakeholder disruption. However, it retains the problematic 9.4 percent outlier exclusion requirement.
+\subsection{Algorithm Selection Rationale}
 
-\textbf{Model 2: Generalized Linear Model with Gamma Distribution} replaces square-root transformation with a log-link function, naturally accommodating right-skewed expenditure data. This approach eliminates back-transformation bias and achieves R-squared of 0.8145. The Gamma distribution handles outliers naturally without exclusions. Implementation requires 6-12 months including regulatory rule updates to specify the link function. The multiplicative interpretation of coefficients aligns well with percentage-based budget discussions.
+The following section provides a concise justification for each of the 10 algorithms evaluated in this study. Each model was selected to address specific challenges in the iBudget allocation system or to establish performance benchmarks.
 
-\textbf{Model 3: Robust Linear Regression using Huber M-Estimators} represents the optimal balance between innovation and compliance. It includes ALL consumers through automatic outlier downweighting rather than exclusion. Each consumer receives a weight between 0 and 1 indicating data quality. Performance reaches R-squared of 0.8023 while improving fairness. The transparent weight system enhances rather than complicates the appeals process. Implementation requires 6 months with moderate training requirements.
+HB 1103  requires to ``develop alternative algorithms using multiple linear regression" (lines 689-690). The algorithms must be tested for "accuracy and reliability" (lines 690-691). The focus is specifically on "multiple linear regression models" (line 681). The requirement for multiple linear regression inherently means the algorithm must be interpretable and explainable, as linear regression models provide clear coefficients that show how each input affects the output.
 
-\subsection{Tier 2: Conditional Replacement Candidates}
+\subsubsection{Model 1: Re-estimated Linear Regression}
+\textbf{Why chosen}: Maintains exact Model 5b structure while updating coefficients with current data. Represents the safest implementation path with zero regulatory risk.
+\begin{itemize}
+    \item Complete regulatory compliance with minimal stakeholder disruption
+    \item Implementation possible within 2 weeks
+    \item Retains problematic 9.4\% outlier exclusion requirement
+\end{itemize}
 
-\textbf{Model 4: Weighted Least Squares} addresses heteroscedasticity through variance-based weighting, achieving R-squared of 0.8089. However, significant equity concerns arise as weights could create systematic bias across demographic groups. Implementation requires 12-18 months with extensive fairness testing and continuous monitoring. The approach offers superior efficiency for stable cases but may disadvantage high-need consumers with variable costs.
+\subsubsection{Model 2: Generalized Linear Model with Gamma Distribution}
+\textbf{Why chosen}: Replaces square-root transformation with log-link function, naturally accommodating right-skewed expenditure data without back-transformation bias.
+\begin{itemize}
+    \item Gamma distribution handles outliers naturally without exclusions
+    \item Multiplicative interpretation aligns with percentage-based budget discussions
+    \item Implementation requires 6-12 months including regulatory rule updates
+\end{itemize}
 
-\textbf{Model 5: Ridge Regression} applies L2 regularization to handle multicollinearity among QSI variables. While offering the highest stability and reducing condition numbers from 45.6 to 8.2, the shrinkage concept proves difficult to explain to non-technical audiences. Performance slightly decreases to R-squared of 0.7956, but generalization improves. The requirement to retain all 22 predictors aligns with current regulations, though penalty parameter justification remains challenging.
+\subsubsection{Model 3: Robust Linear Regression using Huber M-Estimators}
+\textbf{Why chosen}: Represents optimal balance between innovation and compliance. Includes ALL consumers through automatic outlier downweighting rather than exclusion.
+\begin{itemize}
+    \item Each consumer receives weight between 0 and 1 indicating data quality
+    \item Transparent weight system enhances appeals process
+    \item Implementation requires 6 months with moderate training requirements
+\end{itemize}
 
-\textbf{Model 6: Log-Normal Regression} uses natural log transformation, which Box-Cox analysis indicates as superior to square-root. Achieving R-squared of 0.8067, it provides intuitive percentage-change interpretations. However, regulatory approval requires definitive statistical evidence of superiority over the current transformation. Retransformation bias must be carefully managed using smearing estimators or parametric corrections.
+\subsubsection{Model 4: Weighted Least Squares}
+\textbf{Why chosen}: Addresses heteroscedasticity through variance-based weighting. Offers superior efficiency for stable cases but raises equity concerns.
+\begin{itemize}
+    \item Weights could create systematic bias across demographic groups
+    \item Implementation requires 12-18 months with extensive fairness testing
+    \item May disadvantage high-need consumers with variable costs
+\end{itemize}
 
-\subsection{Tier 3: Research and Validation Methods}
+\subsubsection{Model 5: Ridge Regression}
+\textbf{Why chosen}: Applies L2 regularization to handle multicollinearity among QSI variables. Offers highest stability despite communication challenges.
+\begin{itemize}
+    \item Reduces condition numbers from 45.6 to 8.2
+    \item Requirement to retain all 22 predictors aligns with current regulations
+    \item Shrinkage concept proves difficult to explain to non-technical audiences
+\end{itemize}
 
-\textbf{Model 7: Quantile Regression} models multiple percentiles of the expenditure distribution rather than just the mean. While providing valuable insights into allocation uncertainty and risk stratification, it fatally violates F.S. 393.0662's requirement for a single deterministic allocation. The method cannot produce the required point estimate for budgeting but offers excellent research value for understanding consumer variability and supporting appeals with uncertainty estimates.
+\subsubsection{Model 6: Log-Normal Regression}
+\textbf{Why chosen}: Uses natural log transformation supported by Box-Cox analysis. Provides intuitive percentage-change interpretations.
+\begin{itemize}
+    \item Superior statistical foundation compared to square-root transformation
+    \item Requires definitive statistical evidence for regulatory approval
+    \item Retransformation bias managed using smearing estimators
+\end{itemize}
 
-\textbf{Model 8: Bayesian Linear Regression} treats all parameters as probability distributions, providing complete uncertainty quantification through posterior distributions and credible intervals. Despite strong statistical foundations and natural handling of missing data, Medicaid's requirement for deterministic budgets makes this approach legally impossible. The probabilistic output fundamentally conflicts with statutory requirements for fixed allocation amounts.
+\subsubsection{Model 7: Quantile Regression}
+\textbf{Why chosen}: Models multiple percentiles of expenditure distribution for research insights. Cannot produce required point estimates for production use.
+\begin{itemize}
+    \item Provides valuable understanding of allocation uncertainty
+    \item Excellent for risk stratification and appeals support
+    \item Fatally violates F.S. 393.0662's requirement for single deterministic allocation
+\end{itemize}
 
-\subsection{Tier 4: Advanced Methods Requiring Framework Changes}
+\subsubsection{Model 8: Bayesian Linear Regression}
+\textbf{Why chosen}: Treats parameters as probability distributions, providing complete uncertainty quantification through posterior distributions and credible intervals.
+\begin{itemize}
+    \item Natural handling of missing data and parameter uncertainty
+    \item Probabilistic output conflicts with Medicaid's deterministic budget requirements
+    \item Legally uncertain despite strong statistical foundations
+\end{itemize}
 
-\textbf{Model 9: Principal Components Regression} transforms correlated QSI variables into orthogonal components, reducing dimensionality from 22 to 7-8 principal components. However, the transformation destroys the required direct relationship between individual QSI questions and budget allocations. Abstract linear combinations cannot be explained in appeals processes, violating F.A.C. 65G-4.0214's requirement for interpretable coefficients. The method fundamentally fails transparency requirements despite handling multicollinearity effectively.
+\subsubsection{Model 9: Random Forest}
+\textbf{Why chosen}: Ensemble of decision trees captures non-linear relationships without parametric assumptions. Creates interpretability challenges for regulatory compliance.
+\begin{itemize}
+    \item Aggregates predictions from multiple trees built on bootstrap samples
+    \item Variable importance scores indicate contribution but lack direct coefficients
+    \item Violates F.A.C. 65G-4.0214's requirement for interpretable coefficients
+\end{itemize}
 
-\textbf{Model 10: Deep Learning Neural Network} achieves the highest accuracy with R-squared of 0.8456 through multiple hidden layers capturing complex non-linear relationships. However, neural networks epitomize the black-box algorithms explicitly prohibited by HB 1103. With 4,049 parameters interacting non-linearly, no meaningful explanation of individual decisions is possible. Implementation would trigger immediate legal challenges and violate due process requirements. The complete lack of interpretability makes appeals impossible and public trust unsustainable.
+\subsubsection{Model 10: Deep Learning Neural Network}
+\textbf{Why chosen}: Establishes performance ceiling through multiple hidden layers. Fundamentally incompatible with HB 1103's requirement for multiple linear regression models.
+\begin{itemize}
+    \item 4,049 parameters interacting non-linearly prevent meaningful explanation
+    \item HB 1103 specifically requires ``multiple linear regression models" for the algorithm study
+    \item Complete lack of interpretability makes appeals impossible
+\end{itemize}
 
+\subsection{Tiered Implementation Recommendations}
+
+\subsubsection{Tier 1: Primary Replacement Candidates}
+Models 1-3 offer viable paths forward with varying trade-offs between innovation and regulatory compliance. Model 3 (Robust Regression) represents the optimal balance, including all consumers while maintaining transparency.
+
+\subsubsection{Tier 2: Conditional Replacement Candidates}
+Models 4-6 provide statistical improvements but require careful consideration of equity concerns (Model 4), communication challenges (Model 5), or regulatory hurdles (Model 6).
+
+\subsubsection{Tier 3: Research and Validation Methods}
+Models 7-8 offer valuable insights for understanding uncertainty and risk but cannot produce the deterministic allocations required by statute.
+
+\subsubsection{Tier 4: Advanced Methods Requiring Framework Changes}
+Models 9-10 demonstrate superior predictive performance but fundamentally conflict with Florida's transparency and explainability requirements. Their implementation requires rule revision and guardrails to minimize .
 
 %============================================
 \section{Pertinent Regulatory Requirements}
@@ -287,16 +360,20 @@ The path forward requires balancing statistical sophistication with regulatory c
 
 \input{3Alternative-3-RobustLinearRegression}
 
-\input{3Alternative-4-WLS}
+%\input{3Alternative-4-WLS}
 
-\input{3Alternative-5-Ridge} 
+%\input{3Alternative-5-Ridge} 
 
-\input{3Alternative-6-LogNormal}
+%\input{3Alternative-6-LogNormal}
 
-\input{3Alternative-7-Quantile}
+%\input{3Alternative-6_elasticnet}
 
-\input{3Alternative-8-Bayesian}  
+%\input{3Alternative-7-Quantile}
 
-\input{3Alternative-9-PCR}
+%\input{3Alternative-8-Bayesian}  
+
+%\input{3Alternative-9-PCR}
+
+\input{3Alternative-9-RandomForest.tex}
 
 \input{3Alternative-10-DLN}
