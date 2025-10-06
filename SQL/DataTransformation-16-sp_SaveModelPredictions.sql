@@ -33,10 +33,15 @@ BEGIN
 END
 GO
 
+USE [APD]
+GO
+
 -- Step 2: Populate the Age field in batches
-DECLARE @BatchSize INT = 10000;  -- Adjust batch size as needed
+DECLARE @BatchSize INT = 100000;  -- Adjust batch size as needed
 DECLARE @RowsUpdated INT = 0;
 DECLARE @TotalRows INT = 0;
+DECLARE @ProgressCount INT = 0;
+DECLARE @FinalCount INT = 0;
 
 -- Get total count of records to update
 SELECT @TotalRows = COUNT(*)
@@ -73,21 +78,27 @@ BEGIN
     IF @RowsUpdated = 0
         BREAK;
     
+    -- Get progress count (store in variable first)
+    SELECT @ProgressCount = COUNT(*) FROM [dbo].[tbl_Claims_MMIS] WHERE Age IS NOT NULL;
+    
     -- Print progress
     PRINT 'Updated ' + CAST(@RowsUpdated AS VARCHAR(10)) + ' records. Progress: ' + 
-          CAST((SELECT COUNT(*) FROM [dbo].[tbl_Claims_MMIS] WHERE Age IS NOT NULL) AS VARCHAR(10)) + 
-          ' / ' + CAST(@TotalRows AS VARCHAR(10));
+          CAST(@ProgressCount AS VARCHAR(10)) + ' / ' + CAST(@TotalRows AS VARCHAR(10));
     
     -- Optional: Add a small delay to reduce server load
     WAITFOR DELAY '00:00:01';  -- 1 second delay
     
     -- Optional: Checkpoint to clear the log (if database is in SIMPLE recovery mode)
-    -- CHECKPOINT;
+    CHECKPOINT;  -- Uncommented this since you're now in SIMPLE recovery mode
 END
 
-PRINT 'Age field population completed. Total rows updated: ' + 
-      CAST((SELECT COUNT(*) FROM [dbo].[tbl_Claims_MMIS] WHERE Age IS NOT NULL) AS VARCHAR(10));
+-- Get final count
+SELECT @FinalCount = COUNT(*) FROM [dbo].[tbl_Claims_MMIS] WHERE Age IS NOT NULL;
+
+PRINT 'Age field population completed. Total rows updated: ' + CAST(@FinalCount AS VARCHAR(10));
 GO
+
+
 -- Step 3: Create composite index on CaseNo and Age
 IF NOT EXISTS (
     SELECT * 

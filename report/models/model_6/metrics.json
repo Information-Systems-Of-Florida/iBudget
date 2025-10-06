@@ -23,11 +23,12 @@
   "r2_log_scale": 0.24389816871888126,
   "sigma_log": 0.7124015478553678,
   "smearing_factor": 1.2414594653270308,
-  "skewness_original": 0.5837681188443976,
+  "skewness_original": 1.3202179406708283,
   "skewness_log": -0.6361987266119898,
-  "skewness_reduction_pct": 208.98140992546521,
+  "skewness_reduction_pct": 148.18891692145354,
   "heteroscedasticity_pval": 0.0,
   "aic": 116234.080116948,
   "bic": 116403.0519005705,
-  "num_parameters": 23
+  "num_parameters": 23,
+  "transformation": "log-sqrt"
 }

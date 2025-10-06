@@ -4,6 +4,8 @@ Model 2: Generalized Linear Model with Gamma Distribution
 GLM with Gamma distribution and log link for iBudget cost prediction
 Uses feature selection based on mutual information analysis
 No outlier removal - robust to extreme values through distribution choice
+
+STANDARDIZED IMPLEMENTATION - Follows lessons learned from Model 1
 """
 
 import numpy as np
@@ -12,12 +14,10 @@ import statsmodels.api as sm
 from statsmodels.genmod.families import Gamma
 from statsmodels.genmod.families.links import Log
 from typing import Dict, List, Tuple, Any, Optional
-from sklearn.model_selection import KFold, train_test_split
+from sklearn.model_selection import KFold
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
-from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy import stats
 from pathlib import Path
 import json
 import logging
@@ -38,12 +38,14 @@ class Model2GLMGamma(BaseiBudgetModel):
     Key features:
     - Gamma distribution for right-skewed cost data
     - Log link function ensures positive predictions
-    - No outlier removal (robust by design)
+    - 100% data utilization (NO outlier removal)
     - Feature selection based on mutual information
-    - Works directly in dollar scale (no transformation)
+    - Works directly in dollar scale (no transformation needed)
+    
+    Regulatory Status: Fully compliant (requires minor F.A.C. update)
     """
     
-    # Selected features based on mutual information analysis
+    # Selected features based on mutual information analysis (FY2013-2024)
     SELECTED_FEATURES = [
         # Top predictors from MI analysis (consistently important across years)
         'RESIDENCETYPE',     # MI: 0.203-0.272 (highest predictor)
@@ -106,268 +108,155 @@ class Model2GLMGamma(BaseiBudgetModel):
         self.mcfadden_r2 = None
         self.aic = None
         self.bic = None
-        self.coefficients = {}
         self.num_parameters = 0
+        self.coefficients = {}
         
         # Feature importance from GLM
         self.feature_importance = {}
         
-    def _prepare_selected_features(self, record: ConsumerRecord) -> List[float]:
-        """
-        Prepare features based on mutual information selection
-        
-        Args:
-            record: Consumer record
-            
-        Returns:
-            List of feature values
-        """
-        features = []
-        
-        # Categorical features - create dummies
-        # RESIDENCETYPE (top predictor)
-        residence_map = {
-            'FH': 0, 'ILSL': 1, 'RH1': 2, 'RH2': 3, 'RH3': 4, 'RH4': 5
-        }
-        residence_val = residence_map.get(record.residencetype, 0)
-        
-        # Create dummy variables for residence type (FH as reference)
-        for i in range(1, 6):
-            features.append(1.0 if residence_val == i else 0.0)
-        
-        # Living setting dummies (alternative categorization)
-        living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
-        for setting in living_settings:
-            features.append(1.0 if record.living_setting == setting else 0.0)
-        
-        # Age group dummies (Age3_20 as reference)
-        features.append(1.0 if record.age_group == 'Age21_30' else 0.0)
-        features.append(1.0 if record.age_group == 'Age31Plus' else 0.0)
-        
-        # Continuous features
-        features.append(float(record.age))
-        
-        # Summary scores
-        features.append(float(record.bsum))
-        features.append(float(record.blevel))
-        features.append(float(record.fsum))
-        features.append(float(record.flevel))
-        features.append(float(record.psum))
-        features.append(float(record.plevel))
-        features.append(float(record.losri))
-        features.append(float(record.olevel))
-        
-        # Individual QSI questions
-        qsi_questions = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28]
-        for q in qsi_questions:
-            features.append(float(getattr(record, f'q{q}', 0)))
-        
-        # County as numeric code (for now - could be expanded to dummies)
-        county_code = hash(record.county) % 100  # Simple encoding
-        features.append(float(county_code))
-        
-        return features
+        logger.info(f"Model 2 initialized: feature_selection={use_selected_features}, fy2024_only={use_fy2024_only}")
     
-    def _prepare_all_features(self, record: ConsumerRecord) -> List[float]:
+    def load_data(self, fiscal_year_start: int = 2023, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
         """
-        Prepare all available features (no selection)
+        Load data for Model 2
         
         Args:
-            record: Consumer record
+            fiscal_year_start: Start fiscal year (ignored if use_fy2024_only=True)
+            fiscal_year_end: End fiscal year (ignored if use_fy2024_only=True)
             
         Returns:
-            List of all feature values
+            List of consumer records
         """
-        features = []
-        
-        # Living setting dummies (FH as reference)
-        living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
-        for setting in living_settings:
-            features.append(1.0 if record.living_setting == setting else 0.0)
-        
-        # Age group dummies (Age3_20 as reference)
-        features.append(1.0 if record.age_group == 'Age21_30' else 0.0)
-        features.append(1.0 if record.age_group == 'Age31Plus' else 0.0)
-        
-        # All QSI questions (Q14-Q50)
-        for q in range(14, 51):
-            if q == 31:
-                # Q31 is split into sub-questions
-                for sub in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']:
-                    features.append(float(getattr(record, f'q31{sub}', 0)))
-            elif q == 51:
-                features.append(float(getattr(record, 'q51a', 0)))
-            else:
-                features.append(float(getattr(record, f'q{q}', 0)))
-        
-        # Summary scores
-        features.append(float(record.bsum))
-        features.append(float(record.fsum))
-        features.append(float(record.psum))
-        
-        # Level scores
-        features.append(float(record.blevel))
-        features.append(float(record.flevel))
-        features.append(float(record.plevel))
-        features.append(float(record.olevel))
-        features.append(float(record.losri))
-        
-        return features
+        if self.use_fy2024_only:
+            # Force FY2024 only
+            return super().load_data(fiscal_year_start=2024, fiscal_year_end=2024)
+        else:
+            return super().load_data(fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Prepare feature matrix from consumer records
+        Prepare features for Model 2
         
         Args:
             records: List of consumer records
             
         Returns:
-            Feature matrix and feature names
+            Tuple of (feature matrix, feature names)
+        """
+        if self.use_selected_features:
+            return self._prepare_selected_features(records)
+        else:
+            return self._prepare_all_features(records)
+    
+    def _prepare_selected_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
+        """
+        Prepare features based on mutual information selection
+        EXACTLY matches the original implementation with 33 features
+        
+        Args:
+            records: Consumer records
+            
+        Returns:
+            Tuple of (feature matrix, feature names)
         """
         features_list = []
         
         for record in records:
-            if self.use_selected_features:
-                features = self._prepare_selected_features(record)
-            else:
-                features = self._prepare_all_features(record)
-            features_list.append(features)
+            row_features = []
+            
+            # 1. RESIDENCETYPE dummies (5 features) - FH as reference
+            residence_map = {
+                'FH': 0, 'ILSL': 1, 'RH1': 2, 'RH2': 3, 'RH3': 4, 'RH4': 5
+            }
+            residence_val = residence_map.get(getattr(record, 'residencetype', 'FH'), 0)
+            for i in range(1, 6):
+                row_features.append(1.0 if residence_val == i else 0.0)
+            
+            # 2. Living setting dummies (5 features) - FH as reference
+            # Note: This might be duplicate of RESIDENCETYPE but keeping for compatibility
+            living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
+            for setting in living_settings:
+                row_features.append(1.0 if record.living_setting == setting else 0.0)
+            
+            # 3. Age group dummies (2 features) - Age3_20 as reference
+            row_features.append(1.0 if record.age_group == 'Age21_30' else 0.0)
+            row_features.append(1.0 if record.age_group == 'Age31Plus' else 0.0)
+            
+            # 4. Age (continuous)
+            row_features.append(float(record.age))
+            
+            # 5. Summary scores and levels
+            row_features.append(float(record.bsum if record.bsum is not None else 0))
+            row_features.append(float(record.blevel if record.blevel is not None else 0))
+            row_features.append(float(record.fsum if record.fsum is not None else 0))
+            row_features.append(float(record.flevel if record.flevel is not None else 0))
+            row_features.append(float(record.psum if record.psum is not None else 0))
+            row_features.append(float(record.plevel if record.plevel is not None else 0))
+            
+            # 6. Support level scores
+            row_features.append(float(record.losri if record.losri is not None else 0))
+            row_features.append(float(record.olevel if record.olevel is not None else 0))
+            
+            # 7. QSI Questions (11 features) - ordered by MI importance
+            qsi_questions = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28]
+            for q_num in qsi_questions:
+                q_val = getattr(record, f'q{q_num}', None)
+                row_features.append(float(q_val) if q_val is not None else 0.0)
+            
+            # 8. County encoding (simple hash-based)
+            county_code = hash(record.county) % 100 if record.county else 0
+            row_features.append(float(county_code))
+            
+            features_list.append(row_features)
         
         # Build feature names (only once)
         if not self.feature_names:
-            if self.use_selected_features:
-                # Names for selected features
-                self.feature_names = [
-                    'Res_ILSL', 'Res_RH1', 'Res_RH2', 'Res_RH3', 'Res_RH4',
-                    'Live_ILSL', 'Live_RH1', 'Live_RH2', 'Live_RH3', 'Live_RH4',
-                    'Age21_30', 'Age31Plus', 'Age',
-                    'BSum', 'BLEVEL', 'FSum', 'FLEVEL', 'PSum', 'PLEVEL',
-                    'LOSRI', 'OLEVEL',
-                    'Q26', 'Q36', 'Q27', 'Q20', 'Q21', 'Q23', 
-                    'Q30', 'Q25', 'Q16', 'Q18', 'Q28',
-                    'County_Code'
-                ]
-            else:
-                # Names for all features
-                self.feature_names = []
-                for setting in ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
-                    self.feature_names.append(f'Live_{setting}')
-                self.feature_names.extend(['Age21_30', 'Age31Plus'])
-                
-                for q in range(14, 51):
-                    if q == 31:
-                        for sub in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']:
-                            self.feature_names.append(f'Q31{sub}')
-                    else:
-                        self.feature_names.append(f'Q{q}')
-                
-                self.feature_names.extend(['BSum', 'FSum', 'PSum'])
-                self.feature_names.extend(['BLEVEL', 'FLEVEL', 'PLEVEL', 'OLEVEL', 'LOSRI'])
+            self.feature_names = [
+                # RESIDENCETYPE dummies (5)
+                'Res_ILSL', 'Res_RH1', 'Res_RH2', 'Res_RH3', 'Res_RH4',
+                # Living Setting dummies (5)
+                'Live_ILSL', 'Live_RH1', 'Live_RH2', 'Live_RH3', 'Live_RH4',
+                # Age (3)
+                'Age21_30', 'Age31Plus', 'Age',
+                # Summary scores and levels (6)
+                'BSum', 'BLEVEL', 'FSum', 'FLEVEL', 'PSum', 'PLEVEL',
+                # Support levels (2)
+                'LOSRI', 'OLEVEL',
+                # QSI questions (11)
+                'Q26', 'Q36', 'Q27', 'Q20', 'Q21', 'Q23', 
+                'Q30', 'Q25', 'Q16', 'Q18', 'Q28',
+                # County (1)
+                'County_Code'
+            ]
         
-        X = np.array(features_list, dtype=np.float64)
-        
-        # Update parameter count
-        self.num_parameters = X.shape[1] + 1  # Features + intercept
-        
-        logger.info(f"Prepared {X.shape[1]} features for {X.shape[0]} records")
-        
-        return X, self.feature_names
+        return np.array(features_list, dtype=np.float64), self.feature_names
     
-    def calculate_variance_metrics(self) -> Dict[str, float]:
+    def _prepare_all_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Calculate variance-related metrics for the model
+        Prepare all available features (not using feature selection)
         
+        Args:
+            records: Consumer records
+            
         Returns:
-            Dictionary with variance metrics
+            Tuple of (feature matrix, feature names)
         """
-        if self.test_predictions is None or self.y_test is None:
-            return {}
-        
-        # Coefficient of variation
-        cv_actual = np.std(self.y_test) / np.mean(self.y_test)
-        cv_predicted = np.std(self.test_predictions) / np.mean(self.test_predictions)
-        
-        # Prediction interval (using residual standard error)
-        residuals = self.test_predictions - self.y_test
-        rse = np.std(residuals)
-        prediction_interval = 1.96 * rse  # 95% CI
-        
-        # Budget vs actual correlation
-        budget_actual_corr = np.corrcoef(self.test_predictions, self.y_test)[0, 1]
-        
-        # Quarterly variance (simulated)
-        quarterly_variance = np.std(residuals[:len(residuals)//4]) / np.mean(self.y_test) * 100
-        
-        # Annual adjustment rate (simulated)
-        annual_adjustment_rate = np.percentile(np.abs(residuals), 75) / np.mean(self.y_test) * 100
-        
-        self.variance_metrics = {
-            'cv_actual': cv_actual,
-            'cv_predicted': cv_predicted,
-            'prediction_interval': prediction_interval,
-            'budget_actual_corr': budget_actual_corr,
-            'quarterly_variance': quarterly_variance,
-            'annual_adjustment_rate': annual_adjustment_rate
-        }
-        
-        return self.variance_metrics
+        # Delegate to base class
+        return super().prepare_features(records)
     
-    def calculate_population_scenarios(self) -> Dict[str, Dict[str, float]]:
+    def _prepare_all_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Calculate population capacity scenarios under different budget allocations
+        Prepare all available features (not using feature selection)
+        Delegates to base class for full feature set
         
+        Args:
+            records: Consumer records
+            
         Returns:
-            Dictionary with population scenario metrics
+            Tuple of (feature matrix, feature names)
         """
-        if self.test_predictions is None:
-            return {}
-        
-        # Fixed budget assumption
-        total_budget = 1.2e9  # $1.2 billion
-        
-        # Average costs
-        current_avg = np.mean(self.y_test) if self.y_test is not None else 50000
-        model_avg = np.mean(self.test_predictions)
-        
-        scenarios = {
-            'currentbaseline': {
-                'clients_served': int(total_budget / current_avg),
-                'avg_allocation': current_avg,
-                'waitlist_change': 0,
-                'waitlist_pct': 0
-            },
-            'modelbalanced': {
-                'clients_served': int(total_budget / model_avg),
-                'avg_allocation': model_avg,
-                'waitlist_change': int(total_budget / model_avg) - int(total_budget / current_avg),
-                'waitlist_pct': ((int(total_budget / model_avg) - int(total_budget / current_avg)) / 
-                                int(total_budget / current_avg) * 100) if current_avg > 0 else 0
-            },
-            'modelefficiency': {
-                'clients_served': int(total_budget / (model_avg * 0.95)),  # 5% efficiency gain
-                'avg_allocation': model_avg * 0.95,
-                'waitlist_change': int(total_budget / (model_avg * 0.95)) - int(total_budget / current_avg),
-                'waitlist_pct': ((int(total_budget / (model_avg * 0.95)) - int(total_budget / current_avg)) / 
-                                int(total_budget / current_avg) * 100) if current_avg > 0 else 0
-            },
-            'categoryfocused': {
-                'clients_served': int(total_budget / (model_avg * 1.1)),  # Higher allocations
-                'avg_allocation': model_avg * 1.1,
-                'waitlist_change': int(total_budget / (model_avg * 1.1)) - int(total_budget / current_avg),
-                'waitlist_pct': ((int(total_budget / (model_avg * 1.1)) - int(total_budget / current_avg)) / 
-                                int(total_budget / current_avg) * 100) if current_avg > 0 else 0
-            },
-            'populationmaximized': {
-                'clients_served': int(total_budget / (model_avg * 0.85)),  # Lower allocations
-                'avg_allocation': model_avg * 0.85,
-                'waitlist_change': int(total_budget / (model_avg * 0.85)) - int(total_budget / current_avg),
-                'waitlist_pct': ((int(total_budget / (model_avg * 0.85)) - int(total_budget / current_avg)) / 
-                                int(total_budget / current_avg) * 100) if current_avg > 0 else 0
-            }
-        }
-        
-        self.population_scenarios = scenarios
-        return scenarios
+        logger.info("Using all features (no selection)")
+        return super().prepare_features(records)
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
@@ -375,7 +264,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         
         Args:
             X: Feature matrix
-            y: Target values (costs in dollars)
+            y: Target values (costs in dollars, NOT transformed)
         """
         logger.info("Fitting GLM-Gamma model...")
         logger.info(f"Training samples: {len(y)}, Features: {X.shape[1]}")
@@ -387,7 +276,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         y_adjusted = np.maximum(y, 0.01)
         
         try:
-            # Initialize and fit GLM
+            # Initialize and fit GLM with Gamma family and log link
             glm = sm.GLM(
                 y_adjusted,
                 X_with_const,
@@ -398,13 +287,14 @@ class Model2GLMGamma(BaseiBudgetModel):
             self.glm_model = glm.fit(maxiter=200, scale='x2')
             self.model = self.glm_model  # Store for base class compatibility
             
-            # Extract GLM metrics
+            # Extract GLM-specific metrics
             self.dispersion = self.glm_model.scale
             self.deviance = self.glm_model.deviance
             self.aic = self.glm_model.aic
             self.bic = self.glm_model.bic
+            self.num_parameters = len(self.glm_model.params)
             
-            # Calculate null model for pseudo-R^2
+            # Calculate null model for pseudo-R²
             null_model = sm.GLM(
                 y_adjusted,
                 np.ones((len(y_adjusted), 1)),
@@ -413,7 +303,7 @@ class Model2GLMGamma(BaseiBudgetModel):
             
             self.null_deviance = null_model.deviance
             
-            # Calculate pseudo-R^2 measures
+            # Calculate pseudo-R² measures
             self.deviance_r2 = 1 - (self.deviance / self.null_deviance)
             self.mcfadden_r2 = 1 - (self.glm_model.llf / null_model.llf)
             
@@ -421,33 +311,32 @@ class Model2GLMGamma(BaseiBudgetModel):
             coef_names = ['const'] + self.feature_names
             for i, name in enumerate(coef_names):
                 self.coefficients[name] = {
-                    'value': self.glm_model.params[i],
-                    'std_error': self.glm_model.bse[i],
-                    'z_value': self.glm_model.tvalues[i],
-                    'p_value': self.glm_model.pvalues[i],
-                    'conf_int_lower': self.glm_model.conf_int()[i, 0],
-                    'conf_int_upper': self.glm_model.conf_int()[i, 1],
-                    'exp_value': np.exp(self.glm_model.params[i])  # Multiplicative effect
+                    'value': float(self.glm_model.params[i]),
+                    'std_error': float(self.glm_model.bse[i]),
+                    'z_value': float(self.glm_model.tvalues[i]),
+                    'p_value': float(self.glm_model.pvalues[i]),
+                    'conf_int_lower': float(self.glm_model.conf_int()[i, 0]),
+                    'conf_int_upper': float(self.glm_model.conf_int()[i, 1]),
+                    'exp_value': float(np.exp(self.glm_model.params[i]))  # Multiplicative effect
                 }
             
             # Calculate feature importance (absolute z-values)
-            feature_importance = {}
+            self.feature_importance = {}
             for i, name in enumerate(self.feature_names):
-                feature_importance[name] = abs(self.glm_model.tvalues[i+1])
+                self.feature_importance[name] = abs(float(self.glm_model.tvalues[i+1]))
             
             # Sort by importance
             self.feature_importance = dict(sorted(
-                feature_importance.items(), 
+                self.feature_importance.items(), 
                 key=lambda x: x[1], 
                 reverse=True
             ))
             
             logger.info(f"GLM-Gamma fitted successfully")
             logger.info(f"  Converged: {self.glm_model.converged}")
-            logger.info(f"  Iterations: {self.glm_model.fit_history['iteration']}")
             logger.info(f"  Dispersion: {self.dispersion:.4f}")
-            logger.info(f"  Deviance R^2: {self.deviance_r2:.4f}")
-            logger.info(f"  McFadden R^2: {self.mcfadden_r2:.4f}")
+            logger.info(f"  Deviance R²: {self.deviance_r2:.4f}")
+            logger.info(f"  McFadden R²: {self.mcfadden_r2:.4f}")
             logger.info(f"  AIC: {self.aic:.1f}, BIC: {self.bic:.1f}")
             
         except Exception as e:
@@ -478,170 +367,68 @@ class Model2GLMGamma(BaseiBudgetModel):
         
         return predictions
     
-    def perform_cross_validation(self, n_splits: int = 10) -> Dict[str, Any]:
+    def generate_latex_commands(self) -> None:
         """
-        Perform k-fold cross-validation with GLM
-        
-        Args:
-            n_splits: Number of CV folds
-            
-        Returns:
-            Cross-validation results
+        Generate LaTeX commands for Model 2
+        Calls base class first, then adds GLM-specific commands
         """
-        if self.X_train is None or self.y_train is None:
-            raise ValueError("Must prepare features before cross-validation")
+        # CRITICAL: Call parent class first to generate base commands
+        super().generate_latex_commands()
         
-        logger.info(f"Performing {n_splits}-fold cross-validation...")
+        # Model word for LaTeX commands
+        model_word = "Two"
         
-        kf = KFold(n_splits=n_splits, shuffle=True, random_state=self.random_state)
-        cv_scores = []
-        fold_metrics = []
+        # Append GLM-specific commands to newcommands file
+        newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         
-        for fold, (train_idx, val_idx) in enumerate(kf.split(self.X_train), 1):
-            # Split data
-            X_fold_train = self.X_train[train_idx]
-            y_fold_train = self.y_train[train_idx]
-            X_fold_val = self.X_train[val_idx]
-            y_fold_val = self.y_train[val_idx]
+        try:
+            with open(newcommands_file, 'a') as f:
+                f.write("\n% GLM-Specific Command Definitions\n")
+                f.write(f"\\newcommand{{\\Model{model_word}Distribution}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}LinkFunction}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}Dispersion}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}DevianceRSquared}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}McFaddenRSquared}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}AIC}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}BIC}}{{\\WarningRunPipeline}}\n")
+                f.write(f"\\newcommand{{\\Model{model_word}Parameters}}{{\\WarningRunPipeline}}\n")
+                
+                # Feature selection specific
+                if self.use_selected_features:
+                    f.write("\n% Feature Selection Command Definitions\n")
+                    f.write(f"\\newcommand{{\\Model{model_word}FeatureSelection}}{{\\WarningRunPipeline}}\n")
+                    f.write(f"\\newcommand{{\\Model{model_word}TopFeature}}{{\\WarningRunPipeline}}\n")
+                    f.write(f"\\newcommand{{\\Model{model_word}TopFeatureMI}}{{\\WarningRunPipeline}}\n")
             
-            try:
-                # Fit GLM on fold
-                X_train_const = sm.add_constant(X_fold_train)
-                X_val_const = sm.add_constant(X_fold_val)
-                
-                y_adjusted = np.maximum(y_fold_train, 0.01)
-                
-                glm_fold = sm.GLM(
-                    y_adjusted,
-                    X_train_const,
-                    family=Gamma(link=Log())
-                ).fit(disp=0, maxiter=200)
-                
-                # Predict on validation
-                y_pred = glm_fold.predict(X_val_const)
-                y_pred = np.maximum(y_pred, 1.0)
-                
-                # Calculate metrics
-                r2 = r2_score(y_fold_val, y_pred)
-                rmse = np.sqrt(mean_squared_error(y_fold_val, y_pred))
-                mae = mean_absolute_error(y_fold_val, y_pred)
-                
-                cv_scores.append(r2)
-                fold_metrics.append({
-                    'fold': fold,
-                    'r2': r2,
-                    'rmse': rmse,
-                    'mae': mae
-                })
-                
-                logger.info(f"  Fold {fold}: R^2={r2:.4f}, RMSE=${rmse:,.0f}")
-                
-            except Exception as e:
-                logger.warning(f"  Fold {fold} failed: {e}")
-                cv_scores.append(0)
+            logger.info(f"Appended GLM-specific command definitions to {newcommands_file}")
+        except Exception as e:
+            logger.error(f"Error appending to newcommands file: {e}")
         
-        # Calculate summary statistics
-        mean_score = np.mean(cv_scores)
-        std_score = np.std(cv_scores)
+        # Append actual values to renewcommands file
+        renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         
-        logger.info(f"CV Results: Mean R^2={mean_score:.4f} +- {std_score:.4f}")
-        
-        return {
-            'mean_score': mean_score,
-            'std_score': std_score,
-            'scores': cv_scores,
-            'fold_metrics': fold_metrics,
-            'cv_mean': mean_score,  # For compatibility with base class
-            'cv_std': std_score     # For compatibility with base class
-        }
-    
-    def calculate_subgroup_metrics(self) -> Dict[str, Dict[str, float]]:
-        """
-        Calculate metrics for specific subgroups matching LaTeX requirements
-        
-        Returns:
-            Dictionary with subgroup performance metrics
-        """
-        if self.test_predictions is None or self.y_test is None:
-            return {}
-        
-        subgroup_metrics = {}
-        
-        # Define subgroups that match LaTeX commands EXACTLY
-        # Note: base class will convert numbers to words (RH1 -> RHOne, etc.)
-        subgroups = {
-            # Living Settings - these will become LivingSettingFH, LivingSettingILSL, etc.
-            'LivingSetting_FH': lambda r: r.living_setting == 'FH',
-            'LivingSetting_ILSL': lambda r: r.living_setting == 'ILSL',
-            'LivingSetting_RH1': lambda r: r.living_setting == 'RH1',
-            'LivingSetting_RH2': lambda r: r.living_setting == 'RH2',
-            'LivingSetting_RH3': lambda r: r.living_setting == 'RH3',
-            'LivingSetting_RH4': lambda r: r.living_setting == 'RH4',
+        try:
+            with open(renewcommands_file, 'a') as f:
+                f.write("\n% GLM-Specific Values\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}Distribution}}{{Gamma}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}LinkFunction}}{{Log}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{self.dispersion:.4f if self.dispersion else 0}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{self.deviance_r2:.4f if self.deviance_r2 else 0}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{self.mcfadden_r2:.4f if self.mcfadden_r2 else 0}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{self.aic:,.0f if self.aic else 0}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{self.bic:,.0f if self.bic else 0}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{self.num_parameters}}}\n")
+                
+                # Feature selection specific values
+                if self.use_selected_features:
+                    f.write("\n% Feature Selection Values\n")
+                    f.write(f"\\renewcommand{{\\Model{model_word}FeatureSelection}}{{True}}\n")
+                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeature}}{{RESIDENCETYPE}}\n")
+                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeatureMI}}{{0.256}}\n")
             
-            # Age Groups - these will become AgeGroupAgeThreeTwenty, etc.
-            'AgeGroup_Age3_20': lambda r: r.age_group == 'Age3_20',
-            'AgeGroup_Age21_30': lambda r: r.age_group == 'Age21_30',
-            'AgeGroup_Age31Plus': lambda r: r.age_group == 'Age31Plus',
-            
-            # Cost Quartiles - these will become costQOneLow, etc.
-            'cost_Q1_Low': None,  # Will define based on quartiles
-            'cost_Q2': None,
-            'cost_Q3': None,
-            'cost_Q4_High': None
-        }
-        
-        # Calculate cost quartiles
-        if len(self.y_test) > 0:
-            q1, q2, q3 = np.percentile(self.y_test, [25, 50, 75])
-            subgroups['cost_Q1_Low'] = lambda r, idx: self.y_test[idx] <= q1
-            subgroups['cost_Q2'] = lambda r, idx: (self.y_test[idx] > q1) & (self.y_test[idx] <= q2)
-            subgroups['cost_Q3'] = lambda r, idx: (self.y_test[idx] > q2) & (self.y_test[idx] <= q3)
-            subgroups['cost_Q4_High'] = lambda r, idx: self.y_test[idx] > q3
-        
-        # Calculate metrics for each subgroup
-        for key, condition in subgroups.items():
-            if condition is None:
-                continue
-                
-            # Get indices for this subgroup
-            if 'cost' in key:
-                # For cost-based subgroups, use index-based selection
-                indices = [i for i in range(len(self.test_records)) 
-                          if condition(self.test_records[i], i)]
-            else:
-                # For other subgroups, use record-based selection
-                indices = [i for i, record in enumerate(self.test_records) 
-                          if condition(record)]
-            
-            if len(indices) > 0:
-                # Get subset of predictions and actuals
-                y_subset = self.y_test[indices]
-                pred_subset = self.test_predictions[indices]
-                
-                # Calculate metrics
-                r2 = r2_score(y_subset, pred_subset) if len(indices) > 1 else 0
-                rmse = np.sqrt(mean_squared_error(y_subset, pred_subset))
-                bias = np.mean(pred_subset - y_subset)
-                
-                subgroup_metrics[key] = {
-                    'n': len(indices),
-                    'r2': r2,
-                    'rmse': rmse,
-                    'bias': bias
-                }
-            else:
-                # No data for this subgroup
-                subgroup_metrics[key] = {
-                    'n': 0,
-                    'r2': 0,
-                    'rmse': 0,
-                    'bias': 0
-                }
-        
-        self.subgroup_metrics = subgroup_metrics
-        logger.info(f"Calculated metrics for {len(subgroup_metrics)} subgroups")
-        
-        return subgroup_metrics
+            logger.info(f"Appended GLM-specific values to {renewcommands_file}")
+        except Exception as e:
+            logger.error(f"Error appending to renewcommands file: {e}")
     
     def calculate_metrics(self) -> Dict[str, float]:
         """
@@ -685,6 +472,7 @@ class Model2GLMGamma(BaseiBudgetModel):
     def plot_diagnostics(self) -> None:
         """
         Generate comprehensive diagnostic plots for GLM
+        Creates 9-panel diagnostic figure
         """
         if self.test_predictions is None or self.y_test is None:
             logger.warning("No predictions available for plotting")
@@ -703,7 +491,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         ax.plot([min_val, max_val], [min_val, max_val], 'r--', label='Perfect Prediction')
         ax.set_xlabel('Actual Cost ($)')
         ax.set_ylabel('Predicted Cost ($)')
-        ax.set_title(f'Predicted vs Actual (R^2={self.metrics.get("r2_test", 0):.3f})')
+        ax.set_title(f'Predicted vs Actual (R²={self.metrics.get("r2_test", 0):.3f})')
         ax.legend()
         ax.grid(True, alpha=0.3)
         
@@ -735,6 +523,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         
         # 4. Q-Q Plot of Deviance Residuals
         ax = axes[1, 0]
+        from scipy import stats
         stats.probplot(dev_residuals, dist="norm", plot=ax)
         ax.set_title('Q-Q Plot (Deviance Residuals)')
         ax.grid(True, alpha=0.3)
@@ -823,369 +612,88 @@ class Model2GLMGamma(BaseiBudgetModel):
     
     def _plot_glm_specific(self) -> None:
         """
-        Generate GLM-specific diagnostic plots
+        Generate GLM-specific diagnostic plots (4-panel)
+        Includes: Partial residuals, link assessment, influence, Pearson residuals
         """
         if self.glm_model is None:
+            logger.warning("GLM model not fitted, skipping GLM-specific plots")
             return
         
-        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-        fig.suptitle('GLM-Specific Diagnostics', fontsize=14, fontweight='bold')
-        
-        # 1. Partial Residual Plots for top features
-        ax = axes[0, 0]
-        if self.feature_importance:
-            # Get top 3 features for partial residual plots
-            top_3_features = list(self.feature_importance.keys())[:3]
-            for i, feat in enumerate(top_3_features):
-                feat_idx = self.feature_names.index(feat)
-                # Simple partial residuals (would need more complex calculation)
-                ax.scatter(self.X_test[:, feat_idx], 
-                          self.test_predictions - self.y_test, 
-                          alpha=0.3, s=5, label=feat)
-            ax.set_xlabel('Feature Value')
-            ax.set_ylabel('Partial Residual')
-            ax.set_title('Partial Residuals (Top 3 Features)')
+        try:
+            fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+            fig.suptitle('GLM-Specific Diagnostics', fontsize=14, fontweight='bold')
+            
+            # 1. Partial Residuals (Top 3 features)
+            ax = axes[0, 0]
+            if len(self.feature_names) >= 3:
+                top_3_features = list(self.feature_importance.keys())[:3]
+                for feature in top_3_features:
+                    if feature in self.feature_names:
+                        idx = self.feature_names.index(feature)
+                        ax.scatter(self.X_test[:, idx], 
+                                 self.test_predictions - self.y_test, 
+                                 alpha=0.3, s=5, label=feature)
+                ax.set_xlabel('Feature Value')
+                ax.set_ylabel('Partial Residual')
+                ax.set_title('Partial Residuals (Top 3 Features)')
+                ax.legend()
+                ax.grid(True, alpha=0.3)
+            
+            # 2. Link Function Assessment
+            ax = axes[0, 1]
+            # Linear predictor vs response
+            linear_predictor = self.glm_model.predict(
+                sm.add_constant(self.X_test), linear=True
+            )
+            ax.scatter(linear_predictor, self.test_predictions, alpha=0.5, s=10)
+            ax.set_xlabel('Linear Predictor (log scale)')
+            ax.set_ylabel('Predicted Response ($)')
+            ax.set_title('Link Function Assessment')
+            ax.grid(True, alpha=0.3)
+            
+            # 3. Pearson Residuals
+            ax = axes[1, 0]
+            # Calculate Pearson residuals
+            y_test_adj = np.maximum(self.y_test, 0.01)
+            y_pred_adj = np.maximum(self.test_predictions, 0.01)
+            # Variance for Gamma is phi * mu^2
+            variance = self.dispersion * (y_pred_adj ** 2)
+            pearson_resid = (y_test_adj - y_pred_adj) / np.sqrt(variance)
+            ax.scatter(self.test_predictions, pearson_resid, alpha=0.5, s=10)
+            ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
+            ax.set_xlabel('Predicted Cost ($)')
+            ax.set_ylabel('Pearson Residuals')
+            ax.set_title('Pearson Residuals')
+            ax.grid(True, alpha=0.3)
+            
+            # 4. Cook's Distance (Influence)
+            ax = axes[1, 1]
+            # Simplified influence plot using residuals
+            leverage = np.abs(pearson_resid)
+            ax.scatter(range(len(leverage)), leverage, alpha=0.5, s=10)
+            ax.axhline(y=2, color='r', linestyle='--', alpha=0.5, label='Threshold')
+            ax.set_xlabel('Observation Index')
+            ax.set_ylabel('Absolute Pearson Residual')
+            ax.set_title('Influence Plot')
             ax.legend()
             ax.grid(True, alpha=0.3)
-        
-        # 2. Link Function Assessment
-        ax = axes[0, 1]
-        linear_predictor = np.log(self.test_predictions)
-        ax.scatter(linear_predictor, self.y_test, alpha=0.5, s=10)
-        ax.set_xlabel('Linear Predictor (log scale)')
-        ax.set_ylabel('Actual Cost ($)')
-        ax.set_title('Link Function Assessment')
-        ax.grid(True, alpha=0.3)
-        
-        # 3. Influence Plot (simplified version)
-        ax = axes[1, 0]
-        standardized_residuals = (self.test_predictions - self.y_test) / np.std(self.test_predictions - self.y_test)
-        leverage = np.ones(len(standardized_residuals)) * (self.num_parameters / len(self.y_train))
-        ax.scatter(leverage, standardized_residuals, alpha=0.5, s=10)
-        ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Leverage')
-        ax.set_ylabel('Standardized Residuals')
-        ax.set_title('Influence Plot (Simplified)')
-        ax.grid(True, alpha=0.3)
-        
-        # 4. Fitted vs Pearson Residuals
-        ax = axes[1, 1]
-        pearson_residuals = (self.y_test - self.test_predictions) / np.sqrt(self.test_predictions)
-        ax.scatter(self.test_predictions, pearson_residuals, alpha=0.5, s=10)
-        ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Fitted Values ($)')
-        ax.set_ylabel('Pearson Residuals')
-        ax.set_title('Pearson Residuals')
-        ax.grid(True, alpha=0.3)
-        
-        plt.tight_layout()
-        
-        plot_file = self.output_dir / "glm_specific_plots.png"
-        plt.savefig(plot_file, dpi=300, bbox_inches='tight')
-        plt.close()
-        
-        logger.info(f"GLM-specific plots saved to {plot_file}")
-    
-    def generate_latex_commands(self) -> None:
-        """
-        Override to generate commands matching our LaTeX table exactly
-        """
-        # First get the model word
-        model_word = "Two"
-        
-        # Create output directory if it doesn't exist
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Generate newcommands file (definitions)
-        newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
-        
-        with open(newcommands_file, 'w') as f:
-            f.write(f"% Model {self.model_id} Command Definitions\n")
-            f.write(f"% Generated: {datetime.now()}\n")
-            f.write(f"% Model: {self.model_name}\n\n")
             
-            # Core metrics
-            f.write("% Core Metrics\n")
-            metric_commands = [
-                ('r2_train', 'RSquaredTrain'),
-                ('r2_test', 'RSquaredTest'),
-                ('rmse_train', 'RMSETrain'),
-                ('rmse_test', 'RMSETest'),
-                ('mae_train', 'MAETrain'),
-                ('mae_test', 'MAETest'),
-                ('mape_train', 'MAPETrain'),
-                ('mape_test', 'MAPETest'),
-                ('cv_mean', 'CVMean'),
-                ('cv_std', 'CVStd'),
-                ('within_5k', 'WithinFiveK'),
-                ('within_10k', 'WithinTenK'),
-                ('within_20k', 'WithinTwentyK'),
-                ('training_samples', 'TrainingSamples'),
-                ('test_samples', 'TestSamples')
-            ]
+            plt.tight_layout()
             
-            for _, latex_name in metric_commands:
-                f.write(f"\\newcommand{{\\Model{model_word}{latex_name}}}{{\\WarningRunPipeline}}\n")
+            # Save GLM-specific plots
+            plot_file = self.output_dir / "glm_specific_plots.png"
+            plt.savefig(plot_file, dpi=300, bbox_inches='tight')
+            plt.close()
             
-            # Subgroup commands for our specific table
-            f.write("\n% Living Setting Subgroups\n")
-            for setting in ['FH', 'ILSL', 'RHOne', 'RHTwo', 'RHThree', 'RHFour']:
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupLivingSetting{setting}N}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupLivingSetting{setting}RSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupLivingSetting{setting}RMSE}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupLivingSetting{setting}Bias}}{{\\WarningRunPipeline}}\n")
-            
-            f.write("\n% Age Group Subgroups\n")
-            age_groups = [
-                ('AgeThreeTwenty', 'Age3_20'),
-                ('AgeTwentyOneThirty', 'Age21_30'),
-                ('AgeThirtyOnePlus', 'Age31Plus')
-            ]
-            for latex_name, _ in age_groups:
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupAgeGroup{latex_name}N}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupAgeGroup{latex_name}RSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupAgeGroup{latex_name}RMSE}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}SubgroupAgeGroup{latex_name}Bias}}{{\\WarningRunPipeline}}\n")
-            
-            f.write("\n% Cost Quartile Subgroups\n")
-            for q in ['QOneLow', 'QTwo', 'QThree', 'QFourHigh']:
-                f.write(f"\\newcommand{{\\Model{model_word}Subgroupcost{q}N}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Subgroupcost{q}RSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Subgroupcost{q}RMSE}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Subgroupcost{q}Bias}}{{\\WarningRunPipeline}}\n")
-            
-            # Variance metrics
-            f.write("\n% Variance Metrics\n")
-            f.write(f"\\newcommand{{\\Model{model_word}CVActual}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}CVPredicted}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}PredictionInterval}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}BudgetActualCorr}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}QuarterlyVariance}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}AnnualAdjustmentRate}}{{\\WarningRunPipeline}}\n")
-            
-            # Population scenarios
-            f.write("\n% Population Scenarios\n")
-            for scenario in ['currentbaseline', 'modelbalanced', 'modelefficiency', 
-                           'categoryfocused', 'populationmaximized']:
-                f.write(f"\\newcommand{{\\Model{model_word}Pop{scenario}Clients}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Pop{scenario}AvgAlloc}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Pop{scenario}WaitlistChange}}{{\\WarningRunPipeline}}\n")
-            
-            # GLM-specific commands
-            f.write("\n% GLM-Specific Commands\n")
-            f.write(f"\\newcommand{{\\Model{model_word}Distribution}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}LinkFunction}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}Dispersion}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}DevianceRSquared}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}McFaddenRSquared}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}AIC}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}BIC}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}Parameters}}{{\\WarningRunPipeline}}\n")
-            
-            if self.use_selected_features:
-                f.write("\n% Feature Selection Commands\n")
-                f.write(f"\\newcommand{{\\Model{model_word}FeatureSelection}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}NumFeatures}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}TopFeature}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}TopFeatureMI}}{{\\WarningRunPipeline}}\n")
-        
-        # Generate renewcommands file (values)
-        renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
-        
-        with open(renewcommands_file, 'w') as f:
-            f.write(f"% Model {self.model_id} Calibrated Values\n")
-            f.write(f"% Generated: {datetime.now()}\n\n")
-            
-            # Core metrics values
-            f.write("% Core Metrics\n")
-            for metric_key, latex_name in metric_commands:
-                value = self.metrics.get(metric_key, 0)
-                formatted_value = self._format_latex_value(metric_key, value)
-                f.write(f"\\renewcommand{{\\Model{model_word}{latex_name}}}{{{formatted_value}}}\n")
-            
-            # Subgroup values
-            f.write("\n% Living Setting Subgroups\n")
-            subgroup_mapping = {
-                'FH': 'LivingSetting_FH',
-                'ILSL': 'LivingSetting_ILSL', 
-                'RHOne': 'LivingSetting_RH1',
-                'RHTwo': 'LivingSetting_RH2',
-                'RHThree': 'LivingSetting_RH3',
-                'RHFour': 'LivingSetting_RH4'
-            }
-            
-            for latex_setting, data_key in subgroup_mapping.items():
-                if data_key in self.subgroup_metrics:
-                    metrics = self.subgroup_metrics[data_key]
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}N}}{{{metrics.get('n', 0)}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}RSquared}}{{{metrics.get('r2', 0):.4f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}RMSE}}{{{metrics.get('rmse', 0):,.0f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}Bias}}{{{metrics.get('bias', 0):,.0f}}}\n")
-                else:
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}N}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}RSquared}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}RMSE}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupLivingSetting{latex_setting}Bias}}{{0}}\n")
-            
-            f.write("\n% Age Group Subgroups\n")
-            age_mapping = {
-                'AgeThreeTwenty': 'AgeGroup_Age3_20',
-                'AgeTwentyOneThirty': 'AgeGroup_Age21_30',
-                'AgeThirtyOnePlus': 'AgeGroup_Age31Plus'
-            }
-            
-            for latex_age, data_key in age_mapping.items():
-                if data_key in self.subgroup_metrics:
-                    metrics = self.subgroup_metrics[data_key]
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}N}}{{{metrics.get('n', 0)}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}RSquared}}{{{metrics.get('r2', 0):.4f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}RMSE}}{{{metrics.get('rmse', 0):,.0f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}Bias}}{{{metrics.get('bias', 0):,.0f}}}\n")
-                else:
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}N}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}RSquared}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}RMSE}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}SubgroupAgeGroup{latex_age}Bias}}{{0}}\n")
-            
-            f.write("\n% Cost Quartile Subgroups\n")
-            cost_mapping = {
-                'QOneLow': 'cost_Q1_Low',
-                'QTwo': 'cost_Q2',
-                'QThree': 'cost_Q3',
-                'QFourHigh': 'cost_Q4_High'
-            }
-            
-            for latex_cost, data_key in cost_mapping.items():
-                if data_key in self.subgroup_metrics:
-                    metrics = self.subgroup_metrics[data_key]
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}N}}{{{metrics.get('n', 0)}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}RSquared}}{{{metrics.get('r2', 0):.4f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}RMSE}}{{{metrics.get('rmse', 0):,.0f}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}Bias}}{{{metrics.get('bias', 0):,.0f}}}\n")
-                else:
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}N}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}RSquared}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}RMSE}}{{0}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}Subgroupcost{latex_cost}Bias}}{{0}}\n")
-            
-            # Variance metrics
-            f.write("\n% Variance Metrics\n")
-            if self.variance_metrics:
-                f.write(f"\\renewcommand{{\\Model{model_word}CVActual}}{{{self.variance_metrics.get('cv_actual', 0):.3f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}CVPredicted}}{{{self.variance_metrics.get('cv_predicted', 0):.3f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}PredictionInterval}}{{{self.variance_metrics.get('prediction_interval', 0):,.0f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}BudgetActualCorr}}{{{self.variance_metrics.get('budget_actual_corr', 0):.3f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}QuarterlyVariance}}{{{self.variance_metrics.get('quarterly_variance', 0):.1f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}AnnualAdjustmentRate}}{{{self.variance_metrics.get('annual_adjustment_rate', 0):.1f}}}\n")
-            
-            # Population scenarios
-            f.write("\n% Population Scenarios\n")
-            if self.population_scenarios:
-                for scenario in ['currentbaseline', 'modelbalanced', 'modelefficiency', 
-                               'categoryfocused', 'populationmaximized']:
-                    if scenario in self.population_scenarios:
-                        s = self.population_scenarios[scenario]
-                        f.write(f"\\renewcommand{{\\Model{model_word}Pop{scenario}Clients}}{{{s.get('clients_served', 0)}}}\n")
-                        f.write(f"\\renewcommand{{\\Model{model_word}Pop{scenario}AvgAlloc}}{{{s.get('avg_allocation', 0):,.0f}}}\n")
-                        f.write(f"\\renewcommand{{\\Model{model_word}Pop{scenario}WaitlistChange}}{{{s.get('waitlist_change', 0):+,}}}\n")
-            
-            # GLM-specific values
-            f.write("\n% GLM-Specific Values\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}Distribution}}{{Gamma}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}LinkFunction}}{{Log}}\n")
-            
-            # Format GLM metrics properly
-            dispersion_val = f"{self.dispersion:.4f}" if self.dispersion is not None else "0"
-            deviance_r2_val = f"{self.deviance_r2:.4f}" if self.deviance_r2 is not None else "0"
-            mcfadden_r2_val = f"{self.mcfadden_r2:.4f}" if self.mcfadden_r2 is not None else "0"
-            aic_val = f"{self.aic:,.0f}" if self.aic is not None else "0"
-            bic_val = f"{self.bic:,.0f}" if self.bic is not None else "0"
-            
-            f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{dispersion_val}}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{deviance_r2_val}}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{mcfadden_r2_val}}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{aic_val}}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{bic_val}}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{self.num_parameters}}}\n")
-            
-            if self.use_selected_features:
-                f.write("\n% Feature Selection Values\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}FeatureSelection}}{{True}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}NumFeatures}}{{{len(self.feature_names)}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}TopFeature}}{{RESIDENCETYPE}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}TopFeatureMI}}{{0.256}}\n")
-        
-        logger.info(f"LaTeX commands written to {newcommands_file} and {renewcommands_file}")
-    
-    def _format_latex_value(self, metric_key: str, value: Any) -> str:
-        """
-        Generate LaTeX commands with GLM-specific additions
-        """
-        # Generate base commands first (this includes WithinFiveK, etc.)
-        super().generate_latex_commands()
-        
-        # Model word for LaTeX commands
-        model_word = "Two"
-        
-        # Append GLM-specific commands to newcommands file
-        newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
-        
-        try:
-            with open(newcommands_file, 'a') as f:
-                f.write("\n% GLM-Specific Commands\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Distribution}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}LinkFunction}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Dispersion}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}DevianceRSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}McFaddenRSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}AIC}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}BIC}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Parameters}}{{\\WarningRunPipeline}}\n")
-                # Don't add WithinFiveK, WithinTenK, WithinTwentyK here - base class handles them
-                
-                # Feature selection specific
-                if self.use_selected_features:
-                    f.write("\n% Feature Selection Commands\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}FeatureSelection}}{{\\WarningRunPipeline}}\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}NumFeatures}}{{\\WarningRunPipeline}}\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}TopFeature}}{{\\WarningRunPipeline}}\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}TopFeatureMI}}{{\\WarningRunPipeline}}\n")
-        
+            logger.info(f"GLM-specific plots saved to {plot_file}")
         except Exception as e:
-            logger.error(f"Error appending to newcommands file: {e}")
-        
-        # Append actual values to renewcommands file
-        renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
-        
-        try:
-            with open(renewcommands_file, 'a') as f:
-                f.write("\n% GLM-Specific Values\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Distribution}}{{Gamma}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}LinkFunction}}{{Log}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{self.dispersion:.4f if self.dispersion else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{self.deviance_r2:.4f if self.deviance_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{self.mcfadden_r2:.4f if self.mcfadden_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{self.aic:,.0f if self.aic else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{self.bic:,.0f if self.bic else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{self.num_parameters}}}\n")
-                # Don't add WithinFiveK, etc. here - base class handles them
-                
-                # Feature selection specific values
-                if self.use_selected_features:
-                    f.write("\n% Feature Selection Values\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}FeatureSelection}}{{True}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}NumFeatures}}{{{len(self.feature_names)}}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeature}}{{RESIDENCETYPE}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeatureMI}}{{0.256}}\n")
-        
-        except Exception as e:
-            logger.error(f"Error appending to renewcommands file: {e}")
+            logger.error(f"Error generating GLM-specific plots: {e}")
     
     def save_results(self) -> None:
         """
         Save Model 2 specific results including GLM diagnostics
         """
-        # Save base results
+        # Save base results (metrics, predictions, etc.)
         super().save_results()
         
         # Save GLM-specific results
@@ -1193,78 +701,33 @@ class Model2GLMGamma(BaseiBudgetModel):
             'model_type': 'GLM-Gamma',
             'distribution': 'Gamma',
             'link_function': 'Log',
-            'converged': self.glm_model.converged if self.glm_model else None,
-            'iterations': self.glm_model.fit_history['iteration'] if self.glm_model else None,
-            'dispersion': self.dispersion,
-            'deviance': self.deviance,
-            'null_deviance': self.null_deviance,
-            'deviance_r2': self.deviance_r2,
-            'mcfadden_r2': self.mcfadden_r2,
-            'aic': self.aic,
-            'bic': self.bic,
-            'num_parameters': self.num_parameters,
+            'converged': bool(self.glm_model.converged) if self.glm_model else None,
+            'iterations': int(self.glm_model.fit_history['iteration']) if self.glm_model else None,
+            'dispersion': float(self.dispersion) if self.dispersion else None,
+            'deviance': float(self.deviance) if self.deviance else None,
+            'null_deviance': float(self.null_deviance) if self.null_deviance else None,
+            'deviance_r2': float(self.deviance_r2) if self.deviance_r2 else None,
+            'mcfadden_r2': float(self.mcfadden_r2) if self.mcfadden_r2 else None,
+            'aic': float(self.aic) if self.aic else None,
+            'bic': float(self.bic) if self.bic else None,
+            'num_parameters': int(self.num_parameters),
             'feature_selection': self.use_selected_features,
-            'fiscal_years': self.fiscal_years_used
+            'fiscal_years': self.fiscal_years_used,
+            'feature_importance': {k: float(v) for k, v in self.feature_importance.items()} if self.feature_importance else {}
         }
         
-        glm_file = self.output_dir / "glm_results.json"
+        glm_file = self.output_dir / 'glm_results.json'
         with open(glm_file, 'w') as f:
             json.dump(glm_results, f, indent=2)
         
-        # Save coefficients with detailed statistics
-        coef_file = self.output_dir / "coefficients.json"
+        logger.info(f"GLM-specific results saved to {glm_file}")
+        
+        # Save coefficients
+        coef_file = self.output_dir / 'coefficients.json'
         with open(coef_file, 'w') as f:
             json.dump(self.coefficients, f, indent=2)
         
-        # Save feature importance
-        if self.feature_importance:
-            importance_file = self.output_dir / "feature_importance.json"
-            with open(importance_file, 'w') as f:
-                json.dump(self.feature_importance, f, indent=2)
-        
-        logger.info(f"GLM-specific results saved to {self.output_dir}")
-
-
-    def _format_latex_value(self, metric_key: str, value: Any) -> str:
-        """
-        Format values for LaTeX output
-        
-        Args:
-            metric_key: Name of the metric
-            value: Value to format
-            
-        Returns:
-            Formatted string for LaTeX
-        """
-        if value is None or (isinstance(value, float) and np.isnan(value)):
-            return "0"
-        
-        # Percentage metrics (0-100 scale)
-        if any(x in metric_key for x in ['mape', 'within_', 'pct']):
-            return f"{float(value):.1f}"
-        
-        # R-squared and correlations (-1 to 1 scale)
-        elif any(x in metric_key for x in ['r2', 'corr']):
-            return f"{float(value):.4f}"
-        
-        # Dollar amounts
-        elif any(x in metric_key for x in ['rmse', 'mae', 'allocation', 'interval']):
-            return f"{float(value):,.0f}"
-        
-        # Counts
-        elif 'samples' in metric_key or metric_key == 'n':
-            return f"{int(value):,}"
-        
-        # Standard deviations and CVs
-        elif any(x in metric_key for x in ['std', 'cv']):
-            return f"{float(value):.4f}"
-        
-        # Default
-        else:
-            if isinstance(value, (int, np.integer)):
-                return f"{int(value):,}"
-            else:
-                return f"{float(value):.4f}"
+        logger.info(f"Coefficients saved to {coef_file}")
 
 
 def main():
@@ -1284,8 +747,8 @@ def main():
     
     # Run complete pipeline
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
-        fiscal_year_end=2024,
+        fiscal_year_start=2023,  # Ignored due to use_fy2024_only=True
+        fiscal_year_end=2024,    # Ignored due to use_fy2024_only=True
         test_size=0.2,
         perform_cv=True,
         n_cv_folds=10
@@ -1310,31 +773,31 @@ def main():
     print(f"  • Outliers Removed: 0 (GLM is robust to outliers)")
     
     print("\nPerformance Metrics:")
-    print(f"  • Training R^2: {results['metrics']['r2_train']:.4f}")
-    print(f"  • Test R^2: {results['metrics']['r2_test']:.4f}")
+    print(f"  • Training R²: {results['metrics']['r2_train']:.4f}")
+    print(f"  • Test R²: {results['metrics']['r2_test']:.4f}")
     print(f"  • RMSE: ${results['metrics']['rmse_test']:,.0f}")
     print(f"  • MAE: ${results['metrics']['mae_test']:,.0f}")
     print(f"  • MAPE: {results['metrics']['mape_test']:.1f}%")
     
     print("\nGLM-Specific Metrics:")
-    print(f"  • Deviance R^2: {model.deviance_r2:.4f}")
-    print(f"  • McFadden R^2: {model.mcfadden_r2:.4f}")
+    print(f"  • Deviance R²: {model.deviance_r2:.4f}")
+    print(f"  • McFadden R²: {model.mcfadden_r2:.4f}")
     print(f"  • AIC: {model.aic:,.0f}")
     print(f"  • BIC: {model.bic:,.0f}")
     print(f"  • Dispersion: {model.dispersion:.4f}")
     
     print("\nPrediction Accuracy:")
-    print(f"  • Within +-$5,000: {results['metrics'].get('within_5k', 0):.1f}%")
-    print(f"  • Within +-$10,000: {results['metrics'].get('within_10k', 0):.1f}%")
-    print(f"  • Within +-$20,000: {results['metrics'].get('within_20k', 0):.1f}%")
+    print(f"  • Within ±$5,000: {results['metrics'].get('within_5k', 0):.1f}%")
+    print(f"  • Within ±$10,000: {results['metrics'].get('within_10k', 0):.1f}%")
+    print(f"  • Within ±$20,000: {results['metrics'].get('within_20k', 0):.1f}%")
     
     print("\nCross-Validation:")
     if 'cv_mean' in results.get('metrics', {}):
-        print(f"  • Mean R^2: {results['metrics']['cv_mean']:.4f}")
-        print(f"  • Std R^2: {results['metrics']['cv_std']:.4f}")
+        print(f"  • Mean R²: {results['metrics']['cv_mean']:.4f}")
+        print(f"  • Std R²: {results['metrics']['cv_std']:.4f}")
     elif 'cv_results' in results:
-        print(f"  • Mean R^2: {results['cv_results'].get('mean_score', 0):.4f}")
-        print(f"  • Std R^2: {results['cv_results'].get('std_score', 0):.4f}")
+        print(f"  • Mean R²: {results['cv_results'].get('mean_score', 0):.4f}")
+        print(f"  • Std R²: {results['cv_results'].get('std_score', 0):.4f}")
     
     print("\nTop 5 Important Features:")
     if model.feature_importance:
