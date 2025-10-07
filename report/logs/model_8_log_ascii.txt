@@ -1,152 +1,99 @@
-2025-10-02 12:39:57 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:39:57 - MODEL 8 - INFO - INITIALIZING MODEL 8: BAYESIAN LINEAR REGRESSION
-2025-10-02 12:39:57 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:39:57 - MODEL 8 - INFO - Log file: models\..\..\report\logs\model_8_log.txt
-2025-10-02 12:39:57 - MODEL 8 - INFO - Output directory: models/model_8
-2025-10-02 12:39:57 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:39:57 - MODEL 8 - INFO - 
-Robust Feature Specification:
-2025-10-02 12:39:57 - MODEL 8 - INFO -   Living Settings: ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
-2025-10-02 12:39:57 - MODEL 8 - INFO -   Age Groups: ['Age21_30', 'Age31Plus']
-2025-10-02 12:39:57 - MODEL 8 - INFO -   QSI Questions: [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
-2025-10-02 12:39:57 - MODEL 8 - INFO -   Summary Scores: ['bsum', 'fsum']
-2025-10-02 12:39:57 - MODEL 8 - INFO -   Total Features: 19
-2025-10-02 12:39:57 - MODEL 8 - INFO - 
-2025-10-02 12:39:57 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:39:57 - MODEL 8 - INFO - STARTING PIPELINE: BAYESIAN LINEAR REGRESSION
-2025-10-02 12:39:57 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:39:57 - MODEL 8 - INFO - 
-2025-10-02 12:39:57 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:39:57 - MODEL 8 - INFO - LOADING DATA: FY2023-2024
-2025-10-02 12:39:57 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:39:57 - MODEL 8 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-02 12:39:58 - MODEL 8 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-02 12:39:58 - MODEL 8 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-02 12:39:59 - MODEL 8 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-02 12:39:59 - MODEL 8 - INFO - Loaded 67265 usable records
-2025-10-02 12:39:59 - MODEL 8 - INFO - Splitting data into train and test sets...
-2025-10-02 12:39:59 - MODEL 8 - INFO - Data split: 53812 training, 13453 test
-2025-10-02 12:39:59 - MODEL 8 - INFO - 
-2025-10-02 12:39:59 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:39:59 - MODEL 8 - INFO - FEATURE PREPARATION
-2025-10-02 12:39:59 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Prepared ROBUST features matrix with shape (53812, 19)
-2025-10-02 12:40:00 - MODEL 8 - INFO - Using 19 robust features validated in Model 5b
-2025-10-02 12:40:00 - MODEL 8 - INFO - Features: 5 living settings + 2 age groups + 10 QSI questions + 2 summary scores
-2025-10-02 12:40:00 - MODEL 8 - INFO - Prepared ROBUST features matrix with shape (13453, 19)
-2025-10-02 12:40:00 - MODEL 8 - INFO - Using 19 robust features validated in Model 5b
-2025-10-02 12:40:00 - MODEL 8 - INFO - Features: 5 living settings + 2 age groups + 10 QSI questions + 2 summary scores
-2025-10-02 12:40:00 - MODEL 8 - INFO - Features prepared: 19 features
-2025-10-02 12:40:00 - MODEL 8 - INFO - Performing 10-fold cross-validation...
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 1: R^2 = 0.2851
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 2: R^2 = 0.2723
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 3: R^2 = 0.2665
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 4: R^2 = 0.2623
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 5: R^2 = 0.2666
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 6: R^2 = 0.2895
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 7: R^2 = 0.2670
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 8: R^2 = 0.2613
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 9: R^2 = 0.2734
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fold 10: R^2 = 0.2745
-2025-10-02 12:40:00 - MODEL 8 - INFO - Cross-validation R^2: 0.2719 +- 0.0088
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - MODEL TRAINING
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Fitting Bayesian Linear Regression with robust features...
-2025-10-02 12:40:00 - MODEL 8 - INFO - Training samples: 53812, Features: 19
-2025-10-02 12:40:00 - MODEL 8 - INFO - Bayesian model fitted with 20 parameters
-2025-10-02 12:40:00 - MODEL 8 - INFO - Alpha (noise precision): 0.0000
-2025-10-02 12:40:00 - MODEL 8 - INFO - Lambda (weights precision): 0.0000
-2025-10-02 12:40:00 - MODEL 8 - INFO - Log marginal likelihood: -643292.40
-2025-10-02 12:40:00 - MODEL 8 - INFO - Model training complete
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - MAKING PREDICTIONS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Predictions complete
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - CALCULATING METRICS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Training R^2: 0.2726
-2025-10-02 12:40:00 - MODEL 8 - INFO - Test R^2: 0.2738
-2025-10-02 12:40:00 - MODEL 8 - INFO - RMSE: $37,466.89
-2025-10-02 12:40:00 - MODEL 8 - INFO - MAE: $28,053.98
-2025-10-02 12:40:00 - MODEL 8 - INFO - MAPE: 88.12%
-2025-10-02 12:40:00 - MODEL 8 - INFO - CV R^2 (mean +- std): 0.2719 +- 0.0088
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - SUBGROUP ANALYSIS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-02 12:40:00 - MODEL 8 - WARNING - R^2 for cost_QTwo was extremely negative, capped at -10
-2025-10-02 12:40:00 - MODEL 8 - INFO - Calculated metrics for 10 subgroups
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - VARIANCE ANALYSIS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Variance metrics calculated
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - POPULATION SCENARIOS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Calculated 5 population scenarios
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - GENERATING OUTPUTS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - LATEX GENERATION
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - LaTeX commands written to:
-2025-10-02 12:40:00 - MODEL 8 - INFO -   - ..\..\report\models\model_8\model_8_newcommands.tex
-2025-10-02 12:40:00 - MODEL 8 - INFO -   - ..\..\report\models\model_8\model_8_renewcommands.tex
-2025-10-02 12:40:00 - MODEL 8 - INFO - LaTeX commands generated in ..\..\report\models\model_8
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - SAVING RESULTS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - Results saved successfully
-2025-10-02 12:40:00 - MODEL 8 - INFO - 
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:00 - MODEL 8 - INFO - GENERATING PLOTS
-2025-10-02 12:40:00 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:01 - MODEL 8 - INFO - Diagnostic plots saved to ..\..\report\models\model_8\diagnostic_plots.png
-2025-10-02 12:40:01 - MODEL 8 - INFO - 
-2025-10-02 12:40:01 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:40:01 - MODEL 8 - INFO - PIPELINE COMPLETE: BAYESIAN LINEAR REGRESSION
-2025-10-02 12:40:01 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:40:01 - MODEL 8 - INFO - 
-2025-10-02 12:40:01 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:01 - MODEL 8 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 12:40:01 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:01 - MODEL 8 - INFO - Training R^2: 0.2726
-2025-10-02 12:40:01 - MODEL 8 - INFO - Test R^2: 0.2738
-2025-10-02 12:40:01 - MODEL 8 - INFO - RMSE: $37,466.89
-2025-10-02 12:40:01 - MODEL 8 - INFO - MAE: $28,053.98
-2025-10-02 12:40:01 - MODEL 8 - INFO - MAPE: 88.12%
-2025-10-02 12:40:01 - MODEL 8 - INFO - CV R^2 (mean +- std): 0.2719 +- 0.0088
-2025-10-02 12:40:01 - MODEL 8 - INFO - ------------------------------------------------------------
-2025-10-02 12:40:01 - MODEL 8 - INFO - 
-2025-10-02 12:40:01 - MODEL 8 - INFO - Generated files:
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - diagnostic_plots.png
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - metrics.json
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - model_8_newcommands.tex
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - model_8_renewcommands.tex
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - predictions.csv
-2025-10-02 12:40:01 - MODEL 8 - INFO -   - subgroup_metrics.json
-2025-10-02 12:40:01 - MODEL 8 - INFO - 
-============================================================
-2025-10-02 12:40:01 - MODEL 8 - INFO - Model 8 pipeline completed successfully!
-2025-10-02 12:40:01 - MODEL 8 - INFO - ============================================================
-2025-10-02 12:40:01 - MODEL 8 - INFO - 
-============================================================
-2025-10-02 12:40:01 - MODEL 8 - INFO - KEY PERFORMANCE METRICS
-2025-10-02 12:40:01 - MODEL 8 - INFO - ============================================================
+2025-10-07 12:28:44 - MODEL 8 - INFO - ============================================================
+2025-10-07 12:28:44 - MODEL 8 - INFO - INITIALIZING MODEL 8: BAYESIAN-REGRESSION
+2025-10-07 12:28:44 - MODEL 8 - INFO - ============================================================
+2025-10-07 12:28:44 - MODEL 8 - INFO - Log file: models\..\..\report\logs\model_8_log.txt
+2025-10-07 12:28:44 - MODEL 8 - INFO - Output directory: models/model_8
+2025-10-07 12:28:44 - MODEL 8 - INFO - ============================================================
+2025-10-07 12:28:44 - MODEL 8 - INFO - Transformation: sqrt
+2025-10-07 12:28:44 - MODEL 8 - INFO - WARNING - REGULATORY STATUS: NON-COMPLIANT
+2025-10-07 12:28:44 - MODEL 8 - INFO - WARNING - FOR RESEARCH PURPOSES ONLY
+2025-10-07 12:28:44 - MODEL 8 - INFO - Model 8 initialized with 20 parameters (19 features + intercept)
+2025-10-07 12:28:44 - MODEL 8 - INFO - Using robust features from Model 5b validation
+2025-10-07 12:28:44 - MODEL 8 - INFO - 
+2025-10-07 12:28:44 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:44 - MODEL 8 - INFO - LOADING DATA: FY2023-2024
+2025-10-07 12:28:44 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:44 - MODEL 8 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-07 12:28:44 - MODEL 8 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-07 12:28:45 - MODEL 8 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-07 12:28:45 - MODEL 8 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-07 12:28:46 - MODEL 8 - INFO - Loaded 67265 usable records
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - DATA SPLIT
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - Training samples: 53812
+2025-10-07 12:28:46 - MODEL 8 - INFO - Test samples: 13453
+2025-10-07 12:28:46 - MODEL 8 - INFO - Split ratio: 20.0%
+2025-10-07 12:28:46 - MODEL 8 - INFO - Prepared 53812 records with 19 robust features
+2025-10-07 12:28:46 - MODEL 8 - INFO - Prepared 13453 records with 19 robust features
+2025-10-07 12:28:46 - MODEL 8 - INFO - Fitting Bayesian Ridge regression model...
+2025-10-07 12:28:46 - MODEL 8 - INFO - Training on sqrt-transformed scale
+2025-10-07 12:28:46 - MODEL 8 - INFO - Bayesian model fitted successfully
+2025-10-07 12:28:46 - MODEL 8 - INFO - Alpha (noise precision): 0.0001
+2025-10-07 12:28:46 - MODEL 8 - INFO - Lambda (weights precision): 0.0022
+2025-10-07 12:28:46 - MODEL 8 - INFO - Effective parameters: 1.0 (vs 20 total)
+2025-10-07 12:28:46 - MODEL 8 - INFO - Log marginal likelihood: -320780.08
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - CALCULATING METRICS
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - Training R^2: 0.2312
+2025-10-07 12:28:46 - MODEL 8 - INFO - Test R^2: 0.2051
+2025-10-07 12:28:46 - MODEL 8 - INFO - RMSE: $38,938.12
+2025-10-07 12:28:46 - MODEL 8 - INFO - MAE: $28,005.99
+2025-10-07 12:28:46 - MODEL 8 - INFO - MAPE: 86.26%
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - Performing 10-fold cross-validation...
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 1/10: R^2 = 0.2218
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 2/10: R^2 = 0.2279
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 3/10: R^2 = 0.2272
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 4/10: R^2 = 0.2345
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 5/10: R^2 = 0.2140
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 6/10: R^2 = 0.2531
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 7/10: R^2 = 0.2211
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 8/10: R^2 = 0.2325
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 9/10: R^2 = 0.2316
+2025-10-07 12:28:46 - MODEL 8 - INFO -   Fold 10/10: R^2 = 0.2424
+2025-10-07 12:28:46 - MODEL 8 - INFO - Cross-validation R^2: 0.2306 +- 0.0106
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - SUBGROUP ANALYSIS
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-07 12:28:46 - MODEL 8 - INFO - Calculated metrics for 10 subgroups
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - VARIANCE ANALYSIS
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - Variance metrics calculated
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - POPULATION SCENARIOS
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - Calculated 5 population scenarios
+2025-10-07 12:28:46 - MODEL 8 - INFO - 
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:46 - MODEL 8 - INFO - GENERATING PLOTS
+2025-10-07 12:28:46 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:47 - MODEL 8 - INFO - Diagnostic plots saved to ..\..\report\models\model_8\diagnostic_plots.png
+2025-10-07 12:28:47 - MODEL 8 - INFO - Generating Bayesian-specific diagnostic plots...
+2025-10-07 12:28:49 - MODEL 8 - INFO - Bayesian diagnostics saved to ..\..\report\models\model_8\bayesian_diagnostic_plots.png
+2025-10-07 12:28:49 - MODEL 8 - INFO - 
+2025-10-07 12:28:49 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:49 - MODEL 8 - INFO - SAVING RESULTS
+2025-10-07 12:28:49 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:49 - MODEL 8 - INFO - Results saved successfully
+2025-10-07 12:28:49 - MODEL 8 - INFO - 
+2025-10-07 12:28:49 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:49 - MODEL 8 - INFO - LATEX GENERATION
+2025-10-07 12:28:49 - MODEL 8 - INFO - ------------------------------------------------------------
+2025-10-07 12:28:49 - MODEL 8 - INFO - LaTeX commands written to:
+2025-10-07 12:28:49 - MODEL 8 - INFO -   - ..\..\report\models\model_8\model_8_newcommands.tex
+2025-10-07 12:28:49 - MODEL 8 - INFO -   - ..\..\report\models\model_8\model_8_renewcommands.tex
+2025-10-07 12:28:49 - MODEL 8 - INFO - Adding Model 8 specific LaTeX commands...
+2025-10-07 12:28:49 - MODEL 8 - INFO - Model 8 specific commands added successfully

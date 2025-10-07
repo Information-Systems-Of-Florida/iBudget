@@ -1,202 +1,202 @@
-2025-10-06 13:29:30 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:30 - MODEL 6 - INFO - INITIALIZING MODEL 6: LOG-NORMAL-GLM
-2025-10-06 13:29:30 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:30 - MODEL 6 - INFO - Log file: models\..\..\report\logs\model_6_log.txt
-2025-10-06 13:29:30 - MODEL 6 - INFO - Output directory: models/model_6
-2025-10-06 13:29:30 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:30 - MODEL 6 - INFO - Transformation mode: log-sqrt
-2025-10-06 13:29:30 - MODEL 6 - INFO - 
-2025-10-06 13:29:30 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:30 - MODEL 6 - INFO - STARTING PIPELINE: LOG-NORMAL-GLM
-2025-10-06 13:29:30 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:30 - MODEL 6 - INFO - 
-2025-10-06 13:29:30 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:30 - MODEL 6 - INFO - LOADING DATA: FY2023-2024
-2025-10-06 13:29:30 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:30 - MODEL 6 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-06 13:29:31 - MODEL 6 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-06 13:29:31 - MODEL 6 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-06 13:29:32 - MODEL 6 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-06 13:29:32 - MODEL 6 - INFO - Loaded 67265 usable records
-2025-10-06 13:29:32 - MODEL 6 - INFO - Data split: 53812 training, 13453 test
-2025-10-06 13:29:32 - MODEL 6 - INFO - 
-2025-10-06 13:29:32 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:32 - MODEL 6 - INFO - FEATURE PREPARATION
-2025-10-06 13:29:32 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:33 - MODEL 6 - INFO - Prepared feature structure with 22 features
-2025-10-06 13:29:33 - MODEL 6 - INFO - Features prepared: 22 features
-2025-10-06 13:29:33 - MODEL 6 - INFO - 
-2025-10-06 13:29:33 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:33 - MODEL 6 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-06 13:29:33 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:33 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:33 - MODEL 6 - INFO -   R² (log scale): 0.2446
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Sigma (log): 0.7126
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Smearing factor: 1.2416
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Skewness reduction: 148.1%
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Fold 1: R^2 = 0.0874
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:33 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:33 - MODEL 6 - INFO -   R² (log scale): 0.2430
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Sigma (log): 0.7124
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Smearing factor: 1.2413
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Skewness reduction: 148.1%
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Fold 2: R^2 = 0.1220
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:33 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:33 - MODEL 6 - INFO -   R² (log scale): 0.2447
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Sigma (log): 0.7113
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Smearing factor: 1.2409
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Skewness reduction: 148.4%
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Fold 3: R^2 = 0.0784
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:33 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:33 - MODEL 6 - INFO -   R² (log scale): 0.2438
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Sigma (log): 0.7129
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Smearing factor: 1.2422
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Skewness reduction: 147.5%
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Fold 4: R^2 = 0.1120
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:33 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:33 - MODEL 6 - INFO -   R² (log scale): 0.2446
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Sigma (log): 0.7121
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Smearing factor: 1.2410
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Skewness reduction: 148.3%
-2025-10-06 13:29:33 - MODEL 6 - INFO -   Fold 5: R^2 = 0.1013
-2025-10-06 13:29:33 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2442
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7111
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2403
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 149.2%
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Fold 6: R^2 = 0.1133
-2025-10-06 13:29:34 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2417
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7137
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2422
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 148.6%
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Fold 7: R^2 = 0.1543
-2025-10-06 13:29:34 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2434
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7135
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2422
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 147.8%
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Fold 8: R^2 = 0.1344
-2025-10-06 13:29:34 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2441
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7122
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2415
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 147.7%
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Fold 9: R^2 = 0.1184
-2025-10-06 13:29:34 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2451
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7122
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2412
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 148.1%
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Fold 10: R^2 = 0.1287
-2025-10-06 13:29:34 - MODEL 6 - INFO - Mean R^2: 0.1150
-2025-10-06 13:29:34 - MODEL 6 - INFO - Std R^2: 0.0211
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - MODEL TRAINING
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model fitted successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO -   R² (log scale): 0.2439
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Sigma (log): 0.7124
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Smearing factor: 1.2415
-2025-10-06 13:29:34 - MODEL 6 - INFO -   Skewness reduction: 148.2%
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model training complete
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - MAKING PREDICTIONS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Predictions complete
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - CALCULATING METRICS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Training R^2: 0.1161
-2025-10-06 13:29:34 - MODEL 6 - INFO - Test R^2: 0.0806
-2025-10-06 13:29:34 - MODEL 6 - INFO - RMSE: $41,875.10
-2025-10-06 13:29:34 - MODEL 6 - INFO - MAE: $29,144.63
-2025-10-06 13:29:34 - MODEL 6 - INFO - MAPE: 88.78%
-2025-10-06 13:29:34 - MODEL 6 - INFO - CV R^2 (mean +- std): 0.1150 +- 0.0211
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - SUBGROUP ANALYSIS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-06 13:29:34 - MODEL 6 - INFO - Calculated metrics for 10 subgroups
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - VARIANCE ANALYSIS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Variance metrics calculated
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - POPULATION SCENARIOS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Calculated 5 population scenarios
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - GENERATING OUTPUTS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - LATEX GENERATION
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - LaTeX commands written to:
-2025-10-06 13:29:34 - MODEL 6 - INFO -   - ..\..\report\models\model_6\model_6_newcommands.tex
-2025-10-06 13:29:34 - MODEL 6 - INFO -   - ..\..\report\models\model_6\model_6_renewcommands.tex
-2025-10-06 13:29:34 - MODEL 6 - INFO - Adding Model 6 specific LaTeX commands...
-2025-10-06 13:29:34 - MODEL 6 - INFO - Model 6 specific commands added successfully
-2025-10-06 13:29:34 - MODEL 6 - INFO - 
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - SAVING RESULTS
-2025-10-06 13:29:34 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:34 - MODEL 6 - INFO - Results saved successfully
-2025-10-06 13:29:35 - MODEL 6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
-2025-10-06 13:29:35 - MODEL 6 - INFO - 
-2025-10-06 13:29:35 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:35 - MODEL 6 - INFO - PIPELINE COMPLETE: LOG-NORMAL-GLM
-2025-10-06 13:29:35 - MODEL 6 - INFO - ============================================================
-2025-10-06 13:29:35 - MODEL 6 - INFO - 
-2025-10-06 13:29:35 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:35 - MODEL 6 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-06 13:29:35 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:35 - MODEL 6 - INFO - Training R^2: 0.1161
-2025-10-06 13:29:35 - MODEL 6 - INFO - Test R^2: 0.0806
-2025-10-06 13:29:35 - MODEL 6 - INFO - RMSE: $41,875.10
-2025-10-06 13:29:35 - MODEL 6 - INFO - MAE: $29,144.63
-2025-10-06 13:29:35 - MODEL 6 - INFO - MAPE: 88.78%
-2025-10-06 13:29:35 - MODEL 6 - INFO - CV R^2 (mean +- std): 0.1150 +- 0.0211
-2025-10-06 13:29:35 - MODEL 6 - INFO - ------------------------------------------------------------
-2025-10-06 13:29:35 - MODEL 6 - INFO - 
-2025-10-06 13:29:35 - MODEL 6 - INFO - Generated files:
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - coefficients.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - diagnostic_plots.png
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - features.txt
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - metrics.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - model_6_newcommands.tex
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - model_6_renewcommands.tex
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - model_comparison.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - model_summary.txt
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - multiplicative_effects.png
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - multiplicative_effects.txt
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - population_scenarios.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - predictions.csv
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - predictions.npz
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - significant_coefficients.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - subgroup_metrics.json
-2025-10-06 13:29:35 - MODEL 6 - INFO -   - variance_metrics.json
+2025-10-06 16:16:11 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:11 - MODEL 6 - INFO - INITIALIZING MODEL 6: LOG-NORMAL-GLM
+2025-10-06 16:16:11 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:11 - MODEL 6 - INFO - Log file: models\..\..\report\logs\model_6_log.txt
+2025-10-06 16:16:11 - MODEL 6 - INFO - Output directory: models/model_6
+2025-10-06 16:16:11 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:11 - MODEL 6 - INFO - Transformation mode: log-sqrt
+2025-10-06 16:16:11 - MODEL 6 - INFO - 
+2025-10-06 16:16:11 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:11 - MODEL 6 - INFO - STARTING PIPELINE: LOG-NORMAL-GLM
+2025-10-06 16:16:11 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:11 - MODEL 6 - INFO - 
+2025-10-06 16:16:11 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:11 - MODEL 6 - INFO - LOADING DATA: FY2023-2024
+2025-10-06 16:16:11 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:11 - MODEL 6 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-06 16:16:12 - MODEL 6 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-06 16:16:12 - MODEL 6 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-06 16:16:13 - MODEL 6 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-06 16:16:13 - MODEL 6 - INFO - Loaded 67265 usable records
+2025-10-06 16:16:14 - MODEL 6 - INFO - Data split: 53812 training, 13453 test
+2025-10-06 16:16:14 - MODEL 6 - INFO - 
+2025-10-06 16:16:14 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:14 - MODEL 6 - INFO - FEATURE PREPARATION
+2025-10-06 16:16:14 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:14 - MODEL 6 - INFO - Prepared feature structure with 22 features
+2025-10-06 16:16:14 - MODEL 6 - INFO - Features prepared: 22 features
+2025-10-06 16:16:14 - MODEL 6 - INFO - 
+2025-10-06 16:16:14 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:14 - MODEL 6 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-06 16:16:14 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:14 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:14 - MODEL 6 - INFO -   R² (log scale): 0.2446
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Sigma (log): 0.7126
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Smearing factor: 1.2416
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Skewness reduction: 148.1%
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Fold 1: R^2 = 0.0874
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:14 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:14 - MODEL 6 - INFO -   R² (log scale): 0.2430
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Sigma (log): 0.7124
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Smearing factor: 1.2413
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Skewness reduction: 148.1%
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Fold 2: R^2 = 0.1220
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:14 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:14 - MODEL 6 - INFO -   R² (log scale): 0.2447
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Sigma (log): 0.7113
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Smearing factor: 1.2409
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Skewness reduction: 148.4%
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Fold 3: R^2 = 0.0784
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:14 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:14 - MODEL 6 - INFO -   R² (log scale): 0.2438
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Sigma (log): 0.7129
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Smearing factor: 1.2422
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Skewness reduction: 147.5%
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Fold 4: R^2 = 0.1120
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:14 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:14 - MODEL 6 - INFO -   R² (log scale): 0.2446
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Sigma (log): 0.7121
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Smearing factor: 1.2410
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Skewness reduction: 148.3%
+2025-10-06 16:16:14 - MODEL 6 - INFO -   Fold 5: R^2 = 0.1013
+2025-10-06 16:16:14 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2442
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7111
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2403
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 149.2%
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Fold 6: R^2 = 0.1133
+2025-10-06 16:16:15 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2417
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7137
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2422
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 148.6%
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Fold 7: R^2 = 0.1543
+2025-10-06 16:16:15 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2434
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7135
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2422
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 147.8%
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Fold 8: R^2 = 0.1344
+2025-10-06 16:16:15 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2441
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7122
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2415
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 147.7%
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Fold 9: R^2 = 0.1184
+2025-10-06 16:16:15 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2451
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7122
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2412
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 148.1%
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Fold 10: R^2 = 0.1287
+2025-10-06 16:16:15 - MODEL 6 - INFO - Mean R^2: 0.1150
+2025-10-06 16:16:15 - MODEL 6 - INFO - Std R^2: 0.0211
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - MODEL TRAINING
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Fitting Log-Normal GLM with log-sqrt transformation...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model fitted successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO -   R² (log scale): 0.2439
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Sigma (log): 0.7124
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Smearing factor: 1.2415
+2025-10-06 16:16:15 - MODEL 6 - INFO -   Skewness reduction: 148.2%
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model training complete
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - MAKING PREDICTIONS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Predictions complete
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - CALCULATING METRICS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Training R^2: 0.1161
+2025-10-06 16:16:15 - MODEL 6 - INFO - Test R^2: 0.0806
+2025-10-06 16:16:15 - MODEL 6 - INFO - RMSE: $41,875.10
+2025-10-06 16:16:15 - MODEL 6 - INFO - MAE: $29,144.63
+2025-10-06 16:16:15 - MODEL 6 - INFO - MAPE: 88.78%
+2025-10-06 16:16:15 - MODEL 6 - INFO - CV R^2 (mean +- std): 0.1150 +- 0.0211
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - SUBGROUP ANALYSIS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-06 16:16:15 - MODEL 6 - INFO - Calculated metrics for 10 subgroups
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - VARIANCE ANALYSIS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Variance metrics calculated
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - POPULATION SCENARIOS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Calculated 5 population scenarios
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - GENERATING OUTPUTS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - LATEX GENERATION
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - LaTeX commands written to:
+2025-10-06 16:16:15 - MODEL 6 - INFO -   - ..\..\report\models\model_6\model_6_newcommands.tex
+2025-10-06 16:16:15 - MODEL 6 - INFO -   - ..\..\report\models\model_6\model_6_renewcommands.tex
+2025-10-06 16:16:15 - MODEL 6 - INFO - Adding Model 6 specific LaTeX commands...
+2025-10-06 16:16:15 - MODEL 6 - INFO - Model 6 specific commands added successfully
+2025-10-06 16:16:15 - MODEL 6 - INFO - 
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - SAVING RESULTS
+2025-10-06 16:16:15 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:15 - MODEL 6 - INFO - Results saved successfully
+2025-10-06 16:16:16 - MODEL 6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
+2025-10-06 16:16:16 - MODEL 6 - INFO - 
+2025-10-06 16:16:16 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:16 - MODEL 6 - INFO - PIPELINE COMPLETE: LOG-NORMAL-GLM
+2025-10-06 16:16:16 - MODEL 6 - INFO - ============================================================
+2025-10-06 16:16:16 - MODEL 6 - INFO - 
+2025-10-06 16:16:16 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:16 - MODEL 6 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-06 16:16:16 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:16 - MODEL 6 - INFO - Training R^2: 0.1161
+2025-10-06 16:16:16 - MODEL 6 - INFO - Test R^2: 0.0806
+2025-10-06 16:16:16 - MODEL 6 - INFO - RMSE: $41,875.10
+2025-10-06 16:16:16 - MODEL 6 - INFO - MAE: $29,144.63
+2025-10-06 16:16:16 - MODEL 6 - INFO - MAPE: 88.78%
+2025-10-06 16:16:16 - MODEL 6 - INFO - CV R^2 (mean +- std): 0.1150 +- 0.0211
+2025-10-06 16:16:16 - MODEL 6 - INFO - ------------------------------------------------------------
+2025-10-06 16:16:16 - MODEL 6 - INFO - 
+2025-10-06 16:16:16 - MODEL 6 - INFO - Generated files:
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - coefficients.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - diagnostic_plots.png
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - features.txt
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - metrics.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - model_6_newcommands.tex
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - model_6_renewcommands.tex
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - model_comparison.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - model_summary.txt
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - multiplicative_effects.png
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - multiplicative_effects.txt
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - population_scenarios.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - predictions.csv
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - predictions.npz
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - significant_coefficients.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - subgroup_metrics.json
+2025-10-06 16:16:16 - MODEL 6 - INFO -   - variance_metrics.json

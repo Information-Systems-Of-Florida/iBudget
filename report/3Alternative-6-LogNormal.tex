@@ -176,7 +176,7 @@ MAE & \$\ModelSixMAETrain{} & \$\ModelSixMAETest{} \\
 MAPE & \ModelSixMAPETrain{}\% & \ModelSixMAPETest{}\% \\
 Sample Size & \ModelSixTrainingSamples{} & \ModelSixTestSamples{} \\
 \midrule
-Features & \multicolumn{2}{c}{\ModelSixNumFeatures{}} \\
+%Features & \multicolumn{2}{c}{\ModelSixNumFeatures{}} \\
 Data Utilized & \multicolumn{2}{c}{100\% (no outlier removal)} \\
 \bottomrule
 \end{tabular}
@@ -359,7 +359,7 @@ Population Max & \ModelSixPoppopulationmaximizedClients{} & \$\ModelSixPoppopula
 
 \subsubsection{Missing Data Sensitivity}
 \begin{itemize}
-    \item \textbf{Feature Selection}: Uses only \ModelSixNumFeatures{} features with high data completeness
+    %\item \textbf{Feature Selection}: Uses only \ModelSixNumFeatures{} features with high data completeness
     \item \textbf{Imputation Strategy}: QSI missing values imputed to zero (no support need)
     \item \textbf{Diagnostic Indicators}: Three binary flags capture primary diagnostic categories
     \item \textbf{Robust to Missingness}: Log-scale modeling less sensitive to missing value imputation choices
@@ -619,7 +619,7 @@ RMSE & [Model 5b value] & \$\ModelSixRMSETest{} \\
 Outlier Removal & 9.4\% removed & 0\% (none removed) \\
 Transformation & Square-root & \ModelSixTransformation{} \\
 Bias Correction & None & Smearing factor \\
-Features & [Model 5b count] & \ModelSixNumFeatures{} \\
+%Features & [Model 5b count] & \ModelSixNumFeatures{} \\
 Interpretation & Additive (on sqrt) & Multiplicative \\
 Regulatory Risk & Low & Very low (100\% data) \\
 \bottomrule

@@ -1,249 +1,160 @@
-2025-10-02 13:03:58 - MODEL 10 - INFO - ============================================================
-2025-10-02 13:03:58 - MODEL 10 - INFO - INITIALIZING MODEL 10: DEEP LEARNING NEURAL NETWORK (ROBUST FEATURES)
-2025-10-02 13:03:58 - MODEL 10 - INFO - ============================================================
-2025-10-02 13:03:58 - MODEL 10 - INFO - Log file: models\..\..\report\logs\model_10_log.txt
-2025-10-02 13:03:58 - MODEL 10 - INFO - Output directory: models/model_10
-2025-10-02 13:03:58 - MODEL 10 - INFO - ============================================================
-2025-10-02 13:03:58 - MODEL 10 - INFO - ================================================================================
-2025-10-02 13:03:58 - MODEL 10 - INFO - Model 10: Deep Learning Neural Network (ROBUST FEATURES)
-2025-10-02 13:03:58 - MODEL 10 - INFO - Using 13 robust features from FeatureSelection.txt
-2025-10-02 13:03:58 - MODEL 10 - INFO - Features selected based on consistency across 6 fiscal years
-2025-10-02 13:03:58 - MODEL 10 - INFO - WARNING: Black box model - FOR RESEARCH ONLY
-2025-10-02 13:03:58 - MODEL 10 - INFO - ================================================================================
-2025-10-02 13:03:58 - MODEL 10 - INFO - Starting complete pipeline for Model 10: Deep Learning Neural Network (Robust Features)
-2025-10-02 13:03:58 - MODEL 10 - INFO - Loading data...
-2025-10-02 13:03:58 - MODEL 10 - INFO - 
-2025-10-02 13:03:58 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:03:58 - MODEL 10 - INFO - LOADING DATA: FY2023-2024
-2025-10-02 13:03:58 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:03:58 - MODEL 10 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-02 13:03:58 - MODEL 10 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-02 13:03:59 - MODEL 10 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-02 13:03:59 - MODEL 10 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-02 13:04:00 - MODEL 10 - INFO - Loaded 67265 usable records
-2025-10-02 13:04:00 - MODEL 10 - INFO - Loaded 67265 usable records
-2025-10-02 13:04:00 - MODEL 10 - INFO - Splitting data...
-2025-10-02 13:04:00 - MODEL 10 - INFO - 
-2025-10-02 13:04:00 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:04:00 - MODEL 10 - INFO - DATA SPLIT
-2025-10-02 13:04:00 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:04:00 - MODEL 10 - INFO - Training samples: 53812
-2025-10-02 13:04:00 - MODEL 10 - INFO - Test samples: 13453
-2025-10-02 13:04:00 - MODEL 10 - INFO - Split ratio: 20.0%
-2025-10-02 13:04:00 - MODEL 10 - INFO - Preparing ROBUST features...
-2025-10-02 13:04:00 - MODEL 10 - INFO - Using 15 ROBUST features (down from 22)
-2025-10-02 13:04:00 - MODEL 10 - INFO - Features: LiveILSL, LiveRH1, LiveRH2, LiveRH3, LiveRH4, BSum, BLEVEL, LOSRI, OLEVEL, FSum, FLEVEL, Q26, Q36, Q20, Q27
-2025-10-02 13:04:00 - MODEL 10 - INFO - Network parameters: 1,121 (reduced from 4,049)
-2025-10-02 13:04:00 - MODEL 10 - INFO - Prepared 15 features for 53812 records
-2025-10-02 13:04:00 - MODEL 10 - INFO - Network parameters: 1,121 (reduced from 4,049)
-2025-10-02 13:04:00 - MODEL 10 - INFO - Prepared 15 features for 13453 records
-2025-10-02 13:04:00 - MODEL 10 - INFO - Training set: (53812, 15)
-2025-10-02 13:04:00 - MODEL 10 - INFO - Test set: (13453, 15)
-2025-10-02 13:04:00 - MODEL 10 - INFO - Performing cross-validation...
-2025-10-02 13:04:00 - MODEL 10 - INFO - 
-2025-10-02 13:04:00 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:04:00 - MODEL 10 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-02 13:04:00 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:04:00 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:04:00 - MODEL 10 - INFO - Training samples: 48430, Features: 15
-2025-10-02 13:04:10 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:04:12 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:04:12 - MODEL 10 - INFO -   BSum: 1348.3720
-2025-10-02 13:04:12 - MODEL 10 - INFO -   Q36: 1168.5869
-2025-10-02 13:04:12 - MODEL 10 - INFO -   FSum: 1102.7921
-2025-10-02 13:04:12 - MODEL 10 - INFO -   LOSRI: 1017.7579
-2025-10-02 13:04:12 - MODEL 10 - INFO -   Q27: 456.9166
-2025-10-02 13:04:12 - MODEL 10 - INFO - Neural network trained for 132 epochs
-2025-10-02 13:04:12 - MODEL 10 - INFO - Early stopping triggered at epoch 132
-2025-10-02 13:04:12 - MODEL 10 - INFO - Final loss: 4747.9906
-2025-10-02 13:04:12 - MODEL 10 - INFO -   Fold 1: R^2 = 0.1906
-2025-10-02 13:04:12 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:04:12 - MODEL 10 - INFO - Training samples: 48430, Features: 15
-2025-10-02 13:04:21 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:04:23 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:04:23 - MODEL 10 - INFO -   BSum: 1465.8399
-2025-10-02 13:04:23 - MODEL 10 - INFO -   Q36: 1348.9549
-2025-10-02 13:04:23 - MODEL 10 - INFO -   FSum: 1045.5302
-2025-10-02 13:04:23 - MODEL 10 - INFO -   LOSRI: 911.0673
-2025-10-02 13:04:23 - MODEL 10 - INFO -   LiveILSL: 473.7240
-2025-10-02 13:04:23 - MODEL 10 - INFO - Neural network trained for 116 epochs
-2025-10-02 13:04:23 - MODEL 10 - INFO - Early stopping triggered at epoch 116
-2025-10-02 13:04:23 - MODEL 10 - INFO - Final loss: 4752.7176
-2025-10-02 13:04:23 - MODEL 10 - INFO -   Fold 2: R^2 = 0.2076
-2025-10-02 13:04:23 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:04:23 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:04:29 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:04:31 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:04:31 - MODEL 10 - INFO -   BSum: 1591.0218
-2025-10-02 13:04:31 - MODEL 10 - INFO -   Q36: 1214.5493
-2025-10-02 13:04:31 - MODEL 10 - INFO -   FSum: 1009.1068
-2025-10-02 13:04:31 - MODEL 10 - INFO -   LOSRI: 838.8871
-2025-10-02 13:04:31 - MODEL 10 - INFO -   Q20: 488.7725
-2025-10-02 13:04:31 - MODEL 10 - INFO - Neural network trained for 92 epochs
-2025-10-02 13:04:31 - MODEL 10 - INFO - Early stopping triggered at epoch 92
-2025-10-02 13:04:31 - MODEL 10 - INFO - Final loss: 4756.8030
-2025-10-02 13:04:31 - MODEL 10 - INFO -   Fold 3: R^2 = 0.2096
-2025-10-02 13:04:31 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:04:31 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:04:50 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:04:53 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:04:53 - MODEL 10 - INFO -   FSum: 1952.1283
-2025-10-02 13:04:53 - MODEL 10 - INFO -   BSum: 1666.6551
-2025-10-02 13:04:53 - MODEL 10 - INFO -   Q36: 1349.4237
-2025-10-02 13:04:53 - MODEL 10 - INFO -   LOSRI: 1300.5690
-2025-10-02 13:04:53 - MODEL 10 - INFO -   Q26: 527.3794
-2025-10-02 13:04:53 - MODEL 10 - INFO - Neural network trained for 227 epochs
-2025-10-02 13:04:53 - MODEL 10 - INFO - Early stopping triggered at epoch 227
-2025-10-02 13:04:53 - MODEL 10 - INFO - Final loss: 4707.1246
-2025-10-02 13:04:53 - MODEL 10 - INFO -   Fold 4: R^2 = 0.2107
-2025-10-02 13:04:53 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:04:53 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:01 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:03 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:03 - MODEL 10 - INFO -   BSum: 1451.0702
-2025-10-02 13:05:03 - MODEL 10 - INFO -   Q36: 1287.8513
-2025-10-02 13:05:03 - MODEL 10 - INFO -   FSum: 1226.5035
-2025-10-02 13:05:03 - MODEL 10 - INFO -   LOSRI: 992.3803
-2025-10-02 13:05:03 - MODEL 10 - INFO -   LiveILSL: 448.4191
-2025-10-02 13:05:03 - MODEL 10 - INFO - Neural network trained for 118 epochs
-2025-10-02 13:05:03 - MODEL 10 - INFO - Early stopping triggered at epoch 118
-2025-10-02 13:05:03 - MODEL 10 - INFO - Final loss: 4740.8351
-2025-10-02 13:05:03 - MODEL 10 - INFO -   Fold 5: R^2 = 0.2081
-2025-10-02 13:05:03 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:03 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:11 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:13 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:13 - MODEL 10 - INFO -   BSum: 1550.7603
-2025-10-02 13:05:13 - MODEL 10 - INFO -   FSum: 1211.2019
-2025-10-02 13:05:13 - MODEL 10 - INFO -   Q36: 1132.5351
-2025-10-02 13:05:13 - MODEL 10 - INFO -   LOSRI: 883.4439
-2025-10-02 13:05:13 - MODEL 10 - INFO -   Q20: 464.2552
-2025-10-02 13:05:13 - MODEL 10 - INFO - Neural network trained for 106 epochs
-2025-10-02 13:05:13 - MODEL 10 - INFO - Early stopping triggered at epoch 106
-2025-10-02 13:05:13 - MODEL 10 - INFO - Final loss: 4763.4311
-2025-10-02 13:05:13 - MODEL 10 - INFO -   Fold 6: R^2 = 0.2155
-2025-10-02 13:05:13 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:13 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:20 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:22 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:22 - MODEL 10 - INFO -   BSum: 1363.9606
-2025-10-02 13:05:22 - MODEL 10 - INFO -   Q36: 1275.4283
-2025-10-02 13:05:22 - MODEL 10 - INFO -   FSum: 1184.1627
-2025-10-02 13:05:22 - MODEL 10 - INFO -   LOSRI: 940.3442
-2025-10-02 13:05:22 - MODEL 10 - INFO -   Q27: 529.8338
-2025-10-02 13:05:22 - MODEL 10 - INFO - Neural network trained for 99 epochs
-2025-10-02 13:05:22 - MODEL 10 - INFO - Early stopping triggered at epoch 99
-2025-10-02 13:05:22 - MODEL 10 - INFO - Final loss: 4741.9871
-2025-10-02 13:05:22 - MODEL 10 - INFO -   Fold 7: R^2 = 0.2202
-2025-10-02 13:05:22 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:22 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:31 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:33 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:33 - MODEL 10 - INFO -   BSum: 1526.0169
-2025-10-02 13:05:33 - MODEL 10 - INFO -   Q36: 1343.7952
-2025-10-02 13:05:33 - MODEL 10 - INFO -   FSum: 938.8038
-2025-10-02 13:05:33 - MODEL 10 - INFO -   LOSRI: 734.3134
-2025-10-02 13:05:33 - MODEL 10 - INFO -   Q20: 519.1769
-2025-10-02 13:05:33 - MODEL 10 - INFO - Neural network trained for 120 epochs
-2025-10-02 13:05:33 - MODEL 10 - INFO - Early stopping triggered at epoch 120
-2025-10-02 13:05:33 - MODEL 10 - INFO - Final loss: 4745.2472
-2025-10-02 13:05:33 - MODEL 10 - INFO -   Fold 8: R^2 = 0.2192
-2025-10-02 13:05:33 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:33 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:40 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:42 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:42 - MODEL 10 - INFO -   BSum: 1255.6069
-2025-10-02 13:05:42 - MODEL 10 - INFO -   Q36: 1121.7194
-2025-10-02 13:05:42 - MODEL 10 - INFO -   FSum: 1103.4180
-2025-10-02 13:05:42 - MODEL 10 - INFO -   LOSRI: 795.7916
-2025-10-02 13:05:42 - MODEL 10 - INFO -   Q20: 499.8194
-2025-10-02 13:05:42 - MODEL 10 - INFO - Neural network trained for 101 epochs
-2025-10-02 13:05:42 - MODEL 10 - INFO - Early stopping triggered at epoch 101
-2025-10-02 13:05:42 - MODEL 10 - INFO - Final loss: 4785.4188
-2025-10-02 13:05:42 - MODEL 10 - INFO -   Fold 9: R^2 = 0.2215
-2025-10-02 13:05:42 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:42 - MODEL 10 - INFO - Training samples: 48431, Features: 15
-2025-10-02 13:05:54 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:05:57 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:05:57 - MODEL 10 - INFO -   BSum: 1384.0201
-2025-10-02 13:05:57 - MODEL 10 - INFO -   Q36: 1155.7507
-2025-10-02 13:05:57 - MODEL 10 - INFO -   FSum: 1081.8410
-2025-10-02 13:05:57 - MODEL 10 - INFO -   LOSRI: 711.5247
-2025-10-02 13:05:57 - MODEL 10 - INFO -   Q27: 439.7739
-2025-10-02 13:05:57 - MODEL 10 - INFO - Neural network trained for 171 epochs
-2025-10-02 13:05:57 - MODEL 10 - INFO - Early stopping triggered at epoch 171
-2025-10-02 13:05:57 - MODEL 10 - INFO - Final loss: 4739.0016
-2025-10-02 13:05:57 - MODEL 10 - INFO -   Fold 10: R^2 = 0.2015
-2025-10-02 13:05:57 - MODEL 10 - INFO - Mean R^2: 0.2105
-2025-10-02 13:05:57 - MODEL 10 - INFO - Std R^2: 0.0090
-2025-10-02 13:05:57 - MODEL 10 - INFO - CV R^2 mean: 0.2105 (+-0.0090)
-2025-10-02 13:05:57 - MODEL 10 - INFO - Training neural network...
-2025-10-02 13:05:57 - MODEL 10 - INFO - Fitting Deep Learning Neural Network (Robust Features)...
-2025-10-02 13:05:57 - MODEL 10 - INFO - Training samples: 53812, Features: 15
-2025-10-02 13:06:06 - MODEL 10 - INFO - Calculating feature importance...
-2025-10-02 13:06:09 - MODEL 10 - INFO - Top 5 features by importance:
-2025-10-02 13:06:09 - MODEL 10 - INFO -   BSum: 1347.1313
-2025-10-02 13:06:09 - MODEL 10 - INFO -   Q36: 1345.9526
-2025-10-02 13:06:09 - MODEL 10 - INFO -   LOSRI: 1174.6829
-2025-10-02 13:06:09 - MODEL 10 - INFO -   FSum: 980.1409
-2025-10-02 13:06:09 - MODEL 10 - INFO -   Q20: 475.4462
-2025-10-02 13:06:09 - MODEL 10 - INFO - Neural network trained for 120 epochs
-2025-10-02 13:06:09 - MODEL 10 - INFO - Early stopping triggered at epoch 120
-2025-10-02 13:06:09 - MODEL 10 - INFO - Final loss: 4741.1395
-2025-10-02 13:06:09 - MODEL 10 - INFO - Making predictions...
-2025-10-02 13:06:09 - MODEL 10 - INFO - Calculating metrics...
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - CALCULATING METRICS
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - Training R^2: 0.2160
-2025-10-02 13:06:09 - MODEL 10 - INFO - Test R^2: 0.2116
-2025-10-02 13:06:09 - MODEL 10 - INFO - RMSE: $97.25
-2025-10-02 13:06:09 - MODEL 10 - INFO - MAE: $80.54
-2025-10-02 13:06:09 - MODEL 10 - INFO - MAPE: 0.00%
-2025-10-02 13:06:09 - MODEL 10 - INFO - CV R^2 (mean +- std): 0.2105 +- 0.0090
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - Performing additional analyses...
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - SUBGROUP ANALYSIS
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-02 13:06:09 - MODEL 10 - INFO - Calculated metrics for 10 subgroups
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - VARIANCE ANALYSIS
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - Variance metrics calculated
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - POPULATION SCENARIOS
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - Calculated 5 population scenarios
-2025-10-02 13:06:09 - MODEL 10 - INFO - Generating outputs...
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - SAVING RESULTS
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - Results saved successfully
-2025-10-02 13:06:09 - MODEL 10 - INFO - Diagnostic plots saved to ..\..\report\models\model_10\diagnostic_plots.png
-2025-10-02 13:06:09 - MODEL 10 - INFO - 
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - LATEX GENERATION
-2025-10-02 13:06:09 - MODEL 10 - INFO - ------------------------------------------------------------
-2025-10-02 13:06:09 - MODEL 10 - INFO - LaTeX commands written to:
-2025-10-02 13:06:09 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_newcommands.tex
-2025-10-02 13:06:09 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_renewcommands.tex
-2025-10-02 13:06:09 - MODEL 10 - INFO - Generated LaTeX commands with robust feature documentation
-2025-10-02 13:06:09 - MODEL 10 - WARNING - ================================================================================
-2025-10-02 13:06:09 - MODEL 10 - WARNING - CRITICAL REGULATORY WARNING:
-2025-10-02 13:06:09 - MODEL 10 - WARNING - This neural network model violates HB 1103's explainability requirement.
-2025-10-02 13:06:09 - MODEL 10 - WARNING - Even with robust feature selection (13 features), it remains a black box.
-2025-10-02 13:06:09 - MODEL 10 - WARNING - It is a complete black box and CANNOT be deployed in production.
-2025-10-02 13:06:09 - MODEL 10 - WARNING - Use for research/comparison purposes only!
-2025-10-02 13:06:09 - MODEL 10 - WARNING - ================================================================================
-2025-10-02 13:06:09 - MODEL 10 - INFO - Pipeline complete. Results saved to ..\..\report\models\model_10
+2025-10-07 11:36:29 - MODEL 10 - INFO - ============================================================
+2025-10-07 11:36:29 - MODEL 10 - INFO - INITIALIZING MODEL 10: DEEP LEARNING NEURAL NETWORK (ROBUST FEATURES)
+2025-10-07 11:36:29 - MODEL 10 - INFO - ============================================================
+2025-10-07 11:36:29 - MODEL 10 - INFO - Log file: models\..\..\report\logs\model_10_log.txt
+2025-10-07 11:36:29 - MODEL 10 - INFO - Output directory: models/model_10
+2025-10-07 11:36:29 - MODEL 10 - INFO - ============================================================
+2025-10-07 11:36:29 - MODEL 10 - INFO - Transformation: none
+2025-10-07 11:36:29 - MODEL 10 - INFO - ================================================================================
+2025-10-07 11:36:29 - MODEL 10 - INFO - Model 10: Deep Learning Neural Network (ROBUST FEATURES)
+2025-10-07 11:36:29 - MODEL 10 - INFO - Using 13 robust features from FeatureSelection.txt
+2025-10-07 11:36:29 - MODEL 10 - INFO - Feature breakdown: Living(5) + Behavioral(2) + Service(2) + Functional(2) + QSI(2) = 13
+2025-10-07 11:36:29 - MODEL 10 - INFO - Feature reduction: 40.9%
+2025-10-07 11:36:29 - MODEL 10 - INFO - Selection criteria: Consistency across 6 fiscal years (2020-2025)
+2025-10-07 11:36:29 - MODEL 10 - INFO - WARNING: Black box model - FOR RESEARCH ONLY
+2025-10-07 11:36:29 - MODEL 10 - INFO - Deployment NOT recommended due to HB 1103 explainability requirements
+2025-10-07 11:36:29 - MODEL 10 - INFO - ================================================================================
+2025-10-07 11:36:29 - MODEL 10 - INFO - Starting complete pipeline for Model 10: Deep Learning Neural Network (Robust Features)
+2025-10-07 11:36:29 - MODEL 10 - INFO - Transformation mode: none
+2025-10-07 11:36:29 - MODEL 10 - INFO - Loading data from pickle files...
+2025-10-07 11:36:29 - MODEL 10 - INFO - 
+2025-10-07 11:36:29 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:36:29 - MODEL 10 - INFO - LOADING DATA: FY2023-2024
+2025-10-07 11:36:29 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:36:29 - MODEL 10 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-07 11:36:30 - MODEL 10 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-07 11:36:30 - MODEL 10 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-07 11:36:31 - MODEL 10 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-07 11:36:31 - MODEL 10 - INFO - Loaded 67265 usable records
+2025-10-07 11:36:31 - MODEL 10 - INFO - Loaded 67265 usable records from FY2023-2024
+2025-10-07 11:36:31 - MODEL 10 - INFO - Splitting data into train/test sets...
+2025-10-07 11:36:31 - MODEL 10 - INFO - 
+2025-10-07 11:36:31 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:36:31 - MODEL 10 - INFO - DATA SPLIT
+2025-10-07 11:36:31 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:36:31 - MODEL 10 - INFO - Training samples: 53812
+2025-10-07 11:36:31 - MODEL 10 - INFO - Test samples: 13453
+2025-10-07 11:36:31 - MODEL 10 - INFO - Split ratio: 20.0%
+2025-10-07 11:36:31 - MODEL 10 - INFO - Train: 53812, Test: 13453
+2025-10-07 11:36:31 - MODEL 10 - INFO - Preparing ROBUST features...
+2025-10-07 11:36:32 - MODEL 10 - INFO - Prepared 13 robust features from 53812 records
+2025-10-07 11:36:32 - MODEL 10 - INFO - Feature categories: Living(5), Behavioral(2), Service(2), Functional(2), QSI(2)
+2025-10-07 11:36:32 - MODEL 10 - INFO - Prepared 13 robust features from 13453 records
+2025-10-07 11:36:32 - MODEL 10 - INFO - Feature categories: Living(5), Behavioral(2), Service(2), Functional(2), QSI(2)
+2025-10-07 11:36:32 - MODEL 10 - INFO - Feature matrix shape: Train (53812, 13), Test (13453, 13)
+2025-10-07 11:36:32 - MODEL 10 - INFO - Using original dollar scale (no transformation)...
+2025-10-07 11:36:32 - MODEL 10 - INFO - Performing 10-fold cross-validation...
+2025-10-07 11:36:32 - MODEL 10 - INFO - Performing 10-fold cross-validation...
+2025-10-07 11:37:26 - MODEL 10 - INFO -   Fold 1: R^2 = 0.2266
+2025-10-07 11:38:32 - MODEL 10 - INFO -   Fold 2: R^2 = 0.2413
+2025-10-07 11:40:49 - MODEL 10 - INFO -   Fold 3: R^2 = 0.2440
+2025-10-07 11:41:43 - MODEL 10 - INFO -   Fold 4: R^2 = 0.2495
+2025-10-07 11:42:28 - MODEL 10 - INFO -   Fold 5: R^2 = 0.2509
+2025-10-07 11:43:15 - MODEL 10 - INFO -   Fold 6: R^2 = 0.2492
+2025-10-07 11:44:02 - MODEL 10 - INFO -   Fold 7: R^2 = 0.2513
+2025-10-07 11:45:05 - MODEL 10 - INFO -   Fold 8: R^2 = 0.2530
+2025-10-07 11:46:10 - MODEL 10 - INFO -   Fold 9: R^2 = 0.2646
+2025-10-07 11:47:10 - MODEL 10 - INFO -   Fold 10: R^2 = 0.2492
+2025-10-07 11:47:10 - MODEL 10 - INFO - Cross-validation: R^2 = 0.2480 +- 0.0092
+2025-10-07 11:47:10 - MODEL 10 - INFO - CV Results: R^2 = 0.2480 +- 0.0092
+2025-10-07 11:47:10 - MODEL 10 - INFO - Training neural network...
+2025-10-07 11:47:54 - MODEL 10 - INFO - Neural network fitted with 1,121 parameters
+2025-10-07 11:47:54 - MODEL 10 - INFO - Parameter reduction: 72.3% from full model
+2025-10-07 11:47:54 - MODEL 10 - INFO - Training complete in 43.6 seconds
+2025-10-07 11:47:54 - MODEL 10 - INFO - Early stopping at epoch 384 (of 500)
+2025-10-07 11:47:54 - MODEL 10 - INFO - Making predictions...
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculating metrics...
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - CALCULATING METRICS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - Training R^2: 0.2507
+2025-10-07 11:47:54 - MODEL 10 - INFO - Test R^2: 0.2470
+2025-10-07 11:47:54 - MODEL 10 - INFO - RMSE: $37,897.93
+2025-10-07 11:47:54 - MODEL 10 - INFO - MAE: $29,094.43
+2025-10-07 11:47:54 - MODEL 10 - INFO - MAPE: 89.40%
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculating subgroup metrics...
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - SUBGROUP ANALYSIS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-07 11:47:54 - MODEL 10 - WARNING - R^2 for cost_QTwo was extremely negative, capped at -10
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculated metrics for 10 subgroups
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculating variance metrics...
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - VARIANCE ANALYSIS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - Variance metrics calculated
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculating population scenarios...
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - POPULATION SCENARIOS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - Calculated 5 population scenarios
+2025-10-07 11:47:54 - MODEL 10 - INFO - Generating outputs...
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - LATEX GENERATION
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - LaTeX commands written to:
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_newcommands.tex
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_renewcommands.tex
+2025-10-07 11:47:54 - MODEL 10 - INFO - Adding Model 10 specific LaTeX commands...
+2025-10-07 11:47:54 - MODEL 10 - INFO - Model 10 specific commands added successfully
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - Feature selection commands: 4
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - Architecture commands: 8
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - Training commands: 8
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - Explainability commands: 6
+2025-10-07 11:47:54 - MODEL 10 - INFO -   - Total model-specific: 26 commands
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - SAVING RESULTS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - Results saved successfully
+2025-10-07 11:47:54 - MODEL 10 - INFO - 
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:54 - MODEL 10 - INFO - GENERATING PLOTS
+2025-10-07 11:47:54 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:55 - MODEL 10 - INFO - Diagnostic plots saved to ..\..\report\models\model_10\diagnostic_plots.png
+2025-10-07 11:47:55 - MODEL 10 - INFO - ================================================================================
+2025-10-07 11:47:55 - MODEL 10 - INFO - PIPELINE COMPLETE: Deep Learning Neural Network (Robust Features)
+2025-10-07 11:47:55 - MODEL 10 - INFO - ================================================================================
+2025-10-07 11:47:55 - MODEL 10 - INFO - 
+2025-10-07 11:47:55 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:55 - MODEL 10 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 11:47:55 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:55 - MODEL 10 - INFO - Training R^2: 0.2507
+2025-10-07 11:47:55 - MODEL 10 - INFO - Test R^2: 0.2470
+2025-10-07 11:47:55 - MODEL 10 - INFO - RMSE: $37,897.93
+2025-10-07 11:47:55 - MODEL 10 - INFO - MAE: $29,094.43
+2025-10-07 11:47:55 - MODEL 10 - INFO - MAPE: 89.40%
+2025-10-07 11:47:55 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-07 11:47:55 - MODEL 10 - INFO - 
+2025-10-07 11:47:55 - MODEL 10 - INFO - Neural Network Architecture:
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Input: 13 features (robust selection)
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Hidden: (32, 16, 8)
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Total Parameters: 1,121
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Parameter Reduction: 72.3% from full model
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Training Time: 43.6 seconds
+2025-10-07 11:47:55 - MODEL 10 - INFO - 
+2025-10-07 11:47:55 - MODEL 10 - INFO - ??  DEPLOYMENT WARNING:
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Explainability: Limited - black box architecture
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Regulatory Status: Problematic - HB 1103 concerns
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Recommendation: Not Recommended
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Performance Gain: 0.0% over Model 3
+2025-10-07 11:47:55 - MODEL 10 - INFO -   Trade-off: Marginal gain not worth transparency loss
+2025-10-07 11:47:55 - MODEL 10 - INFO - 
+2025-10-07 11:47:55 - MODEL 10 - INFO - Generated files:
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - diagnostic_plots.png
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - metrics.json
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - model_10_newcommands.tex
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - model_10_renewcommands.tex
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - predictions.csv
+2025-10-07 11:47:55 - MODEL 10 - INFO -   - subgroup_metrics.json

@@ -1,180 +1,188 @@
-2025-10-02 12:13:49 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:13:49 - MODEL 3 - INFO - INITIALIZING MODEL 3: ROBUST LINEAR REGRESSION
-2025-10-02 12:13:49 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:13:49 - MODEL 3 - INFO - Log file: models\..\..\report\logs\model_3_log.txt
-2025-10-02 12:13:49 - MODEL 3 - INFO - Output directory: models/model_3
-2025-10-02 12:13:49 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:13:49 - MODEL 3 - INFO - 
-2025-10-02 12:13:49 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:13:49 - MODEL 3 - INFO - STARTING PIPELINE: ROBUST LINEAR REGRESSION
-2025-10-02 12:13:49 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:13:49 - MODEL 3 - INFO - 
-2025-10-02 12:13:49 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:49 - MODEL 3 - INFO - LOADING DATA: FY2023-2024
-2025-10-02 12:13:49 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:49 - MODEL 3 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-02 12:13:49 - MODEL 3 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-02 12:13:50 - MODEL 3 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-02 12:13:50 - MODEL 3 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-02 12:13:51 - MODEL 3 - INFO - Loaded 67265 usable records
-2025-10-02 12:13:51 - MODEL 3 - INFO - Data split: 53812 training, 13453 test
-2025-10-02 12:13:51 - MODEL 3 - INFO - 
-2025-10-02 12:13:51 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:51 - MODEL 3 - INFO - FEATURE PREPARATION
-2025-10-02 12:13:51 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:51 - MODEL 3 - INFO - Prepared 22 features for 53812 records
-2025-10-02 12:13:51 - MODEL 3 - INFO - Prepared 22 features for 13453 records
-2025-10-02 12:13:51 - MODEL 3 - INFO - Features prepared: 22 features
-2025-10-02 12:13:51 - MODEL 3 - INFO - 
-2025-10-02 12:13:51 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:51 - MODEL 3 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-02 12:13:51 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:13:51 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:53 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:53 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:53 - MODEL 3 - INFO - Scale estimate: 31824.1333
-2025-10-02 12:13:53 - MODEL 3 - INFO - Mean weight: 0.9450
-2025-10-02 12:13:53 - MODEL 3 - INFO -   Fold 1: R^2 = 0.2767
-2025-10-02 12:13:53 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:54 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:54 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:54 - MODEL 3 - INFO - Scale estimate: 31921.8665
-2025-10-02 12:13:54 - MODEL 3 - INFO - Mean weight: 0.9453
-2025-10-02 12:13:54 - MODEL 3 - INFO -   Fold 2: R^2 = 0.2644
-2025-10-02 12:13:54 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:55 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:55 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:55 - MODEL 3 - INFO - Scale estimate: 31873.7300
-2025-10-02 12:13:55 - MODEL 3 - INFO - Mean weight: 0.9450
-2025-10-02 12:13:55 - MODEL 3 - INFO -   Fold 3: R^2 = 0.2554
-2025-10-02 12:13:55 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:56 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:56 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:56 - MODEL 3 - INFO - Scale estimate: 31752.2898
-2025-10-02 12:13:56 - MODEL 3 - INFO - Mean weight: 0.9446
-2025-10-02 12:13:56 - MODEL 3 - INFO -   Fold 4: R^2 = 0.2580
-2025-10-02 12:13:56 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:57 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:57 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:57 - MODEL 3 - INFO - Scale estimate: 31796.7304
-2025-10-02 12:13:57 - MODEL 3 - INFO - Mean weight: 0.9446
-2025-10-02 12:13:57 - MODEL 3 - INFO -   Fold 5: R^2 = 0.2595
-2025-10-02 12:13:57 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:13:59 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:13:59 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:13:59 - MODEL 3 - INFO - Scale estimate: 31870.0242
-2025-10-02 12:13:59 - MODEL 3 - INFO - Mean weight: 0.9449
-2025-10-02 12:13:59 - MODEL 3 - INFO -   Fold 6: R^2 = 0.2807
-2025-10-02 12:13:59 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:14:00 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:14:00 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:14:00 - MODEL 3 - INFO - Scale estimate: 31700.9507
-2025-10-02 12:14:00 - MODEL 3 - INFO - Mean weight: 0.9443
-2025-10-02 12:14:00 - MODEL 3 - INFO -   Fold 7: R^2 = 0.2591
-2025-10-02 12:14:00 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:14:01 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:14:01 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:14:01 - MODEL 3 - INFO - Scale estimate: 31698.1496
-2025-10-02 12:14:01 - MODEL 3 - INFO - Mean weight: 0.9446
-2025-10-02 12:14:01 - MODEL 3 - INFO -   Fold 8: R^2 = 0.2529
-2025-10-02 12:14:01 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:14:02 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:14:02 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:14:02 - MODEL 3 - INFO - Scale estimate: 31787.4567
-2025-10-02 12:14:02 - MODEL 3 - INFO - Mean weight: 0.9443
-2025-10-02 12:14:02 - MODEL 3 - INFO -   Fold 9: R^2 = 0.2718
-2025-10-02 12:14:02 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:14:03 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:14:03 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:14:03 - MODEL 3 - INFO - Scale estimate: 31821.5952
-2025-10-02 12:14:03 - MODEL 3 - INFO - Mean weight: 0.9450
-2025-10-02 12:14:03 - MODEL 3 - INFO -   Fold 10: R^2 = 0.2657
-2025-10-02 12:14:03 - MODEL 3 - INFO - Mean R^2: 0.2644
-2025-10-02 12:14:03 - MODEL 3 - INFO - Std R^2: 0.0088
-2025-10-02 12:14:03 - MODEL 3 - INFO - 
-2025-10-02 12:14:03 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:03 - MODEL 3 - INFO - MODEL TRAINING
-2025-10-02 12:14:03 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:03 - MODEL 3 - INFO - Fitting Huber robust regression...
-2025-10-02 12:14:05 - MODEL 3 - INFO - Model converged: False
-2025-10-02 12:14:05 - MODEL 3 - INFO - Iterations: 100
-2025-10-02 12:14:05 - MODEL 3 - INFO - Scale estimate: 31783.1574
-2025-10-02 12:14:05 - MODEL 3 - INFO - Mean weight: 0.9446
-2025-10-02 12:14:05 - MODEL 3 - INFO - Model training complete
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - MAKING PREDICTIONS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - Predictions complete
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - CALCULATING METRICS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - Training R^2: 0.2650
-2025-10-02 12:14:05 - MODEL 3 - INFO - Test R^2: 0.2622
-2025-10-02 12:14:05 - MODEL 3 - INFO - RMSE: $37,764.70
-2025-10-02 12:14:05 - MODEL 3 - INFO - MAE: $27,825.29
-2025-10-02 12:14:05 - MODEL 3 - INFO - MAPE: 86.88%
-2025-10-02 12:14:05 - MODEL 3 - INFO - CV R^2 (mean +- std): 0.2644 +- 0.0088
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - SUBGROUP ANALYSIS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-02 12:14:05 - MODEL 3 - INFO - Calculated metrics for 10 subgroups
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - VARIANCE ANALYSIS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - Variance metrics calculated
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - POPULATION SCENARIOS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - Calculated 5 population scenarios
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - GENERATING OUTPUTS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - LATEX GENERATION
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - LaTeX commands written to:
-2025-10-02 12:14:05 - MODEL 3 - INFO -   - ..\..\report\models\model_3\model_3_newcommands.tex
-2025-10-02 12:14:05 - MODEL 3 - INFO -   - ..\..\report\models\model_3\model_3_renewcommands.tex
-2025-10-02 12:14:05 - MODEL 3 - INFO - Generated Model 3-specific LaTeX commands
-2025-10-02 12:14:05 - MODEL 3 - INFO - 
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - SAVING RESULTS
-2025-10-02 12:14:05 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:05 - MODEL 3 - INFO - Results saved successfully
-2025-10-02 12:14:07 - MODEL 3 - INFO - Diagnostic plots saved
-2025-10-02 12:14:07 - MODEL 3 - INFO - 
-2025-10-02 12:14:07 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:14:07 - MODEL 3 - INFO - PIPELINE COMPLETE: ROBUST LINEAR REGRESSION
-2025-10-02 12:14:07 - MODEL 3 - INFO - ============================================================
-2025-10-02 12:14:07 - MODEL 3 - INFO - 
-2025-10-02 12:14:07 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:07 - MODEL 3 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 12:14:07 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:07 - MODEL 3 - INFO - Training R^2: 0.2650
-2025-10-02 12:14:07 - MODEL 3 - INFO - Test R^2: 0.2622
-2025-10-02 12:14:07 - MODEL 3 - INFO - RMSE: $37,764.70
-2025-10-02 12:14:07 - MODEL 3 - INFO - MAE: $27,825.29
-2025-10-02 12:14:07 - MODEL 3 - INFO - MAPE: 86.88%
-2025-10-02 12:14:07 - MODEL 3 - INFO - CV R^2 (mean +- std): 0.2644 +- 0.0088
-2025-10-02 12:14:07 - MODEL 3 - INFO - ------------------------------------------------------------
-2025-10-02 12:14:07 - MODEL 3 - INFO - 
-2025-10-02 12:14:07 - MODEL 3 - INFO - Generated files:
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - diagnostic_plots.png
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - metrics.json
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - model_3_newcommands.tex
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - model_3_renewcommands.tex
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - predictions.csv
-2025-10-02 12:14:07 - MODEL 3 - INFO -   - subgroup_metrics.json
+2025-10-05 12:28:13 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:13 - MODEL 3 - INFO - INITIALIZING MODEL 3: ROBUST LINEAR REGRESSION
+2025-10-05 12:28:13 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:13 - MODEL 3 - INFO - Log file: models\..\..\report\logs\model_3_log.txt
+2025-10-05 12:28:13 - MODEL 3 - INFO - Output directory: models/model_3
+2025-10-05 12:28:13 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:13 - MODEL 3 - INFO - 
+2025-10-05 12:28:13 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:13 - MODEL 3 - INFO - STARTING PIPELINE: ROBUST LINEAR REGRESSION
+2025-10-05 12:28:13 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:13 - MODEL 3 - INFO - 
+2025-10-05 12:28:13 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:13 - MODEL 3 - INFO - LOADING DATA: FY2023-2024
+2025-10-05 12:28:13 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:13 - MODEL 3 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-05 12:28:13 - MODEL 3 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-05 12:28:14 - MODEL 3 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-05 12:28:14 - MODEL 3 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-05 12:28:15 - MODEL 3 - INFO - Loaded 67265 usable records
+2025-10-05 12:28:15 - MODEL 3 - INFO - 
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - DATA SPLIT
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - Training samples: 53812
+2025-10-05 12:28:15 - MODEL 3 - INFO - Test samples: 13453
+2025-10-05 12:28:15 - MODEL 3 - INFO - Split ratio: 20.0%
+2025-10-05 12:28:15 - MODEL 3 - INFO - 
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - FEATURE PREPARATION
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - Preparing features for robust regression...
+2025-10-05 12:28:15 - MODEL 3 - INFO - Prepared 22 features for 53812 records
+2025-10-05 12:28:15 - MODEL 3 - INFO - Preparing features for robust regression...
+2025-10-05 12:28:15 - MODEL 3 - INFO - Prepared 22 features for 13453 records
+2025-10-05 12:28:15 - MODEL 3 - INFO - Features prepared: 22 features
+2025-10-05 12:28:15 - MODEL 3 - INFO - 
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-05 12:28:15 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:15 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:16 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:16 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:16 - MODEL 3 - INFO - Scale estimate: 31709.9792
+2025-10-05 12:28:16 - MODEL 3 - INFO - Mean weight: 0.9453
+2025-10-05 12:28:16 - MODEL 3 - INFO -   Fold 1: R^2 = 0.2648
+2025-10-05 12:28:16 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:18 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:18 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:18 - MODEL 3 - INFO - Scale estimate: 31800.4531
+2025-10-05 12:28:18 - MODEL 3 - INFO - Mean weight: 0.9453
+2025-10-05 12:28:18 - MODEL 3 - INFO -   Fold 2: R^2 = 0.2704
+2025-10-05 12:28:18 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:19 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:19 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:19 - MODEL 3 - INFO - Scale estimate: 31778.5913
+2025-10-05 12:28:19 - MODEL 3 - INFO - Mean weight: 0.9454
+2025-10-05 12:28:19 - MODEL 3 - INFO -   Fold 3: R^2 = 0.2652
+2025-10-05 12:28:19 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:20 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:20 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:20 - MODEL 3 - INFO - Scale estimate: 31799.8629
+2025-10-05 12:28:20 - MODEL 3 - INFO - Mean weight: 0.9452
+2025-10-05 12:28:20 - MODEL 3 - INFO -   Fold 4: R^2 = 0.2746
+2025-10-05 12:28:20 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:21 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:21 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:21 - MODEL 3 - INFO - Scale estimate: 31687.1801
+2025-10-05 12:28:21 - MODEL 3 - INFO - Mean weight: 0.9448
+2025-10-05 12:28:21 - MODEL 3 - INFO -   Fold 5: R^2 = 0.2498
+2025-10-05 12:28:21 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:22 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:22 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:22 - MODEL 3 - INFO - Scale estimate: 31796.9200
+2025-10-05 12:28:22 - MODEL 3 - INFO - Mean weight: 0.9451
+2025-10-05 12:28:22 - MODEL 3 - INFO -   Fold 6: R^2 = 0.2913
+2025-10-05 12:28:22 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:23 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:23 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:23 - MODEL 3 - INFO - Scale estimate: 31799.2292
+2025-10-05 12:28:23 - MODEL 3 - INFO - Mean weight: 0.9456
+2025-10-05 12:28:23 - MODEL 3 - INFO -   Fold 7: R^2 = 0.2655
+2025-10-05 12:28:23 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:24 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:24 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:24 - MODEL 3 - INFO - Scale estimate: 31733.3686
+2025-10-05 12:28:24 - MODEL 3 - INFO - Mean weight: 0.9451
+2025-10-05 12:28:24 - MODEL 3 - INFO -   Fold 8: R^2 = 0.2740
+2025-10-05 12:28:24 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:26 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:26 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:26 - MODEL 3 - INFO - Scale estimate: 31837.5768
+2025-10-05 12:28:26 - MODEL 3 - INFO - Mean weight: 0.9455
+2025-10-05 12:28:26 - MODEL 3 - INFO -   Fold 9: R^2 = 0.2723
+2025-10-05 12:28:26 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:27 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:27 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:27 - MODEL 3 - INFO - Scale estimate: 31709.3237
+2025-10-05 12:28:27 - MODEL 3 - INFO - Mean weight: 0.9450
+2025-10-05 12:28:27 - MODEL 3 - INFO -   Fold 10: R^2 = 0.2800
+2025-10-05 12:28:27 - MODEL 3 - INFO - Mean R^2: 0.2708
+2025-10-05 12:28:27 - MODEL 3 - INFO - Std R^2: 0.0104
+2025-10-05 12:28:27 - MODEL 3 - INFO - 
+2025-10-05 12:28:27 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:27 - MODEL 3 - INFO - MODEL TRAINING
+2025-10-05 12:28:27 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:27 - MODEL 3 - INFO - Fitting Huber robust regression...
+2025-10-05 12:28:28 - MODEL 3 - INFO - Model converged: False
+2025-10-05 12:28:28 - MODEL 3 - INFO - Iterations: 100
+2025-10-05 12:28:28 - MODEL 3 - INFO - Scale estimate: 31746.0622
+2025-10-05 12:28:28 - MODEL 3 - INFO - Mean weight: 0.9452
+2025-10-05 12:28:28 - MODEL 3 - INFO - Model training complete
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - MAKING PREDICTIONS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - Predictions complete
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - CALCULATING METRICS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - Training R^2: 0.2715
+2025-10-05 12:28:28 - MODEL 3 - INFO - Test R^2: 0.2504
+2025-10-05 12:28:28 - MODEL 3 - INFO - RMSE: $37,811.78
+2025-10-05 12:28:28 - MODEL 3 - INFO - MAE: $27,954.81
+2025-10-05 12:28:28 - MODEL 3 - INFO - MAPE: 88.40%
+2025-10-05 12:28:28 - MODEL 3 - INFO - CV R^2 (mean +- std): 0.2708 +- 0.0104
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - SUBGROUP ANALYSIS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-05 12:28:28 - MODEL 3 - INFO - Calculated metrics for 10 subgroups
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - VARIANCE ANALYSIS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - Variance metrics calculated
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - POPULATION SCENARIOS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - Calculated 5 population scenarios
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - GENERATING OUTPUTS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - LATEX GENERATION
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - LaTeX commands written to:
+2025-10-05 12:28:28 - MODEL 3 - INFO -   - ..\..\report\models\model_3\model_3_newcommands.tex
+2025-10-05 12:28:28 - MODEL 3 - INFO -   - ..\..\report\models\model_3\model_3_renewcommands.tex
+2025-10-05 12:28:28 - MODEL 3 - INFO - Generated Model 3-specific LaTeX commands
+2025-10-05 12:28:28 - MODEL 3 - INFO - 
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - SAVING RESULTS
+2025-10-05 12:28:28 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:28 - MODEL 3 - INFO - Results saved successfully
+2025-10-05 12:28:29 - MODEL 3 - INFO - Diagnostic plots saved
+2025-10-05 12:28:29 - MODEL 3 - INFO - 
+2025-10-05 12:28:29 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:29 - MODEL 3 - INFO - PIPELINE COMPLETE: ROBUST LINEAR REGRESSION
+2025-10-05 12:28:29 - MODEL 3 - INFO - ============================================================
+2025-10-05 12:28:29 - MODEL 3 - INFO - 
+2025-10-05 12:28:29 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:29 - MODEL 3 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-05 12:28:29 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:29 - MODEL 3 - INFO - Training R^2: 0.2715
+2025-10-05 12:28:29 - MODEL 3 - INFO - Test R^2: 0.2504
+2025-10-05 12:28:29 - MODEL 3 - INFO - RMSE: $37,811.78
+2025-10-05 12:28:29 - MODEL 3 - INFO - MAE: $27,954.81
+2025-10-05 12:28:29 - MODEL 3 - INFO - MAPE: 88.40%
+2025-10-05 12:28:29 - MODEL 3 - INFO - CV R^2 (mean +- std): 0.2708 +- 0.0104
+2025-10-05 12:28:29 - MODEL 3 - INFO - ------------------------------------------------------------
+2025-10-05 12:28:29 - MODEL 3 - INFO - 
+2025-10-05 12:28:29 - MODEL 3 - INFO - Generated files:
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - diagnostic_plots.png
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - metrics.json
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - model_3_newcommands.tex
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - model_3_renewcommands.tex
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - predictions.csv
+2025-10-05 12:28:29 - MODEL 3 - INFO -   - subgroup_metrics.json

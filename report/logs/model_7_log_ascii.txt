@@ -1,195 +1,199 @@
-2025-10-02 11:08:46 - MODEL 7 - INFO - ============================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - INITIALIZING MODEL 7: QUANTILE REGRESSION
-2025-10-02 11:08:46 - MODEL 7 - INFO - ============================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - Log file: models\..\..\report\logs\model_7_log.txt
-2025-10-02 11:08:46 - MODEL 7 - INFO - Output directory: models/model_7
-2025-10-02 11:08:46 - MODEL 7 - INFO - ============================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - MODEL 7: QUANTILE REGRESSION - RESEARCH ONLY
-2025-10-02 11:08:46 - MODEL 7 - INFO - ??  NOT REGULATORY COMPLIANT ??
-2025-10-02 11:08:46 - MODEL 7 - INFO - Produces distributions, not single allocations
-2025-10-02 11:08:46 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - 
+2025-10-07 09:17:52 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - INITIALIZING MODEL 7: QUANTILE REGRESSION
+2025-10-07 09:17:52 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - Log file: models\..\..\report\logs\model_7_log.txt
+2025-10-07 09:17:52 - MODEL 7 - INFO - Output directory: models/model_7
+2025-10-07 09:17:52 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - Transformation: sqrt
+2025-10-07 09:17:52 - MODEL 7 - INFO - ================================================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - MODEL 7: QUANTILE REGRESSION - RESEARCH ONLY
+2025-10-07 09:17:52 - MODEL 7 - INFO - WARNING: NOT REGULATORY COMPLIANT
+2025-10-07 09:17:52 - MODEL 7 - INFO - Produces distributions, not single allocations
+2025-10-07 09:17:52 - MODEL 7 - INFO - ================================================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - 
 ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - STARTING MODEL 7 EXECUTION
-2025-10-02 11:08:46 - MODEL 7 - INFO - Using FY2023-2024 data as specified
-2025-10-02 11:08:46 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - 
+2025-10-07 09:17:52 - MODEL 7 - INFO - MODEL 7: QUANTILE REGRESSION PIPELINE
+2025-10-07 09:17:52 - MODEL 7 - INFO - WARNING: RESEARCH ONLY - NOT REGULATORY COMPLIANT
+2025-10-07 09:17:52 - MODEL 7 - INFO - ================================================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - 
+2025-10-07 09:17:52 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - STARTING PIPELINE: QUANTILE REGRESSION
+2025-10-07 09:17:52 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:17:52 - MODEL 7 - INFO - 
+2025-10-07 09:17:52 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:17:52 - MODEL 7 - INFO - LOADING DATA: FY2023-2024
+2025-10-07 09:17:52 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:17:52 - MODEL 7 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-07 09:17:53 - MODEL 7 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-07 09:17:54 - MODEL 7 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-07 09:17:54 - MODEL 7 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-07 09:17:55 - MODEL 7 - INFO - Loaded 67265 usable records
+2025-10-07 09:17:55 - MODEL 7 - INFO - Data split: 53812 training, 13453 test
+2025-10-07 09:17:55 - MODEL 7 - INFO - 
+2025-10-07 09:17:55 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:17:55 - MODEL 7 - INFO - FEATURE PREPARATION
+2025-10-07 09:17:55 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:17:55 - MODEL 7 - INFO - Preparing features from 53812 records...
+2025-10-07 09:17:55 - MODEL 7 - INFO - Feature matrix: (53812, 23)
+2025-10-07 09:17:55 - MODEL 7 - INFO - Features: 23
+2025-10-07 09:17:55 - MODEL 7 - INFO - Preparing features from 13453 records...
+2025-10-07 09:17:55 - MODEL 7 - INFO - Feature matrix: (13453, 23)
+2025-10-07 09:17:55 - MODEL 7 - INFO - Features: 23
+2025-10-07 09:17:55 - MODEL 7 - INFO - Features prepared: 23 features
+2025-10-07 09:17:55 - MODEL 7 - INFO - 
+Performing 10-fold cross-validation on median regression...
+2025-10-07 09:17:55 - MODEL 7 - INFO - Preparing features from 53812 records...
+2025-10-07 09:17:56 - MODEL 7 - INFO - Feature matrix: (53812, 23)
+2025-10-07 09:17:56 - MODEL 7 - INFO - Features: 23
+2025-10-07 09:19:15 - MODEL 7 - INFO -   Fold 1: R2 = 0.2361
+2025-10-07 09:20:32 - MODEL 7 - INFO -   Fold 2: R2 = 0.2522
+2025-10-07 09:21:48 - MODEL 7 - INFO -   Fold 3: R2 = 0.2200
+2025-10-07 09:23:11 - MODEL 7 - INFO -   Fold 4: R2 = 0.2536
+2025-10-07 09:24:45 - MODEL 7 - INFO -   Fold 5: R2 = 0.2439
+2025-10-07 09:26:13 - MODEL 7 - INFO -   Fold 6: R2 = 0.2524
+2025-10-07 09:27:38 - MODEL 7 - INFO -   Fold 7: R2 = 0.2745
+2025-10-07 09:29:04 - MODEL 7 - INFO -   Fold 8: R2 = 0.2638
+2025-10-07 09:30:36 - MODEL 7 - INFO -   Fold 9: R2 = 0.2536
+2025-10-07 09:32:01 - MODEL 7 - INFO -   Fold 10: R2 = 0.2656
+2025-10-07 09:32:01 - MODEL 7 - INFO - 
+Cross-validation R2: 0.2516 +/- 0.0147
+2025-10-07 09:32:01 - MODEL 7 - INFO - CV Range: [0.2200, 0.2745]
+2025-10-07 09:32:01 - MODEL 7 - INFO - 
+2025-10-07 09:32:01 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:32:01 - MODEL 7 - INFO - MODEL TRAINING
+2025-10-07 09:32:01 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:32:01 - MODEL 7 - INFO - 
 ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - MODEL 7: QUANTILE REGRESSION PIPELINE
-2025-10-02 11:08:46 - MODEL 7 - INFO - ??  RESEARCH ONLY - NOT REGULATORY COMPLIANT ??
-2025-10-02 11:08:46 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - 
-2025-10-02 11:08:46 - MODEL 7 - INFO - ============================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - STARTING PIPELINE: QUANTILE REGRESSION
-2025-10-02 11:08:46 - MODEL 7 - INFO - ============================================================
-2025-10-02 11:08:46 - MODEL 7 - INFO - 
-2025-10-02 11:08:46 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:46 - MODEL 7 - INFO - LOADING DATA: FY2023-2024
-2025-10-02 11:08:46 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:46 - MODEL 7 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-02 11:08:46 - MODEL 7 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-02 11:08:47 - MODEL 7 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-02 11:08:47 - MODEL 7 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-02 11:08:48 - MODEL 7 - INFO - Loaded 67265 usable records
-2025-10-02 11:08:48 - MODEL 7 - INFO - 
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - DATA SPLIT
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - Training samples: 53812
-2025-10-02 11:08:48 - MODEL 7 - INFO - Test samples: 13453
-2025-10-02 11:08:48 - MODEL 7 - INFO - Split ratio: 20.0%
-2025-10-02 11:08:48 - MODEL 7 - INFO - 
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - FEATURE PREPARATION
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - Feature matrix shape: (53812, 25)
-2025-10-02 11:08:48 - MODEL 7 - INFO - Using 25 robust features
-2025-10-02 11:08:48 - MODEL 7 - INFO - Cost range: $31.25 to $346560.68
-2025-10-02 11:08:48 - MODEL 7 - INFO - Transformed target range: 5.59 to 588.69
-2025-10-02 11:08:48 - MODEL 7 - INFO - Feature matrix shape: (13453, 25)
-2025-10-02 11:08:48 - MODEL 7 - INFO - Using 25 robust features
-2025-10-02 11:08:48 - MODEL 7 - INFO - Cost range: $74.35 to $313986.73
-2025-10-02 11:08:48 - MODEL 7 - INFO - Transformed target range: 8.62 to 560.35
-2025-10-02 11:08:48 - MODEL 7 - INFO - Features prepared: 25 features
-2025-10-02 11:08:48 - MODEL 7 - INFO - 
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-02 11:08:48 - MODEL 7 - INFO - ------------------------------------------------------------
-2025-10-02 11:08:48 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:48 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
-2025-10-02 11:08:48 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:08:48 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.10...
-2025-10-02 11:10:06 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0080
-2025-10-02 11:10:06 - MODEL 7 - INFO -   Check function loss = 203358644.32
-2025-10-02 11:10:06 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.25...
-2025-10-02 11:11:24 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0651
-2025-10-02 11:11:24 - MODEL 7 - INFO -   Check function loss = 471464402.60
-2025-10-02 11:11:24 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.50...
-2025-10-02 11:12:44 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2085
-2025-10-02 11:12:44 - MODEL 7 - INFO -   Check function loss = 666013248.32
-2025-10-02 11:12:44 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.75...
-2025-10-02 11:13:59 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2273
-2025-10-02 11:13:59 - MODEL 7 - INFO -   Check function loss = 571988881.14
-2025-10-02 11:13:59 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.90...
-2025-10-02 11:15:18 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2422
-2025-10-02 11:15:18 - MODEL 7 - INFO -   Check function loss = 343836228.42
-2025-10-02 11:15:18 - MODEL 7 - INFO - 
+2025-10-07 09:32:01 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
+2025-10-07 09:32:01 - MODEL 7 - INFO - ================================================================================
+2025-10-07 09:32:01 - MODEL 7 - INFO - Applied sqrt transformation for fitting
+2025-10-07 09:32:01 - MODEL 7 - INFO - 
+Fitting quantile tau = 0.10...
+2025-10-07 09:33:34 - MODEL 7 - INFO -   Pseudo-R2 = 0.7029
+2025-10-07 09:33:34 - MODEL 7 - INFO -   Check function loss = 753063.40
+2025-10-07 09:33:34 - MODEL 7 - INFO - 
+Fitting quantile tau = 0.25...
+2025-10-07 09:35:11 - MODEL 7 - INFO -   Pseudo-R2 = 0.3696
+2025-10-07 09:35:11 - MODEL 7 - INFO -   Check function loss = 1608752.53
+2025-10-07 09:35:11 - MODEL 7 - INFO - 
+Fitting quantile tau = 0.50...
+2025-10-07 09:36:45 - MODEL 7 - INFO -   Pseudo-R2 = 0.2173
+2025-10-07 09:36:45 - MODEL 7 - INFO -   Check function loss = 2019169.93
+2025-10-07 09:36:45 - MODEL 7 - INFO - 
+Fitting quantile tau = 0.75...
+2025-10-07 09:38:10 - MODEL 7 - INFO -   Pseudo-R2 = 0.4092
+2025-10-07 09:38:10 - MODEL 7 - INFO -   Check function loss = 1540422.31
+2025-10-07 09:38:10 - MODEL 7 - INFO - 
+Fitting quantile tau = 0.90...
+2025-10-07 09:39:44 - MODEL 7 - INFO -   Pseudo-R2 = 0.6856
+2025-10-07 09:39:44 - MODEL 7 - INFO -   Check function loss = 825119.29
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
 ================================================================================
-2025-10-02 11:15:18 - MODEL 7 - INFO - PRIMARY MODEL: Median Regression (? = 0.5)
-2025-10-02 11:15:18 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:15:18 - MODEL 7 - INFO - Quantile spread ratio (Q90/Q10): 1.69
-2025-10-02 11:15:18 - MODEL 7 - INFO -   Fold 1: R^2 = -4977486067.7675
-2025-10-02 11:15:18 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:15:18 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
-2025-10-02 11:15:18 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:15:18 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.10...
-2025-10-02 11:16:44 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0081
-2025-10-02 11:16:44 - MODEL 7 - INFO -   Check function loss = 203238432.08
-2025-10-02 11:16:44 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.25...
-2025-10-02 11:18:41 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0644
-2025-10-02 11:18:41 - MODEL 7 - INFO -   Check function loss = 471659779.53
-2025-10-02 11:18:41 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.50...
-2025-10-02 11:20:11 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2078
-2025-10-02 11:20:11 - MODEL 7 - INFO -   Check function loss = 668118792.26
-2025-10-02 11:20:11 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.75...
-2025-10-02 11:22:08 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2270
-2025-10-02 11:22:08 - MODEL 7 - INFO -   Check function loss = 574102037.09
-2025-10-02 11:22:08 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.90...
-2025-10-02 11:23:44 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2406
-2025-10-02 11:23:44 - MODEL 7 - INFO -   Check function loss = 345286448.99
-2025-10-02 11:23:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - PRIMARY MODEL: Median Regression (tau = 0.5)
+2025-10-07 09:39:44 - MODEL 7 - INFO - ================================================================================
+2025-10-07 09:39:44 - MODEL 7 - INFO - Quantile spread ratio (Q90/Q10 loss): 1.10
+2025-10-07 09:39:44 - MODEL 7 - INFO - Model training complete
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - MAKING PREDICTIONS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - Predictions complete
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - CALCULATING METRICS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - Training R^2: 0.2524
+2025-10-07 09:39:44 - MODEL 7 - INFO - Test R^2: 0.2246
+2025-10-07 09:39:44 - MODEL 7 - INFO - RMSE: $38,456.11
+2025-10-07 09:39:44 - MODEL 7 - INFO - MAE: $27,562.46
+2025-10-07 09:39:44 - MODEL 7 - INFO - MAPE: 85.33%
+2025-10-07 09:39:44 - MODEL 7 - INFO - CV R^2 (mean +- std): 0.2516 +- 0.0147
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - WARNING - Quantile crossing detected in 165 predictions
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - SUBGROUP ANALYSIS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-07 09:39:44 - MODEL 7 - INFO - Calculated metrics for 10 subgroups
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - VARIANCE ANALYSIS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - Variance metrics calculated
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - POPULATION SCENARIOS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - Calculated 5 population scenarios
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - GENERATING OUTPUTS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - LATEX GENERATION
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - LaTeX commands written to:
+2025-10-07 09:39:44 - MODEL 7 - INFO -   - ..\..\report\models\model_7\model_7_newcommands.tex
+2025-10-07 09:39:44 - MODEL 7 - INFO -   - ..\..\report\models\model_7\model_7_renewcommands.tex
+2025-10-07 09:39:44 - MODEL 7 - INFO - Adding Model 7 specific LaTeX commands...
+2025-10-07 09:39:44 - MODEL 7 - WARNING - Quantile crossing detected in 165 predictions
+2025-10-07 09:39:44 - MODEL 7 - INFO - Model 7 specific commands added successfully
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - SAVING RESULTS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - Results saved successfully
+2025-10-07 09:39:44 - MODEL 7 - INFO - 
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:44 - MODEL 7 - INFO - GENERATING PLOTS
+2025-10-07 09:39:44 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:45 - MODEL 7 - INFO - Diagnostic plots saved to ..\..\report\models\model_7\diagnostic_plots.png
+2025-10-07 09:39:45 - MODEL 7 - WARNING - Quantile crossing detected in 165 predictions
+2025-10-07 09:39:47 - MODEL 7 - INFO - Quantile diagnostics plot saved to ..\..\report\models\model_7\quantile_diagnostics.png
+2025-10-07 09:39:48 - MODEL 7 - INFO - Coefficient comparison plot saved to ..\..\report\models\model_7\quantile_coefficients.png
+2025-10-07 09:39:48 - MODEL 7 - INFO - 
+2025-10-07 09:39:48 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:39:48 - MODEL 7 - INFO - PIPELINE COMPLETE: QUANTILE REGRESSION
+2025-10-07 09:39:48 - MODEL 7 - INFO - ============================================================
+2025-10-07 09:39:48 - MODEL 7 - INFO - 
+2025-10-07 09:39:48 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:48 - MODEL 7 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 09:39:48 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:48 - MODEL 7 - INFO - Training R^2: 0.2524
+2025-10-07 09:39:48 - MODEL 7 - INFO - Test R^2: 0.2246
+2025-10-07 09:39:48 - MODEL 7 - INFO - RMSE: $38,456.11
+2025-10-07 09:39:48 - MODEL 7 - INFO - MAE: $27,562.46
+2025-10-07 09:39:48 - MODEL 7 - INFO - MAPE: 85.33%
+2025-10-07 09:39:48 - MODEL 7 - INFO - CV R^2 (mean +- std): 0.2516 +- 0.0147
+2025-10-07 09:39:48 - MODEL 7 - INFO - ------------------------------------------------------------
+2025-10-07 09:39:48 - MODEL 7 - INFO - 
+2025-10-07 09:39:48 - MODEL 7 - INFO - Generated files:
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - diagnostic_plots.png
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - metrics.json
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - model_7_newcommands.tex
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - model_7_renewcommands.tex
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - predictions.csv
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - predictions.npz
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - quantile_analysis.png
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - quantile_coefficients.png
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - quantile_diagnostics.png
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - quantile_metrics.json
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - quantile_predictions.json
+2025-10-07 09:39:48 - MODEL 7 - INFO -   - subgroup_metrics.json
+2025-10-07 09:39:48 - MODEL 7 - WARNING - 
 ================================================================================
-2025-10-02 11:23:44 - MODEL 7 - INFO - PRIMARY MODEL: Median Regression (? = 0.5)
-2025-10-02 11:23:44 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:23:44 - MODEL 7 - INFO - Quantile spread ratio (Q90/Q10): 1.70
-2025-10-02 11:23:44 - MODEL 7 - INFO -   Fold 2: R^2 = -5269381736.0864
-2025-10-02 11:23:44 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:23:44 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
-2025-10-02 11:23:44 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:23:44 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.10...
-2025-10-02 11:25:29 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0080
-2025-10-02 11:25:29 - MODEL 7 - INFO -   Check function loss = 203474338.93
-2025-10-02 11:25:29 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.25...
-2025-10-02 11:27:01 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0644
-2025-10-02 11:27:01 - MODEL 7 - INFO -   Check function loss = 472093137.51
-2025-10-02 11:27:01 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.50...
-2025-10-02 11:28:57 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2077
-2025-10-02 11:28:57 - MODEL 7 - INFO -   Check function loss = 667080429.52
-2025-10-02 11:28:57 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.75...
-2025-10-02 11:30:23 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2273
-2025-10-02 11:30:23 - MODEL 7 - INFO -   Check function loss = 572297473.13
-2025-10-02 11:30:23 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.90...
-2025-10-02 11:31:33 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2427
-2025-10-02 11:31:33 - MODEL 7 - INFO -   Check function loss = 343557152.72
-2025-10-02 11:31:33 - MODEL 7 - INFO - 
-================================================================================
-2025-10-02 11:31:33 - MODEL 7 - INFO - PRIMARY MODEL: Median Regression (? = 0.5)
-2025-10-02 11:31:33 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:31:33 - MODEL 7 - INFO - Quantile spread ratio (Q90/Q10): 1.69
-2025-10-02 11:31:33 - MODEL 7 - INFO -   Fold 3: R^2 = -5071951934.0951
-2025-10-02 11:31:33 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:31:33 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
-2025-10-02 11:31:33 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:31:33 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.10...
-2025-10-02 11:32:55 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0080
-2025-10-02 11:32:55 - MODEL 7 - INFO -   Check function loss = 203210306.05
-2025-10-02 11:32:55 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.25...
-2025-10-02 11:34:16 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0637
-2025-10-02 11:34:16 - MODEL 7 - INFO -   Check function loss = 471865036.19
-2025-10-02 11:34:16 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.50...
-2025-10-02 11:35:50 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2067
-2025-10-02 11:35:50 - MODEL 7 - INFO -   Check function loss = 668476044.62
-2025-10-02 11:35:50 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.75...
-2025-10-02 11:37:48 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2252
-2025-10-02 11:37:48 - MODEL 7 - INFO -   Check function loss = 575186137.77
-2025-10-02 11:37:48 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.90...
-2025-10-02 11:39:21 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2399
-2025-10-02 11:39:21 - MODEL 7 - INFO -   Check function loss = 345774937.67
-2025-10-02 11:39:21 - MODEL 7 - INFO - 
-================================================================================
-2025-10-02 11:39:21 - MODEL 7 - INFO - PRIMARY MODEL: Median Regression (? = 0.5)
-2025-10-02 11:39:21 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:39:21 - MODEL 7 - INFO - Quantile spread ratio (Q90/Q10): 1.70
-2025-10-02 11:39:21 - MODEL 7 - INFO -   Fold 4: R^2 = -5051623710.5656
-2025-10-02 11:39:21 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:39:21 - MODEL 7 - INFO - FITTING QUANTILE REGRESSION MODELS
-2025-10-02 11:39:21 - MODEL 7 - INFO - ================================================================================
-2025-10-02 11:39:21 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.10...
-2025-10-02 11:40:50 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0080
-2025-10-02 11:40:50 - MODEL 7 - INFO -   Check function loss = 203572793.57
-2025-10-02 11:40:50 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.25...
-2025-10-02 11:42:14 - MODEL 7 - INFO -   Pseudo-R^2 = 0.0657
-2025-10-02 11:42:14 - MODEL 7 - INFO -   Check function loss = 471699425.03
-2025-10-02 11:42:14 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.50...
-2025-10-02 11:43:34 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2089
-2025-10-02 11:43:34 - MODEL 7 - INFO -   Check function loss = 667305637.25
-2025-10-02 11:43:34 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.75...
-2025-10-02 11:45:57 - MODEL 7 - INFO -   Pseudo-R^2 = 0.2271
-2025-10-02 11:45:57 - MODEL 7 - INFO -   Check function loss = 574182262.48
-2025-10-02 11:45:57 - MODEL 7 - INFO - 
-Fitting quantile ? = 0.90...
+2025-10-07 09:39:48 - MODEL 7 - WARNING - REGULATORY COMPLIANCE ASSESSMENT
+2025-10-07 09:39:48 - MODEL 7 - WARNING - ================================================================================
+2025-10-07 09:39:48 - MODEL 7 - WARNING - Status: No
+2025-10-07 09:39:48 - MODEL 7 - WARNING - Warning: Produces distributions, not single allocations. Violates F.S. 393.0662.
+2025-10-07 09:39:48 - MODEL 7 - WARNING - 
+This model CANNOT be used for production budget allocation.
+2025-10-07 09:39:48 - MODEL 7 - WARNING - It violates F.S. 393.0662 by producing distributions rather than
+2025-10-07 09:39:48 - MODEL 7 - WARNING - single deterministic amounts. Suitable for research only.
+2025-10-07 09:39:48 - MODEL 7 - WARNING - ================================================================================

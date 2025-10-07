@@ -35,6 +35,7 @@
 %\usepackage{fontspec}
 %\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support
 \usepackage{fontawesome5}
+\usepackage{pifont} 
 
 %\usepackage[fontsize=10pt]{scrextend} 
 %\setmargins{2.5cm}{2.5cm}{15cm}{23cm}{14pt}{3cm}{0pt}{2cm}
@@ -53,8 +54,10 @@
 %\usepackage{mathptmx}  	%mathematical fonts for use with times, I encountered some problems using this package togather with pdftex, which I was not able to resolve
 
 % ********* Graphics definition *******
-\usepackage[pdftex]{graphicx} % required to import graphic files
+%\usepackage[pdftex]{graphicx} % required to import graphic files
 \usepackage{color} %allows to mark some entries in the tables with color
+\usepackage[pdftex]{graphicx}
+\usepackage{tcolorbox}
 \usepackage{eso-pic} % these two are required to add the little picture on top of every page
 \usepackage{everyshi} % these two are required to add the little picture on top of every page
 \renewcommand{\floatpagefraction}{0.7} %default:0.5 allows two big pictures on one page
@@ -232,9 +235,12 @@ contents={
 \newenvironment{EQA}[1][]{\refstepcounter{QaA} \color{HW} Record your explanation as answer \#\theQaA. #1 }{\medskip}
 \newcommand\QA{\begin{EQA} \end{EQA}} 
 
-\newcommand{\WarningRunPiepeline}{WARNING: Value undefined. Run the analysis pipeline}
 
 % Outlier analysis commands
+
+\newcommand{\WarningRunPiepeline}{WARNING: Value undefined. Run the analysis pipeline}
+\newcommand{\placeholder}{\textcolor{red}{[VALUE NOT SET]}}
+
 
 % Overall statistics
 \newcommand{\TheTotalNumberCustomers}{\WarningRunPiepelinee}

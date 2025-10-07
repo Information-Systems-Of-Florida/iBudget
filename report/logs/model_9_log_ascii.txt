@@ -1,346 +1,103 @@
-2025-10-02 13:32:29 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:32:29 - MODEL 9 - INFO - INITIALIZING MODEL 9: RANDOM FOREST
-2025-10-02 13:32:29 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:32:29 - MODEL 9 - INFO - Log file: models\..\..\report\logs\model_9_log.txt
-2025-10-02 13:32:29 - MODEL 9 - INFO - Output directory: models/model_9
-2025-10-02 13:32:29 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:32:29 - MODEL 9 - INFO - Model 9 initialized with 500 trees, max_depth=20
-2025-10-02 13:32:29 - MODEL 9 - INFO - 
-2025-10-02 13:32:29 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:32:29 - MODEL 9 - INFO - STARTING PIPELINE: RANDOM FOREST
-2025-10-02 13:32:29 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:32:29 - MODEL 9 - INFO - 
-2025-10-02 13:32:29 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:29 - MODEL 9 - INFO - LOADING DATA: FY2023-2024
-2025-10-02 13:32:29 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:29 - MODEL 9 - INFO - Loading data from data\cached\fy2023.pkl
-2025-10-02 13:32:29 - MODEL 9 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
-2025-10-02 13:32:30 - MODEL 9 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-02 13:32:30 - MODEL 9 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-02 13:32:31 - MODEL 9 - INFO - Loaded 67265 usable records
-2025-10-02 13:32:31 - MODEL 9 - INFO - 
-2025-10-02 13:32:31 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:31 - MODEL 9 - INFO - DATA SPLIT
-2025-10-02 13:32:31 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:31 - MODEL 9 - INFO - Training samples: 53812
-2025-10-02 13:32:31 - MODEL 9 - INFO - Test samples: 13453
-2025-10-02 13:32:31 - MODEL 9 - INFO - Split ratio: 20.0%
-2025-10-02 13:32:31 - MODEL 9 - INFO - 
-2025-10-02 13:32:31 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:31 - MODEL 9 - INFO - FEATURE PREPARATION
-2025-10-02 13:32:31 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:32 - MODEL 9 - INFO - Prepared 26 robust features for 53812 records
-2025-10-02 13:32:32 - MODEL 9 - INFO - Feature count: 26
-2025-10-02 13:32:32 - MODEL 9 - INFO - Prepared 26 robust features for 13453 records
-2025-10-02 13:32:32 - MODEL 9 - INFO - Feature count: 26
-2025-10-02 13:32:32 - MODEL 9 - INFO - Features prepared: 26 features
-2025-10-02 13:32:32 - MODEL 9 - INFO - 
-2025-10-02 13:32:32 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:32 - MODEL 9 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-02 13:32:32 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:32:32 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:32 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:32 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:36 - MODEL 9 - INFO -   OOB R^2: 0.4177
-2025-10-02 13:32:36 - MODEL 9 - INFO -   OOB Error: 0.5823
-2025-10-02 13:32:36 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:36 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:36 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:36 - MODEL 9 - INFO -     1. Age: 0.1344
-2025-10-02 13:32:36 - MODEL 9 - INFO -     2. BSum: 0.0949
-2025-10-02 13:32:36 - MODEL 9 - INFO -     3. Q36: 0.0940
-2025-10-02 13:32:36 - MODEL 9 - INFO -     4. Q26: 0.0820
-2025-10-02 13:32:36 - MODEL 9 - INFO -     5. PSum: 0.0633
-2025-10-02 13:32:36 - MODEL 9 - INFO -     6. FSum: 0.0618
-2025-10-02 13:32:36 - MODEL 9 - INFO -     7. Q28: 0.0534
-2025-10-02 13:32:36 - MODEL 9 - INFO -     8. Q27: 0.0481
-2025-10-02 13:32:36 - MODEL 9 - INFO -     9. Q25: 0.0341
-2025-10-02 13:32:36 - MODEL 9 - INFO -     10. Q18: 0.0329
-2025-10-02 13:32:36 - MODEL 9 - INFO -   Fold 1: R^2 = 0.3984
-2025-10-02 13:32:36 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:36 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:36 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:39 - MODEL 9 - INFO -   OOB R^2: 0.4167
-2025-10-02 13:32:39 - MODEL 9 - INFO -   OOB Error: 0.5833
-2025-10-02 13:32:39 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:39 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:39 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:39 - MODEL 9 - INFO -     1. Age: 0.1330
-2025-10-02 13:32:39 - MODEL 9 - INFO -     2. BSum: 0.0941
-2025-10-02 13:32:39 - MODEL 9 - INFO -     3. Q36: 0.0933
-2025-10-02 13:32:39 - MODEL 9 - INFO -     4. Q26: 0.0821
-2025-10-02 13:32:39 - MODEL 9 - INFO -     5. PSum: 0.0644
-2025-10-02 13:32:39 - MODEL 9 - INFO -     6. FSum: 0.0621
-2025-10-02 13:32:39 - MODEL 9 - INFO -     7. Q28: 0.0538
-2025-10-02 13:32:39 - MODEL 9 - INFO -     8. Q27: 0.0484
-2025-10-02 13:32:39 - MODEL 9 - INFO -     9. Q18: 0.0334
-2025-10-02 13:32:39 - MODEL 9 - INFO -     10. Q25: 0.0325
-2025-10-02 13:32:39 - MODEL 9 - INFO -   Fold 2: R^2 = 0.4142
-2025-10-02 13:32:39 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:39 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:39 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:43 - MODEL 9 - INFO -   OOB R^2: 0.4167
-2025-10-02 13:32:43 - MODEL 9 - INFO -   OOB Error: 0.5833
-2025-10-02 13:32:43 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:43 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:43 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:43 - MODEL 9 - INFO -     1. Age: 0.1346
-2025-10-02 13:32:43 - MODEL 9 - INFO -     2. BSum: 0.0943
-2025-10-02 13:32:43 - MODEL 9 - INFO -     3. Q36: 0.0930
-2025-10-02 13:32:43 - MODEL 9 - INFO -     4. Q26: 0.0824
-2025-10-02 13:32:43 - MODEL 9 - INFO -     5. PSum: 0.0634
-2025-10-02 13:32:43 - MODEL 9 - INFO -     6. FSum: 0.0632
-2025-10-02 13:32:43 - MODEL 9 - INFO -     7. Q28: 0.0537
-2025-10-02 13:32:43 - MODEL 9 - INFO -     8. Q27: 0.0477
-2025-10-02 13:32:43 - MODEL 9 - INFO -     9. Q18: 0.0332
-2025-10-02 13:32:43 - MODEL 9 - INFO -     10. Q25: 0.0327
-2025-10-02 13:32:43 - MODEL 9 - INFO -   Fold 3: R^2 = 0.4117
-2025-10-02 13:32:43 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:43 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:43 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:47 - MODEL 9 - INFO -   OOB R^2: 0.4171
-2025-10-02 13:32:47 - MODEL 9 - INFO -   OOB Error: 0.5829
-2025-10-02 13:32:47 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:47 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:47 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:47 - MODEL 9 - INFO -     1. Age: 0.1354
-2025-10-02 13:32:47 - MODEL 9 - INFO -     2. Q36: 0.0945
-2025-10-02 13:32:47 - MODEL 9 - INFO -     3. BSum: 0.0919
-2025-10-02 13:32:47 - MODEL 9 - INFO -     4. Q26: 0.0814
-2025-10-02 13:32:47 - MODEL 9 - INFO -     5. PSum: 0.0633
-2025-10-02 13:32:47 - MODEL 9 - INFO -     6. FSum: 0.0626
-2025-10-02 13:32:47 - MODEL 9 - INFO -     7. Q28: 0.0568
-2025-10-02 13:32:47 - MODEL 9 - INFO -     8. Q27: 0.0483
-2025-10-02 13:32:47 - MODEL 9 - INFO -     9. Q18: 0.0326
-2025-10-02 13:32:47 - MODEL 9 - INFO -     10. Q25: 0.0323
-2025-10-02 13:32:47 - MODEL 9 - INFO -   Fold 4: R^2 = 0.4141
-2025-10-02 13:32:47 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:47 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:47 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:51 - MODEL 9 - INFO -   OOB R^2: 0.4164
-2025-10-02 13:32:51 - MODEL 9 - INFO -   OOB Error: 0.5836
-2025-10-02 13:32:51 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:51 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:51 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:51 - MODEL 9 - INFO -     1. Age: 0.1343
-2025-10-02 13:32:51 - MODEL 9 - INFO -     2. BSum: 0.0976
-2025-10-02 13:32:51 - MODEL 9 - INFO -     3. Q36: 0.0937
-2025-10-02 13:32:51 - MODEL 9 - INFO -     4. Q26: 0.0814
-2025-10-02 13:32:51 - MODEL 9 - INFO -     5. FSum: 0.0636
-2025-10-02 13:32:51 - MODEL 9 - INFO -     6. PSum: 0.0627
-2025-10-02 13:32:51 - MODEL 9 - INFO -     7. Q28: 0.0560
-2025-10-02 13:32:51 - MODEL 9 - INFO -     8. Q27: 0.0477
-2025-10-02 13:32:51 - MODEL 9 - INFO -     9. Q18: 0.0338
-2025-10-02 13:32:51 - MODEL 9 - INFO -     10. Q25: 0.0324
-2025-10-02 13:32:51 - MODEL 9 - INFO -   Fold 5: R^2 = 0.4095
-2025-10-02 13:32:51 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:51 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:51 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:55 - MODEL 9 - INFO -   OOB R^2: 0.4160
-2025-10-02 13:32:55 - MODEL 9 - INFO -   OOB Error: 0.5840
-2025-10-02 13:32:55 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:55 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:55 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:55 - MODEL 9 - INFO -     1. Age: 0.1360
-2025-10-02 13:32:55 - MODEL 9 - INFO -     2. BSum: 0.0952
-2025-10-02 13:32:55 - MODEL 9 - INFO -     3. Q36: 0.0950
-2025-10-02 13:32:55 - MODEL 9 - INFO -     4. Q26: 0.0794
-2025-10-02 13:32:55 - MODEL 9 - INFO -     5. FSum: 0.0637
-2025-10-02 13:32:55 - MODEL 9 - INFO -     6. PSum: 0.0623
-2025-10-02 13:32:55 - MODEL 9 - INFO -     7. Q28: 0.0546
-2025-10-02 13:32:55 - MODEL 9 - INFO -     8. Q27: 0.0466
-2025-10-02 13:32:55 - MODEL 9 - INFO -     9. Q18: 0.0353
-2025-10-02 13:32:55 - MODEL 9 - INFO -     10. Q25: 0.0330
-2025-10-02 13:32:55 - MODEL 9 - INFO -   Fold 6: R^2 = 0.4200
-2025-10-02 13:32:55 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:55 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:55 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:32:58 - MODEL 9 - INFO -   OOB R^2: 0.4155
-2025-10-02 13:32:58 - MODEL 9 - INFO -   OOB Error: 0.5845
-2025-10-02 13:32:58 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:32:58 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:32:58 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:32:58 - MODEL 9 - INFO -     1. Age: 0.1341
-2025-10-02 13:32:58 - MODEL 9 - INFO -     2. Q36: 0.0942
-2025-10-02 13:32:58 - MODEL 9 - INFO -     3. BSum: 0.0894
-2025-10-02 13:32:58 - MODEL 9 - INFO -     4. Q26: 0.0827
-2025-10-02 13:32:58 - MODEL 9 - INFO -     5. PSum: 0.0633
-2025-10-02 13:32:58 - MODEL 9 - INFO -     6. FSum: 0.0619
-2025-10-02 13:32:58 - MODEL 9 - INFO -     7. Q28: 0.0548
-2025-10-02 13:32:58 - MODEL 9 - INFO -     8. Q27: 0.0506
-2025-10-02 13:32:58 - MODEL 9 - INFO -     9. Q18: 0.0340
-2025-10-02 13:32:58 - MODEL 9 - INFO -     10. Q25: 0.0339
-2025-10-02 13:32:59 - MODEL 9 - INFO -   Fold 7: R^2 = 0.4225
-2025-10-02 13:32:59 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:32:59 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:32:59 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:33:02 - MODEL 9 - INFO -   OOB R^2: 0.4148
-2025-10-02 13:33:02 - MODEL 9 - INFO -   OOB Error: 0.5852
-2025-10-02 13:33:02 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:33:02 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:33:02 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:33:02 - MODEL 9 - INFO -     1. Age: 0.1359
-2025-10-02 13:33:02 - MODEL 9 - INFO -     2. Q36: 0.0967
-2025-10-02 13:33:02 - MODEL 9 - INFO -     3. BSum: 0.0948
-2025-10-02 13:33:02 - MODEL 9 - INFO -     4. Q26: 0.0812
-2025-10-02 13:33:02 - MODEL 9 - INFO -     5. PSum: 0.0630
-2025-10-02 13:33:02 - MODEL 9 - INFO -     6. FSum: 0.0629
-2025-10-02 13:33:02 - MODEL 9 - INFO -     7. Q28: 0.0545
-2025-10-02 13:33:02 - MODEL 9 - INFO -     8. Q27: 0.0478
-2025-10-02 13:33:02 - MODEL 9 - INFO -     9. Q18: 0.0336
-2025-10-02 13:33:02 - MODEL 9 - INFO -     10. Q25: 0.0323
-2025-10-02 13:33:02 - MODEL 9 - INFO -   Fold 8: R^2 = 0.4234
-2025-10-02 13:33:02 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:33:02 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:33:02 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:33:06 - MODEL 9 - INFO -   OOB R^2: 0.4142
-2025-10-02 13:33:06 - MODEL 9 - INFO -   OOB Error: 0.5858
-2025-10-02 13:33:06 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:33:06 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:33:06 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:33:06 - MODEL 9 - INFO -     1. Age: 0.1355
-2025-10-02 13:33:06 - MODEL 9 - INFO -     2. BSum: 0.0962
-2025-10-02 13:33:06 - MODEL 9 - INFO -     3. Q36: 0.0927
-2025-10-02 13:33:06 - MODEL 9 - INFO -     4. Q26: 0.0826
-2025-10-02 13:33:06 - MODEL 9 - INFO -     5. PSum: 0.0639
-2025-10-02 13:33:06 - MODEL 9 - INFO -     6. FSum: 0.0632
-2025-10-02 13:33:06 - MODEL 9 - INFO -     7. Q28: 0.0539
-2025-10-02 13:33:06 - MODEL 9 - INFO -     8. Q27: 0.0496
-2025-10-02 13:33:06 - MODEL 9 - INFO -     9. Q25: 0.0324
-2025-10-02 13:33:06 - MODEL 9 - INFO -     10. Q23: 0.0314
-2025-10-02 13:33:06 - MODEL 9 - INFO -   Fold 9: R^2 = 0.4318
-2025-10-02 13:33:06 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:33:06 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:33:06 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:33:10 - MODEL 9 - INFO -   OOB R^2: 0.4155
-2025-10-02 13:33:10 - MODEL 9 - INFO -   OOB Error: 0.5845
-2025-10-02 13:33:10 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:33:10 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:33:10 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:33:10 - MODEL 9 - INFO -     1. Age: 0.1343
-2025-10-02 13:33:10 - MODEL 9 - INFO -     2. Q36: 0.0932
-2025-10-02 13:33:10 - MODEL 9 - INFO -     3. BSum: 0.0897
-2025-10-02 13:33:10 - MODEL 9 - INFO -     4. Q26: 0.0842
-2025-10-02 13:33:10 - MODEL 9 - INFO -     5. PSum: 0.0632
-2025-10-02 13:33:10 - MODEL 9 - INFO -     6. FSum: 0.0627
-2025-10-02 13:33:10 - MODEL 9 - INFO -     7. Q28: 0.0550
-2025-10-02 13:33:10 - MODEL 9 - INFO -     8. Q27: 0.0485
-2025-10-02 13:33:10 - MODEL 9 - INFO -     9. Q18: 0.0353
-2025-10-02 13:33:10 - MODEL 9 - INFO -     10. Q25: 0.0326
-2025-10-02 13:33:10 - MODEL 9 - INFO -   Fold 10: R^2 = 0.4198
-2025-10-02 13:33:10 - MODEL 9 - INFO - Mean R^2: 0.4166
-2025-10-02 13:33:10 - MODEL 9 - INFO - Std R^2: 0.0087
-2025-10-02 13:33:10 - MODEL 9 - INFO - 
-2025-10-02 13:33:10 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:10 - MODEL 9 - INFO - MODEL TRAINING
-2025-10-02 13:33:10 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:10 - MODEL 9 - INFO - Fitting Random Forest model...
-2025-10-02 13:33:10 - MODEL 9 - INFO -   Trees: 500, Max Depth: 20
-2025-10-02 13:33:10 - MODEL 9 - INFO -   Min samples split: 20, Min samples leaf: 10
-2025-10-02 13:33:14 - MODEL 9 - INFO -   OOB R^2: 0.4227
-2025-10-02 13:33:14 - MODEL 9 - INFO -   OOB Error: 0.5773
-2025-10-02 13:33:14 - MODEL 9 - INFO -   Mean tree depth: 20.0
-2025-10-02 13:33:14 - MODEL 9 - INFO -   Tree depth range: [20, 20]
-2025-10-02 13:33:14 - MODEL 9 - INFO - Top 10 features by importance:
-2025-10-02 13:33:14 - MODEL 9 - INFO -     1. Age: 0.1346
-2025-10-02 13:33:14 - MODEL 9 - INFO -     2. Q36: 0.0937
-2025-10-02 13:33:14 - MODEL 9 - INFO -     3. BSum: 0.0921
-2025-10-02 13:33:14 - MODEL 9 - INFO -     4. Q26: 0.0802
-2025-10-02 13:33:14 - MODEL 9 - INFO -     5. PSum: 0.0633
-2025-10-02 13:33:14 - MODEL 9 - INFO -     6. FSum: 0.0632
-2025-10-02 13:33:14 - MODEL 9 - INFO -     7. Q28: 0.0553
-2025-10-02 13:33:14 - MODEL 9 - INFO -     8. Q27: 0.0496
-2025-10-02 13:33:14 - MODEL 9 - INFO -     9. Q18: 0.0337
-2025-10-02 13:33:14 - MODEL 9 - INFO -     10. Q25: 0.0333
-2025-10-02 13:33:14 - MODEL 9 - INFO - Model training complete
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - MAKING PREDICTIONS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - Predictions complete
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - CALCULATING METRICS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - Training R^2: 0.5170
-2025-10-02 13:33:14 - MODEL 9 - INFO - Test R^2: 0.4160
-2025-10-02 13:33:14 - MODEL 9 - INFO - RMSE: $33,374.36
-2025-10-02 13:33:14 - MODEL 9 - INFO - MAE: $24,728.22
-2025-10-02 13:33:14 - MODEL 9 - INFO - MAPE: 84.15%
-2025-10-02 13:33:14 - MODEL 9 - INFO - CV R^2 (mean +- std): 0.4166 +- 0.0087
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - SUBGROUP ANALYSIS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-02 13:33:14 - MODEL 9 - INFO - Calculated metrics for 10 subgroups
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - VARIANCE ANALYSIS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - Variance metrics calculated
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - POPULATION SCENARIOS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - Calculated 5 population scenarios
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - GENERATING OUTPUTS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - LATEX GENERATION
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - LaTeX commands written to:
-2025-10-02 13:33:14 - MODEL 9 - INFO -   - ..\..\report\models\model_9\model_9_newcommands.tex
-2025-10-02 13:33:14 - MODEL 9 - INFO -   - ..\..\report\models\model_9\model_9_renewcommands.tex
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - SAVING RESULTS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - Results saved successfully
-2025-10-02 13:33:14 - MODEL 9 - INFO - Appended Model 9 specific commands to ..\..\report\models\model_9\model_9_newcommands.tex
-2025-10-02 13:33:14 - MODEL 9 - INFO - Appended Model 9 specific values to ..\..\report\models\model_9\model_9_renewcommands.tex
-2025-10-02 13:33:14 - MODEL 9 - INFO - Feature importances saved to ..\..\report\models\model_9\feature_importances.csv
-2025-10-02 13:33:14 - MODEL 9 - INFO - Tree statistics saved to ..\..\report\models\model_9\tree_statistics.json
-2025-10-02 13:33:14 - MODEL 9 - INFO - 
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:14 - MODEL 9 - INFO - GENERATING PLOTS
-2025-10-02 13:33:14 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:15 - MODEL 9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
-2025-10-02 13:33:15 - MODEL 9 - INFO - 
-2025-10-02 13:33:15 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:33:15 - MODEL 9 - INFO - PIPELINE COMPLETE: RANDOM FOREST
-2025-10-02 13:33:15 - MODEL 9 - INFO - ============================================================
-2025-10-02 13:33:15 - MODEL 9 - INFO - 
-2025-10-02 13:33:15 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:15 - MODEL 9 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-02 13:33:15 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:15 - MODEL 9 - INFO - Training R^2: 0.5170
-2025-10-02 13:33:15 - MODEL 9 - INFO - Test R^2: 0.4160
-2025-10-02 13:33:15 - MODEL 9 - INFO - RMSE: $33,374.36
-2025-10-02 13:33:15 - MODEL 9 - INFO - MAE: $24,728.22
-2025-10-02 13:33:15 - MODEL 9 - INFO - MAPE: 84.15%
-2025-10-02 13:33:15 - MODEL 9 - INFO - CV R^2 (mean +- std): 0.4166 +- 0.0087
-2025-10-02 13:33:15 - MODEL 9 - INFO - ------------------------------------------------------------
-2025-10-02 13:33:15 - MODEL 9 - INFO - 
-2025-10-02 13:33:15 - MODEL 9 - INFO - Generated files:
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - diagnostic_plots.png
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - features.txt
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - feature_importance.png
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - feature_importances.csv
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - metrics.json
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - model_9_newcommands.tex
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - model_9_renewcommands.tex
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - population_scenarios.json
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - predictions.csv
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - predictions.npz
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - subgroup_metrics.json
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - tree_statistics.json
-2025-10-02 13:33:15 - MODEL 9 - INFO -   - variance_metrics.json
+2025-10-07 11:31:22 - MODEL 9 - INFO - ============================================================
+2025-10-07 11:31:22 - MODEL 9 - INFO - INITIALIZING MODEL 9: RANDOM FOREST
+2025-10-07 11:31:22 - MODEL 9 - INFO - ============================================================
+2025-10-07 11:31:22 - MODEL 9 - INFO - Log file: models\..\..\report\logs\model_9_log.txt
+2025-10-07 11:31:22 - MODEL 9 - INFO - Output directory: models/model_9
+2025-10-07 11:31:22 - MODEL 9 - INFO - ============================================================
+2025-10-07 11:31:22 - MODEL 9 - INFO - Transformation: sqrt
+2025-10-07 11:31:22 - MODEL 9 - INFO - Model 9 Random Forest initialized
+2025-10-07 11:31:22 - MODEL 9 - INFO - Fiscal years: 2024
+2025-10-07 11:31:22 - MODEL 9 - INFO - Hyperparameters: n_estimators=500, max_depth=20
+2025-10-07 11:31:22 - MODEL 9 - INFO - ================================================================================
+2025-10-07 11:31:22 - MODEL 9 - INFO - Starting Model 9 Random Forest Pipeline
+2025-10-07 11:31:22 - MODEL 9 - INFO - Transformation: sqrt
+2025-10-07 11:31:22 - MODEL 9 - INFO - Random Seed: 42
+2025-10-07 11:31:22 - MODEL 9 - INFO - ================================================================================
+2025-10-07 11:31:22 - MODEL 9 - INFO - 
+2025-10-07 11:31:22 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:22 - MODEL 9 - INFO - LOADING DATA: FY2023-2024
+2025-10-07 11:31:22 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:22 - MODEL 9 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-07 11:31:22 - MODEL 9 - INFO - Found 46193 raw records in data\cached\fy2023.pkl
+2025-10-07 11:31:22 - MODEL 9 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-07 11:31:23 - MODEL 9 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-07 11:31:23 - MODEL 9 - INFO - Loaded 67265 usable records
+2025-10-07 11:31:23 - MODEL 9 - INFO - Filtered to FY2024 only: 34173 records
+2025-10-07 11:31:23 - MODEL 9 - INFO - 
+2025-10-07 11:31:23 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:23 - MODEL 9 - INFO - DATA SPLIT
+2025-10-07 11:31:23 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:23 - MODEL 9 - INFO - Training samples: 27339
+2025-10-07 11:31:24 - MODEL 9 - INFO - Test samples: 6834
+2025-10-07 11:31:24 - MODEL 9 - INFO - Split ratio: 20.0%
+2025-10-07 11:31:24 - MODEL 9 - INFO - Data split with random_state=42
+2025-10-07 11:31:24 - MODEL 9 - INFO - Prepared features: 27339 samples, 19 features
+2025-10-07 11:31:24 - MODEL 9 - INFO - Features used: LivingSetting_ILSL, LivingSetting_RH1, LivingSetting_RH2, LivingSetting_RH3, LivingSetting_RH4, AgeGroup_21_30, AgeGroup_31Plus, Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43, BSum, FSum
+2025-10-07 11:31:24 - MODEL 9 - INFO - Prepared features: 6834 samples, 19 features
+2025-10-07 11:31:24 - MODEL 9 - INFO - Features used: LivingSetting_ILSL, LivingSetting_RH1, LivingSetting_RH2, LivingSetting_RH3, LivingSetting_RH4, AgeGroup_21_30, AgeGroup_31Plus, Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43, BSum, FSum
+2025-10-07 11:31:24 - MODEL 9 - INFO - Applying sqrt transformation to costs...
+2025-10-07 11:31:24 - MODEL 9 - INFO - Performing 10-fold cross-validation...
+2025-10-07 11:31:24 - MODEL 9 - INFO -   Fold 1/10: R^2 = 0.2869
+2025-10-07 11:31:25 - MODEL 9 - INFO -   Fold 2/10: R^2 = 0.2865
+2025-10-07 11:31:26 - MODEL 9 - INFO -   Fold 3/10: R^2 = 0.2795
+2025-10-07 11:31:32 - MODEL 9 - INFO - Cross-validation R^2: 0.2724 +- 0.0138
+2025-10-07 11:31:32 - MODEL 9 - INFO - Fitting Random Forest model...
+2025-10-07 11:31:33 - MODEL 9 - INFO - Random Forest fitted with 500 trees
+2025-10-07 11:31:33 - MODEL 9 - INFO - Training completed in 1.42 seconds
+2025-10-07 11:31:33 - MODEL 9 - INFO - Top 5 features by importance:
+2025-10-07 11:31:33 - MODEL 9 - INFO -   1. Q36: 0.2074
+2025-10-07 11:31:33 - MODEL 9 - INFO -   2. BSum: 0.1737
+2025-10-07 11:31:33 - MODEL 9 - INFO -   3. AgeGroup_31Plus: 0.1033
+2025-10-07 11:31:33 - MODEL 9 - INFO -   4. Q28: 0.0925
+2025-10-07 11:31:33 - MODEL 9 - INFO -   5. FSum: 0.0794
+2025-10-07 11:31:33 - MODEL 9 - INFO - OOB R^2: 0.3056, OOB RMSE: $38,332.97
+2025-10-07 11:31:33 - MODEL 9 - INFO - Mean tree depth: 20.0
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - CALCULATING METRICS
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - Training R^2: 0.3402
+2025-10-07 11:31:33 - MODEL 9 - INFO - Test R^2: 0.2688
+2025-10-07 11:31:33 - MODEL 9 - INFO - RMSE: $38,188.52
+2025-10-07 11:31:33 - MODEL 9 - INFO - MAE: $27,467.97
+2025-10-07 11:31:33 - MODEL 9 - INFO - MAPE: 84.01%
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - SUBGROUP ANALYSIS
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-07 11:31:33 - MODEL 9 - INFO - Calculated metrics for 10 subgroups
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - VARIANCE ANALYSIS
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - Variance metrics calculated
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - POPULATION SCENARIOS
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - Calculated 5 population scenarios
+2025-10-07 11:31:33 - MODEL 9 - INFO - 
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - SAVING RESULTS
+2025-10-07 11:31:33 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:33 - MODEL 9 - INFO - Results saved successfully
+2025-10-07 11:31:33 - MODEL 9 - INFO - Generating diagnostic plots...
+2025-10-07 11:31:35 - MODEL 9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
+2025-10-07 11:31:35 - MODEL 9 - INFO - 
+2025-10-07 11:31:35 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:35 - MODEL 9 - INFO - LATEX GENERATION
+2025-10-07 11:31:35 - MODEL 9 - INFO - ------------------------------------------------------------
+2025-10-07 11:31:35 - MODEL 9 - INFO - LaTeX commands written to:
+2025-10-07 11:31:35 - MODEL 9 - INFO -   - ..\..\report\models\model_9\model_9_newcommands.tex
+2025-10-07 11:31:35 - MODEL 9 - INFO -   - ..\..\report\models\model_9\model_9_renewcommands.tex
+2025-10-07 11:31:35 - MODEL 9 - INFO - Adding Model 9 specific LaTeX commands...
+2025-10-07 11:31:35 - MODEL 9 - INFO - Model 9 specific commands added successfully
+2025-10-07 11:31:35 - MODEL 9 - INFO - ================================================================================
+2025-10-07 11:31:35 - MODEL 9 - INFO - Model 9 Random Forest Pipeline Complete
+2025-10-07 11:31:35 - MODEL 9 - INFO - ================================================================================
