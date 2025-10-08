@@ -41,7 +41,6 @@ DECLARE @BatchSize INT = 100000;  -- Adjust batch size as needed
 DECLARE @RowsUpdated INT = 0;
 DECLARE @TotalRows INT = 0;
 DECLARE @ProgressCount INT = 0;
-DECLARE @FinalCount INT = 0;
 
 -- Get total count of records to update
 SELECT @TotalRows = COUNT(*)
@@ -93,6 +92,8 @@ BEGIN
 END
 
 -- Get final count
+DECLARE @FinalCount INT = 0;
+
 SELECT @FinalCount = COUNT(*) FROM [dbo].[tbl_Claims_MMIS] WHERE Age IS NOT NULL;
 
 PRINT 'Age field population completed. Total rows updated: ' + CAST(@FinalCount AS VARCHAR(10));
@@ -143,6 +144,4 @@ SELECT
 FROM [dbo].[tbl_Claims_MMIS];
 
 
-
-Model 1 - Final Chapter Version
 

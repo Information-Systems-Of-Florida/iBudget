@@ -81,22 +81,18 @@ class Model2GLMGamma(BaseiBudgetModel):
     ]
     
     def __init__(self, use_selected_features: bool = True, 
-                 use_fy2024_only: bool = True,
                  random_state: int = 42):
         """
         Initialize Model 2
         
         Args:
             use_selected_features: Whether to use MI-based feature selection
-            use_fy2024_only: Whether to use only fiscal year 2024 data
             random_state: Random state for reproducibility
         """
         super().__init__(model_id=2, model_name="GLM-Gamma")
         
         # Configuration
         self.use_selected_features = use_selected_features
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2020-2025"
         self.random_state = random_state
         
         # GLM-specific attributes
@@ -114,24 +110,20 @@ class Model2GLMGamma(BaseiBudgetModel):
         # Feature importance from GLM
         self.feature_importance = {}
         
-        logger.info(f"Model 2 initialized: feature_selection={use_selected_features}, fy2024_only={use_fy2024_only}")
+        logger.info(f"Model 2 initialized: feature_selection={use_selected_features},")
     
     def load_data(self, fiscal_year_start: int = 2023, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
         """
         Load data for Model 2
         
         Args:
-            fiscal_year_start: Start fiscal year (ignored if use_fy2024_only=True)
-            fiscal_year_end: End fiscal year (ignored if use_fy2024_only=True)
+            fiscal_year_start: Start fiscal year 
+            fiscal_year_end: End fiscal year 
             
         Returns:
             List of consumer records
         """
-        if self.use_fy2024_only:
-            # Force FY2024 only
-            return super().load_data(fiscal_year_start=2024, fiscal_year_end=2024)
-        else:
-            return super().load_data(fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
+        return super().load_data(fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -712,7 +704,6 @@ class Model2GLMGamma(BaseiBudgetModel):
             'bic': float(self.bic) if self.bic else None,
             'num_parameters': int(self.num_parameters),
             'feature_selection': self.use_selected_features,
-            'fiscal_years': self.fiscal_years_used,
             'feature_importance': {k: float(v) for k, v in self.feature_importance.items()} if self.feature_importance else {}
         }
         
@@ -741,14 +732,13 @@ def main():
     # Initialize model with feature selection
     model = Model2GLMGamma(
         use_selected_features=True,  # Use MI-based feature selection
-        use_fy2024_only=True,        # Use only FY2024 data
         random_state=42              # For reproducibility
     )
     
     # Run complete pipeline
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,  # Ignored due to use_fy2024_only=True
-        fiscal_year_end=2024,    # Ignored due to use_fy2024_only=True
+        fiscal_year_start=2024,  
+        fiscal_year_end=2024,    
         test_size=0.2,
         perform_cv=True,
         n_cv_folds=10
@@ -761,7 +751,6 @@ def main():
     
     print("\nConfiguration:")
     print(f"  • Feature Selection: {model.use_selected_features}")
-    print(f"  • Fiscal Years: {model.fiscal_years_used}")
     print(f"  • Number of Features: {len(model.feature_names)}")
     print(f"  • Distribution: Gamma")
     print(f"  • Link Function: Log")

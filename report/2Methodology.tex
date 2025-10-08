@@ -1,660 +1,679 @@
 \chapter{Methodology}
 
-% Include dynamically generated statistics
-\input{data_quality_commands.tex}
 
-\section{Overview}
+\section{Introduction}
 
-This chapter presents the comprehensive methodology for calibrating and evaluating ten alternative models for the Florida iBudget algorithm. The framework addresses significant data quality challenges, implements sophisticated outlier detection strategies, and ensures reproducibility through a unified pipeline architecture. The approach balances statistical rigor with practical constraints imposed by incomplete longitudinal data and irregular service utilization patterns.
+The Florida iBudget algorithm represents a critical component of the state's developmental disability services infrastructure, determining individual budget allocations for Home and Community-Based Services (HCBS) under the Developmental Disabilities Individual Budgeting waiver program. This system currently serves over 36,000 enrollees, making algorithmic decisions that directly impact the quality of life and service access for individuals with developmental disabilities across Florida. The algorithm's role extends beyond mere budget calculation; it fundamentally shapes how resources are distributed, what services individuals can access, and how person-centered planning principles are implemented in practice.
 
-% ⚠ ======================================== ⚠ 
-% ⚠  DO *NOT* EDIT data_quality_commands.tex ⚠ 
-% ⚠  DO *NOT* EDIT data_quality_analysis.tex ⚠ 
-% ⚠ ======================================== ⚠ 
-% These files are produced by executing the program Outliers.py
-% Any change in those files will be lost with every execution of the analysis pipeline 
-\input{data_quality_commands.tex}
-\input{data_quality_analysis.tex}
-% ⚠ ======================================== ⚠ 
+The enactment of House Bill 1103 in the 2025 legislative session has fundamentally altered the regulatory landscape for iBudget allocation methodologies. This legislation mandates a comprehensive study to review, evaluate, and identify recommendations regarding the current algorithm, with particular emphasis on ensuring compliance with person-centered planning requirements under section 393.0662, Florida Statutes. The bill's requirements extend beyond simple algorithmic refinement, demanding a fundamental reassessment of how statistical methods align with person-centered planning principles and contemporary disability services philosophy.
 
-\section{Data Quality and Exclusion Strategy}
+This analysis addresses three interconnected questions that form the foundation for algorithm evaluation and redesign. 
 
-\subsection{Data Availability Assessment}
-
-The initial data quality analysis examined \TheTotalNumberCustomers{} unique customers in the Agency for Persons with Disabilities (APD) database, spanning fiscal years \TheInitialYear{} through \TheFinalYear{}. Each fiscal year runs from September 1 through August 31, creating potential complications when Questionnaire for Situational Information (QSI) assessments occur mid-year.
-
-The outlier analysis revealed substantial data quality challenges:
-\begin{itemize}
-    \item \textbf{\CustomerNumberOneYear{} customers (\CustomerPctOneYear\%)} have at least one fiscal year of usable data
-    \item \textbf{\CustomerNumberTwoPlusYear{} customers (\CustomerPctTwoPlusYear\%)} have two or more years suitable for trajectory modeling
-    \item \textbf{\CustomerNumberNoData{} customers (\CustomerPctNoData\%)} have no usable data after applying quality criteria
-\end{itemize}
-
-\subsection{Exclusion Criteria}
-
-Customer-fiscal year records are excluded from calibration if they exhibit any of the following characteristics:
-
-\begin{enumerate}
-    \item \textbf{Mid-year QSI changes}: Multiple QSI assessments within a single fiscal year create ambiguity in attributing costs to specific QSI scores
-    \item \textbf{Late entry}: Customers entering the system more than 30 days after fiscal year start
-    \item \textbf{Early exit}: Customers leaving the system more than 30 days before fiscal year end
-    \item \textbf{Zero or negative costs}: Records with \$0 or negative total paid amounts
-    \item \textbf{Insufficient service days}: Fewer than 30 service days within the fiscal year
-    \item \textbf{Missing QSI assessment}: No QSI assessment linked to the fiscal year
-\end{enumerate}
-
-This conservative approach prioritizes data quality over quantity, ensuring that model calibration uses only complete, unambiguous customer-year records.
-
-% ⚠ ===================================== ⚠ 
-% ⚠  DO *NOT* EDIT proration_commands.tex ⚠ 
-% ⚠  DO *NOT* EDIT proration_analysis.tex ⚠ 
-% ⚠ ===================================== ⚠ 
-% These file are produced by executing the program ProrationAnalysis.py
-% Any change in those files will be lost with every execution of the analysis pipeline 
-\input{proration_commands.tex}
-\input{proration_analysis.tex}
-% ⚠ ===================================== ⚠ 
-
-\section{Modeling Framework Architecture}
-
-\subsection{Two-Track Trajectory Modeling}
-
-Given that only \CustomerPctTwoPlusYear\% of customers have sufficient multi-year data for individual trajectory calculation, we implement a dual-track approach:
-
-\subsubsection{Track A: Individual Trajectories}
-For the \CustomerNumberTwoPlusYear{} customers with two or more years of usable data:
-\begin{enumerate}
-    \item Calculate individual linear cost trajectories using ordinary least squares
-    \item Store intercept, slope, $R^2$, and years used for each customer
-    \item Apply trajectory: $\text{Cost}_{t+k} = \text{Base}_t + k \times \text{Slope}_i$
-\end{enumerate}
-
-\subsubsection{Track B: Cluster-Based Trajectories}
-For the remaining customers with single-year data:
-\begin{enumerate}
-    \item Perform K-means clustering on standardized QSI variables and demographics
-    \item Assign each customer to their nearest cluster centroid
-    \item Inherit the average slope from Track A customers within the same cluster
-    \item If cluster contains fewer than 10 Track A customers, use broader grouping
-\end{enumerate}
-
-\subsection{Model Calibration Pipeline}
-
-Each of the ten alternative models follows a standardized calibration process:
-
-\begin{enumerate}
-    \item \textbf{Feature Preparation}: Apply model-specific transformations and feature engineering
-    \item \textbf{Outlier Removal}: Implement model-specific outlier detection (0-10\% removal)
-    \item \textbf{Model Fitting}: Train on 80\% of data, stratified by living setting
-    \item \textbf{Cross-Validation}: Perform 10-fold stratified cross-validation
-    \item \textbf{Trajectory Integration}: Combine base predictions with trajectory adjustments
-    \item \textbf{Validation}: Evaluate on 20\% holdout test set
-\end{enumerate}
-
-\subsection{Master Pipeline Architecture}
-
-The entire framework operates through a single master script (\texttt{main\_pipeline.py}) that orchestrates all components:
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=1.5cm, auto]
-    % Define styles
-    \tikzstyle{process} = [rectangle, draw, text width=4cm, text centered, minimum height=0.8cm, fill=blue!10]
-    \tikzstyle{data} = [rectangle, rounded corners, draw, text width=3cm, text centered, fill=green!10]
-    \tikzstyle{arrow} = [thick,->,>=stealth]
-    
-    % Nodes
-    \node [data] (raw) {Raw Claims \& QSI Data};
-    \node [process, below of=raw] (quality) {Data Quality Analysis};
-    \node [process, below of=quality] (proration) {Proration Feasibility};
-    \node [process, below of=proration] (prep) {Data Preparation};
-    \node [process, below of=prep] (trajectory) {Trajectory Calculation};
-    \node [process, below of=trajectory] (models) {Model Calibration (×10)};
-    \node [process, below of=models] (compare) {Comparison Analysis};
-    \node [data, below of=compare] (report) {LaTeX Report};
-    
-    % Arrows
-    \draw [arrow] (raw) -- (quality);
-    \draw [arrow] (quality) -- (proration);
-    \draw [arrow] (proration) -- (prep);
-    \draw [arrow] (prep) -- (trajectory);
-    \draw [arrow] (trajectory) -- (models);
-    \draw [arrow] (models) -- (compare);
-    \draw [arrow] (compare) -- (report);
-\end{tikzpicture}
-\caption{Master pipeline architecture showing sequential processing stages}
-\end{figure}
-
-\section{Individual Model Specifications}
-
-\subsection{Model Portfolio}
-
-The framework evaluates ten alternative models, each with distinct theoretical foundations and assumptions:
-
-\begin{enumerate}
-    \item \textbf{Current Algorithm Updated}: Square-root transformation with outlier removal
-    \item \textbf{GLM-Gamma}: Generalized linear model with gamma distribution and log link
-    \item \textbf{Robust Linear Regression}: Huber regression resistant to outliers
-    \item \textbf{Weighted Least Squares}: Heteroscedasticity correction through variance weighting
-    \item \textbf{Ridge Regression}: L2-regularized regression for multicollinearity
-    \item \textbf{Log-Normal}: Linear regression with logarithmic transformation
-    \item \textbf{Quantile Regression}: Median-based estimation robust to outliers
-    \item \textbf{Bayesian Linear}: Uncertainty quantification through posterior distributions
-    \item \textbf{Principal Component Regression}: Dimensionality reduction before regression
-    \item \textbf{Deep Learning Network}: Multi-layer neural network for non-linear patterns
-\end{enumerate}
-
-\subsection{Common Features}
-
-All models utilize a consistent set of input features:
-\begin{itemize}
-    \item \textbf{Demographics}: Age groups (0-20, 21-30, 31+)
-    \item \textbf{Living Settings}: Family home, independent/supported living, residential homes (1-4)
-    \item \textbf{QSI Variables}: Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43
-    \item \textbf{Sum Scores}: BSum, FHFSum, SLFSum, SLBSum
-    \item \textbf{Temporal}: Fiscal year as numeric feature
-\end{itemize}
-
-\section{Validation Strategy}
-
-\subsection{Dual Validation Approach}
-
-Models undergo two complementary validation strategies:
-
-\subsubsection{Temporal Validation}
-\begin{itemize}
-    \item Training: Fiscal years 2018-2022
-    \item Testing: Fiscal years 2023-2024
-    \item Metrics: Year-ahead prediction accuracy
-\end{itemize}
-
-\subsubsection{Cross-Sectional Validation}
-\begin{itemize}
-    \item 80/20 train-test split stratified by living setting
-    \item 10-fold cross-validation on training set
-    \item Bootstrap confidence intervals (100 iterations)
-\end{itemize}
-
-\subsection{Performance Metrics}
-
-Each model is evaluated using comprehensive metrics:
-\begin{itemize}
-    \item \textbf{Regression accuracy}: $R^2$, adjusted $R^2$, RMSE, MAE, MAPE
-    \item \textbf{Model selection}: AIC, BIC
-    \item \textbf{Robustness}: Performance by demographic subgroups
-    \item \textbf{Trajectory accuracy}: Multi-year prediction errors
-    \item \textbf{Fairness}: Disparate impact analysis across protected classes
-\end{itemize}
-
-\section{Reproducibility and Quality Assurance}
-
-\subsection{Configuration Management}
-
-All parameters are externalized in JSON configuration files:
-\begin{itemize}
-    \item \texttt{master\_config.json}: Global settings, paths, and thresholds
-    \item \texttt{model\_configs/}: Individual model hyperparameters
-    \item Version control through Git ensures configuration tracking
-\end{itemize}
-
-\subsection{Reproducibility Features}
-
-\begin{enumerate}
-    \item \textbf{Random seed control}: Fixed seed (42) for all stochastic operations
-    \item \textbf{Checkpoint system}: Intermediate results saved for debugging/restart
-    \item \textbf{Comprehensive logging}: Detailed logs at each pipeline stage
-    \item \textbf{Data versioning}: MD5 checksums for input data files
-    \item \textbf{Environment specification}: Docker container for consistent execution
-\end{enumerate}
-
-\subsection{Quality Checks}
-
-Automated quality checks ensure data and model integrity:
-\begin{itemize}
-    \item Verification that excluded records match documented criteria
-    \item Comparison of model coefficients against expected ranges
-    \item Detection of data leakage between train and test sets
-    \item Validation of LaTeX output compilation
-    \item Performance regression tests against baseline metrics
-\end{itemize}
 
 \section{Technical Architecture and Implementation Framework}
 
 \subsection{System Architecture Overview}
 
-The iBudget model calibration framework implements a hierarchical object-oriented architecture designed for extensibility, reproducibility, and maintainability. The system employs the Template Method design pattern, where a base abstract class defines the algorithmic skeleton while allowing derived classes to override specific steps.
+The iBudget model calibration framework implements an object-oriented architecture designed for extensibility, reproducibility, and maintainability. The system employs the Template Method design pattern, where a base abstract class (\texttt{BaseiBudgetModel}) defines the algorithmic skeleton while allowing derived model classes to override specific steps for their unique implementations.
 
 \subsection{Class Hierarchy and Design Patterns}
 
 \subsubsection{Base Abstract Class}
 
-The \texttt{BaseISFModel} abstract class serves as the foundation for all ten alternative models. It enforces a consistent interface while allowing model-specific implementations:
+The \texttt{BaseiBudgetModel} abstract class (in \texttt{base\_model.py}) serves as the foundation for all ten alternative models. It enforces a consistent interface while allowing model-specific implementations:
 
 \begin{verbatim}
-class BaseISFModel(ABC):
-    def __init__(self, model_id: int, model_name: str, config: Dict)
+class BaseiBudgetModel(ABC):
+    def __init__(self, model_id: int, model_name: str)
+    
+    # Abstract methods requiring implementation
+    @abstractmethod
+    def prepare_features(self, records: List[ConsumerRecord]) 
+        -> Tuple[np.ndarray, List[str]]
     
     @abstractmethod
-    def prepare_features(self, data: pd.DataFrame) -> pd.DataFrame
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None
     
     @abstractmethod
-    def build_model(self) -> None
-    
-    @abstractmethod
-    def get_model_specific_params(self) -> Dict[str, Any]
+    def predict(self, X: np.ndarray) -> np.ndarray
     
     # Concrete methods shared across all models
-    def fit(self, X_train, y_train) -> 'BaseISFModel'
-    def predict(self, X: pd.DataFrame) -> np.ndarray
-    def evaluate(self, X_test, y_test) -> Dict[str, float]
-    def cross_validate(self, X, y, cv=10) -> Dict[str, Any]
-    def generate_diagnostic_plots(self, X_test, y_test) -> None
-    def to_tex(self, output_path: Optional[Path]) -> Path
-    def save_metrics(self) -> None
+    def load_data(self, cache_file: Path) -> List[ConsumerRecord]
+    def split_data(self, test_size: float = 0.2) -> None
+    def calculate_metrics(self) -> Dict[str, float]
+    def calculate_subgroup_metrics(self) -> Dict[str, Dict[str, float]]
+    def perform_cross_validation(self, n_folds: int = 10) 
+        -> Dict[str, Any]
+    def generate_diagnostic_plots(self) -> None
+    def generate_latex_commands(self) -> None
+    def save_results(self) -> None
+    def run_complete_pipeline(self, fiscal_year_start: int, 
+                            fiscal_year_end: int) -> Dict[str, Any]
+\end{verbatim}
+
+\subsubsection{Consumer Record Data Structure}
+
+The framework uses a standardized \texttt{ConsumerRecord} dataclass to represent individual client records with comprehensive demographic, clinical, and cost data:
+
+\begin{verbatim}
+@dataclass
+class ConsumerRecord:
+    # Identifiers
+    case_no: int
+    fiscal_year: int
+    
+    # Demographics
+    age: int
+    gender: str
+    age_group: str  # Age3_20, Age21_30, Age31Plus
+    living_setting: str  # FH, ILSL, RH1-RH4
+    county: str
+    district: str
+    region: str
+    
+    # Clinical information
+    primary_diagnosis: str
+    secondary_diagnosis: str
+    
+    # Cost and utilization
+    total_cost: float
+    service_days: int
+    unique_procedures: int
+    unique_providers: int
+    
+    # QSI Assessment Scores
+    bsum: float  # Behavioral sum (Q25-Q30)
+    fsum: float  # Functional sum (Q14-Q24)
+    psum: float  # Physical sum (Q32-Q50)
+    fhfsum: float  # Family Home/Foster sum
+    slfsum: float  # Supported Living Functional sum
+    slbsum: float  # Supported Living Behavioral sum
+    
+    # Individual QSI questions (q14-q51a)
+    # Data quality flags
+    late_entry: bool
+    early_exit: bool
+    has_multiple_qsi: bool
+    usable: bool
 \end{verbatim}
 
 \subsubsection{Derived Model Classes}
 
-Each alternative model extends \texttt{BaseISFModel} with specific implementations:
+Each alternative model extends \texttt{BaseiBudgetModel} with specific implementations. The actual model files are:
 
 \begin{itemize}
-    \item \textbf{Alternative1Model}: Implements square-root transformation with percentile-based outlier removal
-    \item \textbf{Alternative2Model}: GLM with Gamma family using statsmodels or sklearn's TweedieRegressor
-    \item \textbf{Alternative3Model}: HuberRegressor for robust regression
-    \item \textbf{Alternative4Model}: Weighted Least Squares with heteroscedasticity correction
-    \item \textbf{Alternative5Model}: RidgeCV with cross-validated alpha selection
-    \item \textbf{Alternative6Model}: Log-normal regression with smearing adjustment
-    \item \textbf{Alternative7Model}: Quantile regression for median estimation
-    \item \textbf{Alternative8Model}: BayesianRidge for uncertainty quantification
-    \item \textbf{Alternative9Model}: PCA-based dimensionality reduction pipeline
-    \item \textbf{Alternative10Model}: Neural network using Keras/TensorFlow or MLPRegressor
+    \item \textbf{model\_1\_current.py}: Square-root transformation with 9.4\% percentile-based outlier removal
+    \item \textbf{model\_2\_gamma.py}: GLM with Gamma family and log link function
+    \item \textbf{model\_3\_robust.py}: Huber Regressor for robust regression
+    \item \textbf{model\_4\_wls.py}: Weighted Least Squares with heteroscedasticity correction
+    \item \textbf{model\_5\_ridge.py}: Ridge regression with cross-validated alpha selection
+    \item \textbf{model\_6\_lognormal.py}: Log-normal regression with Duan's smearing retransformation
+    \item \textbf{model\_6\_elasticnet.py}: Elastic Net with combined L1/L2 regularization
+    \item \textbf{model\_7\_quantile.py}: Quantile regression for median estimation
+    \item \textbf{model\_8\_bayesian.py}: Bayesian Ridge for uncertainty quantification
+    \item \textbf{model\_9\_random\_forest.py}: Random Forest ensemble method
+    \item \textbf{model\_10\_neural.py}: Neural network using Keras/TensorFlow or MLPRegressor
 \end{itemize}
 
 \subsection{Directory Structure}
 
-The project follows a modular directory structure that separates code, configuration, data, and outputs:
+The project follows this actual directory structure:
 
 \begin{verbatim}
 iBudget/
-├── script/                          # All Python code
-│   ├── main_pipeline.py            # Master orchestration script
-│   ├── data_quality/
-│   │   ├── outlier_analysis.py     # Outlier detection and statistics
-│   │   └── proration_analysis.py   # Monthly cost distribution analysis
+├── script/                          # Python code and execution
 │   ├── models/
-│   │   ├── __init__.py
 │   │   ├── base_model.py           # Abstract base class
-│   │   ├── alternative_1.py        # Current algorithm updated
-│   │   ├── alternative_2.py        # GLM Gamma
-│   │   ├── alternative_3.py        # Robust regression
-│   │   ├── alternative_4.py        # Weighted least squares
-│   │   ├── alternative_5.py        # Ridge regression
-│   │   ├── alternative_6.py        # Log-normal
-│   │   ├── alternative_7.py        # Quantile regression
-│   │   ├── alternative_8.py        # Bayesian linear
-│   │   ├── alternative_9.py        # Principal component regression
-│   │   └── alternative_10.py       # Deep learning network
-│   ├── trajectory/
-│   │   ├── calculator.py           # Individual trajectory calculation
-│   │   └── clustering.py           # QSI-based clustering for imputation
-│   ├── utils/
-│   │   ├── database.py             # Database connection utilities
-│   │   ├── metrics.py              # Performance metric calculations
-│   │   └── visualization.py        # Common plotting functions
-│   └── configs/
-│       ├── master_config.json      # Global configuration
-│       └── model_configs/          # Individual model parameters
-│           ├── model_1_config.json
-│           └── ...
+│   │   ├── model_1_current.py      # Current algorithm updated
+│   │   ├── model_2_gamma.py        # GLM Gamma
+│   │   ├── model_3_robust.py       # Robust regression
+│   │   ├── model_4_wls.py          # Weighted least squares
+│   │   ├── model_5_ridge.py        # Ridge regression
+│   │   ├── model_6_lognormal.py    # Log-normal
+│   │   ├── model_6_elasticnet.py   # Elastic Net
+│   │   ├── model_7_quantile.py     # Quantile regression
+│   │   ├── model_8_bayesian.py     # Bayesian Ridge
+│   │   ├── model_9_random_forest.py # Random Forest
+│   │   └── model_10_neural.py      # Neural Network
+│   ├── APDSampleImport.py          # Sample data import
+│   ├── CacheCreation.py            # Pickle cache generation
+│   ├── CacheSummary.py             # Cache data inspection
+│   ├── FeatureSelection.py         # Feature importance analysis
+│   ├── outliers.py                 # Outlier detection analysis
+│   ├── ProrationAnalysis.py        # Monthly cost distribution analysis
+│   ├── metadata.py                 # Data dictionary generation
+│   ├── Model5bRecalibration.py     # Final model recalibration
+│   └── Model5bRecalibratedExecution.py  # Production execution
 ├── report/                          # LaTeX and output files
-│   ├── iBudget.tex                 # Main document
+│   ├── iBudgetReport.tex           # Main document
 │   ├── 0.1.config.tex              # Document configuration
-│   ├── Methodology.tex             # This methodology chapter
+│   ├── 0.2.FrontMatter.tex         # Title and TOC
+│   ├── 1Introduction.tex           # Introduction chapter
+│   ├── 2FeatureSelection.tex       # Feature selection chapter
+│   ├── 2Methodology.tex            # Methodology chapter
+│   ├── 2PreviousAlgorithm.tex      # Historical context
+│   ├── 3AlternativeAlgorithms.tex  # Alternative models overview
+│   ├── 3Alternative-[1-10]-*.tex   # Individual model chapters
+│   ├── 4Implementation.tex         # Implementation chapter
+│   ├── 5Appendix.tex               # Appendix with code listings
+│   ├── APD_metadata.tex            # Data dictionary
+│   ├── data_quality_analysis.tex   # Data quality findings
 │   ├── data_quality_commands.tex   # Dynamic statistics
+│   ├── proration_analysis.tex      # Proration analysis
 │   ├── proration_commands.tex      # Proration statistics
-│   ├── figures/                    # All generated plots
+│   ├── figures/                    # Generated plots and visualizations
 │   ├── models/                     # Model-specific outputs
-│   │   ├── alternative_1/
-│   │   │   ├── Alternative_1_calibrated.tex
-│   │   │   ├── plots/
-│   │   │   └── metrics.json
-│   │   └── ...
-│   └── comparison/                 # Cross-model comparisons
-│       ├── model_comparison_master.tex
-│       └── comparative_plots/
-├── data/                            # Data storage
-│   ├── raw/                        # Original data files
-│   ├── processed/                  # Cleaned datasets
-│   └── intermediate/               # Checkpoint saves
-└── logs/                            # Execution logs
-    └── pipeline_YYYYMMDD_HHMMSS.log
+│   │   ├── model_1/
+│   │   │   ├── model_1_newcommands.tex      # Command definitions
+│   │   │   ├── model_1_renewcommands.tex    # Command values
+│   │   │   ├── diagnostic_plots.png         # Six-panel diagnostics
+│   │   │   ├── predictions.pkl              # Saved predictions
+│   │   │   └── metrics.json                 # Performance metrics
+│   │   └── [model_2 through model_10 similar structure]
+│   └── logs/                       # Execution logs and outputs
+│       ├── model_1_log.txt         # Model 1 execution log
+│       ├── model_1_current_ascii.py # ASCII version for LaTeX
+│       ├── FeatureSelection.txt    # Feature selection output
+│       ├── FeatureSelectionCommands.tex # Feature LaTeX commands
+│       └── TopFeaturesTable.tex    # Top features table
+├── data/                            # Data cache files
+│   └── cache_FY[YYYY].pkl          # Pickled consumer records by FY
+├── assets/                          # Project documentation
+│   ├── DatabaseDDL.txt             # Database schema
+│   ├── DataDictionary.txt          # Variable definitions
+│   └── ModelingTemplate.txt        # Modeling instructions
+└── SQL/                             # SQL scripts and schema
+    └── DatabaseDDL.txt             # Database creation scripts
 \end{verbatim}
 
-\subsection{Configuration Management}
+\subsection{Model Execution Workflow}
 
-\subsubsection{Master Configuration Structure}
+\subsubsection{Individual Model Execution}
 
-The \texttt{master\_config.json} provides centralized control over all pipeline parameters:
+Each model operates as an independent script that can be executed standalone:
 
 \begin{verbatim}
-{
-  "master_config": {
-    "project_name": "Florida iBudget Algorithm Calibration",
-    "version": "1.0.0",
-    "data_settings": {
-      "database": "APD",
-      "server": ".",
-      "random_seed": 42,
-      "test_size": 0.2,
-      "cv_folds": 10
-    },
-    "common_features": {
-      "demographic": ["age_group", "living_setting"],
-      "qsi_variables": ["Q16", "Q18", "Q20", "Q21", "Q23", 
-                        "Q28", "Q33", "Q34", "Q36", "Q43"],
-      "sum_scores": ["BSum", "FHFSum", "SLFSum", "SLBSum"]
-    },
-    "output_settings": {
-      "report_dir": "../report",
-      "models_dir": "../report/models",
-      "figures_dir": "../report/figures",
-      "log_dir": "../logs"
-    }
-  }
-}
+if __name__ == "__main__":
+    # Set global random seed for reproducibility
+    np.random.seed(42)
+    
+    # Initialize model with configuration
+    model = Model1Current(
+        use_fy2024_only=True,
+        use_sqrt_transform=True,
+        outlier_percentile=0.094
+    )
+    
+    # Run complete pipeline
+    results = model.run_complete_pipeline(
+        fiscal_year_start=2024,
+        fiscal_year_end=2024,
+        test_size=0.2,
+        perform_cv=True,
+        n_cv_folds=10
+    )
+    
+    # Results automatically saved to:
+    # - ../../report/models/model_1/
+    # - ../../report/logs/model_1_log.txt
 \end{verbatim}
 
-\subsubsection{Model-Specific Configurations}
+\subsubsection{Pipeline Stages}
 
-Each model maintains its own configuration file with hyperparameters:
-
-\begin{verbatim}
-{
-  "model_id": 1,
-  "model_name": "Current Algorithm Updated",
-  "transformation": "sqrt",
-  "outlier_removal": {
-    "method": "percentile",
-    "threshold": 0.094
-  },
-  "features": {
-    "use_common": true,
-    "additional": [],
-    "exclude": []
-  }
-}
-\end{verbatim}
-
-\subsection{Data Flow and Processing Pipeline}
-
-\subsubsection{Pipeline Execution Sequence}
-
-The master pipeline orchestrates execution through defined stages:
+The \texttt{run\_complete\_pipeline} method orchestrates the following stages:
 
 \begin{enumerate}
-    \item \textbf{Initialization}: Load configurations, establish database connections
-    \item \textbf{Data Quality Analysis}: Execute \texttt{sp\_Outliers}, generate exclusion statistics
-    \item \textbf{Proration Analysis}: Analyze monthly distributions, document decision
-    \item \textbf{Data Preparation}: Apply exclusions, create customer-fiscal year dataset
-    \item \textbf{Feature Engineering}: Prepare common and model-specific features
-    \item \textbf{Trajectory Calculation}: Compute individual slopes, perform clustering
-    \item \textbf{Model Calibration}: Sequential or parallel model fitting
-    \item \textbf{Validation}: Cross-validation and holdout testing
-    \item \textbf{Comparison}: Generate comparative metrics and visualizations
-    \item \textbf{Report Generation}: Compile LaTeX outputs
+    \item \textbf{Data Loading}: Read cached pickle files containing \texttt{ConsumerRecord} objects
+    \item \textbf{Data Splitting}: Stratified 80/20 train-test split with fixed random seed
+    \item \textbf{Feature Preparation}: Model-specific feature engineering and transformation
+    \item \textbf{Model Training}: Fit model on training data
+    \item \textbf{Prediction}: Generate predictions for both train and test sets
+    \item \textbf{Metric Calculation}: Compute comprehensive performance metrics
+    \item \textbf{Subgroup Analysis}: Calculate metrics by demographic groups
+    \item \textbf{Cross-Validation}: 10-fold CV for robust performance estimation
+    \item \textbf{Diagnostic Plots}: Generate six-panel diagnostic visualization
+    \item \textbf{LaTeX Generation}: Create \texttt{newcommands.tex} and \texttt{renewcommands.tex}
+    \item \textbf{Results Persistence}: Save predictions, metrics, and logs
 \end{enumerate}
 
-\subsubsection{Checkpoint and Recovery System}
+\subsection{Data Flow and Caching System}
 
-The pipeline implements checkpointing for fault tolerance:
+\subsubsection{Cache Creation Pipeline}
 
-\begin{verbatim}
-checkpoint_manager = CheckpointManager(checkpoint_dir='../data/intermediate')
-
-# Save checkpoint after each major stage
-checkpoint_manager.save('data_prepared', {
-    'X_train': X_train,
-    'X_test': X_test,
-    'y_train': y_train,
-    'y_test': y_test
-})
-
-# Recovery on restart
-if checkpoint_manager.exists('data_prepared'):
-    data = checkpoint_manager.load('data_prepared')
-    X_train = data['X_train']
-    # ... continue from checkpoint
-\end{verbatim}
-
-\subsection{Key Implementation Classes}
-
-\subsubsection{ModelPipeline Class}
-
-The central orchestrator managing the entire workflow:
+The \texttt{CacheCreation.py} script extracts data from the SQL Server database and creates fiscal year-specific pickle caches:
 
 \begin{verbatim}
-class ModelPipeline:
-    def __init__(self, config_path: str)
-    def load_data(self) -> pd.DataFrame
-    def validate_data(self) -> None
-    def prepare_common_features(self) -> pd.DataFrame
-    def split_data(self, features, target) -> None
-    def calibrate_single_model(self, model_config) -> BaseISFModel
-    def calibrate_all_models(self) -> None
-    def generate_comparisons(self) -> None
-    def run(self) -> None
+# Database connection
+conn_string = (
+    "DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER=.;DATABASE=APD;Trusted_Connection=yes"
+)
+
+# Execute stored procedure
+cursor.execute("EXEC sp_PrepareModelingData")
+
+# Build ConsumerRecord objects
+records = []
+for row in cursor.fetchall():
+    record = ConsumerRecord(
+        case_no=row.CaseNo,
+        fiscal_year=row.FiscalYear,
+        total_cost=parse_currency(row.TotalCost),
+        living_setting=row.LivingSetting,
+        age_group=row.AgeGroup,
+        # ... additional fields
+    )
+    records.append(record)
+
+# Save to pickle
+with open(f'cache_FY{fiscal_year}.pkl', 'wb') as f:
+    pickle.dump(records, f)
 \end{verbatim}
 
-\subsubsection{TrajectoryCalculator Class}
+\subsubsection{Database Integration}
 
-Handles the two-track trajectory modeling:
-
-\begin{verbatim}
-class TrajectoryCalculator:
-    def calculate_individual_slopes(self, customer_data) -> Dict
-    def perform_qsi_clustering(self, n_clusters=30) -> KMeans
-    def assign_cluster_slopes(self, customers_without_trajectory) -> Dict
-    def get_trajectory_adjustment(self, customer_id, years_forward) -> float
-\end{verbatim}
-
-\subsubsection{ModelComparison Class}
-
-Generates cross-model analytics:
-
-\begin{verbatim}
-class ModelComparison:
-    def __init__(self, models: List[BaseISFModel])
-    def generate_comparison_matrix(self) -> pd.DataFrame
-    def generate_performance_summary(self) -> None
-    def calculate_prediction_correlation(self) -> pd.DataFrame
-    def generate_master_tex(self) -> Path
-\end{verbatim}
-
-\subsection{Database Integration}
-
-\subsubsection{Connection Management}
-
-Database connections use Windows Authentication with connection pooling:
-
-\begin{verbatim}
-class DatabaseManager:
-    def __init__(self):
-        self.connection_string = (
-            "DRIVER={ODBC Driver 17 for SQL Server};"
-            "SERVER=.;DATABASE=APD;Trusted_Connection=yes"
-        )
-        self.connection_pool = []
-    
-    def get_connection(self) -> pyodbc.Connection
-    def execute_query(self, query: str) -> pd.DataFrame
-    def execute_stored_procedure(self, sp_name: str) -> List[pd.DataFrame]
-\end{verbatim}
-
-\subsubsection{Key Database Objects}
-
-The system interacts with these primary database objects:
+The system interacts with these primary SQL Server database objects:
 
 \begin{itemize}
-    \item \textbf{tbl\_Claims\_MMIS}: Service claims with dates and paid amounts
-    \item \textbf{tbl\_QSIAssessments}: QSI scores and assessment dates
-    \item \textbf{sp\_Outliers}: Analyzes data quality and exclusions
-    \item \textbf{sp\_PrepareModelingData}: Creates customer-fiscal year dataset
+    \item \textbf{tbl\_Claims\_MMIS}: Service claims with dates, procedures, and paid amounts
+    \item \textbf{tbl\_QSIAssessments}: QSI assessment scores and dates
+    \item \textbf{tbl\_Consumer}: Consumer demographics and characteristics
+    \item \textbf{tbl\_Plans}: Budget plans and allocations
+    \item \textbf{tbl\_PlannedServices}: Planned service details
+    \item \textbf{tbl\_Model5b\_Predictions}: Production model predictions
+    \item \textbf{sp\_PrepareModelingData}: Stored procedure creating customer-fiscal year dataset
 \end{itemize}
 
-\subsection{Quality Assurance and Testing}
+\subsection{LaTeX Integration System}
 
-\subsubsection{Unit Testing Framework}
+\subsubsection{Two-File Command Structure}
 
-Each model class includes comprehensive unit tests:
+Each model generates two LaTeX command files:
 
+\textbf{1. newcommands.tex} - Command definitions (created once):
 \begin{verbatim}
-class TestAlternative1Model(unittest.TestCase):
-    def setUp(self):
-        self.model = Alternative1Model(model_id=1, ...)
-        self.test_data = generate_test_data()
-    
-    def test_feature_preparation(self):
-        features = self.model.prepare_features(self.test_data)
-        self.assertEqual(features.shape[1], 21)
-    
-    def test_outlier_removal(self):
-        # Verify correct percentage removed
-    
-    def test_model_convergence(self):
-        # Ensure model fits without errors
+% Model 1 Command Definitions
+\newcommand{\ModelOneRsqTrain}{\WarningRunPipeline}
+\newcommand{\ModelOneRsqTest}{\WarningRunPipeline}
+\newcommand{\ModelOneRMSETrain}{\WarningRunPipeline}
+\newcommand{\ModelOneRMSETest}{\WarningRunPipeline}
+% ... 100+ additional commands
 \end{verbatim}
 
-\subsubsection{Integration Testing}
+\textbf{2. renewcommands.tex} - Actual values (updated each run):
+\begin{verbatim}
+% Model 1 Calibrated Values
+\renewcommand{\ModelOneRsqTrain}{0.6523}
+\renewcommand{\ModelOneRsqTest}{0.6487}
+\renewcommand{\ModelOneRMSETrain}{\$14{,}235.67}
+\renewcommand{\ModelOneRMSETest}{\$14{,}512.89}
+% ... corresponding values
+\end{verbatim}
 
-End-to-end pipeline tests verify complete workflow:
+\subsubsection{Command Generation Rules}
+
+The base class automatically generates LaTeX commands following these naming conventions:
 
 \begin{itemize}
-    \item Data loading and validation
-    \item Feature engineering consistency
-    \item Model calibration completion
-    \item LaTeX compilation success
-    \item Performance regression checks
+    \item \textbf{Model prefix}: \verb|\ModelOne|, \verb|\ModelTwo|, etc. (numbers spelled out)
+    \item \textbf{No numeric characters}: Q16 becomes QOneSix, 3\_20 becomes ThreeToTwenty
+    \item \textbf{Underscores removed}: age\_group becomes AgeGroup
+    \item \textbf{CamelCase}: All command names use CamelCase formatting
 \end{itemize}
 
-\subsection{Performance Optimization}
+\subsection{Metric Calculation and Reporting}
 
-\subsubsection{Parallel Processing}
+\subsubsection{Core Performance Metrics}
 
-Independent models are calibrated in parallel using multiprocessing:
-
-\begin{verbatim}
-from multiprocessing import Pool
-
-def calibrate_models_parallel(model_configs):
-    with Pool(processes=4) as pool:
-        models = pool.map(calibrate_single_model, model_configs)
-    return models
-\end{verbatim}
-
-\subsubsection{Memory Management}
-
-Large datasets are processed in chunks to manage memory:
+The base class calculates comprehensive metrics automatically:
 
 \begin{verbatim}
-def process_in_chunks(data, chunk_size=10000):
-    for start in range(0, len(data), chunk_size):
-        chunk = data[start:start + chunk_size]
-        yield process_chunk(chunk)
-\end{verbatim}
-
-\subsection{Logging and Monitoring}
-
-\subsubsection{Hierarchical Logging}
-
-Multi-level logging captures execution details:
-
-\begin{verbatim}
-logging.config.dictConfig({
-    'version': 1,
-    'handlers': {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': f'pipeline_{timestamp}.log',
-            'level': 'DEBUG'
-        },
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'INFO'
-        }
-    },
-    'root': {
-        'handlers': ['file', 'console']
+def calculate_metrics(self) -> Dict[str, float]:
+    """Calculate standard regression metrics"""
+    return {
+        # R-squared metrics
+        'r2_train': r2_score(self.y_train, self.train_predictions),
+        'r2_test': r2_score(self.y_test, self.test_predictions),
+        'adj_r2_train': 1 - (1 - r2_train) * (n_train - 1) / dof,
+        'adj_r2_test': 1 - (1 - r2_test) * (n_test - 1) / dof,
+        
+        # Error metrics
+        'rmse_train': sqrt(mean_squared_error(...)),
+        'rmse_test': sqrt(mean_squared_error(...)),
+        'mae_train': mean_absolute_error(...),
+        'mae_test': mean_absolute_error(...),
+        'mape_train': mean_absolute_percentage_error(...),
+        'mape_test': mean_absolute_percentage_error(...),
+        
+        # Information criteria
+        'aic': n * log(rss/n) + 2*k,
+        'bic': n * log(rss/n) + k*log(n),
+        
+        # Bias metrics
+        'bias_train': mean(residuals_train),
+        'bias_test': mean(residuals_test)
     }
-})
 \end{verbatim}
 
-\subsubsection{Performance Metrics}
+\subsubsection{Subgroup Analysis}
 
-Execution timing and resource usage are tracked:
+Metrics are automatically calculated for demographic subgroups:
+
+\begin{itemize}
+    \item \textbf{Age groups}: Age3\_20, Age21\_30, Age31Plus
+    \item \textbf{Living settings}: FH (Family Home), ILSL (Independent Living), RH1-RH4 (Residential Habilitation levels)
+    \item \textbf{Cost quartiles}: Q1\_Low through Q4\_High
+\end{itemize}
+
+For each subgroup, the framework computes R², RMSE, bias, and sample size.
+
+\subsection{Diagnostic Visualization}
+
+\subsubsection{Six-Panel Diagnostic Plot}
+
+Each model generates a standardized six-panel diagnostic plot (\texttt{diagnostic\_plots.png}):
+
+\begin{enumerate}
+    \item \textbf{Predicted vs Actual (Training)}: Scatter plot with 45-degree reference line and R² annotation
+    \item \textbf{Predicted vs Actual (Test)}: Same for test set to assess generalization
+    \item \textbf{Residual Plot}: Residuals vs predicted values to check heteroscedasticity
+    \item \textbf{Q-Q Plot}: Normal probability plot to assess residual distribution
+    \item \textbf{Model-Specific Plot}: Custom visualization (e.g., weight distribution for WLS, regularization path for Ridge)
+    \item \textbf{Performance by Group}: Bar chart showing R² across demographic subgroups
+\end{enumerate}
+
+\subsection{Quality Assurance and Reproducibility}
+
+\subsubsection{Reproducibility Features}
+
+\begin{enumerate}
+    \item \textbf{Fixed random seeds}: Global seed of 42 for all stochastic operations
+    \item \textbf{Comprehensive logging}: Detailed execution logs in \texttt{report/logs/model\_X\_log.txt}
+    \item \textbf{Results persistence}: All predictions and metrics saved in pickle/JSON format
+    \item \textbf{Version control}: Git tracking of all code and configuration
+    \item \textbf{ASCII code copies}: LaTeX-safe ASCII versions in \texttt{logs/} for appendix inclusion
+\end{enumerate}
+
+\subsubsection{Logging System}
+
+Each model maintains a dedicated log file with structured output:
 
 \begin{verbatim}
-@timing_decorator
-def calibrate_model(model_config):
-    start_memory = get_memory_usage()
-    # ... model calibration
-    end_memory = get_memory_usage()
-    log_performance_metrics(time_elapsed, memory_used)
+2024-09-23 14:23:45 - MODEL 1 - INFO - ===============================
+2024-09-23 14:23:45 - MODEL 1 - INFO - Model 1: Current Algorithm Updated
+2024-09-23 14:23:45 - MODEL 1 - INFO - ===============================
+2024-09-23 14:23:45 - MODEL 1 - INFO - Loading data...
+2024-09-23 14:23:46 - MODEL 1 - INFO - Loaded 29,737 records
+2024-09-23 14:23:46 - MODEL 1 - INFO - Splitting data (80/20)...
+2024-09-23 14:23:46 - MODEL 1 - INFO - Training: 23,789, Test: 5,948
+2024-09-23 14:23:46 - MODEL 1 - INFO - Preparing features...
+2024-09-23 14:23:47 - MODEL 1 - INFO - Features: 22 columns
+...
 \end{verbatim}
 
-\subsection{Deployment Considerations}
+\subsection{Production Deployment Framework}
 
-\subsubsection{Environment Setup}
+\subsubsection{Model 5b Final Implementation}
 
-Required Python packages and versions:
+The selected final model (Model 5b) has dedicated production scripts:
+
+\begin{itemize}
+    \item \textbf{Model5bRecalibration.py}: Annual recalibration using updated data
+    \item \textbf{Model5bRecalibratedExecution.py}: Batch prediction generation for new assessments
+    \item \textbf{Model5bDBVerification.py}: Validation of predictions against database
+\end{itemize}
+
+\subsubsection{Prediction Storage}
+
+Production predictions are stored in \texttt{tbl\_Model5b\_Predictions}:
 
 \begin{verbatim}
-# requirements.txt
-pandas>=1.3.0
-numpy>=1.21.0
-scikit-learn>=1.0.0
-statsmodels>=0.13.0
-tensorflow>=2.8.0  # For Alternative 10
-pyodbc>=4.0.0
-matplotlib>=3.4.0
-seaborn>=0.11.0
+CREATE TABLE [dbo].[tbl_Model5b_Predictions](
+    [PredictionID] [bigint] IDENTITY(1,1) NOT NULL,
+    [CaseNo] [bigint] NOT NULL,
+    [AssessID] [bigint] NOT NULL,
+    [ReviewDate] [datetime] NULL,
+    [LivingSetting] [varchar](10) NULL,
+    [Age] [int] NULL,
+    [AgeGroup] [varchar](20) NULL,
+    [BSum] [int] NULL,
+    [FSum] [int] NULL,
+    [SqrtPrediction] [decimal](19, 4) NULL,
+    [PredictedBudget] [decimal](19, 2) NULL,
+    [CalculationDate] [datetime] NULL,
+    [CreatedDate] [datetime] NULL,
+    [RunID] [bigint] NOT NULL
+)
 \end{verbatim}
-
-\subsubsection{Docker Containerization}
-
-For reproducible environments:
-
-\begin{verbatim}
-FROM python:3.9
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY script/ ./script/
-CMD ["python", "script/main_pipeline.py"]
-\end{verbatim}
-
-\subsection{Summary}
-
-This technical architecture provides a robust, scalable framework for the iBudget model calibration project. The object-oriented design ensures code reusability and maintainability, while the modular structure facilitates independent development and testing of components. The comprehensive configuration management and checkpoint system ensure reproducibility and fault tolerance, critical for regulatory compliance and scientific validity.
 
 \subsection{Computational Requirements}
 
 \begin{itemize}
-    \item \textbf{Hardware}: Minimum 16GB RAM, 8 CPU cores recommended
-    \item \textbf{Execution time}: Complete pipeline $<$2 hours, individual model $<$10 minutes
-    \item \textbf{Storage}: Approximately 5GB for intermediate files and outputs
-    \item \textbf{Parallelization}: Independent models processed concurrently when possible
+    \item \textbf{Hardware}: Minimum 8GB RAM, 4 CPU cores recommended
+    \item \textbf{Execution time}: Individual model $<$ 5 minutes on standard hardware
+    \item \textbf{Storage}: Approximately 2GB for cache files and outputs per fiscal year
+    \item \textbf{Dependencies}: Python 3.9+, scikit-learn 1.0+, statsmodels 0.13+, pandas 1.3+
 \end{itemize}
 
-\subsection{Risk Mitigation}
+\subsection{Summary}
 
-Key risks and mitigation strategies:
-\begin{enumerate}
-    \item \textbf{Limited trajectory coverage}: Clustering approach ensures all consumers receive trajectory adjustments
-    \item \textbf{High cost variance}: Multiple outlier detection methods to identify appropriate thresholds
-    \item \textbf{Model overfitting}: Cross-validation and regularization prevent overspecialization
-    \item \textbf{Technical failures}: Checkpoint system enables pipeline restart without data loss
-\end{enumerate}
+This technical architecture provides a robust, maintainable framework for the iBudget model calibration project. The object-oriented design with the \texttt{BaseiBudgetModel} abstract class ensures code reusability across all ten alternative models. The modular structure with independent model execution facilitates parallel development and testing. The comprehensive LaTeX integration system ensures reproducible reporting with dynamically updated metrics. The pickle-based caching system provides fast data access while maintaining data integrity. This systematic approach enables rigorous comparison of alternative algorithms and evidence-based selection of the optimal model for Florida's disability services budget allocation.
 
-\section{Summary}
 
-This methodology provides a comprehensive framework for evaluating alternative iBudget algorithms while addressing significant data quality challenges. The conservative exclusion strategy, justified by the proration analysis, ensures model calibration uses only high-quality data. The two-track trajectory approach accommodates limited longitudinal coverage, while the unified pipeline architecture ensures reproducibility and comparability across all models. This systematic approach enables evidence-based selection of the optimal algorithm for Florida's disability services allocation.
+% % Include dynamically generated statistics
+% \input{data_quality_commands.tex}
+
+% \section{Overview}
+
+% This chapter presents the comprehensive methodology for calibrating and evaluating ten alternative models for the Florida iBudget algorithm. The framework addresses significant data quality challenges, implements sophisticated outlier detection strategies, and ensures reproducibility through a unified pipeline architecture. The approach balances statistical rigor with practical constraints imposed by incomplete longitudinal data and irregular service utilization patterns.
+
+% % ⚠ ======================================== ⚠ 
+% % ⚠  DO *NOT* EDIT data_quality_commands.tex ⚠ 
+% % ⚠  DO *NOT* EDIT data_quality_analysis.tex ⚠ 
+% % ⚠ ======================================== ⚠ 
+% % These files are produced by executing the program Outliers.py
+% % Any change in those files will be lost with every execution of the analysis pipeline 
+% \input{data_quality_commands.tex}
+% \input{data_quality_analysis.tex}
+% % ⚠ ======================================== ⚠ 
+
+% \section{Data Quality and Exclusion Strategy}
+
+% \subsection{Data Availability Assessment}
+
+% The initial data quality analysis examined \TheTotalNumberCustomers{} unique customers in the Agency for Persons with Disabilities (APD) database, spanning fiscal years \TheInitialYear{} through \TheFinalYear{}. Each fiscal year runs from September 1 through August 31, creating potential complications when Questionnaire for Situational Information (QSI) assessments occur mid-year.
+
+% The outlier analysis revealed substantial data quality challenges:
+% \begin{itemize}
+%     \item \textbf{\CustomerNumberOneYear{} customers (\CustomerPctOneYear\%)} have at least one fiscal year of usable data
+%     \item \textbf{\CustomerNumberTwoPlusYear{} customers (\CustomerPctTwoPlusYear\%)} have two or more years suitable for trajectory modeling
+%     \item \textbf{\CustomerNumberNoData{} customers (\CustomerPctNoData\%)} have no usable data after applying quality criteria
+% \end{itemize}
+
+% \subsection{Exclusion Criteria}
+
+% Customer-fiscal year records are excluded from calibration if they exhibit any of the following characteristics:
+
+% \begin{enumerate}
+%     \item \textbf{Mid-year QSI changes}: Multiple QSI assessments within a single fiscal year create ambiguity in attributing costs to specific QSI scores
+%     \item \textbf{Late entry}: Customers entering the system more than 30 days after fiscal year start
+%     \item \textbf{Early exit}: Customers leaving the system more than 30 days before fiscal year end
+%     \item \textbf{Zero or negative costs}: Records with \$0 or negative total paid amounts
+%     \item \textbf{Insufficient service days}: Fewer than 30 service days within the fiscal year
+%     \item \textbf{Missing QSI assessment}: No QSI assessment linked to the fiscal year
+% \end{enumerate}
+
+% This conservative approach prioritizes data quality over quantity, ensuring that model calibration uses only complete, unambiguous customer-year records.
+
+% % ⚠ ===================================== ⚠ 
+% % ⚠  DO *NOT* EDIT proration_commands.tex ⚠ 
+% % ⚠  DO *NOT* EDIT proration_analysis.tex ⚠ 
+% % ⚠ ===================================== ⚠ 
+% % These file are produced by executing the program ProrationAnalysis.py
+% % Any change in those files will be lost with every execution of the analysis pipeline 
+% \input{proration_commands.tex}
+% \input{proration_analysis.tex}
+% % ⚠ ===================================== ⚠ 
+
+% \section{Modeling Framework Architecture}
+
+% \subsection{Two-Track Trajectory Modeling}
+
+% Given that only \CustomerPctTwoPlusYear\% of customers have sufficient multi-year data for individual trajectory calculation, we implement a dual-track approach:
+
+% \subsubsection{Track A: Individual Trajectories}
+% For the \CustomerNumberTwoPlusYear{} customers with two or more years of usable data:
+% \begin{enumerate}
+%     \item Calculate individual linear cost trajectories using ordinary least squares
+%     \item Store intercept, slope, $R^2$, and years used for each customer
+%     \item Apply trajectory: $\text{Cost}_{t+k} = \text{Base}_t + k \times \text{Slope}_i$
+% \end{enumerate}
+
+% \subsubsection{Track B: Cluster-Based Trajectories}
+% For the remaining customers with single-year data:
+% \begin{enumerate}
+%     \item Perform K-means clustering on standardized QSI variables and demographics
+%     \item Assign each customer to their nearest cluster centroid
+%     \item Inherit the average slope from Track A customers within the same cluster
+%     \item If cluster contains fewer than 10 Track A customers, use broader grouping
+% \end{enumerate}
+
+% \subsection{Model Calibration Pipeline}
+
+% Each of the ten alternative models follows a standardized calibration process:
+
+% \begin{enumerate}
+%     \item \textbf{Feature Preparation}: Apply model-specific transformations and feature engineering
+%     \item \textbf{Outlier Removal}: Implement model-specific outlier detection (0-10\% removal)
+%     \item \textbf{Model Fitting}: Train on 80\% of data, stratified by living setting
+%     \item \textbf{Cross-Validation}: Perform 10-fold stratified cross-validation
+%     \item \textbf{Trajectory Integration}: Combine base predictions with trajectory adjustments
+%     \item \textbf{Validation}: Evaluate on 20\% holdout test set
+% \end{enumerate}
+
+% \subsection{Master Pipeline Architecture}
+
+% The entire framework operates through a single master script (\texttt{main\_pipeline.py}) that orchestrates all components:
+
+% \begin{figure}[h]
+% \centering
+% \begin{tikzpicture}[node distance=1.5cm, auto]
+%     % Define styles
+%     \tikzstyle{process} = [rectangle, draw, text width=4cm, text centered, minimum height=0.8cm, fill=blue!10]
+%     \tikzstyle{data} = [rectangle, rounded corners, draw, text width=3cm, text centered, fill=green!10]
+%     \tikzstyle{arrow} = [thick,->,>=stealth]
+    
+%     % Nodes
+%     \node [data] (raw) {Raw Claims \& QSI Data};
+%     \node [process, below of=raw] (quality) {Data Quality Analysis};
+%     \node [process, below of=quality] (proration) {Proration Feasibility};
+%     \node [process, below of=proration] (prep) {Data Preparation};
+%     \node [process, below of=prep] (trajectory) {Trajectory Calculation};
+%     \node [process, below of=trajectory] (models) {Model Calibration (×10)};
+%     \node [process, below of=models] (compare) {Comparison Analysis};
+%     \node [data, below of=compare] (report) {LaTeX Report};
+    
+%     % Arrows
+%     \draw [arrow] (raw) -- (quality);
+%     \draw [arrow] (quality) -- (proration);
+%     \draw [arrow] (proration) -- (prep);
+%     \draw [arrow] (prep) -- (trajectory);
+%     \draw [arrow] (trajectory) -- (models);
+%     \draw [arrow] (models) -- (compare);
+%     \draw [arrow] (compare) -- (report);
+% \end{tikzpicture}
+% \caption{Master pipeline architecture showing sequential processing stages}
+% \end{figure}
+
+% \section{Individual Model Specifications}
+
+% \subsection{Model Portfolio}
+
+% The framework evaluates ten alternative models, each with distinct theoretical foundations and assumptions:
+
+% \begin{enumerate}
+%     \item \textbf{Current Algorithm Updated}: Square-root transformation with outlier removal
+%     \item \textbf{GLM-Gamma}: Generalized linear model with gamma distribution and log link
+%     \item \textbf{Robust Linear Regression}: Huber regression resistant to outliers
+%     \item \textbf{Weighted Least Squares}: Heteroscedasticity correction through variance weighting
+%     \item \textbf{Ridge Regression}: L2-regularized regression for multicollinearity
+%     \item \textbf{Log-Normal}: Linear regression with logarithmic transformation
+%     \item \textbf{Quantile Regression}: Median-based estimation robust to outliers
+%     \item \textbf{Bayesian Linear}: Uncertainty quantification through posterior distributions
+%     \item \textbf{Principal Component Regression}: Dimensionality reduction before regression
+%     \item \textbf{Deep Learning Network}: Multi-layer neural network for non-linear patterns
+% \end{enumerate}
+
+% \subsection{Common Features}
+
+% All models utilize a consistent set of input features:
+% \begin{itemize}
+%     \item \textbf{Demographics}: Age groups (0-20, 21-30, 31+)
+%     \item \textbf{Living Settings}: Family home, independent/supported living, residential homes (1-4)
+%     \item \textbf{QSI Variables}: Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43
+%     \item \textbf{Sum Scores}: BSum, FHFSum, SLFSum, SLBSum
+%     \item \textbf{Temporal}: Fiscal year as numeric feature
+% \end{itemize}
+
+% \section{Validation Strategy}
+
+% \subsection{Dual Validation Approach}
+
+% Models undergo two complementary validation strategies:
+
+% \subsubsection{Temporal Validation}
+% \begin{itemize}
+%     \item Training: Fiscal years 2018-2022
+%     \item Testing: Fiscal years 2023-2024
+%     \item Metrics: Year-ahead prediction accuracy
+% \end{itemize}
+
+% \subsubsection{Cross-Sectional Validation}
+% \begin{itemize}
+%     \item 80/20 train-test split stratified by living setting
+%     \item 10-fold cross-validation on training set
+%     \item Bootstrap confidence intervals (100 iterations)
+% \end{itemize}
+
+% \subsection{Performance Metrics}
+
+% Each model is evaluated using comprehensive metrics:
+% \begin{itemize}
+%     \item \textbf{Regression accuracy}: $R^2$, adjusted $R^2$, RMSE, MAE, MAPE
+%     \item \textbf{Model selection}: AIC, BIC
+%     \item \textbf{Robustness}: Performance by demographic subgroups
+%     \item \textbf{Trajectory accuracy}: Multi-year prediction errors
+%     \item \textbf{Fairness}: Disparate impact analysis across protected classes
+% \end{itemize}
+
+% \section{Reproducibility and Quality Assurance}
+
+% \subsection{Configuration Management}
+
+% All parameters are externalized in JSON configuration files:
+% \begin{itemize}
+%     \item \texttt{master\_config.json}: Global settings, paths, and thresholds
+%     \item \texttt{model\_configs/}: Individual model hyperparameters
+%     \item Version control through Git ensures configuration tracking
+% \end{itemize}
+
+% \subsection{Reproducibility Features}
+
+% \begin{enumerate}
+%     \item \textbf{Random seed control}: Fixed seed (42) for all stochastic operations
+%     \item \textbf{Checkpoint system}: Intermediate results saved for debugging/restart
+%     \item \textbf{Comprehensive logging}: Detailed logs at each pipeline stage
+%     \item \textbf{Data versioning}: MD5 checksums for input data files
+%     \item \textbf{Environment specification}: Docker container for consistent execution
+% \end{enumerate}
+
+% \subsection{Quality Checks}
+
+% Automated quality checks ensure data and model integrity:
+% \begin{itemize}
+%     \item Verification that excluded records match documented criteria
+%     \item Comparison of model coefficients against expected ranges
+%     \item Detection of data leakage between train and test sets
+%     \item Validation of LaTeX output compilation
+%     \item Performance regression tests against baseline metrics
+% \end{itemize}

@@ -1,117 +1,117 @@
 {
   "const": {
-    "coefficient": 3.3503990324401296,
+    "coefficient": 3.3432961848366904,
     "p_value": 0.0,
-    "multiplicative_effect": 2751.4109428626166
+    "multiplicative_effect": 2731.229562960182
   },
   "living_ILSL": {
-    "coefficient": 0.2591702698107371,
-    "p_value": 7.030792228449083e-150,
-    "multiplicative_effect": 29.58544309332305
+    "coefficient": 0.25965062878187833,
+    "p_value": 2.7041809869391583e-77,
+    "multiplicative_effect": 29.647705576416183
   },
   "living_RH1": {
-    "coefficient": 2.771871166579688e-15,
+    "coefficient": -1.9569673613054303e-15,
     "p_value": 0.0,
-    "multiplicative_effect": 2.6645352591003757e-13
+    "multiplicative_effect": -1.9984014443252818e-13
   },
   "living_RH2": {
-    "coefficient": -2.8529903459432924e-15,
+    "coefficient": -2.5648536313600676e-15,
     "p_value": 0.0,
-    "multiplicative_effect": -2.886579864025407e-13
+    "multiplicative_effect": -2.55351295663786e-13
   },
   "living_RH3": {
-    "coefficient": 1.3513652492621478e-15,
-    "p_value": 0.0,
-    "multiplicative_effect": 1.3322676295501878e-13
+    "coefficient": 5.68984886676891e-16,
+    "p_value": 2.330744503678201e-92,
+    "multiplicative_effect": 6.661338147750939e-14
   },
   "living_RH4": {
-    "coefficient": 5.536641236682922e-16,
-    "p_value": 1.2681576873553122e-205,
-    "multiplicative_effect": 4.440892098500626e-14
+    "coefficient": 7.20014483452044e-16,
+    "p_value": 0.0,
+    "multiplicative_effect": 6.661338147750939e-14
   },
   "age_21_30": {
-    "coefficient": 0.72307490146173,
+    "coefficient": 0.7184114657063204,
     "p_value": 0.0,
-    "multiplicative_effect": 106.07601126413427
+    "multiplicative_effect": 105.11722637833985
   },
   "age_31_plus": {
-    "coefficient": 0.913131784519044,
+    "coefficient": 0.9004794943370629,
     "p_value": 0.0,
-    "multiplicative_effect": 149.2115092173507
+    "multiplicative_effect": 146.0782759714972
   },
   "q16": {
-    "coefficient": 0.002891168064483176,
-    "p_value": 0.47456977291841174,
-    "multiplicative_effect": 0.2895351521592815
+    "coefficient": -0.003181007336849665,
+    "p_value": 0.5731554380748365,
+    "multiplicative_effect": -0.31759532934144685
   },
   "q18": {
-    "coefficient": 0.07496368549516606,
-    "p_value": 1.4108142886670956e-59,
-    "multiplicative_effect": 7.784500876614153
+    "coefficient": 0.07073726616429006,
+    "p_value": 4.292494021399713e-28,
+    "multiplicative_effect": 7.329919680584984
   },
   "q20": {
-    "coefficient": 0.08896206965644943,
-    "p_value": 2.5371304860346e-62,
-    "multiplicative_effect": 9.303919618781098
+    "coefficient": 0.08385187075310684,
+    "p_value": 2.681840696239868e-29,
+    "multiplicative_effect": 8.746779609182331
   },
   "q21": {
-    "coefficient": 0.0538374423411714,
-    "p_value": 2.7599183522479755e-24,
-    "multiplicative_effect": 5.531303899405482
+    "coefficient": 0.04922386997949279,
+    "p_value": 2.684653872970235e-11,
+    "multiplicative_effect": 5.045548986772497
   },
   "q23": {
-    "coefficient": 0.10518506447011793,
-    "p_value": 2.9386882878876714e-82,
-    "multiplicative_effect": 11.091618244772338
+    "coefficient": 0.10453611938628742,
+    "p_value": 1.068197098704396e-42,
+    "multiplicative_effect": 11.019549272189554
   },
   "q28": {
-    "coefficient": 0.07080595339648861,
-    "p_value": 1.121002057505494e-97,
-    "multiplicative_effect": 7.33729212889358
+    "coefficient": 0.06859890672477008,
+    "p_value": 8.367085319145156e-48,
+    "multiplicative_effect": 7.1006549462584445
   },
   "q33": {
-    "coefficient": 0.05644832538267566,
-    "p_value": 2.4670087416037965e-24,
-    "multiplicative_effect": 5.807193792504095
+    "coefficient": 0.04060955519710531,
+    "p_value": 1.6878623174678824e-07,
+    "multiplicative_effect": 4.144539920883883
   },
   "q34": {
-    "coefficient": -0.015557252208712256,
-    "p_value": 0.005633251671639783,
-    "multiplicative_effect": -1.5436863276100055
+    "coefficient": -0.008484586353112902,
+    "p_value": 0.27877107481895474,
+    "multiplicative_effect": -0.8448693833115639
   },
   "q36": {
-    "coefficient": 0.09595955049894465,
-    "p_value": 1.6620401621080305e-231,
-    "multiplicative_effect": 10.071453973955613
+    "coefficient": 0.09568269210078914,
+    "p_value": 7.105337757093722e-119,
+    "multiplicative_effect": 10.04098398565645
   },
   "q43": {
-    "coefficient": 0.0029680005631117705,
-    "p_value": 0.2692134068309533,
-    "multiplicative_effect": 0.2972409437551393
+    "coefficient": 0.0028255285531468078,
+    "p_value": 0.45420059498681975,
+    "multiplicative_effect": 0.2829524121260141
   },
   "bsum": {
-    "coefficient": 0.01521391824707479,
-    "p_value": 1.5122353296957759e-81,
-    "multiplicative_effect": 1.533023905104347
+    "coefficient": 0.01565169017057024,
+    "p_value": 4.8894475399060884e-45,
+    "multiplicative_effect": 1.5774819428079123
   },
   "fsum": {
-    "coefficient": -0.01839594100286164,
-    "p_value": 7.269610479002746e-41,
-    "multiplicative_effect": -1.8227768489644691
+    "coefficient": -0.0164130543449741,
+    "p_value": 1.305870483017848e-17,
+    "multiplicative_effect": -1.627909406893313
   },
   "diag_intellectual": {
-    "coefficient": 0.13555381726266622,
-    "p_value": 3.6501622931228894e-15,
-    "multiplicative_effect": 14.517082413512771
+    "coefficient": 0.17137836187061,
+    "p_value": 6.175587797434982e-13,
+    "multiplicative_effect": 18.69397568193316
   },
   "diag_autism": {
-    "coefficient": -0.046857339207858326,
-    "p_value": 0.012575837466936475,
-    "multiplicative_effect": -4.577648183641269
+    "coefficient": -0.011881178454047039,
+    "p_value": 0.6472707175996009,
+    "multiplicative_effect": -1.1810875954283762
   },
   "diag_cerebral": {
-    "coefficient": 0.04806231622656544,
-    "p_value": 0.013892467345565528,
-    "multiplicative_effect": 4.923603771790441
+    "coefficient": 0.09735529929863011,
+    "p_value": 0.00031611956215932285,
+    "multiplicative_effect": 10.225193339528381
   }
 }

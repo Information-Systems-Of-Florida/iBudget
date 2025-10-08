@@ -71,7 +71,7 @@ class Model7QuantileRegression(BaseiBudgetModel):
     - Research and validation tool only
     """
     
-    def __init__(self, use_sqrt_transform: bool = True):
+    def __init__(self, use_sqrt_transform: bool = False):
         """
         Initialize Model 7
         
@@ -804,7 +804,7 @@ def main():
     
     # Run complete pipeline
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         perform_cv=True,
         test_size=0.2,

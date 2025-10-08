@@ -262,7 +262,7 @@ class Model10NeuralNet(BaseiBudgetModel):
         
         return X, feature_names
     
-    def run_complete_pipeline(self, fiscal_year_start: int = 2023, fiscal_year_end: int = 2024,
+    def run_complete_pipeline(self, fiscal_year_start: int = 2024, fiscal_year_end: int = 2024,
                              test_size: float = 0.2, perform_cv: bool = True, 
                              n_cv_folds: int = 10) -> Dict[str, Any]:
         """
@@ -380,7 +380,7 @@ class Model10NeuralNet(BaseiBudgetModel):
         
         # Log deployment warning
         logger.info("")
-        logger.info("⚠️  DEPLOYMENT WARNING:")
+        logger.info("  DEPLOYMENT WARNING:")
         logger.info(f"  Explainability: {self.explainability}")
         logger.info(f"  Regulatory Status: {self.regulatory_compliant}")
         logger.info(f"  Recommendation: {self.deployment_recommendation}")
@@ -667,8 +667,8 @@ def main():
     print("\n" + "="*80)
     print("MODEL 10: DEEP LEARNING NEURAL NETWORK WITH ROBUST FEATURES")
     print("="*80)
-    print(f"\n🎲 Random Seed: {RANDOM_SEED} (for reproducibility)")
-    print("💡 To change seed, edit RANDOM_SEED = 42 at top of file")
+    print(f"\n Random Seed: {RANDOM_SEED} (for reproducibility)")
+    print(" To change seed, edit RANDOM_SEED = 42 at top of file")
     
     # ============================================================================
     # TRANSFORMATION OPTION - Test both empirically!
@@ -680,10 +680,10 @@ def main():
     # ============================================================================
     USE_SQRT = False  # Changed to test original dollar scale
     
-    print(f"\n📐 Transformation: {'sqrt' if USE_SQRT else 'none (original dollars)'}")
+    print(f"\n Transformation: {'sqrt' if USE_SQRT else 'none (original dollars)'}")
     print(f"    (To test other mode, set USE_SQRT = {not USE_SQRT})")
     
-    print("\n⚠️  DEPLOYMENT WARNING:")
+    print("\n  DEPLOYMENT WARNING:")
     print("    This model violates HB 1103 explainability requirements")
     print("    FOR RESEARCH PURPOSES ONLY - Cannot be deployed in production")
     print("    Value: Feature selection validation, not neural network deployment")
@@ -694,7 +694,7 @@ def main():
     # Run complete pipeline
     # DO NOT pass random_state parameter - base class doesn't accept it!
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
@@ -710,17 +710,17 @@ def main():
     if renewcommands_file.exists():
         with open(renewcommands_file, 'r') as f:
             command_count = sum(1 for line in f if '\\renewcommand' in line)
-        print(f"\n✅ Total LaTeX commands generated: {command_count}")
+        print(f"\n Total LaTeX commands generated: {command_count}")
         print(f"   Expected: ~105 (75 base + 26 model-specific + 4 special)")
         if command_count >= 100:
-            print("   ✅ PASS: All commands generated")
+            print("    PASS: All commands generated")
         else:
-            print(f"   ⚠️  WARNING: Expected ~105, got {command_count}")
+            print(f"     WARNING: Expected ~105, got {command_count}")
     
     print("\n" + "="*80)
     print("KEY FINDINGS - MODEL 10")
     print("="*80)
-    print(f"\n📊 Performance:")
+    print(f"\n Performance:")
     print(f"   Test R²: {results['metrics'].get('test_r2', 0):.4f}")
     print(f"   Test RMSE: ${results['metrics'].get('test_rmse', 0):,.0f}")
     print(f"   CV Mean: {results['metrics'].get('cv_mean', 0):.4f} ± {results['metrics'].get('cv_std', 0):.4f}")
@@ -732,14 +732,14 @@ def main():
     print(f"   Training Time: {model.training_time:.1f} seconds")
     print(f"   Early Stopped: Epoch {model.epochs_stopped} of {model.max_iter}")
     
-    print(f"\n⚠️  Deployment Assessment:")
+    print(f"\n  Deployment Assessment:")
     print(f"   Explainability: {model.explainability}")
     print(f"   Regulatory: {model.regulatory_compliant}")
     print(f"   Recommendation: {model.deployment_recommendation}")
     print(f"   Performance Gain: {model.performance_gain:.1f}% over Model 3")
     print(f"   Trade-off: {model.explainability_tradeoff}")
     
-    print("\n💡 Key Insight:")
+    print("\n Key Insight:")
     print("   The value of Model 10 is in validating the 13 robust features,")
     print("   NOT in deploying the neural network. Apply these robust features")
     print("   to interpretable models (Model 1 or 3) for best results.")
@@ -747,13 +747,13 @@ def main():
     print("\n" + "="*80)
     print("REPRODUCIBILITY NOTE")
     print("="*80)
-    print(f"\n🎲 Current random seed: {RANDOM_SEED}")
+    print(f"\n Current random seed: {RANDOM_SEED}")
     print(f"   To replicate: Keep RANDOM_SEED = {RANDOM_SEED}")
     print(f"   To test sensitivity: Change RANDOM_SEED value")
-    print(f"\n📐 Current transformation: {'sqrt' if USE_SQRT else 'none'}")
+    print(f"\n Current transformation: {'sqrt' if USE_SQRT else 'none'}")
     print(f"   To test alternative: Set USE_SQRT = {not USE_SQRT}")
     
-    print("\n✅ Model 10 pipeline complete!")
+    print("\n Model 10 pipeline complete!")
     print("="*80 + "\n")
     
     return model

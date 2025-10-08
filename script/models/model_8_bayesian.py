@@ -76,19 +76,16 @@ class Model8Bayesian(BaseiBudgetModel):
     - 2 Summary Scores: BSum, FSum
     """
     
-    def __init__(self, use_fy2024_only: bool = True, use_sqrt_transform: bool = False):
+    def __init__(self, use_sqrt_transform: bool = False):
         """
         Initialize Model 8 Bayesian Regression
         
         Args:
-            use_fy2024_only: If True, use only FY2024 data
             use_sqrt_transform: If True, use sqrt transformation (historical baseline)
                                If False, fit on original dollar scale
         """
         super().__init__(model_id=8, model_name="Bayesian-Regression")
-        
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2023-2024"
+       
         
         # ============================================================================
         # TRANSFORMATION CONTROL - Test both to see which performs better!
@@ -674,7 +671,7 @@ def main():
     print(f"Purpose: Research and comparison only\n")
     
     # Initialize model
-    model = Model8Bayesian(use_fy2024_only=True, use_sqrt_transform=USE_SQRT)
+    model = Model8Bayesian(use_sqrt_transform=USE_SQRT)
     
     # Display feature specification
     print("\n" + "="*80)
@@ -694,8 +691,8 @@ def main():
     try:
         # Load data
         print("\n[Loading data...]")
-        model.all_records = model.load_data(fiscal_year_start=2023, fiscal_year_end=2024)
-        print(f"[OK] Loaded {len(model.all_records)} records from FY2023-2024")
+        model.all_records = model.load_data(fiscal_year_start=2024, fiscal_year_end=2024)
+        print(f"[OK] Loaded {len(model.all_records)} records from FY2024-2024")
         
         # Split data
         print("\n[Splitting data...]")

@@ -1,8 +1,9 @@
 """
 Model 1: Linear Regression with IQR Outlier Removal and Feature Selection
 =========================================================================
-CORRECTED VERSION - Complete LaTeX command generation
-Maintains square-root transformation and 9.4% outlier removal methodology
+Updated to use enhanced base class - streamlined implementation
+Maintains square-root transformation and outlier removal methodology
+FIXED: Added prediction floor to avoid extreme MAPE issues
 """
 
 import numpy as np
@@ -30,62 +31,84 @@ class Model1Linear(BaseiBudgetModel):
     - Square-root transformation of costs
     - 9.4% outlier removal based on residuals (IQR method)
     - Optional feature selection based on mutual information analysis
+    - Configurable to use fiscal year 2024 data only
     - Minimum prediction floor to avoid extreme errors
     """
     
-    # Selected features based on mutual information analysis (19 features)
+    # Selected features based on mutual information analysis
     SELECTED_FEATURES = [
         # Demographics (regulatory requirements)
-        'Age', 'AgeGroup', 'LivingSetting',
+        'Age', 'AgeGroup', 'GENDER', 'County',
         
-        # Top residential/support variables
-        'RESIDENCETYPE', 'LOSRI', 'OLEVEL',
+        # Top residential/support variables (highest MI scores)
+        'RESIDENCETYPE',      # MI: 0.203-0.272, top predictor
+        'LivingSetting',      # Categorical: FH, ILSL, RH1-RH4
+        'LOSRI',             # MI: 0.087-0.130
+        'OLEVEL',            # MI: 0.085-0.131
         
         # Clinical assessment scores
-        'BSum', 'FSum', 'BLEVEL', 'FLEVEL',
+        'BSum',              # MI: 0.113-0.137, behavioral summary
+        'BLEVEL',            # MI: 0.089-0.101
+        'FSum',              # Functional summary
+        'FLEVEL',            # Functional level
+        'PSum',              # Physical summary
+        'PLEVEL',            # Physical level
         
-        # Top QSI items
-        'Q16', 'Q18', 'Q20', 'Q21', 'Q23', 
-        'Q28', 'Q33', 'Q34', 'Q36', 'Q43'
+        # Top individual QSI items (MI > 0.05)
+        'Q20', 'Q21', 'Q23', 'Q25', 'Q26', 'Q27', 'Q30', 'Q36', 'Q44',
+        
+        # Diagnostic information
+        'PrimaryDiagnosis',
+        'DevelopmentalDisability',
     ]
     
-    def __init__(self, use_selected_features: bool = True, 
-                 use_fy2024_only: bool = True,
+    def __init__(self, use_selected_features: bool = True,  
                  prediction_floor: float = 5000.0):
         """
         Initialize Model 1
         
         Args:
             use_selected_features: Whether to use the refined feature set (default: True)
-            use_fy2024_only: Whether to restrict to fiscal year 2024 data (default: True)
             prediction_floor: Minimum prediction value to avoid extreme MAPE (default: $5000)
         """
-        super().__init__(
-            model_id=1,
-            model_name="Linear Regression with Outlier Removal"
-        )
+        super().__init__(model_id=1, model_name="Linear with Outlier Removal")
         
         # Configuration flags
         self.use_selected_features = use_selected_features
-        self.use_fy2024_only = use_fy2024_only
         self.prediction_floor = prediction_floor
         
-        # Model-specific attributes
-        self.linear_model: Optional[LinearRegression] = None
-        self.outlier_percentage = 9.4  # Target outlier removal percentage
-        self.outlier_mask: Optional[np.ndarray] = None
-        self.outlier_indices: Optional[np.ndarray] = None
-        self.n_outliers_removed: int = 0
-        self.transformation = "sqrt"
-        self.coefficients: Dict[str, Any] = {}
+        # Model specific parameters
+        self.transformation = "square_root"
+        self.outlier_percentage = 9.4  # Remove top 9.4% based on residuals
+        self.linear_model = None
+        
+        # Store outlier information
+        self.outlier_mask = None
+        self.outlier_indices = np.array([])
+        self.n_outliers_removed = 0
+        
+        # Store coefficients for interpretability
+        self.coefficients = {}
         
         # Feature selection tracking
         self.features_used = "selected" if use_selected_features else "all"
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2020-2021"
         
-        logger.info(f"Model 1 initialized: feature_selection={use_selected_features}, "
-                   f"FY2024_only={use_fy2024_only}, floor=${prediction_floor:,.0f}")
+        logger.info(f"Model 1 initialized with feature selection: {use_selected_features}, "
+                   f"prediction floor: ${prediction_floor:,.0f}")
+    
+    def load_data(self, fiscal_year_start: int = 2020, fiscal_year_end: int = 2021) -> List[ConsumerRecord]:
+        """
+        Load data with optional fiscal year 2024 filtering
         
+        Args:
+            fiscal_year_start: Starting fiscal year 
+            fiscal_year_end: Ending fiscal year 
+            
+        Returns:
+            List of consumer records
+        """
+        return super().load_data(fiscal_year_start, fiscal_year_end)
+    
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
         Prepare features with optional feature selection
@@ -108,113 +131,114 @@ class Model1Linear(BaseiBudgetModel):
         for record in records:
             row_features = []
             
-            # Living Setting (one-hot encoding, FH as reference)
-            for setting in ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
-                row_features.append(1.0 if record.living_setting == setting else 0.0)
-                if not feature_names:
-                    feature_names.append(f'LivingSetting_{setting}')
+            # Demographics
+            row_features.append(float(record.age))
             
-            # Age Group (one-hot encoding, Age3_20 as reference)
-            for age_grp in ['Age21_30', 'Age31Plus']:
-                row_features.append(1.0 if record.age_group == age_grp else 0.0)
-                if not feature_names:
-                    feature_names.append(f'AgeGroup_{age_grp}')
+            # Age group dummies (drop Age3_20 as reference)
+            if record.age_group == 'Age21_30':
+                row_features.extend([1.0, 0.0])
+            elif record.age_group == 'Age31Plus':
+                row_features.extend([0.0, 1.0])
+            else:  # Age3_20
+                row_features.extend([0.0, 0.0])
             
-            # QSI Questions (10 features)
-            for q in [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]:
-                q_val = getattr(record, f'q{q}', 0.0)
-                row_features.append(float(q_val) if q_val is not None else 0.0)
-                if not feature_names:
-                    feature_names.append(f'Q{q}')
+            # Gender (1 for Male, 0 for Female)
+            row_features.append(1.0 if record.gender in ['M', 'Male'] else 0.0)
             
-            # Summary Scores (2 features)
-            row_features.append(float(record.bsum) if record.bsum is not None else 0.0)
-            row_features.append(float(record.fsum) if record.fsum is not None else 0.0)
-            if not feature_names:
-                feature_names.extend(['BSum', 'FSum'])
+            # Living setting dummies (drop FH as reference)
+            living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
+            for setting in living_settings:
+                value = 1.0 if record.living_setting == setting else 0.0
+                row_features.append(value)
+            
+            # Support levels (using available data)
+            row_features.append(float(record.losri))  # LOSRI
+            row_features.append(float(record.olevel))  # OLEVEL
+            
+            # Clinical assessment scores
+            row_features.append(float(record.bsum))  # BSum
+            row_features.append(float(record.blevel))  # BLEVEL
+            row_features.append(float(record.fsum))  # FSum
+            row_features.append(float(record.flevel))  # FLEVEL
+            row_features.append(float(record.psum))  # PSum
+            row_features.append(float(record.plevel))  # PLEVEL
+            
+            # Selected QSI items
+            selected_qsi = [20, 21, 23, 25, 26, 27, 30, 36, 44]
+            for q_num in selected_qsi:
+                value = getattr(record, f'q{q_num}', 0)
+                row_features.append(float(value))
             
             features_list.append(row_features)
         
-        X = np.array(features_list)
-        self.feature_names = feature_names
+        # Create feature names
+        feature_names = [
+            'Age', 'Age21_30', 'Age31Plus', 'Gender_Male',
+            'ILSL', 'RH1', 'RH2', 'RH3', 'RH4',
+            'LOSRI', 'OLEVEL',
+            'BSum', 'BLEVEL', 'FSum', 'FLEVEL', 'PSum', 'PLEVEL',
+            'Q20', 'Q21', 'Q23', 'Q25', 'Q26', 'Q27', 'Q30', 'Q36', 'Q44'
+        ]
         
-        logger.info(f"Prepared SELECTED features: {X.shape[0]} records, {X.shape[1]} features")
+        X = np.array(features_list)
+        logger.info(f"Prepared {X.shape[1]} selected features for {X.shape[0]} records")
+        
         return X, feature_names
     
     def _prepare_all_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Prepare ALL available features (for comparison/debugging)
+        Prepare all features following original Model 1 structure (22 features)
         """
         features_list = []
-        feature_names = []
         
         for record in records:
             row_features = []
             
-            # Demographics
-            row_features.append(float(record.age))
-            if not feature_names:
-                feature_names.append('Age')
+            # Living setting dummies (5 features, drop FH as reference)
+            living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
+            for setting in living_settings:
+                value = 1.0 if record.living_setting == setting else 0.0
+                row_features.append(value)
             
-            # Age group (one-hot, Age3_20 reference)
-            for age_grp in ['Age21_30', 'Age31Plus']:
-                row_features.append(1.0 if record.age_group == age_grp else 0.0)
-                if not feature_names:
-                    feature_names.append(f'AgeGroup_{age_grp}')
+            # Age group dummies (2 features, drop Age3_20 as reference)
+            age_groups = ['Age21_30', 'Age31Plus']
+            for age_group in age_groups:
+                value = 1.0 if record.age_group == age_group else 0.0
+                row_features.append(value)
             
-            # Living Setting (one-hot, FH reference)
-            for setting in ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
-                row_features.append(1.0 if record.living_setting == setting else 0.0)
-                if not feature_names:
-                    feature_names.append(f'LivingSetting_{setting}')
+            # Individual QSI questions (10 features as per original Model 5b)
+            selected_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
+            for q_num in selected_qsi:
+                value = getattr(record, f'q{q_num}', 0)
+                row_features.append(float(value))
             
-            # ALL QSI Questions (not just selected ones)
-            for q in range(14, 51):  # Q14-Q50
-                if q == 31:  # Skip Q31 (has sub-parts)
-                    continue
-                q_val = getattr(record, f'q{q}', 0.0)
-                row_features.append(float(q_val) if q_val is not None else 0.0)
-                if not feature_names:
-                    feature_names.append(f'Q{q}')
+            # Summary scores (2 features)
+            row_features.append(float(record.bsum))  # Behavioral sum
+            row_features.append(float(record.fsum))  # Functional sum
             
-            # Summary scores
-            row_features.append(float(record.bsum) if record.bsum is not None else 0.0)
-            row_features.append(float(record.fsum) if record.fsum is not None else 0.0)
-            if not feature_names:
-                feature_names.extend(['BSum', 'FSum'])
+            # County dummies (3 features for top 4 counties, drop one as reference)
+            # Placeholder for now
+            row_features.extend([0.0, 0.0, 0.0])
             
             features_list.append(row_features)
         
+        # Generate feature names
+        feature_names = (
+            ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'] +
+            ['Age21_30', 'Age31Plus'] +
+            [f'Q{q}' for q in [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]] +
+            ['BSum', 'FSum'] +
+            ['County1', 'County2', 'County3']
+        )
+        
         X = np.array(features_list)
-        self.feature_names = feature_names
+        logger.info(f"Prepared {X.shape[1]} features for {X.shape[0]} records")
         
-        logger.info(f"Prepared ALL features: {X.shape[0]} records, {X.shape[1]} features")
         return X, feature_names
-    
-    def load_data(self, fiscal_year_start: int = 2020, fiscal_year_end: int = 2021) -> List[ConsumerRecord]:
-        """
-        Load data with optional fiscal year 2024 filtering
-        
-        Args:
-            fiscal_year_start: Starting fiscal year (ignored if use_fy2024_only is True)
-            fiscal_year_end: Ending fiscal year (ignored if use_fy2024_only is True)
-            
-        Returns:
-            List of consumer records
-        """
-        if self.use_fy2024_only:
-            # Override to use only FY2024 (September 1, 2023 - August 31, 2024)
-            logger.info("Loading FY2024 data only (Sep 1, 2023 - Aug 31, 2024)")
-            all_records = super().load_data(fiscal_year_start=2024, fiscal_year_end=2024)
-            logger.info(f"Loaded {len(all_records)} records from FY2024")
-            return all_records
-        else:
-            # Use the standard date range
-            return super().load_data(fiscal_year_start, fiscal_year_end)
     
     def remove_outliers(self, X_train: np.ndarray, y_train: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
-        Remove outliers using residual-based method
+        Remove outliers using IQR method on residuals after preliminary fit
         
         Process:
         1. Apply square-root transformation
@@ -294,8 +318,6 @@ class Model1Linear(BaseiBudgetModel):
                 }
             
             logger.info("Model 1 fitted successfully with outlier removal")
-            logger.info(f"Intercept: {self.linear_model.intercept_:.4f}")
-            logger.info(f"Non-zero coefficients: {np.sum(np.abs(self.linear_model.coef_) > 1e-6)}")
             
         except Exception as e:
             logger.error(f"Error fitting Model 1: {str(e)}")
@@ -330,9 +352,8 @@ class Model1Linear(BaseiBudgetModel):
     def calculate_metrics(self) -> Dict[str, float]:
         """
         Override to add Model 1 specific metrics
-        Ensures accuracy bands and all metrics are calculated
         """
-        # Get all base metrics (includes accuracy bands, CV, subgroups, etc.)
+        # Get all base metrics (includes accuracy bands, etc.)
         metrics = super().calculate_metrics()
         
         # Add Model 1 specific metrics
@@ -345,32 +366,24 @@ class Model1Linear(BaseiBudgetModel):
                 'prediction_floor': self.prediction_floor
             })
         
-        # Ensure CV metrics have both naming conventions
-        if 'cv_r2_mean' in metrics:
-            metrics['cv_mean'] = metrics['cv_r2_mean']
-        if 'cv_r2_std' in metrics:
-            metrics['cv_std'] = metrics['cv_r2_std']
-        
         return metrics
     
     def generate_latex_commands(self) -> None:
         """
-        Generate LaTeX commands for Model 1
-        CRITICAL: Properly appends Model 1-specific commands after base class
+        Generate LaTeX commands - let base class create files, then append Model 1 specifics
         """
-        # FIRST: Call base class to generate ALL standard commands
-        # This creates both newcommands.tex and renewcommands.tex files
+        # First call base class to generate standard commands
         super().generate_latex_commands()
         
-        # SECOND: Append Model 1-specific commands to BOTH files
+        # Now append Model 1 specific commands
         model_word = "One"
         newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         
-        # Append to newcommands file (definitions)
+        # Append Model 1 specific newcommands
         try:
             with open(newcommands_file, 'a') as f:
-                f.write("\n% Model 1 Specific Commands - Outlier Removal\n")
+                f.write("\n% Model 1 Specific Commands\n")
                 f.write(f"\\newcommand{{\\Model{model_word}OutliersRemoved}}{{\\WarningRunPipeline}}\n")
                 f.write(f"\\newcommand{{\\Model{model_word}OutlierPercentage}}{{\\WarningRunPipeline}}\n")
                 f.write(f"\\newcommand{{\\Model{model_word}Transformation}}{{\\WarningRunPipeline}}\n")
@@ -386,14 +399,15 @@ class Model1Linear(BaseiBudgetModel):
                     f.write(f"\\newcommand{{\\Model{model_word}VarianceExplained}}{{\\WarningRunPipeline}}\n")
             
             logger.info(f"Appended Model 1 specific commands to {newcommands_file}")
+            
         except Exception as e:
-            logger.error(f"Failed to append to newcommands file: {e}")
+            logger.error(f"Error appending to newcommands file: {e}")
         
-        # Append to renewcommands file (actual values)
+        # Append actual values to renewcommands
         try:
             with open(renewcommands_file, 'a') as f:
-                f.write("\n% Model 1 Specific Values - Outlier Removal\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}OutliersRemoved}}{{{self.n_outliers_removed:,}}}\n")
+                f.write("\n% Model 1 Specific Metrics\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}OutliersRemoved}}{{{self.n_outliers_removed}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}OutlierPercentage}}{{{self.outlier_percentage:.1f}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}Transformation}}{{Square Root}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}NumFeatures}}{{{len(self.feature_names) if self.feature_names else 0}}}\n")
@@ -403,20 +417,22 @@ class Model1Linear(BaseiBudgetModel):
                 if self.use_selected_features:
                     f.write("\n% Feature Selection Specific Values\n")
                     f.write(f"\\renewcommand{{\\Model{model_word}FeatureSelection}}{{True}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}FiscalYears}}{{{self.fiscal_years_used}}}\n")
                     f.write(f"\\renewcommand{{\\Model{model_word}MIScoreTop}}{{0.272}}\n")  # RESIDENCETYPE MI score
                     f.write(f"\\renewcommand{{\\Model{model_word}VarianceExplained}}{{89.0}}\n")  # Percentage
             
             logger.info(f"Appended Model 1 specific values to {renewcommands_file}")
+            
         except Exception as e:
-            logger.error(f"Failed to append to renewcommands file: {e}")
+            logger.error(f"Error appending to renewcommands file: {e}")
     
     def save_results(self) -> None:
         """
-        Save all model results including Model 1 specifics
+        Save Model 1 specific results
         """
-        # Call base class to save standard results
+        # Save base results (metrics, predictions, etc.)
         super().save_results()
+        
+        # Save Model 1 specific files
         
         # Save coefficients
         coef_file = self.output_dir / "coefficients.json"
@@ -441,10 +457,8 @@ class Model1Linear(BaseiBudgetModel):
         # Save feature selection info
         feature_info = {
             'use_selected_features': self.use_selected_features,
-            'use_fy2024_only': self.use_fy2024_only,
             'num_features': len(self.feature_names) if self.feature_names else 0,
             'feature_names': self.feature_names if self.feature_names else [],
-            'fiscal_years': self.fiscal_years_used,
             'features_used': self.features_used,
             'prediction_floor': self.prediction_floor
         }
@@ -471,13 +485,12 @@ class Model1Linear(BaseiBudgetModel):
         """
         Generate diagnostic plots including Model 1 specific visualizations
         """
-        # Generate base diagnostic plots (6-panel standard plot)
+        # Generate base diagnostic plots
         super().plot_diagnostics()
         
-        # Additional Model 1 specific plots (outlier analysis)
+        # Additional Model 1 specific plots
         if self.outlier_mask is not None and self.y_train is not None:
-            fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-            fig.suptitle('Model 1: Outlier Removal Analysis', fontsize=16, fontweight='bold')
+            fig, axes = plt.subplots(2, 2, figsize=(12, 10))
             
             # 1. Residuals before/after outlier removal
             ax = axes[0, 0]
@@ -488,44 +501,40 @@ class Model1Linear(BaseiBudgetModel):
             residuals = y_sqrt - y_pred_sqrt
             
             # Plot all residuals
-            ax.scatter(range(len(residuals)), residuals, alpha=0.5, s=10, 
-                      color='blue', label='Kept', edgecolors='none')
+            ax.scatter(range(len(residuals)), residuals, alpha=0.5, s=10, label='Kept')
             # Highlight outliers
             if len(self.outlier_indices) > 0:
                 ax.scatter(self.outlier_indices, residuals[self.outlier_indices], 
-                          color='red', s=30, label='Removed', alpha=0.7, edgecolors='darkred')
+                          color='red', s=20, label='Removed')
             ax.axhline(y=0, color='black', linestyle='--', alpha=0.3)
             ax.set_xlabel('Observation Index')
             ax.set_ylabel('Residuals (sqrt scale)')
-            ax.set_title(f'Outlier Detection\n({self.n_outliers_removed:,} removed, {self.outlier_percentage}%)')
+            ax.set_title(f'Outlier Detection ({self.n_outliers_removed} removed)')
             ax.legend()
-            ax.grid(True, alpha=0.3)
             
             # 2. Cost distribution before/after outlier removal
             ax = axes[0, 1]
-            ax.hist(self.y_train/1000, bins=50, alpha=0.5, label='All Data', 
-                   edgecolor='black', color='lightblue')
+            ax.hist(self.y_train, bins=50, alpha=0.5, label='All Data', edgecolor='black')
             if self.outlier_mask is not None:
-                ax.hist(self.y_train[self.outlier_mask]/1000, bins=50, alpha=0.6, 
-                       label='After Outlier Removal', edgecolor='black', color='green')
-            ax.set_xlabel('Cost ($1000s)')
+                ax.hist(self.y_train[self.outlier_mask], bins=50, alpha=0.5, 
+                       label='After Outlier Removal', edgecolor='black')
+            ax.set_xlabel('Cost ($)')
             ax.set_ylabel('Frequency')
-            ax.set_title('Cost Distribution\nBefore/After Outlier Removal')
+            ax.set_title('Cost Distribution')
             ax.legend()
-            ax.grid(True, alpha=0.3)
             
             # 3. Transformation effect
             ax = axes[1, 0]
-            costs = np.linspace(0, 100000, 200)
+            costs = np.linspace(100, self.y_test.max() if self.y_test is not None else 100000, 100)
             sqrt_costs = np.sqrt(costs)
-            ax.plot(costs/1000, sqrt_costs, 'b-', linewidth=2, label='Square Root Transform')
-            ax.set_xlabel('Original Cost ($1000s)')
-            ax.set_ylabel('Transformed Value (√Cost)')
-            ax.set_title('Square Root Transformation Effect')
+            ax.plot(costs, costs/1000, 'b-', label='No Transform', alpha=0.5)
+            ax.plot(costs, sqrt_costs, 'r-', label='Square Root', alpha=0.5)
+            ax.set_xlabel('Original Cost ($)')
+            ax.set_ylabel('Transformed Value')
+            ax.set_title('Square Root Transformation')
             ax.legend()
-            ax.grid(True, alpha=0.3)
             
-            # 4. Feature importance (coefficient magnitude)
+            # 4. Feature importance
             ax = axes[1, 1]
             if self.coefficients:
                 coef_list = [(name, abs(data['value'])) for name, data in self.coefficients.items() 
@@ -537,37 +546,34 @@ class Model1Linear(BaseiBudgetModel):
                 values = [f[1] for f in top_features]
                 
                 y_pos = np.arange(len(names))
-                ax.barh(y_pos, values, color='steelblue', edgecolor='black')
+                ax.barh(y_pos, values)
                 ax.set_yticks(y_pos)
                 ax.set_yticklabels(names, fontsize=8)
                 ax.set_xlabel('|Coefficient|')
-                ax.set_title('Top 10 Features by Magnitude')
+                ax.set_title('Top 10 Features')
                 ax.invert_yaxis()
-                ax.grid(True, alpha=0.3, axis='x')
             
+            plt.suptitle('Model 1: Outlier Analysis and Feature Importance', 
+                        fontsize=14, fontweight='bold')
             plt.tight_layout()
             
-            # Save the plot
-            outlier_plot_file = self.output_dir / "outlier_analysis.png"
-            plt.savefig(outlier_plot_file, dpi=300, bbox_inches='tight')
-            logger.info(f"Outlier analysis plot saved to {outlier_plot_file}")
+            output_file = self.output_dir / 'model1_specific_diagnostics.png'
+            plt.savefig(output_file, dpi=300, bbox_inches='tight')
             plt.close()
+            
+            logger.info(f"Model 1 specific diagnostic plots saved to {output_file}")
 
 
 def main():
     """
-    Main execution function for Model 1
+    Run Model 1 with feature selection on FY2024 data
     """
-    print("="*80)
-    print("MODEL 1: LINEAR REGRESSION WITH FEATURE SELECTION")
-    print("="*80)
-    
     # Initialize model with feature selection enabled and prediction floor
-    model = Model1Linear(use_selected_features=True, use_fy2024_only=True, prediction_floor=5000)
+    model = Model1Linear(use_selected_features=True, prediction_floor=5000)
     
     # Run complete pipeline - base class handles everything
     results = model.run_complete_pipeline(
-        fiscal_year_start=2024,  # Will use FY2024 due to use_fy2024_only flag
+        fiscal_year_start=2024,  
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
@@ -576,12 +582,11 @@ def main():
     
     # Print summary
     print("\n" + "="*80)
-    print("MODEL 1: RESULTS SUMMARY")
+    print("MODEL 1: LINEAR REGRESSION WITH FEATURE SELECTION")
     print("="*80)
     
     print(f"\nConfiguration:")
     print(f"  • Feature Selection: {model.use_selected_features}")
-    print(f"  • Fiscal Years: {model.fiscal_years_used}")
     print(f"  • Number of Features: {len(model.feature_names) if model.feature_names else 0}")
     print(f"  • Outlier Removal: {model.outlier_percentage}%")
     print(f"  • Transformation: {model.transformation}")
@@ -589,21 +594,19 @@ def main():
     
     print(f"\nData Summary:")
     print(f"  • Total Records: {len(model.all_records)}")
-    print(f"  • Training Records: {model.metrics.get('training_samples', 0):,}")
-    print(f"  • Test Records: {model.metrics.get('test_samples', 0):,}")
-    print(f"  • Outliers Removed: {model.n_outliers_removed:,}")
+    print(f"  • Training Records: {model.metrics.get('training_samples', 0)}")
+    print(f"  • Test Records: {model.metrics.get('test_samples', 0)}")
+    print(f"  • Outliers Removed: {model.n_outliers_removed}")
     
     print(f"\nPerformance Metrics:")
-    print(f"  • Training R²: {model.metrics.get('r2_train', 0):.4f}")
-    print(f"  • Test R²: {model.metrics.get('r2_test', 0):.4f}")
+    print(f"  • Training R^2: {model.metrics.get('r2_train', 0):.4f}")
+    print(f"  • Test R^2: {model.metrics.get('r2_test', 0):.4f}")
     print(f"  • RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
     print(f"  • MAE: ${model.metrics.get('mae_test', 0):,.2f}")
     print(f"  • MAPE: {model.metrics.get('mape_test', 0):.2f}%")
-    print(f"  • CV R² (10-fold): {model.metrics.get('cv_mean', 0):.4f} ± {model.metrics.get('cv_std', 0):.4f}")
+    print(f"  • CV R^2 (10-fold): {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
     
     print(f"\nAccuracy Bands:")
-    print(f"  • Within $1,000: {model.metrics.get('within_1k', 0):.1f}%")
-    print(f"  • Within $2,000: {model.metrics.get('within_2k', 0):.1f}%")
     print(f"  • Within $5,000: {model.metrics.get('within_5k', 0):.1f}%")
     print(f"  • Within $10,000: {model.metrics.get('within_10k', 0):.1f}%")
     print(f"  • Within $20,000: {model.metrics.get('within_20k', 0):.1f}%")
@@ -612,17 +615,17 @@ def main():
     if model.subgroup_metrics:
         for subgroup, metrics in model.subgroup_metrics.items():
             if metrics['n'] > 0:  # Only show subgroups with data
-                print(f"  {subgroup}: R²={metrics['r2']:.4f}, RMSE=${metrics['rmse']:,.0f}, n={metrics['n']:,}")
+                print(f"  {subgroup}: R^2={metrics['r2']:.4f}, RMSE=${metrics['rmse']:,.0f}, n={metrics['n']}")
     
     print("\nVariance Metrics:")
     if model.variance_metrics:
         print(f"  • CV Predicted: {model.variance_metrics.get('cv_predicted', 0):.3f}")
-        print(f"  • Prediction Interval: ±${model.variance_metrics.get('prediction_interval', 0):,.0f}")
+        print(f"  • Prediction Interval: +-${model.variance_metrics.get('prediction_interval', 0):,.0f}")
         print(f"  • Budget-Actual Correlation: {model.variance_metrics.get('budget_actual_corr', 0):.3f}")
     
     print("\nFiles Generated:")
-    for file in sorted(model.output_dir.glob("*")):
-        print(f"  • {file.name}")
+    for file in model.output_dir.glob("*"):
+        print(f"  • {file}")
     
     print("="*80)
     
@@ -630,10 +633,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # Set up logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    
     model = main()

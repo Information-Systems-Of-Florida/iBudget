@@ -2,7 +2,7 @@
 model_3_robust.py
 =================
 Model 3: Robust Linear Regression with Huber Estimation
-COMPLETE implementation - generates ALL LaTeX commands including model-specific ones
+FIXED: Generates ALL LaTeX commands including model-specific ones
 """
 
 import numpy as np
@@ -17,38 +17,21 @@ from scipy import stats
 import logging
 from pathlib import Path
 import json
-import random
 
 from base_model import BaseiBudgetModel, ConsumerRecord
 
 logger = logging.getLogger(__name__)
 
-# ============================================================================
-# SINGLE POINT OF CONTROL FOR RANDOM SEED
-# ============================================================================
-# Change this value to get different random splits, or keep at 42 for reproducibility
-# This seed controls:
-#   - Train/test split
-#   - Cross-validation folds
-#   - Any other random operations in the pipeline
-# 
-# To run with a different seed, simply change the value below:
-# ============================================================================
-RANDOM_SEED = 42
-
 
 class Model3Robust(BaseiBudgetModel):
     """Model 3: Robust Linear Regression with Huber Estimation"""
     
-    def __init__(self, use_fy2024_only: bool = True):
+    def __init__(self):
         super().__init__(model_id=3, model_name="Robust Linear Regression")
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2020-2021"
-    
-        # Huber-specific attributes
+        
         self.model = None
         self.weights = None
-        self.epsilon = 1.35  # Standard Huber threshold for 95% efficiency
+        self.epsilon = 1.35
         self.scale_estimate = None
         self.num_iterations = None
         self.converged = False
@@ -56,7 +39,7 @@ class Model3Robust(BaseiBudgetModel):
         self.uses_all_data = True
         self.outlier_percentage = 0.0
         
-    def split_data(self, test_size: float = 0.2, random_state: int = RANDOM_SEED) -> None:
+    def split_data(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """Override to handle boolean test_size"""
         if isinstance(test_size, bool):
             test_size = 0.2 if test_size else 0.0
@@ -64,52 +47,55 @@ class Model3Robust(BaseiBudgetModel):
         if not self.all_records:
             raise ValueError("No records loaded. Call load_data() first.")
         
-        super().split_data(test_size=test_size, random_state=random_state)
+        n_total = len(self.all_records)
+        n_test = int(n_total * test_size)
+        n_train = n_total - n_test
+        
+        np.random.seed(random_state)
+        indices = np.random.permutation(n_total)
+        
+        train_indices = indices[:n_train]
+        test_indices = indices[n_train:]
+        
+        self.train_records = [self.all_records[i] for i in train_indices]
+        self.test_records = [self.all_records[i] for i in test_indices]
+        
+        logger.info(f"Data split: {len(self.train_records)} training, {len(self.test_records)} test")
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-        """
-        Prepare feature matrix from consumer records
-        Uses the same 22 features as Model 1
-        """
-        logger.info("Preparing features for robust regression...")
+        """Prepare features using Model 5b structure"""
+        if not records:
+            return np.array([]).reshape(0, 22), []
         
-        # Feature categories (same as Model 1/5b)
-        living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']  # FH is reference
-        age_groups = ['Age21_30', 'Age31Plus']  # Age3_20 is reference
-        selected_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]  # 10 QSI questions
+        living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
+        age_groups = ['Age21_30', 'Age31Plus']
+        selected_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
         
         features_list = []
         
         for record in records:
             row_features = []
             
-            # Living settings (5 binary features)
             for ls in living_settings:
                 row_features.append(1.0 if record.living_setting == ls else 0.0)
             
-            # Age groups (2 binary features)
             for age in age_groups:
                 row_features.append(1.0 if record.age_group == age else 0.0)
             
-            # Selected QSI questions (10 features)
             for q in selected_qsi:
-                qsi_attr = f'q{q}'
-                qsi_value = getattr(record, qsi_attr, 0)
-                row_features.append(float(qsi_value) if qsi_value is not None else 0.0)
+                value = getattr(record, f'q{q}', 0)
+                row_features.append(float(value) if value is not None else 0.0)
             
-            # Summary scores (2 features)
             row_features.append(float(record.bsum) if record.bsum is not None else 0.0)
             row_features.append(float(record.fsum) if record.fsum is not None else 0.0)
             
-            # Disability indicators (3 features)
-            pd_lower = record.primary_diagnosis.lower() if record.primary_diagnosis else ''
-            row_features.append(1.0 if 'autism' in pd_lower else 0.0)
-            row_features.append(1.0 if 'cerebral' in pd_lower else 0.0)
-            row_features.append(1.0 if 'down' in pd_lower else 0.0)
+            dd = record.developmental_disability if hasattr(record, 'developmental_disability') else ""
+            row_features.append(1.0 if 'autism' in str(dd).lower() else 0.0)
+            row_features.append(1.0 if 'cerebral' in str(dd).lower() else 0.0)
+            row_features.append(1.0 if 'down' in str(dd).lower() else 0.0)
             
             features_list.append(row_features)
         
-        # Set feature names if not already set
         if not self.feature_names:
             feature_names = []
             for ls in living_settings:
@@ -125,7 +111,7 @@ class Model3Robust(BaseiBudgetModel):
         X = np.array(features_list, dtype=np.float64)
         
         if len(features_list) > 0:
-            self.num_parameters = X.shape[1] + 1  # Features + intercept
+            self.num_parameters = X.shape[1] + 1
             logger.info(f"Prepared {X.shape[1]} features for {X.shape[0]} records")
         else:
             self.num_parameters = len(self.feature_names) + 1
@@ -146,17 +132,11 @@ class Model3Robust(BaseiBudgetModel):
         
         self.model.fit(X, y)
         
-        # Calculate residuals and scale estimate
         predictions = self.model.predict(X)
         residuals = y - predictions
         
-        # Use MAD for robust scale estimation
         self.scale_estimate = median_abs_deviation(residuals, scale='normal')
-        
-        # Calculate Huber weights
         self.weights = self._calculate_huber_weights(residuals)
-        
-        # Store convergence info
         self.converged = self.model.n_iter_ < self.model.max_iter
         self.num_iterations = self.model.n_iter_
         
@@ -166,20 +146,16 @@ class Model3Robust(BaseiBudgetModel):
         logger.info(f"Mean weight: {np.mean(self.weights):.4f}")
     
     def _calculate_huber_weights(self, residuals: np.ndarray) -> np.ndarray:
-        """Calculate Huber weights for each observation"""
+        """Calculate Huber weights"""
         if self.scale_estimate == 0:
             return np.ones_like(residuals)
         
-        # Standardized residuals
         std_residuals = np.abs(residuals / self.scale_estimate)
-        
-        # Huber weight function
         weights = np.where(
             std_residuals <= self.epsilon,
-            1.0,  # Full weight for small residuals
-            self.epsilon / std_residuals  # Downweight for large residuals
+            1.0,
+            self.epsilon / std_residuals
         )
-        
         return weights
     
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -190,30 +166,22 @@ class Model3Robust(BaseiBudgetModel):
     
     def calculate_metrics(self) -> Dict[str, float]:
         """Calculate model-specific metrics"""
-        # Get base metrics first
         metrics = super().calculate_metrics()
         
-        # Add Huber-specific weight metrics
         if self.weights is not None:
             metrics['mean_weight'] = float(np.mean(self.weights))
             metrics['min_weight'] = float(np.min(self.weights))
             metrics['max_weight'] = float(np.max(self.weights))
-            
-            # Percentage with full weight (>= 0.99)
             full_weight_pct = np.mean(self.weights >= 0.99) * 100
             metrics['full_weight_pct'] = float(full_weight_pct)
-            
-            # Number and percentage downweighted
             outliers_detected = np.sum(self.weights < 0.99)
             metrics['outliers_detected'] = int(outliers_detected)
             metrics['outlier_percentage'] = float(outliers_detected / len(self.weights) * 100)
         
-        # Convergence information
         if self.converged is not None:
             metrics['converged'] = 'Yes' if self.converged else 'No'
             metrics['num_iterations'] = int(self.num_iterations) if self.num_iterations else 0
         
-        # Scale and epsilon
         if self.scale_estimate is not None:
             metrics['scale_estimate'] = float(self.scale_estimate)
             metrics['epsilon'] = float(self.epsilon)
@@ -224,10 +192,10 @@ class Model3Robust(BaseiBudgetModel):
     
     def generate_latex_commands(self) -> None:
         """Override to add Model 3-specific LaTeX commands"""
-        # CRITICAL: Generate base commands first (this creates ~75 commands)
+        # Generate base commands first
         super().generate_latex_commands()
         
-        # Now add Model 3-specific commands (~11 more commands)
+        # Now add Model 3-specific commands
         model_word = "Three"
         newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
@@ -285,7 +253,7 @@ class Model3Robust(BaseiBudgetModel):
         logger.info("Generated Model 3-specific LaTeX commands")
     
     def plot_diagnostics(self) -> None:
-        """Create diagnostic plots specific to robust regression"""
+        """Create diagnostic plots"""
         if self.test_predictions is None or self.y_test is None:
             logger.warning("Cannot create diagnostic plots - no predictions available")
             return
@@ -305,43 +273,36 @@ class Model3Robust(BaseiBudgetModel):
         ax.grid(True, alpha=0.3)
         ax.legend()
         
-        # 2. Residuals colored by weight (unique to robust regression)
+        # 2. Residual Plot with weights
         ax = axes[0, 1]
-        test_residuals = self.y_test - self.test_predictions
-        
-        # Calculate test weights if we have them
-        if self.weights is not None and len(self.train_records) > 0:
-            # For visualization, use training weights as proxy
-            scatter = ax.scatter(self.test_predictions, test_residuals, 
-                               c='blue', alpha=0.3, s=10, label='Test Set')
-        else:
-            scatter = ax.scatter(self.test_predictions, test_residuals, 
-                               alpha=0.3, s=10)
-        
+        train_residuals = self.y_train - self.model.predict(self.X_train)
+        scatter = ax.scatter(self.model.predict(self.X_train), train_residuals,
+                            c=self.weights, cmap='RdYlGn', alpha=0.5, s=10, vmin=0, vmax=1)
         ax.axhline(y=0, color='r', linestyle='--', linewidth=2)
-        ax.set_xlabel('Predicted √Cost')
+        ax.set_xlabel('Fitted Values')
         ax.set_ylabel('Residuals')
-        ax.set_title('Residuals vs Predicted (Robust Regression)')
+        ax.set_title('Residuals (colored by Huber weight)')
+        plt.colorbar(scatter, ax=ax, label='Weight')
         ax.grid(True, alpha=0.3)
         
-        # 3. Weight Distribution (unique to Model 3)
+        # 3. Weight Distribution
         ax = axes[0, 2]
-        if self.weights is not None:
-            ax.hist(self.weights, bins=50, edgecolor='black', alpha=0.7, color='green')
-            ax.axvline(x=np.mean(self.weights), color='r', linestyle='--', 
-                      linewidth=2, label=f'Mean: {np.mean(self.weights):.3f}')
-            ax.axvline(x=0.99, color='orange', linestyle='--', 
-                      linewidth=2, label='Full Weight Threshold')
-            ax.set_xlabel('Huber Weight')
-            ax.set_ylabel('Frequency')
-            ax.set_title(f'Weight Distribution (Mean={np.mean(self.weights):.3f})')
-            ax.legend()
-            ax.grid(True, alpha=0.3, axis='y')
+        ax.hist(self.weights, bins=50, edgecolor='black', alpha=0.7, color='steelblue')
+        ax.axvline(x=np.mean(self.weights), color='r', linestyle='--', linewidth=2,
+                   label=f'Mean: {np.mean(self.weights):.3f}')
+        ax.axvline(x=0.99, color='orange', linestyle=':', linewidth=2,
+                   label='Full Weight Cutoff')
+        ax.set_xlabel('Huber Weight')
+        ax.set_ylabel('Frequency')
+        ax.set_title(f'Weight Distribution ({np.mean(self.weights>=0.99)*100:.1f}% full)')
+        ax.legend()
+        ax.grid(True, alpha=0.3, axis='y')
         
         # 4. Q-Q Plot
         ax = axes[1, 0]
+        test_residuals = self.y_test - self.test_predictions
         stats.probplot(test_residuals, dist="norm", plot=ax)
-        ax.set_title('Q-Q Plot (Normal Distribution)')
+        ax.set_title('Q-Q Plot (Test Residuals)')
         ax.grid(True, alpha=0.3)
         
         # 5. Residual Distribution
@@ -385,85 +346,50 @@ class Model3Robust(BaseiBudgetModel):
 
 def main():
     """Main execution"""
-    # ============================================================================
-    # SET ALL RANDOM SEEDS FOR REPRODUCIBILITY
-    # This ensures identical results across runs
-    # ============================================================================
-    np.random.seed(RANDOM_SEED)
-    random.seed(RANDOM_SEED)
-    
     print("\n" + "="*80)
     print("MODEL 3: ROBUST LINEAR REGRESSION WITH HUBER ESTIMATION")
     print("="*80)
-    print(f"\n🎲 Random Seed: {RANDOM_SEED} (for reproducibility)")
     
-    # Initialize model
-    model = Model3Robust(use_fy2024_only=True)
+    model = Model3Robust()
     
-    # Run complete pipeline (random seed already set globally above)
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
         n_cv_folds=10
     )
     
-    # Print configuration
     print(f"\nConfiguration:")
     print(f"  • Method: Huber M-estimator")
     print(f"  • Epsilon: {model.epsilon}")
     print(f"  • Data Utilization: 100%")
     print(f"  • Features: {len(model.feature_names)}")
     
-    # Print model fitting info
     print(f"\nModel Fitting:")
     print(f"  • Converged: {model.converged}")
     print(f"  • Iterations: {model.num_iterations}")
     print(f"  • Scale Estimate: {model.scale_estimate:.4f}")
     
-    # Print weight statistics
     print(f"\nWeight Statistics:")
     print(f"  • Mean: {model.metrics.get('mean_weight', 0):.4f}")
     print(f"  • Min: {model.metrics.get('min_weight', 0):.4f}")
     print(f"  • % Full: {model.metrics.get('full_weight_pct', 0):.1f}%")
     print(f"  • Downweighted: {model.metrics.get('outliers_detected', 0)} ({model.metrics.get('outlier_percentage', 0):.1f}%)")
     
-    # Print performance
     print(f"\nPerformance:")
     print(f"  • Test R²: {model.metrics.get('r2_test', 0):.4f}")
     print(f"  • RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
     print(f"  • CV R²: {model.metrics.get('cv_r2_mean', 0):.4f} ± {model.metrics.get('cv_r2_std', 0):.4f}")
     
-    # List generated files
     print("\nFiles Generated:")
     for file in sorted(model.output_dir.glob("*")):
         print(f"  • {file.name}")
     
     print("="*80)
     
-    # Verify LaTeX command count
-    renewcommands_file = model.output_dir / f"model_{model.model_id}_renewcommands.tex"
-    if renewcommands_file.exists():
-        with open(renewcommands_file, 'r') as f:
-            lines = f.readlines()
-            command_count = sum(1 for line in lines if '\\renewcommand' in line)
-            print(f"\n✓ LaTeX Commands Generated: {command_count}")
-            if command_count >= 80:
-                print("  SUCCESS: Command count meets requirement (80+)")
-            else:
-                print(f"  WARNING: Expected 80+, got {command_count}")
-    
-    print(f"\n💡 To change random seed, edit RANDOM_SEED = {RANDOM_SEED} at top of file")
-    
     return model
 
 
 if __name__ == "__main__":
-    # Set up logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    
     model = main()

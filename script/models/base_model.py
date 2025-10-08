@@ -291,7 +291,7 @@ class BaseiBudgetModel(ABC):
         }
         return words.get(num, str(num))
 
-    def load_data(self, fiscal_year_start: int = 2023, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
+    def load_data(self, fiscal_year_start: int = 2024, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
         """
         Load data from pickle files for specified fiscal years
         FIXED VERSION: No Usable flag filtering, proper field mapping

@@ -64,7 +64,7 @@ class Model6ElasticNet(BaseiBudgetModel):
         self.cv_alphas = None
         self.cv_scores = None
     
-    def load_data(self, fiscal_year_start: int = 2020, fiscal_year_end: int = 2021) -> List[ConsumerRecord]:
+    def load_data(self, fiscal_year_start: int = 2024, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
         """
         Override to load ALL data, not just usable records
         

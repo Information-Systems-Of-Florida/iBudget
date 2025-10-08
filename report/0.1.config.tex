@@ -37,6 +37,7 @@
 \usepackage{fontawesome5}
 \usepackage{pifont} 
 
+
 %\usepackage[fontsize=10pt]{scrextend} 
 %\setmargins{2.5cm}{2.5cm}{15cm}{23cm}{14pt}{3cm}{0pt}{2cm}
 % \setmargins{3.5cm}%			% left edge
@@ -64,6 +65,11 @@
 
 %********** Enabling landscape orientation *******
 \usepackage{rotating}
+
+\usepackage{draftwatermark}
+\SetWatermarkText{\phantom{} \\DRAFT}
+\SetWatermarkScale{4} % Adjust size
+\SetWatermarkColor[gray]{0.9} % Set color and transparency
 
 %********** Enybeling Hyperlinks *******
 \usepackage[pdfborder=000,pdftex=true]{hyperref}% this enables jumping from a reference and table of content in the pdf file to its target
@@ -152,7 +158,7 @@ contents={
 \lhead{\includegraphics[width=1cm]{../assets/ISF-logo-tight.png}} % 
 \rhead{\footnotesize{\sc{iBudget - Information Systems of Florida}}} 
 \setcounter{page}{1} 
-\lfoot{\today}
+\lfoot{Obsolescence date: 10/15/2025}%\today -
 %\cfoot{\sc{\footnotesize }}
 \rfoot{Page \thepage \hspace{0.005cm} of \pageref*{TotPages}} % \ThePageCount
 %%************************************************
