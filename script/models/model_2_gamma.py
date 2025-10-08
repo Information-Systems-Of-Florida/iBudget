@@ -404,11 +404,17 @@ class Model2GLMGamma(BaseiBudgetModel):
                 f.write("\n% GLM-Specific Values\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}Distribution}}{{Gamma}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}LinkFunction}}{{Log}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{self.dispersion:.4f if self.dispersion else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{self.deviance_r2:.4f if self.deviance_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{self.mcfadden_r2:.4f if self.mcfadden_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{self.aic:,.0f if self.aic else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{self.bic:,.0f if self.bic else 0}}}\n")
+                
+                dispersion_str = f"{self.dispersion:.4f}" if self.dispersion else "0"
+                f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{dispersion_str}}}\n")
+                deviance_str = f"{self.deviance_r2:.4f}" if self.deviance_r2 else "0"
+                f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{deviance_str}}}\n")
+                mcfadden_str = f"{self.mcfadden_r2:.4f}" if self.mcfadden_r2 else "0"
+                f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{mcfadden_str}}}\n")
+                aic_str = f"{self.aic:.4f}" if self.aic else "0"
+                f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{aic_str}}}\n")
+                bic_str = f"{self.bic:.4f}" if self.bic else "0"
+                f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{bic_str}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{self.num_parameters}}}\n")
                 
                 # Feature selection specific values
