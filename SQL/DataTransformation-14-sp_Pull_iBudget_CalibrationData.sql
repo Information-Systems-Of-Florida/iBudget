@@ -219,12 +219,14 @@ BEGIN
             MAX(cl.ServiceDate) as LastServiceDate,
             SUM(CASE WHEN cl.PaidAmt > 0 THEN cl.PaidAmt ELSE 0 END) as PositivePaidAmount,
             SUM(CASE WHEN cl.PaidAmt < 0 THEN cl.PaidAmt ELSE 0 END) as NegativeAdjustments,
-            COUNT(*) as TotalClaimLines
+            COUNT(*) as TotalClaimLines,
+            AVG(CAST(cl.Age as FLOAT)) as AvgAge
             
         FROM tbl_Claims_MMIS cl
         INNER JOIN @FY_Table fy ON 
             cl.ServiceDate >= fy.StartDate AND 
             cl.ServiceDate <= fy.EndDate
+		WHERE cl.Age IS NOT NULL 
         GROUP BY cl.CaseNo, fy.FiscalYear
     ),
     
@@ -283,6 +285,7 @@ BEGIN
         cyb.RESIDENCETYPE,
         
         -- Aggregated Living Setting (6 levels for models)
+        /*
         CASE 
             WHEN cyb.RESIDENCETYPE = 'FH' OR cyb.RESIDENCETYPE LIKE 'Family%' 
                 THEN 'FH'
@@ -314,6 +317,39 @@ BEGIN
                  cyb.RESIDENCETYPE IN ('RHCTEP1', 'RHCTEP2', 'RHCTEP3', 'RHCTEP4') 
                 THEN 'RH4'
             ELSE 'FH'  -- Default to Family Home if not classified
+        END as LivingSetting,
+        */
+        CASE 
+            -- Family Home
+            WHEN cyb.RESIDENCETYPE LIKE 'Family Home%' 
+                THEN 'FH'
+            
+            -- Independent/Supported Living
+            WHEN cyb.RESIDENCETYPE LIKE 'Supported Living%' 
+                OR cyb.RESIDENCETYPE LIKE 'Independent Living%'
+                THEN 'ILSL'
+            
+            -- RH1: Small Group Homes (Standard)
+            WHEN cyb.RESIDENCETYPE LIKE '%Small Group Home%'
+                AND cyb.RESIDENCETYPE NOT LIKE '%Behavior%'
+                THEN 'RH1'
+            
+            -- RH2: Behavior Focus
+            WHEN cyb.RESIDENCETYPE LIKE '%Behavior%'
+                OR cyb.RESIDENCETYPE LIKE '%Residential Habilitation%'
+                THEN 'RH2'
+            
+            -- RH3: Large Group Homes / ICF
+            WHEN cyb.RESIDENCETYPE LIKE '%Large Group Home%'
+                OR cyb.RESIDENCETYPE LIKE '%ICF%'
+                THEN 'RH3'
+            
+            -- RH4: Special Medical / Nursing
+            WHEN cyb.RESIDENCETYPE LIKE '%Nursing%'
+                OR cyb.RESIDENCETYPE LIKE '%Assisted Living%'
+                THEN 'RH4'
+            
+            ELSE 'FH'
         END as LivingSetting,
         
         -- Age Groups (3 categories)
@@ -351,6 +387,7 @@ BEGIN
         ISNULL(cl.UniqueProcedures, 0) as UniqueProcedures,
         ISNULL(cl.UniqueProviders, 0) as UniqueProviders,
         ISNULL(cl.TotalClaimLines, 0) as ClaimLines,
+        ISNULL(cl.AvgAge, 0) as AvgAge, 
         
         -- Budget Data (optional for some models)
         ISNULL(bd.BudgetAmount, 0) as BudgetAmount,
@@ -435,10 +472,10 @@ The stored procedure returns 100+ columns including:
 - Living Setting (Original and 6-level aggregated)
 - QSI Questions (Q14-Q50)
 - QSI Summary Scores (FSum, BSum, PSum)
-- Cost Data (TotalCost, ServiceDays, etc.)
+- Cost Data (TotalCost, ServiceDays, AvgAge, etc.)
 - Data Quality Flags (Usable, MissingQSI, etc.)
 - System Participation (DaysInSystem, LateEntry, EarlyExit)
 
 Models can select which columns to use based on their requirements.
 ================================================================================
-*/
+*/ -- EXEC sp_GetiBudgetModelData @FiscalYearStart = 2024, @FiscalYearEnd = 2024;

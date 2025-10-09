@@ -1,5 +1,5 @@
 % Model 2 Command Definitions
-% Generated: 2025-10-02 09:07:00.066611
+% Generated: 2025-10-08 15:03:28.411590
 % Model: GLM-Gamma
 
 % Core Metrics
@@ -13,53 +13,39 @@
 \newcommand{\ModelTwoMAPETest}{\WarningRunPipeline}
 \newcommand{\ModelTwoCVMean}{\WarningRunPipeline}
 \newcommand{\ModelTwoCVStd}{\WarningRunPipeline}
+\newcommand{\ModelTwoWithinOneK}{\WarningRunPipeline}
+\newcommand{\ModelTwoWithinTwoK}{\WarningRunPipeline}
 \newcommand{\ModelTwoWithinFiveK}{\WarningRunPipeline}
 \newcommand{\ModelTwoWithinTenK}{\WarningRunPipeline}
 \newcommand{\ModelTwoWithinTwentyK}{\WarningRunPipeline}
 \newcommand{\ModelTwoTrainingSamples}{\WarningRunPipeline}
 \newcommand{\ModelTwoTestSamples}{\WarningRunPipeline}
 
-% Living Setting Subgroups
-\newcommand{\ModelTwoSubgroupLivingSettingFHN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingFHRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingFHRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingFHBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingILSLN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingILSLRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingILSLRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingILSLBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHOneN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHOneRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHOneRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHOneBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHTwoN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHTwoRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHTwoRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHTwoBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHThreeN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHThreeRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHThreeRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHThreeBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHFourN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHFourRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHFourRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupLivingSettingRHFourBias}{\WarningRunPipeline}
-
-% Age Group Subgroups
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThreeTwentyN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThreeTwentyRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThreeTwentyRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThreeTwentyBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeTwentyOneThirtyN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeTwentyOneThirtyRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeTwentyOneThirtyRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeTwentyOneThirtyBias}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThirtyOnePlusN}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThirtyOnePlusRSquared}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThirtyOnePlusRMSE}{\WarningRunPipeline}
-\newcommand{\ModelTwoSubgroupAgeGroupAgeThirtyOnePlusBias}{\WarningRunPipeline}
-
-% Cost Quartile Subgroups
+% Subgroup Metrics
+\newcommand{\ModelTwoSubgrouplivingFHN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingFHRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingFHRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingFHBias}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingILSLN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingILSLRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingILSLRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingILSLBias}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingRHOneToFourN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingRHOneToFourRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingRHOneToFourRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgrouplivingRHOneToFourBias}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeUnderTwentyOneN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeUnderTwentyOneRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeUnderTwentyOneRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeUnderTwentyOneBias}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeTwentyOneToThirtyN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeTwentyOneToThirtyRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeTwentyOneToThirtyRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeTwentyOneToThirtyBias}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeThirtyOnePlusN}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeThirtyOnePlusRSquared}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeThirtyOnePlusRMSE}{\WarningRunPipeline}
+\newcommand{\ModelTwoSubgroupageAgeThirtyOnePlusBias}{\WarningRunPipeline}
 \newcommand{\ModelTwoSubgroupcostQOneLowN}{\WarningRunPipeline}
 \newcommand{\ModelTwoSubgroupcostQOneLowRSquared}{\WarningRunPipeline}
 \newcommand{\ModelTwoSubgroupcostQOneLowRMSE}{\WarningRunPipeline}
@@ -89,20 +75,25 @@
 \newcommand{\ModelTwoPopcurrentbaselineClients}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopcurrentbaselineAvgAlloc}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopcurrentbaselineWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelTwoPopcurrentbaselineWaitlistPct}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelbalancedClients}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelbalancedAvgAlloc}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelbalancedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelTwoPopmodelbalancedWaitlistPct}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelefficiencyClients}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelefficiencyAvgAlloc}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopmodelefficiencyWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelTwoPopmodelefficiencyWaitlistPct}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopcategoryfocusedClients}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopcategoryfocusedAvgAlloc}{\WarningRunPipeline}
 \newcommand{\ModelTwoPopcategoryfocusedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelTwoPopcategoryfocusedWaitlistPct}{\WarningRunPipeline}
 \newcommand{\ModelTwoPoppopulationmaximizedClients}{\WarningRunPipeline}
 \newcommand{\ModelTwoPoppopulationmaximizedAvgAlloc}{\WarningRunPipeline}
 \newcommand{\ModelTwoPoppopulationmaximizedWaitlistChange}{\WarningRunPipeline}
+\newcommand{\ModelTwoPoppopulationmaximizedWaitlistPct}{\WarningRunPipeline}
 
-% GLM-Specific Commands
+% GLM-Specific Command Definitions
 \newcommand{\ModelTwoDistribution}{\WarningRunPipeline}
 \newcommand{\ModelTwoLinkFunction}{\WarningRunPipeline}
 \newcommand{\ModelTwoDispersion}{\WarningRunPipeline}
@@ -112,8 +103,7 @@
 \newcommand{\ModelTwoBIC}{\WarningRunPipeline}
 \newcommand{\ModelTwoParameters}{\WarningRunPipeline}
 
-% Feature Selection Commands
+% Feature Selection Command Definitions
 \newcommand{\ModelTwoFeatureSelection}{\WarningRunPipeline}
-\newcommand{\ModelTwoNumFeatures}{\WarningRunPipeline}
 \newcommand{\ModelTwoTopFeature}{\WarningRunPipeline}
 \newcommand{\ModelTwoTopFeatureMI}{\WarningRunPipeline}

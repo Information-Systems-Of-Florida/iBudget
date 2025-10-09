@@ -1,0 +1,141 @@
+% ============================================
+% model_template_setup.tex
+% ============================================
+% Defines \SetupModelTemplate{ModelWord} macro
+% Maps generic template commands (\M...) to model-specific commands (\ModelX...)
+%
+% Usage in model chapters:
+%   \SetupModelTemplate{One}   % For Model 1
+%   \SetupModelTemplate{Two}   % For Model 2
+%   \SetupModelTemplate{Five}  % For Model 5
+%   etc.
+%
+% After calling this macro, the template can use generic commands like:
+%   \MRSquaredTest   → maps to \ModelOneRSquaredTest (for Model 1)
+%   \MRMSETest       → maps to \ModelOneRMSETest (for Model 1)
+%   etc.
+% ============================================
+% Usage Example:
+% ============================================
+% In 3Alternative-1-CurrentUpdated.tex (Model 1):
+%
+% \chapter{Model 1: Re-evaluation of Model 5b}
+% \input{models/model_1/model_1_renewcommands.tex}
+% \SetupModelTemplate{One}
+% \input{model_template.tex}
+%
+% Now all \M... commands in the template will use Model 1's values
+% ============================================
+\newcommand{\SetupModelTemplate}[1]{%
+    % #1 = Model word (One, Two, Three, ..., Ten)
+    
+    % ===== Performance Metrics =====
+    \expandafter\def\csname MRSquaredTrain\endcsname{\csname Model#1RSquaredTrain\endcsname}%
+    \expandafter\def\csname MRSquaredTest\endcsname{\csname Model#1RSquaredTest\endcsname}%
+    \expandafter\def\csname MRMSETrain\endcsname{\csname Model#1RMSETrain\endcsname}%
+    \expandafter\def\csname MRMSETest\endcsname{\csname Model#1RMSETest\endcsname}%
+    \expandafter\def\csname MMAETrain\endcsname{\csname Model#1MAETrain\endcsname}%
+    \expandafter\def\csname MMAETest\endcsname{\csname Model#1MAETest\endcsname}%
+    \expandafter\def\csname MMAPETrain\endcsname{\csname Model#1MAPETrain\endcsname}%
+    \expandafter\def\csname MMAPETest\endcsname{\csname Model#1MAPETest\endcsname}%
+    \expandafter\def\csname MCVMean\endcsname{\csname Model#1CVMean\endcsname}%
+    \expandafter\def\csname MCVStd\endcsname{\csname Model#1CVStd\endcsname}%
+    \expandafter\def\csname MTrainingSamples\endcsname{\csname Model#1TrainingSamples\endcsname}%
+    \expandafter\def\csname MTestSamples\endcsname{\csname Model#1TestSamples\endcsname}%
+    
+    % ===== Accuracy Bands =====
+    \expandafter\def\csname MWithinOneK\endcsname{\csname Model#1WithinOneK\endcsname}%
+    \expandafter\def\csname MWithinTwoK\endcsname{\csname Model#1WithinTwoK\endcsname}%
+    \expandafter\def\csname MWithinFiveK\endcsname{\csname Model#1WithinFiveK\endcsname}%
+    \expandafter\def\csname MWithinTenK\endcsname{\csname Model#1WithinTenK\endcsname}%
+    \expandafter\def\csname MWithinTwentyK\endcsname{\csname Model#1WithinTwentyK\endcsname}%
+    
+    % ===== Variance Metrics =====
+    \expandafter\def\csname MCVActual\endcsname{\csname Model#1CVActual\endcsname}%
+    \expandafter\def\csname MCVPredicted\endcsname{\csname Model#1CVPredicted\endcsname}%
+    \expandafter\def\csname MPredictionInterval\endcsname{\csname Model#1PredictionInterval\endcsname}%
+    \expandafter\def\csname MBudgetActualCorr\endcsname{\csname Model#1BudgetActualCorr\endcsname}%
+    
+    % ===== Outlier Metrics =====
+    \expandafter\def\csname MOutliersRemoved\endcsname{\csname Model#1OutliersRemoved\endcsname}%
+    \expandafter\def\csname MOutlierPct\endcsname{\csname Model#1OutlierPct\endcsname}%
+    
+    % ===== Subgroup Metrics - Living Settings =====
+    \expandafter\def\csname MSubgroupLivingFHRSquared\endcsname{\csname Model#1SubgroupLivingFHRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupLivingFHRMSE\endcsname{\csname Model#1SubgroupLivingFHRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupLivingFHBias\endcsname{\csname Model#1SubgroupLivingFHBias\endcsname}%
+    \expandafter\def\csname MSubgroupLivingFHN\endcsname{\csname Model#1SubgroupLivingFHN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupLivingILSLRSquared\endcsname{\csname Model#1SubgroupLivingILSLRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupLivingILSLRMSE\endcsname{\csname Model#1SubgroupLivingILSLRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupLivingILSLBias\endcsname{\csname Model#1SubgroupLivingILSLBias\endcsname}%
+    \expandafter\def\csname MSubgroupLivingILSLN\endcsname{\csname Model#1SubgroupLivingILSLN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupLivingRHOneFourRSquared\endcsname{\csname Model#1SubgroupLivingRHOneFourRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupLivingRHOneFourRMSE\endcsname{\csname Model#1SubgroupLivingRHOneFourRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupLivingRHOneFourBias\endcsname{\csname Model#1SubgroupLivingRHOneFourBias\endcsname}%
+    \expandafter\def\csname MSubgroupLivingRHOneFourN\endcsname{\csname Model#1SubgroupLivingRHOneFourN\endcsname}%
+    
+    % ===== Subgroup Metrics - Age Groups =====
+    \expandafter\def\csname MSubgroupAgeAgeUnderTwentyOneRSquared\endcsname{\csname Model#1SubgroupAgeAgeUnderTwentyOneRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeUnderTwentyOneRMSE\endcsname{\csname Model#1SubgroupAgeAgeUnderTwentyOneRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeUnderTwentyOneBias\endcsname{\csname Model#1SubgroupAgeAgeUnderTwentyOneBias\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeUnderTwentyOneN\endcsname{\csname Model#1SubgroupAgeAgeUnderTwentyOneN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupAgeAgeTwentyOneToThirtyRSquared\endcsname{\csname Model#1SubgroupAgeAgeTwentyOneToThirtyRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeTwentyOneToThirtyRMSE\endcsname{\csname Model#1SubgroupAgeAgeTwentyOneToThirtyRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeTwentyOneToThirtyBias\endcsname{\csname Model#1SubgroupAgeAgeTwentyOneToThirtyBias\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeTwentyOneToThirtyN\endcsname{\csname Model#1SubgroupAgeAgeTwentyOneToThirtyN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupAgeAgeThirtyOnePlusRSquared\endcsname{\csname Model#1SubgroupAgeAgeThirtyOnePlusRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeThirtyOnePlusRMSE\endcsname{\csname Model#1SubgroupAgeAgeThirtyOnePlusRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeThirtyOnePlusBias\endcsname{\csname Model#1SubgroupAgeAgeThirtyOnePlusBias\endcsname}%
+    \expandafter\def\csname MSubgroupAgeAgeThirtyOnePlusN\endcsname{\csname Model#1SubgroupAgeAgeThirtyOnePlusN\endcsname}%
+    
+    % ===== Subgroup Metrics - Cost Quartiles =====
+    \expandafter\def\csname MSubgroupCostQOneLowRSquared\endcsname{\csname Model#1SubgroupCostQOneLowRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupCostQOneLowRMSE\endcsname{\csname Model#1SubgroupCostQOneLowRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupCostQOneLowBias\endcsname{\csname Model#1SubgroupCostQOneLowBias\endcsname}%
+    \expandafter\def\csname MSubgroupCostQOneLowN\endcsname{\csname Model#1SubgroupCostQOneLowN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupCostQTwoRSquared\endcsname{\csname Model#1SubgroupCostQTwoRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupCostQTwoRMSE\endcsname{\csname Model#1SubgroupCostQTwoRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupCostQTwoBias\endcsname{\csname Model#1SubgroupCostQTwoBias\endcsname}%
+    \expandafter\def\csname MSubgroupCostQTwoN\endcsname{\csname Model#1SubgroupCostQTwoN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupCostQThreeRSquared\endcsname{\csname Model#1SubgroupCostQThreeRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupCostQThreeRMSE\endcsname{\csname Model#1SubgroupCostQThreeRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupCostQThreeBias\endcsname{\csname Model#1SubgroupCostQThreeBias\endcsname}%
+    \expandafter\def\csname MSubgroupCostQThreeN\endcsname{\csname Model#1SubgroupCostQThreeN\endcsname}%
+    
+    \expandafter\def\csname MSubgroupCostQFourHighRSquared\endcsname{\csname Model#1SubgroupCostQFourHighRSquared\endcsname}%
+    \expandafter\def\csname MSubgroupCostQFourHighRMSE\endcsname{\csname Model#1SubgroupCostQFourHighRMSE\endcsname}%
+    \expandafter\def\csname MSubgroupCostQFourHighBias\endcsname{\csname Model#1SubgroupCostQFourHighBias\endcsname}%
+    \expandafter\def\csname MSubgroupCostQFourHighN\endcsname{\csname Model#1SubgroupCostQFourHighN\endcsname}%
+    
+    % ===== Population Scenarios =====
+    % Current Baseline
+    \expandafter\def\csname MPopcurrentbaselineClients\endcsname{\csname Model#1PopcurrentbaselineClients\endcsname}%
+    \expandafter\def\csname MPopcurrentbaselineAvgAlloc\endcsname{\csname Model#1PopcurrentbaselineAvgAlloc\endcsname}%
+    \expandafter\def\csname MPopcurrentbaselineWaitlistChange\endcsname{\csname Model#1PopcurrentbaselineWaitlistChange\endcsname}%
+    \expandafter\def\csname MPopcurrentbaselineWaitlistPct\endcsname{\csname Model#1PopcurrentbaselineWaitlistPct\endcsname}%
+    
+    % Model Balanced
+    \expandafter\def\csname MPopmodelbalancedClients\endcsname{\csname Model#1PopmodelbalancedClients\endcsname}%
+    \expandafter\def\csname MPopmodelbalancedAvgAlloc\endcsname{\csname Model#1PopmodelbalancedAvgAlloc\endcsname}%
+    \expandafter\def\csname MPopmodelbalancedWaitlistChange\endcsname{\csname Model#1PopmodelbalancedWaitlistChange\endcsname}%
+    \expandafter\def\csname MPopmodelbalancedWaitlistPct\endcsname{\csname Model#1PopmodelbalancedWaitlistPct\endcsname}%
+    
+    % Model Efficiency
+    \expandafter\def\csname MPopmodelefficiencyClients\endcsname{\csname Model#1PopmodelefficiencyClients\endcsname}%
+    \expandafter\def\csname MPopmodelefficiencyAvgAlloc\endcsname{\csname Model#1PopmodelefficiencyAvgAlloc\endcsname}%
+    \expandafter\def\csname MPopmodelefficiencyWaitlistChange\endcsname{\csname Model#1PopmodelefficiencyWaitlistChange\endcsname}%
+    \expandafter\def\csname MPopmodelefficiencyWaitlistPct\endcsname{\csname Model#1PopmodelefficiencyWaitlistPct\endcsname}%
+    
+    % Category Focused
+    \expandafter\def\csname MPopcategoryfocusedClients\endcsname{\csname Model#1PopcategoryfocusedClients\endcsname}%
+    \expandafter\def\csname MPopcategoryfocusedAvgAlloc\endcsname{\csname Model#1PopcategoryfocusedAvgAlloc\endcsname}%
+    \expandafter\def\csname MPopcategoryfocusedWaitlistChange\endcsname{\csname Model#1PopcategoryfocusedWaitlistChange\endcsname}%
+    \expandafter\def\csname MPopcategoryfocusedWaitlistPct\endcsname{\csname Model#1PopcategoryfocusedWaitlistPct\endcsname}%
+}
+

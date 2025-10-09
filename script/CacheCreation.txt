@@ -1,0 +1,53 @@
+Starting extraction process...
+Format: pickle
+Force refresh: False
+
+2025-10-08 20:21:57,230 - INFO - Found fiscal years from FY2020 to FY2025
+2025-10-08 20:21:57,230 - INFO - (Sept 1, 2019 through Aug 31, 2025)
+2025-10-08 20:21:57,230 - INFO - Processing 6 fiscal years
+2025-10-08 20:21:57,230 - INFO - Note: Each fiscal year runs Sept 1 to Aug 31
+2025-10-08 20:21:57,230 - INFO - ============================================================
+2025-10-08 20:21:57,230 - INFO - Extracting FY2020 (Sept 1, 2019 to Aug 31, 2020)...
+2025-10-08 20:23:47,729 - INFO - Extracted 42677 records in 110.5 seconds
+2025-10-08 20:23:47,996 - INFO - Saved data\cached\fy2020.pkl
+2025-10-08 20:23:48,998 - INFO - Extracting FY2021 (Sept 1, 2020 to Aug 31, 2021)...
+2025-10-08 20:34:26,659 - INFO - Extracted 43968 records in 637.7 seconds
+2025-10-08 20:34:26,943 - INFO - Saved data\cached\fy2021.pkl
+2025-10-08 20:34:27,956 - INFO - Extracting FY2022 (Sept 1, 2021 to Aug 31, 2022)...
+2025-10-08 20:48:56,269 - INFO - Extracted 45270 records in 868.3 seconds
+2025-10-08 20:48:56,643 - INFO - Saved data\cached\fy2022.pkl
+2025-10-08 20:48:57,645 - INFO - Extracting FY2023 (Sept 1, 2022 to Aug 31, 2023)...
+2025-10-08 21:01:23,878 - INFO - Extracted 46193 records in 746.2 seconds
+2025-10-08 21:01:24,288 - INFO - Saved data\cached\fy2023.pkl
+2025-10-08 21:01:25,295 - INFO - Extracting FY2024 (Sept 1, 2023 to Aug 31, 2024)...
+2025-10-08 21:19:50,662 - INFO - Extracted 47259 records in 1105.4 seconds
+2025-10-08 21:19:51,087 - INFO - Saved data\cached\fy2024.pkl
+2025-10-08 21:19:52,088 - INFO - Extracting FY2025 (Sept 1, 2024 to Aug 31, 2025)...
+2025-10-08 21:32:03,241 - INFO - Extracted 47797 records in 731.2 seconds
+2025-10-08 21:32:03,588 - INFO - Saved data\cached\fy2025.pkl
+2025-10-08 21:32:04,592 - INFO - ============================================================
+2025-10-08 21:32:04,592 - INFO - EXTRACTION COMPLETE
+2025-10-08 21:32:04,592 - INFO - Successful: 6 years
+2025-10-08 21:32:04,592 - INFO - Failed: 0 years
+2025-10-08 21:32:04,592 - INFO - Total records: 273,164
+2025-10-08 21:32:04,592 - INFO - Total extraction time: 70.0 minutes
+2025-10-08 21:32:04,592 - INFO - Average time per year: 699.9 seconds
+2025-10-08 21:32:04,596 - INFO - Cache directory: data\cached
+2025-10-08 21:32:04,596 - INFO - ============================================================
+
+============================================================
+CACHED DATA SUMMARY
+============================================================
+Cache directory: data\cached
+Last update: 2025-10-08T21:32:03.591387
+Total cached records: 273,164
+
+Cached fiscal years (6):
+----------------------------------------
+  FY2020 (Sept 2019 - Aug 2020): 42,677 records (110.5s) [2025-10-08]
+  FY2021 (Sept 2020 - Aug 2021): 43,968 records (637.7s) [2025-10-08]
+  FY2022 (Sept 2021 - Aug 2022): 45,270 records (868.3s) [2025-10-08]
+  FY2023 (Sept 2022 - Aug 2023): 46,193 records (746.2s) [2025-10-08]
+  FY2024 (Sept 2023 - Aug 2024): 47,259 records (1105.4s) [2025-10-08]
+  FY2025 (Sept 2024 - Aug 2025): 47,797 records (731.2s) [2025-10-08]
+============================================================

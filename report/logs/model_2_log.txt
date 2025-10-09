@@ -1,224 +1,232 @@
-2025-10-08 11:03:16 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:16 - MODEL 2 - INFO - INITIALIZING MODEL 2: GLM-GAMMA
-2025-10-08 11:03:16 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:16 - MODEL 2 - INFO - Log file: models\..\..\report\logs\model_2_log.txt
-2025-10-08 11:03:16 - MODEL 2 - INFO - Output directory: models/model_2
-2025-10-08 11:03:16 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:16 - MODEL 2 - INFO - Model 2 initialized: feature_selection=True,
-2025-10-08 11:03:16 - MODEL 2 - INFO - 
-2025-10-08 11:03:16 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:16 - MODEL 2 - INFO - STARTING PIPELINE: GLM-GAMMA
-2025-10-08 11:03:16 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:16 - MODEL 2 - INFO - 
-2025-10-08 11:03:16 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:16 - MODEL 2 - INFO - LOADING DATA: FY2024-2024
-2025-10-08 11:03:16 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:16 - MODEL 2 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-08 11:03:17 - MODEL 2 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-08 11:03:18 - MODEL 2 - INFO - Loaded 34173 usable records
-2025-10-08 11:03:18 - MODEL 2 - INFO - 
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - DATA SPLIT
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - Training samples: 27339
-2025-10-08 11:03:18 - MODEL 2 - INFO - Test samples: 6834
-2025-10-08 11:03:18 - MODEL 2 - INFO - Split ratio: 20.0%
-2025-10-08 11:03:18 - MODEL 2 - INFO - 
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - FEATURE PREPARATION
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - Features prepared: 33 features
-2025-10-08 11:03:18 - MODEL 2 - INFO - 
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-08 11:03:18 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:18 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:18 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:19 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Dispersion: 0.9646
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Deviance R²: 0.1943
-2025-10-08 11:03:19 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:19 - MODEL 2 - INFO -   AIC: 568142.3, BIC: -214457.9
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Fold 1: R^2 = 0.2456
-2025-10-08 11:03:19 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:19 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:19 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Dispersion: 0.9618
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Deviance R²: 0.1935
-2025-10-08 11:03:19 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:19 - MODEL 2 - INFO -   AIC: 568371.9, BIC: -214428.3
-2025-10-08 11:03:19 - MODEL 2 - INFO -   Fold 2: R^2 = 0.2494
-2025-10-08 11:03:19 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:19 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:20 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Dispersion: 0.9717
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Deviance R²: 0.1939
-2025-10-08 11:03:20 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:20 - MODEL 2 - INFO -   AIC: 568106.9, BIC: -214393.9
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Fold 3: R^2 = 0.2416
-2025-10-08 11:03:20 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:20 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:20 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Dispersion: 0.9649
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Deviance R²: 0.1934
-2025-10-08 11:03:20 - MODEL 2 - INFO -   McFadden R²: 0.0135
-2025-10-08 11:03:20 - MODEL 2 - INFO -   AIC: 568186.4, BIC: -214545.7
-2025-10-08 11:03:20 - MODEL 2 - INFO -   Fold 4: R^2 = 0.2702
-2025-10-08 11:03:20 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:20 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:21 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Dispersion: 0.9586
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Deviance R²: 0.1961
-2025-10-08 11:03:21 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:21 - MODEL 2 - INFO -   AIC: 568125.9, BIC: -214592.7
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Fold 5: R^2 = 0.2378
-2025-10-08 11:03:21 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:21 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:21 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Dispersion: 0.9647
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Deviance R²: 0.1946
-2025-10-08 11:03:21 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:21 - MODEL 2 - INFO -   AIC: 568141.1, BIC: -214479.6
-2025-10-08 11:03:21 - MODEL 2 - INFO -   Fold 6: R^2 = 0.2057
-2025-10-08 11:03:21 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:21 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:22 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Dispersion: 0.9665
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Deviance R²: 0.1954
-2025-10-08 11:03:22 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:22 - MODEL 2 - INFO -   AIC: 568101.8, BIC: -214471.7
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Fold 7: R^2 = 0.2525
-2025-10-08 11:03:22 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:22 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:22 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Dispersion: 0.9644
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Deviance R²: 0.1956
-2025-10-08 11:03:22 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:22 - MODEL 2 - INFO -   AIC: 568131.9, BIC: -214555.1
-2025-10-08 11:03:22 - MODEL 2 - INFO -   Fold 8: R^2 = 0.2340
-2025-10-08 11:03:22 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:22 - MODEL 2 - INFO - Training samples: 24605, Features: 33
-2025-10-08 11:03:23 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Dispersion: 0.9685
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Deviance R²: 0.1967
-2025-10-08 11:03:23 - MODEL 2 - INFO -   McFadden R²: 0.0138
-2025-10-08 11:03:23 - MODEL 2 - INFO -   AIC: 567987.6, BIC: -214521.4
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Fold 9: R^2 = 0.2167
-2025-10-08 11:03:23 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:23 - MODEL 2 - INFO - Training samples: 24606, Features: 33
-2025-10-08 11:03:23 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Dispersion: 0.9618
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Deviance R²: 0.1950
-2025-10-08 11:03:23 - MODEL 2 - INFO -   McFadden R²: 0.0137
-2025-10-08 11:03:23 - MODEL 2 - INFO -   AIC: 568227.3, BIC: -214626.0
-2025-10-08 11:03:23 - MODEL 2 - INFO -   Fold 10: R^2 = 0.2383
-2025-10-08 11:03:23 - MODEL 2 - INFO - Mean R^2: 0.2392
-2025-10-08 11:03:23 - MODEL 2 - INFO - Std R^2: 0.0172
-2025-10-08 11:03:23 - MODEL 2 - INFO - 
-2025-10-08 11:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:23 - MODEL 2 - INFO - MODEL TRAINING
-2025-10-08 11:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:23 - MODEL 2 - INFO - Fitting GLM-Gamma model...
-2025-10-08 11:03:23 - MODEL 2 - INFO - Training samples: 27339, Features: 33
-2025-10-08 11:03:24 - MODEL 2 - INFO - GLM-Gamma fitted successfully
-2025-10-08 11:03:24 - MODEL 2 - INFO -   Converged: True
-2025-10-08 11:03:24 - MODEL 2 - INFO -   Dispersion: 0.9648
-2025-10-08 11:03:24 - MODEL 2 - INFO -   Deviance R²: 0.1948
-2025-10-08 11:03:24 - MODEL 2 - INFO -   McFadden R²: 0.0136
-2025-10-08 11:03:24 - MODEL 2 - INFO -   AIC: 631277.6, BIC: -241243.4
-2025-10-08 11:03:24 - MODEL 2 - INFO - Model training complete
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - MAKING PREDICTIONS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - Predictions complete
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - CALCULATING METRICS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - Training R^2: 0.2410
-2025-10-08 11:03:24 - MODEL 2 - INFO - Test R^2: 0.2225
-2025-10-08 11:03:24 - MODEL 2 - INFO - RMSE: $39,379.48
-2025-10-08 11:03:24 - MODEL 2 - INFO - MAE: $28,913.99
-2025-10-08 11:03:24 - MODEL 2 - INFO - MAPE: 88.15%
-2025-10-08 11:03:24 - MODEL 2 - INFO - CV R^2 (mean +- std): 0.2392 +- 0.0172
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - SUBGROUP ANALYSIS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-08 11:03:24 - MODEL 2 - INFO - Calculated metrics for 10 subgroups
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - VARIANCE ANALYSIS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - Variance metrics calculated
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - POPULATION SCENARIOS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - Calculated 5 population scenarios
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - GENERATING OUTPUTS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - LATEX GENERATION
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - LaTeX commands written to:
-2025-10-08 11:03:24 - MODEL 2 - INFO -   - ..\..\report\models\model_2\model_2_newcommands.tex
-2025-10-08 11:03:24 - MODEL 2 - INFO -   - ..\..\report\models\model_2\model_2_renewcommands.tex
-2025-10-08 11:03:24 - MODEL 2 - INFO - Appended GLM-specific command definitions to ..\..\report\models\model_2\model_2_newcommands.tex
-2025-10-08 11:03:24 - MODEL 2 - ERROR - Error appending to renewcommands file: Invalid format specifier '.4f if self.dispersion else 0' for object of type 'float'
-2025-10-08 11:03:24 - MODEL 2 - INFO - 
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - SAVING RESULTS
-2025-10-08 11:03:24 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:24 - MODEL 2 - INFO - Results saved successfully
-2025-10-08 11:03:24 - MODEL 2 - INFO - GLM-specific results saved to ..\..\report\models\model_2\glm_results.json
-2025-10-08 11:03:24 - MODEL 2 - INFO - Coefficients saved to ..\..\report\models\model_2\coefficients.json
-2025-10-08 11:03:26 - MODEL 2 - INFO - Diagnostic plots saved to ..\..\report\models\model_2\diagnostic_plots.png
-2025-10-08 11:03:27 - MODEL 2 - INFO - GLM-specific plots saved to ..\..\report\models\model_2\glm_specific_plots.png
-2025-10-08 11:03:27 - MODEL 2 - INFO - 
-2025-10-08 11:03:27 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:27 - MODEL 2 - INFO - PIPELINE COMPLETE: GLM-GAMMA
-2025-10-08 11:03:27 - MODEL 2 - INFO - ============================================================
-2025-10-08 11:03:27 - MODEL 2 - INFO - 
-2025-10-08 11:03:27 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:27 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-08 11:03:27 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:27 - MODEL 2 - INFO - Training R^2: 0.2410
-2025-10-08 11:03:27 - MODEL 2 - INFO - Test R^2: 0.2225
-2025-10-08 11:03:27 - MODEL 2 - INFO - RMSE: $39,379.48
-2025-10-08 11:03:27 - MODEL 2 - INFO - MAE: $28,913.99
-2025-10-08 11:03:27 - MODEL 2 - INFO - MAPE: 88.15%
-2025-10-08 11:03:27 - MODEL 2 - INFO - CV R^2 (mean +- std): 0.2392 +- 0.0172
-2025-10-08 11:03:27 - MODEL 2 - INFO - ------------------------------------------------------------
-2025-10-08 11:03:27 - MODEL 2 - INFO - 
-2025-10-08 11:03:27 - MODEL 2 - INFO - Generated files:
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - coefficients.json
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - diagnostic_plots.png
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - feature_importance.json
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - glm_results.json
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - glm_specific_plots.png
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - metrics.json
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - model_2_newcommands.tex
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - model_2_renewcommands.tex
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - predictions.csv
-2025-10-08 11:03:27 - MODEL 2 - INFO -   - subgroup_metrics.json
+2025-10-08 15:03:21 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:21 - MODEL 2 - INFO - INITIALIZING MODEL 2: GLM-GAMMA
+2025-10-08 15:03:21 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:21 - MODEL 2 - INFO - Log file: models\..\..\report\logs\model_2_log.txt
+2025-10-08 15:03:21 - MODEL 2 - INFO - Output directory: models/model_2
+2025-10-08 15:03:21 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:21 - MODEL 2 - INFO - Model 2 initialized: feature_selection=True,
+2025-10-08 15:03:21 - MODEL 2 - INFO - 
+2025-10-08 15:03:21 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:21 - MODEL 2 - INFO - STARTING PIPELINE: GLM-GAMMA
+2025-10-08 15:03:21 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:21 - MODEL 2 - INFO - 
+2025-10-08 15:03:21 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:21 - MODEL 2 - INFO - LOADING DATA: FY2024-2024
+2025-10-08 15:03:21 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:21 - MODEL 2 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-08 15:03:22 - MODEL 2 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
+2025-10-08 15:03:23 - MODEL 2 - INFO - Loaded 34173 usable records
+2025-10-08 15:03:23 - MODEL 2 - INFO - 
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - DATA SPLIT
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - Training samples: 27339
+2025-10-08 15:03:23 - MODEL 2 - INFO - Test samples: 6834
+2025-10-08 15:03:23 - MODEL 2 - INFO - Split ratio: 20.0%
+2025-10-08 15:03:23 - MODEL 2 - INFO - 
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - FEATURE PREPARATION
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - Features prepared: 33 features
+2025-10-08 15:03:23 - MODEL 2 - INFO - 
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-08 15:03:23 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:23 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:23 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:23 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:23 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:23 - MODEL 2 - INFO -   Dispersion: 0.9648
+2025-10-08 15:03:23 - MODEL 2 - INFO -   Deviance R²: 0.1943
+2025-10-08 15:03:23 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:23 - MODEL 2 - INFO -   AIC: 568142.1, BIC: -214457.3
+2025-10-08 15:03:23 - MODEL 2 - INFO -   Fold 1: R^2 = 0.2456
+2025-10-08 15:03:23 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:23 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:24 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Dispersion: 0.9618
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Deviance R²: 0.1935
+2025-10-08 15:03:24 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:24 - MODEL 2 - INFO -   AIC: 568372.0, BIC: -214428.6
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Fold 2: R^2 = 0.2496
+2025-10-08 15:03:24 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:24 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:24 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Dispersion: 0.9717
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Deviance R²: 0.1939
+2025-10-08 15:03:24 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:24 - MODEL 2 - INFO -   AIC: 568106.6, BIC: -214394.2
+2025-10-08 15:03:24 - MODEL 2 - INFO -   Fold 3: R^2 = 0.2413
+2025-10-08 15:03:24 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:24 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:25 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Dispersion: 0.9651
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Deviance R²: 0.1934
+2025-10-08 15:03:25 - MODEL 2 - INFO -   McFadden R²: 0.0135
+2025-10-08 15:03:25 - MODEL 2 - INFO -   AIC: 568185.5, BIC: -214545.2
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Fold 4: R^2 = 0.2704
+2025-10-08 15:03:25 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:25 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:25 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Dispersion: 0.9587
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Deviance R²: 0.1961
+2025-10-08 15:03:25 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:25 - MODEL 2 - INFO -   AIC: 568125.5, BIC: -214592.7
+2025-10-08 15:03:25 - MODEL 2 - INFO -   Fold 5: R^2 = 0.2373
+2025-10-08 15:03:25 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:25 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:26 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Dispersion: 0.9646
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Deviance R²: 0.1946
+2025-10-08 15:03:26 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:26 - MODEL 2 - INFO -   AIC: 568141.1, BIC: -214480.6
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Fold 6: R^2 = 0.2047
+2025-10-08 15:03:26 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:26 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:26 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Dispersion: 0.9666
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Deviance R²: 0.1954
+2025-10-08 15:03:26 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:26 - MODEL 2 - INFO -   AIC: 568101.4, BIC: -214471.3
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Fold 7: R^2 = 0.2521
+2025-10-08 15:03:26 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:26 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:26 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Dispersion: 0.9649
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Deviance R²: 0.1956
+2025-10-08 15:03:26 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:26 - MODEL 2 - INFO -   AIC: 568129.9, BIC: -214553.5
+2025-10-08 15:03:26 - MODEL 2 - INFO -   Fold 8: R^2 = 0.2345
+2025-10-08 15:03:26 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:26 - MODEL 2 - INFO - Training samples: 24605, Features: 33
+2025-10-08 15:03:27 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Dispersion: 0.9687
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Deviance R²: 0.1967
+2025-10-08 15:03:27 - MODEL 2 - INFO -   McFadden R²: 0.0138
+2025-10-08 15:03:27 - MODEL 2 - INFO -   AIC: 567986.5, BIC: -214520.9
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Fold 9: R^2 = 0.2169
+2025-10-08 15:03:27 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:27 - MODEL 2 - INFO - Training samples: 24606, Features: 33
+2025-10-08 15:03:27 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Dispersion: 0.9617
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Deviance R²: 0.1950
+2025-10-08 15:03:27 - MODEL 2 - INFO -   McFadden R²: 0.0137
+2025-10-08 15:03:27 - MODEL 2 - INFO -   AIC: 568227.7, BIC: -214626.4
+2025-10-08 15:03:27 - MODEL 2 - INFO -   Fold 10: R^2 = 0.2383
+2025-10-08 15:03:27 - MODEL 2 - INFO - Mean R^2: 0.2391
+2025-10-08 15:03:27 - MODEL 2 - INFO - Std R^2: 0.0173
+2025-10-08 15:03:27 - MODEL 2 - INFO - 
+2025-10-08 15:03:27 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:27 - MODEL 2 - INFO - MODEL TRAINING
+2025-10-08 15:03:27 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:27 - MODEL 2 - INFO - Fitting GLM-Gamma model...
+2025-10-08 15:03:27 - MODEL 2 - INFO - Training samples: 27339, Features: 33
+2025-10-08 15:03:28 - MODEL 2 - INFO - GLM-Gamma fitted successfully
+2025-10-08 15:03:28 - MODEL 2 - INFO -   Converged: True
+2025-10-08 15:03:28 - MODEL 2 - INFO -   Dispersion: 0.9649
+2025-10-08 15:03:28 - MODEL 2 - INFO -   Deviance R²: 0.1948
+2025-10-08 15:03:28 - MODEL 2 - INFO -   McFadden R²: 0.0136
+2025-10-08 15:03:28 - MODEL 2 - INFO -   AIC: 631277.1, BIC: -241243.2
+2025-10-08 15:03:28 - MODEL 2 - INFO - Model training complete
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - MAKING PREDICTIONS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - Predictions complete
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - CALCULATING METRICS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - Training R^2: 0.2409
+2025-10-08 15:03:28 - MODEL 2 - INFO - Test R^2: 0.2223
+2025-10-08 15:03:28 - MODEL 2 - INFO - RMSE: $39,386.32
+2025-10-08 15:03:28 - MODEL 2 - INFO - MAE: $28,917.07
+2025-10-08 15:03:28 - MODEL 2 - INFO - MAPE: 88.15%
+2025-10-08 15:03:28 - MODEL 2 - INFO - CV R^2 (mean +- std): 0.2391 +- 0.0173
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - SUBGROUP ANALYSIS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-08 15:03:28 - MODEL 2 - INFO - Calculated metrics for 10 subgroups
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - VARIANCE ANALYSIS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - Variance metrics calculated
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - POPULATION SCENARIOS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - Calculated 5 population scenarios
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - GENERATING OUTPUTS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - LATEX GENERATION
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - LaTeX commands written to:
+2025-10-08 15:03:28 - MODEL 2 - INFO -   - ..\..\report\models\model_2\model_2_newcommands.tex
+2025-10-08 15:03:28 - MODEL 2 - INFO -   - ..\..\report\models\model_2\model_2_renewcommands.tex
+2025-10-08 15:03:28 - MODEL 2 - INFO - Appended GLM-specific command definitions to ..\..\report\models\model_2\model_2_newcommands.tex
+2025-10-08 15:03:28 - MODEL 2 - ERROR - Error appending to renewcommands file: Invalid format specifier '.4f if self.dispersion else 0' for object of type 'float'
+2025-10-08 15:03:28 - MODEL 2 - INFO - 
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - SAVING RESULTS
+2025-10-08 15:03:28 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:28 - MODEL 2 - INFO - Results saved successfully
+2025-10-08 15:03:28 - MODEL 2 - INFO - GLM-specific results saved to ..\..\report\models\model_2\glm_results.json
+2025-10-08 15:03:28 - MODEL 2 - INFO - Coefficients saved to ..\..\report\models\model_2\coefficients.json
+2025-10-08 15:03:30 - MODEL 2 - INFO - Diagnostic plots saved to ..\..\report\models\model_2\diagnostic_plots.png
+2025-10-08 15:03:31 - MODEL 2 - INFO - GLM-specific plots saved to ..\..\report\models\model_2\glm_specific_plots.png
+2025-10-08 15:03:31 - MODEL 2 - INFO - 
+2025-10-08 15:03:31 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:31 - MODEL 2 - INFO - PIPELINE COMPLETE: GLM-GAMMA
+2025-10-08 15:03:31 - MODEL 2 - INFO - ============================================================
+2025-10-08 15:03:31 - MODEL 2 - INFO - 
+2025-10-08 15:03:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:31 - MODEL 2 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-08 15:03:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:31 - MODEL 2 - INFO - Training R^2: 0.2409
+2025-10-08 15:03:31 - MODEL 2 - INFO - Test R^2: 0.2223
+2025-10-08 15:03:31 - MODEL 2 - INFO - RMSE: $39,386.32
+2025-10-08 15:03:31 - MODEL 2 - INFO - MAE: $28,917.07
+2025-10-08 15:03:31 - MODEL 2 - INFO - MAPE: 88.15%
+2025-10-08 15:03:31 - MODEL 2 - INFO - CV R^2 (mean +- std): 0.2391 +- 0.0173
+2025-10-08 15:03:31 - MODEL 2 - INFO - ------------------------------------------------------------
+2025-10-08 15:03:31 - MODEL 2 - INFO - 
+2025-10-08 15:03:31 - MODEL 2 - INFO - Generated files:
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - coefficients.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - diagnostic_plots.png
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - features.txt
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - feature_importance.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - glm_diagnostic_plots.png
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - glm_results.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - glm_specific_plots.png
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - metrics.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - model_2_newcommands.tex
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - model_2_renewcommands.tex
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - model_summary.txt
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - population_scenarios.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - predictions.csv
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - predictions.npz
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - significant_coefficients.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - subgroup_analysis.png
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - subgroup_metrics.json
+2025-10-08 15:03:31 - MODEL 2 - INFO -   - variance_metrics.json

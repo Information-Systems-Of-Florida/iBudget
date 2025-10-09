@@ -43,3 +43,116 @@
 2025-10-08 13:23:43 - MODEL 10 - INFO - Using original dollar scale (no transformation)...
 2025-10-08 13:23:43 - MODEL 10 - INFO - Performing 10-fold cross-validation...
 2025-10-08 13:23:43 - MODEL 10 - INFO - Performing 10-fold cross-validation...
+2025-10-08 13:24:15 - MODEL 10 - INFO -   Fold 1: R² = 0.2593
+2025-10-08 13:24:50 - MODEL 10 - INFO -   Fold 2: R² = 0.2272
+2025-10-08 13:25:21 - MODEL 10 - INFO -   Fold 3: R² = 0.2673
+2025-10-08 13:25:49 - MODEL 10 - INFO -   Fold 4: R² = 0.2604
+2025-10-08 13:26:19 - MODEL 10 - INFO -   Fold 5: R² = 0.2364
+2025-10-08 13:26:44 - MODEL 10 - INFO -   Fold 6: R² = 0.2393
+2025-10-08 13:27:16 - MODEL 10 - INFO -   Fold 7: R² = 0.2531
+2025-10-08 13:27:44 - MODEL 10 - INFO -   Fold 8: R² = 0.2461
+2025-10-08 13:28:07 - MODEL 10 - INFO -   Fold 9: R² = 0.2342
+2025-10-08 13:28:29 - MODEL 10 - INFO -   Fold 10: R² = 0.2282
+2025-10-08 13:28:29 - MODEL 10 - INFO - Cross-validation: R² = 0.2452 ± 0.0135
+2025-10-08 13:28:29 - MODEL 10 - INFO - CV Results: R² = 0.2452 ± 0.0135
+2025-10-08 13:28:29 - MODEL 10 - INFO - Training neural network...
+2025-10-08 13:28:50 - MODEL 10 - INFO - Neural network fitted with 1,121 parameters
+2025-10-08 13:28:50 - MODEL 10 - INFO - Parameter reduction: 72.3% from full model
+2025-10-08 13:28:50 - MODEL 10 - INFO - Training complete in 20.6 seconds
+2025-10-08 13:28:50 - MODEL 10 - INFO - Early stopping at epoch 424 (of 500)
+2025-10-08 13:28:50 - MODEL 10 - INFO - Making predictions...
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculating metrics...
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - CALCULATING METRICS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Training R^2: 0.2517
+2025-10-08 13:28:50 - MODEL 10 - INFO - Test R^2: 0.2330
+2025-10-08 13:28:50 - MODEL 10 - INFO - RMSE: $39,113.57
+2025-10-08 13:28:50 - MODEL 10 - INFO - MAE: $29,889.44
+2025-10-08 13:28:50 - MODEL 10 - INFO - MAPE: 87.73%
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculating subgroup metrics...
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - SUBGROUP ANALYSIS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculated metrics for 10 subgroups
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculating variance metrics...
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - VARIANCE ANALYSIS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Variance metrics calculated
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculating population scenarios...
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - POPULATION SCENARIOS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Calculated 5 population scenarios
+2025-10-08 13:28:50 - MODEL 10 - INFO - Generating outputs...
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - LATEX GENERATION
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - LaTeX commands written to:
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_newcommands.tex
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - ..\..\report\models\model_10\model_10_renewcommands.tex
+2025-10-08 13:28:50 - MODEL 10 - INFO - Adding Model 10 specific LaTeX commands...
+2025-10-08 13:28:50 - MODEL 10 - INFO - Model 10 specific commands added successfully
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - Feature selection commands: 4
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - Architecture commands: 8
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - Training commands: 8
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - Explainability commands: 6
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - Total model-specific: 26 commands
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - SAVING RESULTS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Results saved successfully
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - GENERATING PLOTS
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Diagnostic plots saved to ..\..\report\models\model_10\diagnostic_plots.png
+2025-10-08 13:28:50 - MODEL 10 - INFO - ================================================================================
+2025-10-08 13:28:50 - MODEL 10 - INFO - PIPELINE COMPLETE: Deep Learning Neural Network (Robust Features)
+2025-10-08 13:28:50 - MODEL 10 - INFO - ================================================================================
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - Training R^2: 0.2517
+2025-10-08 13:28:50 - MODEL 10 - INFO - Test R^2: 0.2330
+2025-10-08 13:28:50 - MODEL 10 - INFO - RMSE: $39,113.57
+2025-10-08 13:28:50 - MODEL 10 - INFO - MAE: $29,889.44
+2025-10-08 13:28:50 - MODEL 10 - INFO - MAPE: 87.73%
+2025-10-08 13:28:50 - MODEL 10 - INFO - ------------------------------------------------------------
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - Neural Network Architecture:
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Input: 13 features (robust selection)
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Hidden: (32, 16, 8)
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Total Parameters: 1,121
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Parameter Reduction: 72.3% from full model
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Training Time: 20.6 seconds
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO -   DEPLOYMENT WARNING:
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Explainability: Limited - black box architecture
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Regulatory Status: Problematic - HB 1103 concerns
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Recommendation: Not Recommended
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Performance Gain: 0.0% over Model 3
+2025-10-08 13:28:50 - MODEL 10 - INFO -   Trade-off: Marginal gain not worth transparency loss
+2025-10-08 13:28:50 - MODEL 10 - INFO - 
+2025-10-08 13:28:50 - MODEL 10 - INFO - Generated files:
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - diagnostic_plots.png
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - metrics.json
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - model_10_newcommands.tex
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - model_10_renewcommands.tex
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - predictions.csv
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - predictions.npz
+2025-10-08 13:28:50 - MODEL 10 - INFO -   - subgroup_metrics.json

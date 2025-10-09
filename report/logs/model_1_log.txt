@@ -1,181 +1,22 @@
-2025-10-08 10:59:56 - MODEL 1 - INFO - ============================================================
-2025-10-08 10:59:56 - MODEL 1 - INFO - INITIALIZING MODEL 1: LINEAR WITH OUTLIER REMOVAL
-2025-10-08 10:59:56 - MODEL 1 - INFO - ============================================================
-2025-10-08 10:59:56 - MODEL 1 - INFO - Log file: models\..\..\report\logs\model_1_log.txt
-2025-10-08 10:59:56 - MODEL 1 - INFO - Output directory: models/model_1
-2025-10-08 10:59:56 - MODEL 1 - INFO - ============================================================
-2025-10-08 10:59:56 - MODEL 1 - INFO - Model 1 initialized with feature selection: True, prediction floor: $5,000
-2025-10-08 10:59:56 - MODEL 1 - INFO - 
-2025-10-08 10:59:56 - MODEL 1 - INFO - ============================================================
-2025-10-08 10:59:56 - MODEL 1 - INFO - STARTING PIPELINE: LINEAR WITH OUTLIER REMOVAL
-2025-10-08 10:59:56 - MODEL 1 - INFO - ============================================================
-2025-10-08 10:59:56 - MODEL 1 - INFO - 
-2025-10-08 10:59:56 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:56 - MODEL 1 - INFO - LOADING DATA: FY2024-2024
-2025-10-08 10:59:56 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:56 - MODEL 1 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-08 10:59:57 - MODEL 1 - INFO - Found 47259 raw records in data\cached\fy2024.pkl
-2025-10-08 10:59:57 - MODEL 1 - INFO - Loaded 34173 usable records
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - DATA SPLIT
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples: 27339
-2025-10-08 10:59:58 - MODEL 1 - INFO - Test samples: 6834
-2025-10-08 10:59:58 - MODEL 1 - INFO - Split ratio: 20.0%
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - FEATURE PREPARATION
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Prepared 26 selected features for 27339 records
-2025-10-08 10:59:58 - MODEL 1 - INFO - Prepared 26 selected features for 6834 records
-2025-10-08 10:59:58 - MODEL 1 - INFO - Features prepared: 26 features
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 1: R^2 = 0.2475
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 2: R^2 = 0.2681
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 3: R^2 = 0.2342
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 4: R^2 = 0.2684
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 5: R^2 = 0.2314
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 6: R^2 = 0.2196
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 7: R^2 = 0.2399
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 8: R^2 = 0.2385
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22292
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 9: R^2 = 0.2020
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2313 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 22293
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO -   Fold 10: R^2 = 0.2223
-2025-10-08 10:59:58 - MODEL 1 - INFO - Mean R^2: 0.2372
-2025-10-08 10:59:58 - MODEL 1 - INFO - Std R^2: 0.0196
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - MODEL TRAINING
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Removed 2570 outliers (9.4%)
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training samples after outlier removal: 24769
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 fitted successfully with outlier removal
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model training complete
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - MAKING PREDICTIONS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Predictions complete
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - CALCULATING METRICS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Training R^2: 0.2383
-2025-10-08 10:59:58 - MODEL 1 - INFO - Test R^2: 0.2178
-2025-10-08 10:59:58 - MODEL 1 - INFO - RMSE: $39,499.50
-2025-10-08 10:59:58 - MODEL 1 - INFO - MAE: $27,912.13
-2025-10-08 10:59:58 - MODEL 1 - INFO - MAPE: 84.76%
-2025-10-08 10:59:58 - MODEL 1 - INFO - CV R^2 (mean +- std): 0.2372 +- 0.0196
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - SUBGROUP ANALYSIS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - WARNING - R^2 for cost_QOneLow was extremely negative, capped at -10
-2025-10-08 10:59:58 - MODEL 1 - INFO - Calculated metrics for 10 subgroups
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - VARIANCE ANALYSIS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Variance metrics calculated
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - POPULATION SCENARIOS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Calculated 5 population scenarios
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - GENERATING OUTPUTS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - LATEX GENERATION
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - LaTeX commands written to:
-2025-10-08 10:59:58 - MODEL 1 - INFO -   - ..\..\report\models\model_1\model_1_newcommands.tex
-2025-10-08 10:59:58 - MODEL 1 - INFO -   - ..\..\report\models\model_1\model_1_renewcommands.tex
-2025-10-08 10:59:58 - MODEL 1 - INFO - Appended Model 1 specific commands to ..\..\report\models\model_1\model_1_newcommands.tex
-2025-10-08 10:59:58 - MODEL 1 - INFO - Appended Model 1 specific values to ..\..\report\models\model_1\model_1_renewcommands.tex
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - SAVING RESULTS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - Results saved successfully
-2025-10-08 10:59:58 - MODEL 1 - INFO - Model 1 specific results saved
-2025-10-08 10:59:58 - MODEL 1 - INFO - 
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:58 - MODEL 1 - INFO - GENERATING PLOTS
-2025-10-08 10:59:58 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 10:59:59 - MODEL 1 - INFO - Diagnostic plots saved to ..\..\report\models\model_1\diagnostic_plots.png
-2025-10-08 11:00:01 - MODEL 1 - INFO - Model 1 specific diagnostic plots saved to ..\..\report\models\model_1\model1_specific_diagnostics.png
-2025-10-08 11:00:01 - MODEL 1 - INFO - 
-2025-10-08 11:00:01 - MODEL 1 - INFO - ============================================================
-2025-10-08 11:00:01 - MODEL 1 - INFO - PIPELINE COMPLETE: LINEAR WITH OUTLIER REMOVAL
-2025-10-08 11:00:01 - MODEL 1 - INFO - ============================================================
-2025-10-08 11:00:01 - MODEL 1 - INFO - 
-2025-10-08 11:00:01 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 11:00:01 - MODEL 1 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-08 11:00:01 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 11:00:01 - MODEL 1 - INFO - Training R^2: 0.2383
-2025-10-08 11:00:01 - MODEL 1 - INFO - Test R^2: 0.2178
-2025-10-08 11:00:01 - MODEL 1 - INFO - RMSE: $39,499.50
-2025-10-08 11:00:01 - MODEL 1 - INFO - MAE: $27,912.13
-2025-10-08 11:00:01 - MODEL 1 - INFO - MAPE: 84.76%
-2025-10-08 11:00:01 - MODEL 1 - INFO - CV R^2 (mean +- std): 0.2372 +- 0.0196
-2025-10-08 11:00:01 - MODEL 1 - INFO - ------------------------------------------------------------
-2025-10-08 11:00:01 - MODEL 1 - INFO - 
-2025-10-08 11:00:01 - MODEL 1 - INFO - Generated files:
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - coefficients.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - diagnostic_plots.png
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - features.txt
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - feature_selection_info.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - metrics.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - model1_specific_diagnostics.png
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - model_1_newcommands.tex
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - model_1_renewcommands.tex
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - outlier_analysis.png
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - outlier_analysis_plots.png
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - outlier_info.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - population_scenarios.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - predictions.csv
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - predictions.npz
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - subgroup_metrics.json
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - top_coefficients.txt
-2025-10-08 11:00:01 - MODEL 1 - INFO -   - variance_metrics.json
+2025-10-09 06:53:27 - MODEL_1 - INFO - 
+2025-10-09 06:53:27 - MODEL_1 - INFO - ============================================================
+2025-10-09 06:53:27 - MODEL_1 - INFO - INITIALIZING MODEL 1: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-09 06:53:27 - MODEL_1 - INFO - ============================================================
+2025-10-09 06:53:27 - MODEL_1 - INFO - Output directory: report\models\model_1
+2025-10-09 06:53:27 - MODEL_1 - INFO - ============================================================
+2025-10-09 06:53:27 - MODEL_1 - INFO - Configuration:
+2025-10-09 06:53:27 - MODEL_1 - INFO -   - Outlier removal: False
+2025-10-09 06:53:27 - MODEL_1 - INFO -   - Transformation: none
+2025-10-09 06:53:27 - MODEL_1 - INFO -   - Random seed: 42
+2025-10-09 06:53:27 - MODEL_1 - INFO - 
+2025-10-09 06:53:27 - MODEL_1 - INFO - ============================================================
+2025-10-09 06:53:27 - MODEL_1 - INFO - STARTING PIPELINE: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-09 06:53:27 - MODEL_1 - INFO - ============================================================
+2025-10-09 06:53:27 - MODEL_1 - INFO - 
+2025-10-09 06:53:27 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-09 06:53:27 - MODEL_1 - INFO - LOADING DATA: FY2024-2024
+2025-10-09 06:53:27 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-09 06:53:27 - MODEL_1 - WARNING - Cache file not found: data\cached\fy2024.pkl
+2025-10-09 06:53:27 - MODEL_1 - INFO - Total loaded: 0 usable records
+2025-10-09 06:53:27 - MODEL_1 - ERROR - No records loaded!
+2025-10-09 06:53:27 - MODEL_1 - ERROR - No records loaded!
