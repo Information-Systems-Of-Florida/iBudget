@@ -527,9 +527,9 @@ class BaseiBudgetModel(ABC):
                         continue
                     
                     # Filter by Usable flag
-                    if record_data.get('Usable', 0) != 1:
-                        records_skipped_unusable += 1
-                        continue
+                    #if record_data.get('Usable', 0) != 1:
+                    #    records_skipped_unusable += 1
+                    #    continue
                     
                     # Map field names
                     mapped_data = self._map_field_names(record_data)

@@ -54,8 +54,8 @@ class Model1Linear(BaseiBudgetModel):
     MODEL_5B_OUTLIER_PCT_2015 = 9.40
     
     def __init__(self,  
-             use_sqrt_transform: bool = True,
-             use_outlier_removal: bool = True,
+             use_sqrt_transform: bool = False,
+             use_outlier_removal: bool = False,
              outlier_threshold: float = 1.645
              ):
         """
@@ -423,9 +423,9 @@ def main():
     
     # Initialize model with sqrt transform (Model 5b default)
     model = Model1Linear(
-                use_sqrt_transform=False,      # sqrt transformation
-                use_outlier_removal=False,      # enable outlier removal
-                outlier_threshold=1.645        # ~10% outliers (Model 5b default)        
+                #use_sqrt_transform=False,      # sqrt transformation
+                #use_outlier_removal=False,      # enable outlier removal
+                #outlier_threshold=1.645        # ~10% outliers (Model 5b default)        
             )
     
     # Run complete pipeline
