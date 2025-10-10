@@ -206,7 +206,7 @@ class BaseiBudgetModel(ABC):
     
     def _setup_logging(self):
         """Set up model-specific logging"""
-        log_dir = Path("report/logs")
+        log_dir = Path("../../report/logs")
         log_dir.mkdir(parents=True, exist_ok=True)
         log_filename = log_dir / f"model_{self.model_id}_log.txt"
         

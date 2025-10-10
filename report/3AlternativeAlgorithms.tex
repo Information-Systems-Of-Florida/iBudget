@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Alternative Algorithms}  \newpage
+%\chapter{Alternative Algorithms}  \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -9,350 +9,355 @@
 
 %The 10 alternative methods presented here span four regulatory compliance tiers, from immediate deployment candidates to advanced research methods requiring fundamental framework changes. Each model documentation follows the comprehensive template structure, addressing algorithm specification, accuracy metrics, robustness analysis, implementation feasibility, and regulatory alignment.
 
-\section{Summary of Alternative APD iBudget Methods}
 
-\subsection{Executive Overview}
 
-The Florida Agency for Persons with Disabilities (APD) iBudget algorithm, currently implemented as Model 5b, requires modernization while maintaining strict regulatory compliance. This analysis presents ten alternative methods organized into four tiers based on regulatory feasibility, ranging from immediately deployable solutions to advanced research methods. Each alternative has been evaluated against Florida Statute 393.0662, Florida Administrative Code 65G-4.0214, and House Bill 1103's explainability requirements.
 
-The current Model 5b achieves an R-squared of 0.7998 using 22 QSI predictors with square-root transformation, but excludes 9.4 percent of consumers as outliers. Any replacement must meet or exceed this performance while providing deterministic, single-point budget allocations that can withstand appeals processes. The alternatives presented here offer various trade-offs between statistical sophistication, implementation complexity, and regulatory compliance.
 
-\section{Model Summary}
 
-\subsection{Algorithm Selection Rationale}
+% \section{Summary of Alternative APD iBudget Methods}
 
-The following section provides a concise justification for each of the 10 algorithms evaluated in this study. Each model was selected to address specific challenges in the iBudget allocation system or to establish performance benchmarks.
+% \subsection{Executive Overview}
 
-HB 1103  requires to ``develop alternative algorithms using multiple linear regression" (lines 689-690). The algorithms must be tested for "accuracy and reliability" (lines 690-691). The focus is specifically on "multiple linear regression models" (line 681). The requirement for multiple linear regression inherently means the algorithm must be interpretable and explainable, as linear regression models provide clear coefficients that show how each input affects the output.
+% The Florida Agency for Persons with Disabilities (APD) iBudget algorithm, currently implemented as Model 5b, requires modernization while maintaining strict regulatory compliance. This analysis presents ten alternative methods organized into four tiers based on regulatory feasibility, ranging from immediately deployable solutions to advanced research methods. Each alternative has been evaluated against Florida Statute 393.0662, Florida Administrative Code 65G-4.0214, and House Bill 1103's explainability requirements.
 
-\subsubsection{Model 1: Re-estimated Linear Regression}
-\textbf{Why chosen}: Maintains exact Model 5b structure while updating coefficients with current data. Represents the safest implementation path with zero regulatory risk.
-\begin{itemize}
-    \item Complete regulatory compliance with minimal stakeholder disruption
-    \item Implementation possible within 2 weeks
-    \item Retains problematic 9.4\% outlier exclusion requirement
-\end{itemize}
+% The current Model 5b achieves an R-squared of 0.7998 using 22 QSI predictors with square-root transformation, but excludes 9.4 percent of consumers as outliers. Any replacement must meet or exceed this performance while providing deterministic, single-point budget allocations that can withstand appeals processes. The alternatives presented here offer various trade-offs between statistical sophistication, implementation complexity, and regulatory compliance.
 
-\subsubsection{Model 2: Generalized Linear Model with Gamma Distribution}
-\textbf{Why chosen}: Replaces square-root transformation with log-link function, naturally accommodating right-skewed expenditure data without back-transformation bias.
-\begin{itemize}
-    \item Gamma distribution handles outliers naturally without exclusions
-    \item Multiplicative interpretation aligns with percentage-based budget discussions
-    \item Implementation requires 6-12 months including regulatory rule updates
-\end{itemize}
+% \section{Model Summary}
 
-\subsubsection{Model 3: Robust Linear Regression using Huber M-Estimators}
-\textbf{Why chosen}: Represents optimal balance between innovation and compliance. Includes ALL consumers through automatic outlier downweighting rather than exclusion.
-\begin{itemize}
-    \item Each consumer receives weight between 0 and 1 indicating data quality
-    \item Transparent weight system enhances appeals process
-    \item Implementation requires 6 months with moderate training requirements
-\end{itemize}
+% \subsection{Algorithm Selection Rationale}
 
-\subsubsection{Model 4: Weighted Least Squares}
-\textbf{Why chosen}: Addresses heteroscedasticity through variance-based weighting. Offers superior efficiency for stable cases but raises equity concerns.
-\begin{itemize}
-    \item Weights could create systematic bias across demographic groups
-    \item Implementation requires 12-18 months with extensive fairness testing
-    \item May disadvantage high-need consumers with variable costs
-\end{itemize}
+% The following section provides a concise justification for each of the 10 algorithms evaluated in this study. Each model was selected to address specific challenges in the iBudget allocation system or to establish performance benchmarks.
 
-\subsubsection{Model 5: Ridge Regression}
-\textbf{Why chosen}: Applies L2 regularization to handle multicollinearity among QSI variables. Offers highest stability despite communication challenges.
-\begin{itemize}
-    \item Reduces condition numbers from 45.6 to 8.2
-    \item Requirement to retain all 22 predictors aligns with current regulations
-    \item Shrinkage concept proves difficult to explain to non-technical audiences
-\end{itemize}
+% HB 1103  requires to ``develop alternative algorithms using multiple linear regression" (lines 689-690). The algorithms must be tested for "accuracy and reliability" (lines 690-691). The focus is specifically on "multiple linear regression models" (line 681). The requirement for multiple linear regression inherently means the algorithm must be interpretable and explainable, as linear regression models provide clear coefficients that show how each input affects the output.
 
-\subsubsection{Model 6: Log-Normal Regression}
-\textbf{Why chosen}: Uses natural log transformation supported by Box-Cox analysis. Provides intuitive percentage-change interpretations.
-\begin{itemize}
-    \item Superior statistical foundation compared to square-root transformation
-    \item Requires definitive statistical evidence for regulatory approval
-    \item Retransformation bias managed using smearing estimators
-\end{itemize}
+% \subsubsection{Model 1: Re-estimated Linear Regression}
+% \textbf{Why chosen}: Maintains exact Model 5b structure while updating coefficients with current data. Represents the safest implementation path with zero regulatory risk.
+% \begin{itemize}
+%     \item Complete regulatory compliance with minimal stakeholder disruption
+%     \item Implementation possible within 2 weeks
+%     \item Retains problematic 9.4\% outlier exclusion requirement
+% \end{itemize}
 
-\subsubsection{Model 7: Quantile Regression}
-\textbf{Why chosen}: Models multiple percentiles of expenditure distribution for research insights. Cannot produce required point estimates for production use.
-\begin{itemize}
-    \item Provides valuable understanding of allocation uncertainty
-    \item Excellent for risk stratification and appeals support
-    \item Fatally violates F.S. 393.0662's requirement for single deterministic allocation
-\end{itemize}
+% \subsubsection{Model 2: Generalized Linear Model with Gamma Distribution}
+% \textbf{Why chosen}: Replaces square-root transformation with log-link function, naturally accommodating right-skewed expenditure data without back-transformation bias.
+% \begin{itemize}
+%     \item Gamma distribution handles outliers naturally without exclusions
+%     \item Multiplicative interpretation aligns with percentage-based budget discussions
+%     \item Implementation requires 6-12 months including regulatory rule updates
+% \end{itemize}
 
-\subsubsection{Model 8: Bayesian Linear Regression}
-\textbf{Why chosen}: Treats parameters as probability distributions, providing complete uncertainty quantification through posterior distributions and credible intervals.
-\begin{itemize}
-    \item Natural handling of missing data and parameter uncertainty
-    \item Probabilistic output conflicts with Medicaid's deterministic budget requirements
-    \item Legally uncertain despite strong statistical foundations
-\end{itemize}
+% \subsubsection{Model 3: Robust Linear Regression using Huber M-Estimators}
+% \textbf{Why chosen}: Represents optimal balance between innovation and compliance. Includes ALL consumers through automatic outlier downweighting rather than exclusion.
+% \begin{itemize}
+%     \item Each consumer receives weight between 0 and 1 indicating data quality
+%     \item Transparent weight system enhances appeals process
+%     \item Implementation requires 6 months with moderate training requirements
+% \end{itemize}
 
-\subsubsection{Model 9: Random Forest}
-\textbf{Why chosen}: Ensemble of decision trees captures non-linear relationships without parametric assumptions. Creates interpretability challenges for regulatory compliance.
-\begin{itemize}
-    \item Aggregates predictions from multiple trees built on bootstrap samples
-    \item Variable importance scores indicate contribution but lack direct coefficients
-    \item Violates F.A.C. 65G-4.0214's requirement for interpretable coefficients
-\end{itemize}
+% \subsubsection{Model 4: Weighted Least Squares}
+% \textbf{Why chosen}: Addresses heteroscedasticity through variance-based weighting. Offers superior efficiency for stable cases but raises equity concerns.
+% \begin{itemize}
+%     \item Weights could create systematic bias across demographic groups
+%     \item Implementation requires 12-18 months with extensive fairness testing
+%     \item May disadvantage high-need consumers with variable costs
+% \end{itemize}
 
-\subsubsection{Model 10: Deep Learning Neural Network}
-\textbf{Why chosen}: Establishes performance ceiling through multiple hidden layers. Fundamentally incompatible with HB 1103's requirement for multiple linear regression models.
-\begin{itemize}
-    \item 4,049 parameters interacting non-linearly prevent meaningful explanation
-    \item HB 1103 specifically requires ``multiple linear regression models" for the algorithm study
-    \item Complete lack of interpretability makes appeals impossible
-\end{itemize}
+% \subsubsection{Model 5: Ridge Regression}
+% \textbf{Why chosen}: Applies L2 regularization to handle multicollinearity among QSI variables. Offers highest stability despite communication challenges.
+% \begin{itemize}
+%     \item Reduces condition numbers from 45.6 to 8.2
+%     \item Requirement to retain all 22 predictors aligns with current regulations
+%     \item Shrinkage concept proves difficult to explain to non-technical audiences
+% \end{itemize}
 
-\subsection{Tiered Implementation Recommendations}
+% \subsubsection{Model 6: Log-Normal Regression}
+% \textbf{Why chosen}: Uses natural log transformation supported by Box-Cox analysis. Provides intuitive percentage-change interpretations.
+% \begin{itemize}
+%     \item Superior statistical foundation compared to square-root transformation
+%     \item Requires definitive statistical evidence for regulatory approval
+%     \item Retransformation bias managed using smearing estimators
+% \end{itemize}
 
-\subsubsection{Tier 1: Primary Replacement Candidates}
-Models 1-3 offer viable paths forward with varying trade-offs between innovation and regulatory compliance. Model 3 (Robust Regression) represents the optimal balance, including all consumers while maintaining transparency.
+% \subsubsection{Model 7: Quantile Regression}
+% \textbf{Why chosen}: Models multiple percentiles of expenditure distribution for research insights. Cannot produce required point estimates for production use.
+% \begin{itemize}
+%     \item Provides valuable understanding of allocation uncertainty
+%     \item Excellent for risk stratification and appeals support
+%     \item Fatally violates F.S. 393.0662's requirement for single deterministic allocation
+% \end{itemize}
 
-\subsubsection{Tier 2: Conditional Replacement Candidates}
-Models 4-6 provide statistical improvements but require careful consideration of equity concerns (Model 4), communication challenges (Model 5), or regulatory hurdles (Model 6).
+% \subsubsection{Model 8: Bayesian Linear Regression}
+% \textbf{Why chosen}: Treats parameters as probability distributions, providing complete uncertainty quantification through posterior distributions and credible intervals.
+% \begin{itemize}
+%     \item Natural handling of missing data and parameter uncertainty
+%     \item Probabilistic output conflicts with Medicaid's deterministic budget requirements
+%     \item Legally uncertain despite strong statistical foundations
+% \end{itemize}
 
-\subsubsection{Tier 3: Research and Validation Methods}
-Models 7-8 offer valuable insights for understanding uncertainty and risk but cannot produce the deterministic allocations required by statute.
+% \subsubsection{Model 9: Random Forest}
+% \textbf{Why chosen}: Ensemble of decision trees captures non-linear relationships without parametric assumptions. Creates interpretability challenges for regulatory compliance.
+% \begin{itemize}
+%     \item Aggregates predictions from multiple trees built on bootstrap samples
+%     \item Variable importance scores indicate contribution but lack direct coefficients
+%     \item Violates F.A.C. 65G-4.0214's requirement for interpretable coefficients
+% \end{itemize}
 
-\subsubsection{Tier 4: Advanced Methods Requiring Framework Changes}
-Models 9-10 demonstrate superior predictive performance. Their implementation requires rule revision and guardrails to minimize black-box effects.
+% \subsubsection{Model 10: Deep Learning Neural Network}
+% \textbf{Why chosen}: Establishes performance ceiling through multiple hidden layers. Fundamentally incompatible with HB 1103's requirement for multiple linear regression models.
+% \begin{itemize}
+%     \item 4,049 parameters interacting non-linearly prevent meaningful explanation
+%     \item HB 1103 specifically requires ``multiple linear regression models" for the algorithm study
+%     \item Complete lack of interpretability makes appeals impossible
+% \end{itemize}
 
-%============================================
-% \section{Pertinent Regulatory Requirements}
+% \subsection{Tiered Implementation Recommendations}
+
+% \subsubsection{Tier 1: Primary Replacement Candidates}
+% Models 1-3 offer viable paths forward with varying trade-offs between innovation and regulatory compliance. Model 3 (Robust Regression) represents the optimal balance, including all consumers while maintaining transparency.
+
+% \subsubsection{Tier 2: Conditional Replacement Candidates}
+% Models 4-6 provide statistical improvements but require careful consideration of equity concerns (Model 4), communication challenges (Model 5), or regulatory hurdles (Model 6).
+
+% \subsubsection{Tier 3: Research and Validation Methods}
+% Models 7-8 offer valuable insights for understanding uncertainty and risk but cannot produce the deterministic allocations required by statute.
+
+% \subsubsection{Tier 4: Advanced Methods Requiring Framework Changes}
+% Models 9-10 demonstrate superior predictive performance. Their implementation requires rule revision and guardrails to minimize black-box effects.
+
 % %============================================
+% % \section{Pertinent Regulatory Requirements}
+% % %============================================
 
-% This section presents the statutory and regulatory requirements governing the iBudget algorithm. These provisions establish the legal framework for algorithm development, assessment, and implementation.
+% % This section presents the statutory and regulatory requirements governing the iBudget algorithm. These provisions establish the legal framework for algorithm development, assessment, and implementation.
 
-% While no enacted federal laws explicitly mandate algorithmic transparency for government services, the regulatory landscape reveals a complex interplay between proposed legislation, existing legal frameworks, and practical requirements that effectively push toward transparent, interpretable algorithms in government benefit systems. Multiple versions of the Algorithmic Accountability Act have been introduced in Congress since 2019, proposing requirements for impact assessments of high-risk automated decision systems and mandating "transparency, explainability, contestability, and opportunity for recourse" (H.R.6580, 117th Congress, 2022), though none have been enacted. At the federal level, existing legal principles create indirect transparency requirements through constitutional due process protections under the 14th Amendment and the Administrative Procedure Act's requirement that agencies provide reasoning for decisions, while federal agencies are already "applying existing civil rights laws to address discrimination in automated systems in housing, employment, and criminal justice" (Brookings, 2024). The White House AI Bill of Rights has highlighted "problems of bias in algorithms and called for transparency" (Brookings, 2024), though this remains policy guidance rather than binding law. In the specific context of Florida's iBudget system, while Chapter 393 of the Florida Statutes defines "algorithm" without mandating transparency, the statutory framework creates de facto transparency requirements through established due process rights (F.S. 393.125), appeals processes requiring explanations, and error correction mechanisms that allow individuals to challenge their assessment results (Rule 65G-4.0214, F.A.C.). The project's Request for Quotes explicitly calls for "alternative algorithms using multiple linear regression" (RFQ 2526-020, 2025) over "black box" approaches like neural networks, reflecting both anticipation of future regulations and practical necessities for a system where individuals must be able to understand and potentially appeal decisions affecting their disability benefits.
+% % While no enacted federal laws explicitly mandate algorithmic transparency for government services, the regulatory landscape reveals a complex interplay between proposed legislation, existing legal frameworks, and practical requirements that effectively push toward transparent, interpretable algorithms in government benefit systems. Multiple versions of the Algorithmic Accountability Act have been introduced in Congress since 2019, proposing requirements for impact assessments of high-risk automated decision systems and mandating "transparency, explainability, contestability, and opportunity for recourse" (H.R.6580, 117th Congress, 2022), though none have been enacted. At the federal level, existing legal principles create indirect transparency requirements through constitutional due process protections under the 14th Amendment and the Administrative Procedure Act's requirement that agencies provide reasoning for decisions, while federal agencies are already "applying existing civil rights laws to address discrimination in automated systems in housing, employment, and criminal justice" (Brookings, 2024). The White House AI Bill of Rights has highlighted "problems of bias in algorithms and called for transparency" (Brookings, 2024), though this remains policy guidance rather than binding law. In the specific context of Florida's iBudget system, while Chapter 393 of the Florida Statutes defines "algorithm" without mandating transparency, the statutory framework creates de facto transparency requirements through established due process rights (F.S. 393.125), appeals processes requiring explanations, and error correction mechanisms that allow individuals to challenge their assessment results (Rule 65G-4.0214, F.A.C.). The project's Request for Quotes explicitly calls for "alternative algorithms using multiple linear regression" (RFQ 2526-020, 2025) over "black box" approaches like neural networks, reflecting both anticipation of future regulations and practical necessities for a system where individuals must be able to understand and potentially appeal decisions affecting their disability benefits.
 
-% Sources:
-% - H.R.6580 - 117th Congress (2021-2022): Algorithmic Accountability Act of 2022
-% - Brookings Institution. (2024, October 10). ``How privacy legislation can help address AI"
-% - Florida Statutes Chapter 393: Developmental Disabilities
-% - Rule 65G-4.0214, Florida Administrative Code: Allocation Algorithm
-% - Florida Agency for Persons with Disabilities, RFQ 2526-020: iBudget Algorithm Study (2025)
-% - White House AI Bill of Rights (2022)
+% % Sources:
+% % - H.R.6580 - 117th Congress (2021-2022): Algorithmic Accountability Act of 2022
+% % - Brookings Institution. (2024, October 10). ``How privacy legislation can help address AI"
+% % - Florida Statutes Chapter 393: Developmental Disabilities
+% % - Rule 65G-4.0214, Florida Administrative Code: Allocation Algorithm
+% % - Florida Agency for Persons with Disabilities, RFQ 2526-020: iBudget Algorithm Study (2025)
+% % - White House AI Bill of Rights (2022)
 
-% %---------------------------------------------
-% \subsection{Florida Statutes Section 393.0662 - iBudget System Foundation}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Statutes Section 393.0662 - iBudget System Foundation}
+% % %---------------------------------------------
 
-% Section 393.0662, Florida Statutes, establishes the fundamental requirements for the iBudget system and individual budget allocation methodology:
+% % Section 393.0662, Florida Statutes, establishes the fundamental requirements for the iBudget system and individual budget allocation methodology:
 
-% \begin{quote}
-% ``The Legislature finds that improved financial management of the existing home and community-based Medicaid waiver program is necessary to avoid deficits that impede the provision of services to individuals who are on the waiting list for enrollment in the program. The Legislature further finds that clients and their families should have greater flexibility to choose the services that best allow them to live in their community within the limits of an established budget. Therefore, the Legislature intends that the agency, in consultation with the Agency for Health Care Administration, shall manage the service delivery system using individual budgets as the basis for allocating the funds appropriated for the home and community-based services Medicaid waiver program among eligible enrolled clients. The service delivery system that uses individual budgets shall be called the iBudget system''
-% \end{quote}
+% % \begin{quote}
+% % ``The Legislature finds that improved financial management of the existing home and community-based Medicaid waiver program is necessary to avoid deficits that impede the provision of services to individuals who are on the waiting list for enrollment in the program. The Legislature further finds that clients and their families should have greater flexibility to choose the services that best allow them to live in their community within the limits of an established budget. Therefore, the Legislature intends that the agency, in consultation with the Agency for Health Care Administration, shall manage the service delivery system using individual budgets as the basis for allocating the funds appropriated for the home and community-based services Medicaid waiver program among eligible enrolled clients. The service delivery system that uses individual budgets shall be called the iBudget system''
+% % \end{quote}
 
-% Section 393.0662(1)(a) specifically addresses the allocation algorithm:
+% % Section 393.0662(1)(a) specifically addresses the allocation algorithm:
 
-% \begin{quote}
-% ``In developing each client's iBudget, the agency shall use the allocation methodology as defined in s. 393.063(4), in conjunction with an assessment instrument that the agency deems to be reliable and valid, including, but not limited to, the agency's Questionnaire for Situational Information. The allocation methodology shall determine the amount of funds allocated to a client's iBudget.''
-% \end{quote}
+% % \begin{quote}
+% % ``In developing each client's iBudget, the agency shall use the allocation methodology as defined in s. 393.063(4), in conjunction with an assessment instrument that the agency deems to be reliable and valid, including, but not limited to, the agency's Questionnaire for Situational Information. The allocation methodology shall determine the amount of funds allocated to a client's iBudget.''
+% % \end{quote}
 
-% Section 393.0662(1)(b) defines extraordinary needs beyond the algorithm:
+% % Section 393.0662(1)(b) defines extraordinary needs beyond the algorithm:
 
-% \begin{quote}
-% ``An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
-% \end{quote}
+% % \begin{quote}
+% % ``An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{House Bill 1103 (2025) - Algorithm Study Mandate}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{House Bill 1103 (2025) - Algorithm Study Mandate}
+% % %---------------------------------------------
 
-% House Bill 1103, enacted in 2025, mandates a comprehensive algorithm study with specific requirements:
+% % House Bill 1103, enacted in 2025, mandates a comprehensive algorithm study with specific requirements:
 
-% \begin{quote}
-% HB1103-03-ER 675-681: ``The Agency for Persons with Disabilities shall contract for a study to review, evaluate, and identify recommendations regarding the algorithm required under s. 393.0662, Florida Statutes. The individual contractor must possess or, if the contractor is a firm must include at least one lead team member who possesses, a doctorate in statistics and advanced knowledge of the development and selection of multiple linear regression models.''
-% \end{quote}
-% %
-% The statute specifies detailed assessment requirements:
-% %
-% \begin{quote}
-% HB1103-03-ER 682-695:  ``The study must, at a minimum, assess the performance of the current algorithm used by the agency and determine whether a different algorithm would better meet the requirements of that section. In conducting this assessment and determination, at a minimum, the study must also review the fit of recent expenditure data to the current algorithm, \textbf{determine and refine dependent and independent variables}, develop and apply a method for identifying and removing outliers, \textbf{develop alternative algorithms using multiple linear regression}, test the accuracy and reliability of the algorithms, provide recommendations for improving accuracy and reliability, recommend an algorithm for use by the agency, assess the robustness of the recommended algorithm, and provide suggestions for improving any recommended alternative algorithm, if appropriate.'' (emphasis added)
-% \end{quote} 
-% %
-% HB1103-03-ER 695-699: The statute further requires assessment of service expansion:
-% %
-% \begin{quote}
-% ``The study must also consider whether any waiver services that are not currently funded through the algorithm can be funded through the current algorithm or an alternative algorithm, and the impact of doing so on that algorithm's fit and effectiveness.''
-% \end{quote}
-% %
-% Required impact analysis provisions:
-% %
-% \begin{quote}
-% HB1103-03-ER 699-707: ``
-% The study must present for any recommended alternative algorithm, at a minimum, the estimated number and percent of waiver enrollees who would  require supplemental funding under s. 393.0662(1)(b), Florida Statutes, compared to the current algorithm; and the number and percent of waiver enrollees whose budgets are estimated to increase or decrease, categorized by level of increase or decrease, age, living setting, and current total individual budget amount.''
-% \end{quote}
-% %
-% Reporting requirement:
-% %
-% \begin{quote}
-% HB1103-03-ER 708-710: ``The agency shall report to the Governor, the President of the Senate, and the Speaker of the House of Representatives findings and recommendations by November 15, 2025.''
-% \end{quote}
+% % \begin{quote}
+% % HB1103-03-ER 675-681: ``The Agency for Persons with Disabilities shall contract for a study to review, evaluate, and identify recommendations regarding the algorithm required under s. 393.0662, Florida Statutes. The individual contractor must possess or, if the contractor is a firm must include at least one lead team member who possesses, a doctorate in statistics and advanced knowledge of the development and selection of multiple linear regression models.''
+% % \end{quote}
+% % %
+% % The statute specifies detailed assessment requirements:
+% % %
+% % \begin{quote}
+% % HB1103-03-ER 682-695:  ``The study must, at a minimum, assess the performance of the current algorithm used by the agency and determine whether a different algorithm would better meet the requirements of that section. In conducting this assessment and determination, at a minimum, the study must also review the fit of recent expenditure data to the current algorithm, \textbf{determine and refine dependent and independent variables}, develop and apply a method for identifying and removing outliers, \textbf{develop alternative algorithms using multiple linear regression}, test the accuracy and reliability of the algorithms, provide recommendations for improving accuracy and reliability, recommend an algorithm for use by the agency, assess the robustness of the recommended algorithm, and provide suggestions for improving any recommended alternative algorithm, if appropriate.'' (emphasis added)
+% % \end{quote} 
+% % %
+% % HB1103-03-ER 695-699: The statute further requires assessment of service expansion:
+% % %
+% % \begin{quote}
+% % ``The study must also consider whether any waiver services that are not currently funded through the algorithm can be funded through the current algorithm or an alternative algorithm, and the impact of doing so on that algorithm's fit and effectiveness.''
+% % \end{quote}
+% % %
+% % Required impact analysis provisions:
+% % %
+% % \begin{quote}
+% % HB1103-03-ER 699-707: ``
+% % The study must present for any recommended alternative algorithm, at a minimum, the estimated number and percent of waiver enrollees who would  require supplemental funding under s. 393.0662(1)(b), Florida Statutes, compared to the current algorithm; and the number and percent of waiver enrollees whose budgets are estimated to increase or decrease, categorized by level of increase or decrease, age, living setting, and current total individual budget amount.''
+% % \end{quote}
+% % %
+% % Reporting requirement:
+% % %
+% % \begin{quote}
+% % HB1103-03-ER 708-710: ``The agency shall report to the Governor, the President of the Senate, and the Speaker of the House of Representatives findings and recommendations by November 15, 2025.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Administrative Code Rule 65G-4.0214 - Current Algorithm Implementation}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Administrative Code Rule 65G-4.0214 - Current Algorithm Implementation}
+% % %---------------------------------------------
 
-% Rule 65G-4.0214, F.A.C., codifies the current allocation algorithm structure:
+% % Rule 65G-4.0214, F.A.C., codifies the current allocation algorithm structure:
 
-% \begin{quote}
-% 65G-4.0213 Definitions: ``The Allocation Algorithm: The mathematical formula based upon statistically validated relationships between individual characteristics (variables) and the individual's level of need for services provided through the Waiver as set forth in Rule 65G-4.0214, F.A.C., and as provided in Section 393.0662(1)(a), F.S.''
-% \end{quote}
-% %
-% The rule specifies the algorithm calculation methodology:
-% %
-% \begin{quote}
-% 65G-4.0214 Allocation Algorithm: ``The squared result of the sum of the applicable values of paragraphs (2)(a) through (v) above, then apportioned according to available funding, is the individual's Allocation Algorithm Amount.''
-% \end{quote}
+% % \begin{quote}
+% % 65G-4.0213 Definitions: ``The Allocation Algorithm: The mathematical formula based upon statistically validated relationships between individual characteristics (variables) and the individual's level of need for services provided through the Waiver as set forth in Rule 65G-4.0214, F.A.C., and as provided in Section 393.0662(1)(a), F.S.''
+% % \end{quote}
+% % %
+% % The rule specifies the algorithm calculation methodology:
+% % %
+% % \begin{quote}
+% % 65G-4.0214 Allocation Algorithm: ``The squared result of the sum of the applicable values of paragraphs (2)(a) through (v) above, then apportioned according to available funding, is the individual's Allocation Algorithm Amount.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Administrative Code Rule 65G-4.0216 - iBudget Amount Establishment}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Administrative Code Rule 65G-4.0216 - iBudget Amount Establishment}
+% % %---------------------------------------------
 
-% Rule 65G-4.0216, F.A.C., governs the establishment of individual budget amounts:
+% % Rule 65G-4.0216, F.A.C., governs the establishment of individual budget amounts:
 
-% \begin{quote}
-% ``The iBudget Amount for an individual shall be the Allocation Algorithm Amount, as provided in Rule 65G-4.0214, F.A.C., plus any approved Significant Additional Needs funding as provided in Rule 65G-4.0218, F.A.C.''
-% \end{quote}
+% % \begin{quote}
+% % ``The iBudget Amount for an individual shall be the Allocation Algorithm Amount, as provided in Rule 65G-4.0214, F.A.C., plus any approved Significant Additional Needs funding as provided in Rule 65G-4.0218, F.A.C.''
+% % \end{quote}
 
-% \begin{quote}
-% ``The Agency will determine the iBudget Amount consistent with the criteria and limitations contained in the following provisions: Sections 409.906 and 393.0662, F.S.; and Rules 59G-13.080, 59G-13.081, and 59G-13.070, F.A.C.''
-% \end{quote}
+% % \begin{quote}
+% % ``The Agency will determine the iBudget Amount consistent with the criteria and limitations contained in the following provisions: Sections 409.906 and 393.0662, F.S.; and Rules 59G-13.080, 59G-13.081, and 59G-13.070, F.A.C.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Administrative Code Rule 65G-4.0215 - General Provisions}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Administrative Code Rule 65G-4.0215 - General Provisions}
+% % %---------------------------------------------
 
-% Rule 65G-4.0215, F.A.C., establishes service authorization requirements:
+% % Rule 65G-4.0215, F.A.C., establishes service authorization requirements:
 
-% \begin{quote}
-% ``Medical necessity alone is not sufficient to authorize a service under the waiver; in addition: (a) With the assistance of the WSC the individual must utilize all available State Plan Medicaid services, school-based services, private insurance, natural supports, and any other resources which''
-% \end{quote}
+% % \begin{quote}
+% % ``Medical necessity alone is not sufficient to authorize a service under the waiver; in addition: (a) With the assistance of the WSC the individual must utilize all available State Plan Medicaid services, school-based services, private insurance, natural supports, and any other resources which''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Administrative Code Rule 65G-4.0217 - Cost Plan Requirements}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Administrative Code Rule 65G-4.0217 - Cost Plan Requirements}
+% % %---------------------------------------------
 
-% Rule 65G-4.0217, F.A.C., mandates person-centered planning integration:
+% % Rule 65G-4.0217, F.A.C., mandates person-centered planning integration:
 
-% \begin{quote}
-% ``When an individual's iBudget Amount is determined, the WSC must submit a cost plan proposal that reflects the specific waiver services and supports (paid and unpaid) that will assist the individual to achieve identified goals, and the provider of those services and supports, including natural supports. The cost plan proposal is derived from person-centered planning.''
-% \end{quote}
+% % \begin{quote}
+% % ``When an individual's iBudget Amount is determined, the WSC must submit a cost plan proposal that reflects the specific waiver services and supports (paid and unpaid) that will assist the individual to achieve identified goals, and the provider of those services and supports, including natural supports. The cost plan proposal is derived from person-centered planning.''
+% % \end{quote}
 
-% \begin{quote}
-% ``Each individual's proposed iBudget cost plan shall be reviewed and approved by the Agency in conformance with the iBudget Rules and the Handbook. Any conflict between the Handbook and these iBudget Rules shall be resolved in favor of these rules.''
-% \end{quote}
+% % \begin{quote}
+% % ``Each individual's proposed iBudget cost plan shall be reviewed and approved by the Agency in conformance with the iBudget Rules and the Handbook. Any conflict between the Handbook and these iBudget Rules shall be resolved in favor of these rules.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Administrative Code Rule 65G-4.0218 - Significant Additional Needs}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Administrative Code Rule 65G-4.0218 - Significant Additional Needs}
+% % %---------------------------------------------
 
-% Rule 65G-4.0218, F.A.C., defines criteria for funding beyond the algorithm:
+% % Rule 65G-4.0218, F.A.C., defines criteria for funding beyond the algorithm:
 
-% \begin{quote}
-% ``Supplemental funding for Significant Additional Needs (SANs) may be of a one-time, temporary, or long-term in nature including the loss of Medicaid State Plan or school system services due to a change in age. SANs funding requests must be based on at least one of the four categories, as follows: (a) An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
-% \end{quote}
+% % \begin{quote}
+% % ``Supplemental funding for Significant Additional Needs (SANs) may be of a one-time, temporary, or long-term in nature including the loss of Medicaid State Plan or school system services due to a change in age. SANs funding requests must be based on at least one of the four categories, as follows: (a) An extraordinary need that would place the health and safety of the client, the client's caregiver, or the public in immediate, serious jeopardy unless the increase is approved.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Statutes Section 409.906 - Medicaid Waiver Authority}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Statutes Section 409.906 - Medicaid Waiver Authority}
+% % %---------------------------------------------
 
-% Section 409.906, F.S., provides the Medicaid waiver framework:
+% % Section 409.906, F.S., provides the Medicaid waiver framework:
 
-% \begin{quote}
-% ``The home and community-based services Medicaid waiver program under Section 409.906, F.S., that consists of the waiver service delivery system utilizing individual budgets required pursuant to Section 393.0662, F.S. and under which the Agency for Persons with Disabilities operates the Developmental Disabilities Individual Budgeting Waiver.''
-% \end{quote}
+% % \begin{quote}
+% % ``The home and community-based services Medicaid waiver program under Section 409.906, F.S., that consists of the waiver service delivery system utilizing individual budgets required pursuant to Section 393.0662, F.S. and under which the Agency for Persons with Disabilities operates the Developmental Disabilities Individual Budgeting Waiver.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Statutes Section 393.065 - Eligibility and Application Requirements}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Statutes Section 393.065 - Eligibility and Application Requirements}
+% % %---------------------------------------------
 
-% Section 393.065, F.S., as amended by HB 1103, establishes application and eligibility provisions:
+% % Section 393.065, F.S., as amended by HB 1103, establishes application and eligibility provisions:
 
-% \begin{quote}
-% ``The agency shall develop and implement an online application process that, at a minimum, supports paperless, electronic application submissions with immediate e-mail confirmation to each applicant to acknowledge receipt of application upon submission. The online application system must allow an applicant to review the status of a submitted application and respond to provide additional information.''
-% \end{quote}
+% % \begin{quote}
+% % ``The agency shall develop and implement an online application process that, at a minimum, supports paperless, electronic application submissions with immediate e-mail confirmation to each applicant to acknowledge receipt of application upon submission. The online application system must allow an applicant to review the status of a submitted application and respond to provide additional information.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Florida Statutes Section 393.501 - Rulemaking Authority}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Florida Statutes Section 393.501 - Rulemaking Authority}
+% % %---------------------------------------------
 
-% Section 393.501(1), F.S., provides the Agency's rulemaking authority:
+% % Section 393.501(1), F.S., provides the Agency's rulemaking authority:
 
-% \begin{quote}
-% ``Rulemaking Authority 393.501(1), 393.0662 FS. Law Implemented 393.0662, 409.906 FS.''
-% \end{quote}
+% % \begin{quote}
+% % ``Rulemaking Authority 393.501(1), 393.0662 FS. Law Implemented 393.0662, 409.906 FS.''
+% % \end{quote}
 
-% %---------------------------------------------
-% \subsection{Regulatory Compliance Analysis}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Regulatory Compliance Analysis}
+% % %---------------------------------------------
 
-% Based on these statutory and regulatory provisions, the current Model 5b algorithm faces the following compliance challenges:
+% % Based on these statutory and regulatory provisions, the current Model 5b algorithm faces the following compliance challenges:
 
-% \begin{enumerate}
-%     \item The algorithm's reliance on fiscal year 2013-14 data violates the HB 1103 requirement to ``review the fit of recent expenditure data to the current algorithm.''
+% % \begin{enumerate}
+% %     \item The algorithm's reliance on fiscal year 2013-14 data violates the HB 1103 requirement to ``review the fit of recent expenditure data to the current algorithm.''
     
-%     \item The absence of person-centered planning variables conflicts with Rule 65G-4.0217's mandate that ``the cost plan proposal is derived from person-centered planning.''
+% %     \item The absence of person-centered planning variables conflicts with Rule 65G-4.0217's mandate that ``the cost plan proposal is derived from person-centered planning.''
     
-%     \item The 9.40\% outlier exclusion rate may impair the algorithm's ability to meet Section 393.0662's requirement for ``statistically validated relationships between individual characteristics (variables) and the individual's level of need.''
+% %     \item The 9.40\% outlier exclusion rate may impair the algorithm's ability to meet Section 393.0662's requirement for ``statistically validated relationships between individual characteristics (variables) and the individual's level of need.''
     
-%     \item The static coefficient structure lacks provisions for adjustment when appropriations increase, as required by the statutory framework.
+% %     \item The static coefficient structure lacks provisions for adjustment when appropriations increase, as required by the statutory framework.
     
-%     \item The algorithm's limited scope fails to incorporate all waiver services, as HB 1103 requires consideration of ``whether any waiver services that are not currently funded through the algorithm can be funded.''
-% \end{enumerate}
+% %     \item The algorithm's limited scope fails to incorporate all waiver services, as HB 1103 requires consideration of ``whether any waiver services that are not currently funded through the algorithm can be funded.''
+% % \end{enumerate}
 
-% These regulatory requirements establish clear standards for algorithm development and assessment, providing the legal foundation for recommendations regarding alternative algorithmic approaches.
+% % These regulatory requirements establish clear standards for algorithm development and assessment, providing the legal foundation for recommendations regarding alternative algorithmic approaches.
 
-% %---------------------------------------------
-% \subsection{Summary of Regulatory Compliance Analysis of Current Algorithms}
-% %---------------------------------------------
+% % %---------------------------------------------
+% % \subsection{Summary of Regulatory Compliance Analysis of Current Algorithms}
+% % %---------------------------------------------
 
-% \begin{table}[h]
-% \centering
-% \caption{Regulatory Compliance Matrix for Alternative Methods}
-% \label{tab:compliance}
-% \begin{tabular}{lcccccc}
-% \hline
-% \textbf{Model} & \textbf{F.S.} & \textbf{F.A.C.} & \textbf{HB} & \textbf{Appeals} & \textbf{Deploy} & \textbf{Risk} \\
-%  & \textbf{393.0662} & \textbf{65G-4.0214} & \textbf{1103} & \textbf{Process} & \textbf{Time} & \textbf{Level} \\
-% \hline
-% \multicolumn{7}{l}{\textit{Tier 1: Direct Replacement}} \\
-% 1. Re-estimated Linear & Yes & Yes & Yes & Yes & 2 wks & None \\
-% 2. Gamma GLM & Yes & Update & Yes & Yes & 6-12 mo & Low \\
-% 3. Robust Regression & Yes & Update & Yes & Enhanced & 6 mo & Low \\
-% \hline
-% \multicolumn{7}{l}{\textit{Tier 2: Conditional Replacement}} \\
-% 4. Weighted LS & Concern & Update & Yes & Yes & 12-18 mo & High \\
-% 5. Ridge Regression & Yes & Challenge & Concern & Complex & 12-18 mo & Med \\
-% 6. Log-Normal & Yes & Update & Yes & Yes & 12-18 mo & Med \\
-% \hline
-% \multicolumn{7}{l}{\textit{Tier 3: Research Only}} \\
-% 7. Quantile Regression & No & No & Concern & No & N/A & Fatal \\
-% 8. Bayesian Regression & No & No & No & No & N/A & Fatal \\
-% \hline
-% \multicolumn{7}{l}{\textit{Tier 4: Framework Change Required}} \\
-% 9. PCR & Concern & No & No & No & N/A & Fatal \\
-% 10. Neural Network & Concern & No & No & No & N/A & Fatal \\
-% \hline
-% \end{tabular}
-% \end{table}
+% % \begin{table}[h]
+% % \centering
+% % \caption{Regulatory Compliance Matrix for Alternative Methods}
+% % \label{tab:compliance}
+% % \begin{tabular}{lcccccc}
+% % \hline
+% % \textbf{Model} & \textbf{F.S.} & \textbf{F.A.C.} & \textbf{HB} & \textbf{Appeals} & \textbf{Deploy} & \textbf{Risk} \\
+% %  & \textbf{393.0662} & \textbf{65G-4.0214} & \textbf{1103} & \textbf{Process} & \textbf{Time} & \textbf{Level} \\
+% % \hline
+% % \multicolumn{7}{l}{\textit{Tier 1: Direct Replacement}} \\
+% % 1. Re-estimated Linear & Yes & Yes & Yes & Yes & 2 wks & None \\
+% % 2. Gamma GLM & Yes & Update & Yes & Yes & 6-12 mo & Low \\
+% % 3. Robust Regression & Yes & Update & Yes & Enhanced & 6 mo & Low \\
+% % \hline
+% % \multicolumn{7}{l}{\textit{Tier 2: Conditional Replacement}} \\
+% % 4. Weighted LS & Concern & Update & Yes & Yes & 12-18 mo & High \\
+% % 5. Ridge Regression & Yes & Challenge & Concern & Complex & 12-18 mo & Med \\
+% % 6. Log-Normal & Yes & Update & Yes & Yes & 12-18 mo & Med \\
+% % \hline
+% % \multicolumn{7}{l}{\textit{Tier 3: Research Only}} \\
+% % 7. Quantile Regression & No & No & Concern & No & N/A & Fatal \\
+% % 8. Bayesian Regression & No & No & No & No & N/A & Fatal \\
+% % \hline
+% % \multicolumn{7}{l}{\textit{Tier 4: Framework Change Required}} \\
+% % 9. PCR & Concern & No & No & No & N/A & Fatal \\
+% % 10. Neural Network & Concern & No & No & No & N/A & Fatal \\
+% % \hline
+% % \end{tabular}
+% % \end{table}
 
-\subsection{Implementation Recommendations}
+% \subsection{Implementation Recommendations}
 
-Based on comprehensive analysis, we recommend a phased implementation approach beginning with Tier 1 methods. Model 3 (Robust Linear Regression) offers the optimal balance of innovation and compliance, addressing the critical outlier exclusion issue while maintaining full interpretability. For immediate deployment with minimal risk, Model 1 (Re-estimation) provides a baseline improvement. Model 2 (Gamma GLM) should be developed in parallel as a medium-term enhancement.
+% Based on comprehensive analysis, we recommend a phased implementation approach beginning with Tier 1 methods. Model 3 (Robust Linear Regression) offers the optimal balance of innovation and compliance, addressing the critical outlier exclusion issue while maintaining full interpretability. For immediate deployment with minimal risk, Model 1 (Re-estimation) provides a baseline improvement. Model 2 (Gamma GLM) should be developed in parallel as a medium-term enhancement.
 
-Tier 2 methods warrant careful pilot testing, particularly Model 6 (Log-Normal) which shows statistical merit. However, Model 4 (Weighted LS) poses unacceptable equity risks despite efficiency gains. Ridge Regression offers stability benefits but faces explainability challenges that may prove insurmountable.
+% Tier 2 methods warrant careful pilot testing, particularly Model 6 (Log-Normal) which shows statistical merit. However, Model 4 (Weighted LS) poses unacceptable equity risks despite efficiency gains. Ridge Regression offers stability benefits but faces explainability challenges that may prove insurmountable.
 
-Tier 3 methods should be implemented exclusively for research and validation purposes. Both Quantile and Bayesian approaches provide valuable uncertainty quantification for policy analysis and appeals support but cannot generate required deterministic allocations. Their insights should inform risk management and reserve planning without directly determining budgets.
+% Tier 3 methods should be implemented exclusively for research and validation purposes. Both Quantile and Bayesian approaches provide valuable uncertainty quantification for policy analysis and appeals support but cannot generate required deterministic allocations. Their insights should inform risk management and reserve planning without directly determining budgets.
 
-Tier 4 methods must be categorically rejected for iBudget allocation. Both PCR and neural networks fundamentally violate transparency requirements and would trigger immediate legal challenges. While neural networks achieve superior accuracy, the black-box nature directly contradicts HB 1103's explainability mandate. These methods serve only to establish theoretical performance ceilings.
+% Tier 4 methods must be categorically rejected for iBudget allocation. Both PCR and neural networks fundamentally violate transparency requirements and would trigger immediate legal challenges. While neural networks achieve superior accuracy, the black-box nature directly contradicts HB 1103's explainability mandate. These methods serve only to establish theoretical performance ceilings.
 
-\subsection{Conclusion}
+% \subsection{Conclusion}
 
-The path forward requires balancing statistical sophistication with regulatory constraints and stakeholder acceptance. Robust Linear Regression emerges as the recommended solution, eliminating problematic outlier exclusions while maintaining the transparency essential for public programs serving vulnerable populations. Success depends on careful implementation with extensive stakeholder engagement, comprehensive training programs, and continuous monitoring for fairness and equity. The transition from Model 5b must prioritize continuity of service while achieving measurable improvements in accuracy, fairness, and inclusivity.
+% The path forward requires balancing statistical sophistication with regulatory constraints and stakeholder acceptance. Robust Linear Regression emerges as the recommended solution, eliminating problematic outlier exclusions while maintaining the transparency essential for public programs serving vulnerable populations. Success depends on careful implementation with extensive stakeholder engagement, comprehensive training programs, and continuous monitoring for fairness and equity. The transition from Model 5b must prioritize continuity of service while achieving measurable improvements in accuracy, fairness, and inclusivity.
 
 \input{3Alternative-1-CurrentUpdated}
 

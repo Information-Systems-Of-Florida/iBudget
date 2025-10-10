@@ -1,22 +1,23 @@
-2025-10-09 07:57:25 - MODEL_1 - INFO - 
-2025-10-09 07:57:25 - MODEL_1 - INFO - ============================================================
-2025-10-09 07:57:25 - MODEL_1 - INFO - INITIALIZING MODEL 1: MODEL 5B RE-EVALUATION (2024 DATA)
-2025-10-09 07:57:25 - MODEL_1 - INFO - ============================================================
-2025-10-09 07:57:25 - MODEL_1 - INFO - Output directory: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_1
-2025-10-09 07:57:25 - MODEL_1 - INFO - ============================================================
-2025-10-09 07:57:25 - MODEL_1 - INFO - Configuration:
-2025-10-09 07:57:25 - MODEL_1 - INFO -   - Outlier removal: False
-2025-10-09 07:57:25 - MODEL_1 - INFO -   - Transformation: none
-2025-10-09 07:57:25 - MODEL_1 - INFO -   - Random seed: 42
-2025-10-09 07:57:25 - MODEL_1 - INFO - 
-2025-10-09 07:57:25 - MODEL_1 - INFO - ============================================================
-2025-10-09 07:57:25 - MODEL_1 - INFO - STARTING PIPELINE: MODEL 5B RE-EVALUATION (2024 DATA)
-2025-10-09 07:57:25 - MODEL_1 - INFO - ============================================================
-2025-10-09 07:57:25 - MODEL_1 - INFO - 
-2025-10-09 07:57:25 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 07:57:25 - MODEL_1 - INFO - LOADING DATA: FY2024-2024
-2025-10-09 07:57:25 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 07:57:25 - MODEL_1 - WARNING - Cache file not found: data\cached\fy2024.pkl
-2025-10-09 07:57:25 - MODEL_1 - INFO - Total loaded: 0 usable records
-2025-10-09 07:57:25 - MODEL_1 - ERROR - No records loaded!
-2025-10-09 07:57:25 - MODEL_1 - ERROR - No records loaded!
+2025-10-10 15:37:32 - MODEL_1 - INFO - 
+2025-10-10 15:37:32 - MODEL_1 - INFO - ============================================================
+2025-10-10 15:37:32 - MODEL_1 - INFO - INITIALIZING MODEL 1: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-10 15:37:32 - MODEL_1 - INFO - ============================================================
+2025-10-10 15:37:32 - MODEL_1 - INFO - Output directory: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_1
+2025-10-10 15:37:32 - MODEL_1 - INFO - ============================================================
+2025-10-10 15:37:32 - MODEL_1 - INFO - Configuration:
+2025-10-10 15:37:32 - MODEL_1 - INFO -   - Outlier removal: True
+2025-10-10 15:37:32 - MODEL_1 - INFO -   - Outlier threshold: ±1.645 (studentized residuals)
+2025-10-10 15:37:32 - MODEL_1 - INFO -   - Transformation: sqrt
+2025-10-10 15:37:32 - MODEL_1 - INFO -   - Random seed: 42
+2025-10-10 15:37:32 - MODEL_1 - INFO - 
+2025-10-10 15:37:32 - MODEL_1 - INFO - ============================================================
+2025-10-10 15:37:32 - MODEL_1 - INFO - STARTING PIPELINE: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-10 15:37:32 - MODEL_1 - INFO - ============================================================
+2025-10-10 15:37:32 - MODEL_1 - INFO - 
+2025-10-10 15:37:32 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 15:37:32 - MODEL_1 - INFO - LOADING DATA: FY2024-2024
+2025-10-10 15:37:32 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 15:37:32 - MODEL_1 - WARNING - Cache file not found: data\cached\fy2024.pkl
+2025-10-10 15:37:32 - MODEL_1 - INFO - Total loaded: 0 usable records
+2025-10-10 15:37:32 - MODEL_1 - ERROR - No records loaded!
+2025-10-10 15:37:32 - MODEL_1 - ERROR - No records loaded!
