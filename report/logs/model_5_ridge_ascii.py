@@ -72,10 +72,8 @@ class Model5Ridge(BaseiBudgetModel):
     - All features retained (no selection)
     """
     
-    def __init__(self, use_fy2024_only: bool = True, use_sqrt_transform: bool = True):
+    def __init__(self, use_sqrt_transform: bool = True):
         super().__init__(model_id=5, model_name="Ridge Regression")
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2023-2024"
         
         # ============================================================================
         # TRANSFORMATION CONTROL - Applicable to ALL models
@@ -820,10 +818,10 @@ def main():
     print("="*80)
     
     # Initialize model
-    model = Model5Ridge(use_fy2024_only=True, use_sqrt_transform=USE_SQRT)
+    model = Model5Ridge(use_sqrt_transform=USE_SQRT)
     
     # Run complete pipeline (seed already set globally)
-    print("\n? Running complete pipeline...")
+    print("\n Running complete pipeline...")
     results = model.run_complete_pipeline(
         fiscal_year_start=2024,
         fiscal_year_end=2024,
@@ -897,19 +895,19 @@ def main():
             command_count = sum(1 for line in lines if '\\renewcommand' in line)
             print(f"  ? LaTeX Commands Generated: {command_count}")
             if command_count >= 90:
-                print(f"  ? Status: ? SUCCESS - Command count meets requirement (90+)")
+                print(f"  ? Status:  SUCCESS - Command count meets requirement (90+)")
             elif command_count >= 80:
-                print(f"  ? Status: ? GOOD - Command count acceptable (80+)")
+                print(f"  ? Status:  GOOD - Command count acceptable (80+)")
             else:
-                print(f"  ? Status: ? WARNING - Expected 80+, got {command_count}")
+                print(f"  ? Status:  WARNING - Expected 80+, got {command_count}")
                 print(f"  ? Action: Check if Ridge-specific commands were added")
     else:
-        print("  ? Status: ? ERROR - renewcommands.tex file not found!")
+        print("  ? Status:  ERROR - renewcommands.tex file not found!")
     
     print("\n" + "="*80)
     print("EXECUTION COMPLETE")
     print("="*80)
-    print(f"\n? To change random seed, edit RANDOM_SEED = {RANDOM_SEED} at top of file")
+    print(f"\n To change random seed, edit RANDOM_SEED = {RANDOM_SEED} at top of file")
     print("="*80 + "\n")
     
     return model

@@ -1,0 +1,87 @@
+{
+  "model": "GLM-Gamma",
+  "features": 21,
+  "significant_features": 19,
+  "top_features": [
+    {
+      "feature": "RH1",
+      "coefficient": 1.401446701267282,
+      "exp_coefficient": 4.061070875477313,
+      "pct_effect": 306.1070875477313,
+      "p_value": 0.0,
+      "significant": true
+    },
+    {
+      "feature": "RH2",
+      "coefficient": 1.3473235291240409,
+      "exp_coefficient": 3.8471150476166485,
+      "pct_effect": 284.71150476166486,
+      "p_value": 3.4925127410151005e-47,
+      "significant": true
+    },
+    {
+      "feature": "RH3",
+      "coefficient": 1.2920202180691847,
+      "exp_coefficient": 3.6401329950003145,
+      "pct_effect": 264.01329950003145,
+      "p_value": 1.4178342653787684e-169,
+      "significant": true
+    },
+    {
+      "feature": "Age31Plus",
+      "coefficient": 1.078351872880432,
+      "exp_coefficient": 2.939830341993134,
+      "pct_effect": 193.9830341993134,
+      "p_value": 0.0,
+      "significant": true
+    },
+    {
+      "feature": "Age21_30",
+      "coefficient": 1.0718612657867352,
+      "exp_coefficient": 2.920810849119831,
+      "pct_effect": 192.08108491198308,
+      "p_value": 0.0,
+      "significant": true
+    },
+    {
+      "feature": "RH4",
+      "coefficient": 1.0645647910235378,
+      "exp_coefficient": 2.8995767875740426,
+      "pct_effect": 189.95767875740427,
+      "p_value": 4.2625975774719265e-58,
+      "significant": true
+    },
+    {
+      "feature": "ILSL",
+      "coefficient": 0.8537138178243653,
+      "exp_coefficient": 2.348352028822486,
+      "pct_effect": 134.8352028822486,
+      "p_value": 4.36242619218533e-177,
+      "significant": true
+    },
+    {
+      "feature": "Q23",
+      "coefficient": 0.16049780386453924,
+      "exp_coefficient": 1.1740951946656935,
+      "pct_effect": 17.409519466569346,
+      "p_value": 2.5842355056353743e-62,
+      "significant": true
+    },
+    {
+      "feature": "Q21",
+      "coefficient": 0.10072297940685271,
+      "exp_coefficient": 1.1059702227960788,
+      "pct_effect": 10.59702227960788,
+      "p_value": 1.9717808440439276e-26,
+      "significant": true
+    },
+    {
+      "feature": "Q18",
+      "coefficient": 0.09411815661567913,
+      "exp_coefficient": 1.0986895556876632,
+      "pct_effect": 9.868955568766324,
+      "p_value": 3.07380209069582e-37,
+      "significant": true
+    }
+  ]
+}

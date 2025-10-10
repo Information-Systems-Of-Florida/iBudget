@@ -609,6 +609,140 @@ class BaseiBudgetModel(ABC):
         """Core prediction logic (child implements)"""
         pass
     
+
+    # ========================================================================
+    # DYNAMIC FEATURE PREPARATION
+    # ========================================================================
+    def prepare_features_from_spec(self, 
+                                records: List[ConsumerRecord],
+                                feature_config: Dict[str, Any]) -> Tuple[np.ndarray, List[str]]:
+        """
+        Generic feature preparation from configuration dictionary with comprehensive logging
+        """
+        features_list = []
+        feature_names = []
+        feature_counts = {}  # Track counts by category
+        
+        for i, record in enumerate(records):
+            row_features = []
+            
+            # Numeric features
+            if 'numeric' in feature_config:
+                for field in feature_config['numeric']:
+                    value = getattr(record, field, 0) or 0
+                    row_features.append(float(value))
+                    if i == 0:  # Build names only once
+                        feature_names.append(field)
+                if i == 0:
+                    feature_counts['numeric'] = len(feature_config['numeric'])
+            
+            # Categorical features (one-hot encoding)
+            if 'categorical' in feature_config:
+                cat_count = 0
+                for field_name, config in feature_config['categorical'].items():
+                    field_value = getattr(record, field_name, '')
+                    for category in config['categories']:
+                        row_features.append(1.0 if field_value == category else 0.0)
+                        if i == 0:
+                            feature_names.append(category)
+                            cat_count += 1
+                if i == 0:
+                    feature_counts['categorical'] = cat_count
+            
+            # Binary features from lambdas
+            if 'binary' in feature_config:
+                for feature_name, condition_func in feature_config['binary'].items():
+                    row_features.append(1.0 if condition_func(record) else 0.0)
+                    if i == 0:
+                        feature_names.append(feature_name)
+                if i == 0:
+                    feature_counts['binary'] = len(feature_config['binary'])
+            
+            # QSI features
+            if 'qsi' in feature_config:
+                for q_num in feature_config['qsi']:
+                    value = getattr(record, f'q{q_num}', 0) or 0
+                    row_features.append(float(value))
+                    if i == 0:
+                        feature_names.append(f'Q{q_num}')
+                if i == 0:
+                    feature_counts['qsi'] = len(feature_config['qsi'])
+            
+            # Interaction terms
+            if 'interactions' in feature_config:
+                for name, func in feature_config['interactions']:
+                    row_features.append(func(record))
+                    if i == 0:
+                        feature_names.append(name)
+                if i == 0:
+                    feature_counts['interactions'] = len(feature_config['interactions'])
+            
+            features_list.append(row_features)
+        
+        # Comprehensive logging
+        total_features = len(feature_names)
+        
+        # Summary logging (INFO level)
+        self.logger.info(f"Features prepared: {total_features} total features from {len(records)} records")
+        
+        # Detailed breakdown (INFO level)
+        self.logger.info("Feature breakdown:")
+        
+        # Categorical features detail
+        if 'categorical' in feature_config:
+            for field_name, config in feature_config['categorical'].items():
+                ref = config.get('reference', 'None')
+                cats = ', '.join(config['categories'])
+                self.logger.info(f"  {field_name}: {len(config['categories'])} categories [{cats}] (reference: {ref})")
+        
+        # Binary features detail  
+        if 'binary' in feature_counts:
+            binary_names = ', '.join(feature_config['binary'].keys())
+            self.logger.info(f"  Binary: {feature_counts['binary']} features [{binary_names}]")
+        
+        # Numeric features detail
+        if 'numeric' in feature_counts:
+            numeric_names = ', '.join(feature_config['numeric'])
+            self.logger.info(f"  Numeric: {feature_counts['numeric']} features [{numeric_names}]")
+        
+        # QSI features detail
+        if 'qsi' in feature_counts:
+            qsi_list = feature_config['qsi']
+            if len(qsi_list) > 10:
+                qsi_str = f"Q{qsi_list[0]}-Q{qsi_list[-1]} ({len(qsi_list)} items)"
+            else:
+                qsi_str = ', '.join([f"Q{q}" for q in qsi_list])
+            self.logger.info(f"  QSI: {feature_counts['qsi']} features [{qsi_str}]")
+        
+        # Interaction terms detail
+        if 'interactions' in feature_counts:
+            interaction_names = ', '.join([name for name, _ in feature_config['interactions']])
+            self.logger.info(f"  Interactions: {feature_counts['interactions']} features [{interaction_names}]")
+        
+        # Feature counts summary
+        self.logger.info("Feature counts by type:")
+        for category, count in feature_counts.items():
+            self.logger.info(f"  {category}: {count}")
+        
+        # Debug level - list ALL features
+        if self.logger.level <= logging.DEBUG:
+            self.logger.debug("Complete feature list:")
+            for i, name in enumerate(feature_names, 1):
+                self.logger.debug(f"  {i:3d}. {name}")
+        
+        # Validation checks
+        if len(feature_names) != len(row_features):
+            self.logger.error(f"Feature count mismatch: names={len(feature_names)}, values={len(row_features)}")
+        
+        # Check for any missing data warnings
+        if len(records) > 0:
+            first_row = features_list[0]
+            nan_count = sum(1 for x in first_row if np.isnan(x) or x is None)
+            if nan_count > 0:
+                self.logger.warning(f"Found {nan_count} missing values in first record")
+        
+        return np.array(features_list), feature_names
+
     # ========================================================================
     # TEMPLATE METHODS
     # ========================================================================
@@ -1045,10 +1179,10 @@ class BaseiBudgetModel(ABC):
         self.log_section(f"PIPELINE COMPLETE: {self.model_name}", "=")
         self.log_metrics_summary()
         
-        print(f"DEBUG: metrics keys = {list(self.metrics.keys())}")
-        print(f"DEBUG: subgroup_metrics keys = {list(self.subgroup_metrics.keys())}")
-        print(f"DEBUG: variance_metrics keys = {list(self.variance_metrics.keys())}")
-        print(f"DEBUG: population_scenarios keys = {list(self.population_scenarios.keys())}")
+        # print(f"DEBUG: metrics keys = {list(self.metrics.keys())}")
+        # print(f"DEBUG: subgroup_metrics keys = {list(self.subgroup_metrics.keys())}")
+        # print(f"DEBUG: variance_metrics keys = {list(self.variance_metrics.keys())}")
+        # print(f"DEBUG: population_scenarios keys = {list(self.population_scenarios.keys())}")
         
         return {
             'metrics': self.metrics,
@@ -1079,13 +1213,13 @@ class BaseiBudgetModel(ABC):
     def generate_latex_commands(self) -> None:
         """Generate standard LaTeX commands for all models"""
         self.log_section("LATEX GENERATION")
-        print(f"DEBUG: Starting LaTeX generation for model {self.model_id}") 
+        #print(f"DEBUG: Starting LaTeX generation for model {self.model_id}") 
         
         model_word = self._number_to_word(self.model_id)
         newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         
-        print(f"DEBUG: Writing to {renewcommands_file}")
+        #print(f"DEBUG: Writing to {renewcommands_file}")
         
         # ========================================================================
         # NEWCOMMANDS (Placeholders)
@@ -1095,7 +1229,7 @@ class BaseiBudgetModel(ABC):
             f.write(f"% Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             
             # Basic performance metrics
-            print("DEBUG: Writing basic metrics newcommands")
+            #print("DEBUG: Writing basic metrics newcommands")
             for metric in ['RSquaredTrain', 'RSquaredTest', 'RMSETrain', 'RMSETest',
                         'RMSETrainSqrt', 'RMSETestSqrt',  
                         'MAETrain', 'MAETest', 'MAPETrain', 'MAPETest',
@@ -1104,24 +1238,24 @@ class BaseiBudgetModel(ABC):
                 f.write(f"\\newcommand{{\\Model{model_word}{metric}}}{{\\WarningRunPipeline}}\n")
             
             # Accuracy bands
-            print("DEBUG: Accuracy bands")
+            #print("DEBUG: Accuracy bands")
             for threshold in ['OneK', 'TwoK', 'FiveK', 'TenK', 'TwentyK']:
                 f.write(f"\\newcommand{{\\Model{model_word}Within{threshold}}}{{\\WarningRunPipeline}}\n")
             
             # Subgroup: Living settings
-            print("DEBUG: Subgroup: Living settings")
+            #print("DEBUG: Subgroup: Living settings")
             for setting in ['FH', 'ILSL', 'RHOneFour']:
                 for metric in ['N', 'RSquared', 'RMSE', 'Bias']:
                     f.write(f"\\newcommand{{\\Model{model_word}SubgroupLiving{setting}{metric}}}{{\\WarningRunPipeline}}\n")
             
             # Subgroup: Age groups
-            print("DEBUG: Subgroup: Age groups")
+            #print("DEBUG: Subgroup: Age groups")
             for age in ['AgeUnderTwentyOne', 'AgeTwentyOneToThirty', 'AgeThirtyOnePlus']:
                 for metric in ['N', 'RSquared', 'RMSE', 'Bias']:
                     f.write(f"\\newcommand{{\\Model{model_word}SubgroupAge{age}{metric}}}{{\\WarningRunPipeline}}\n")
             
             # Subgroup: Cost quartiles
-            print("DEBUG: Subgroup: Cost quartiles")
+            #print("DEBUG: Subgroup: Cost quartiles")
             for quartile in ['QOneLow', 'QTwo', 'QThree', 'QFourHigh']:
                 for metric in ['N', 'RSquared', 'RMSE', 'Bias']:
                     f.write(f"\\newcommand{{\\Model{model_word}SubgroupCost{quartile}{metric}}}{{\\WarningRunPipeline}}\n")

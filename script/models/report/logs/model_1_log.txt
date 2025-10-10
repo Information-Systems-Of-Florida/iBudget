@@ -1,386 +1,488 @@
-2025-10-09 16:48:11 - MODEL_1 - INFO - 
-2025-10-09 16:48:11 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:11 - MODEL_1 - INFO - INITIALIZING MODEL 1: MODEL 5B RE-EVALUATION (2024 DATA)
-2025-10-09 16:48:11 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:11 - MODEL_1 - INFO - Output directory: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_1
-2025-10-09 16:48:11 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:11 - MODEL_1 - INFO - Configuration:
-2025-10-09 16:48:11 - MODEL_1 - INFO -   - Outlier removal: False
-2025-10-09 16:48:11 - MODEL_1 - INFO -   - Transformation: sqrt
-2025-10-09 16:48:11 - MODEL_1 - INFO -   - Random seed: 42
-2025-10-09 16:48:11 - MODEL_1 - INFO - 
-2025-10-09 16:48:11 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:11 - MODEL_1 - INFO - STARTING PIPELINE: MODEL 5B RE-EVALUATION (2024 DATA)
-2025-10-09 16:48:11 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:11 - MODEL_1 - INFO - 
-2025-10-09 16:48:11 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:11 - MODEL_1 - INFO - LOADING DATA: FY2024-2024
-2025-10-09 16:48:11 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:11 - MODEL_1 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-09 16:48:11 - MODEL_1 - INFO - Found 47259 records in 'data' key
-2025-10-09 16:48:13 - MODEL_1 - INFO - FY2024 Summary:
-2025-10-09 16:48:13 - MODEL_1 - INFO -   - Processed: 34,173
-2025-10-09 16:48:13 - MODEL_1 - INFO -   - Skipped (Usable=0): 0
-2025-10-09 16:48:13 - MODEL_1 - INFO -   - Skipped (no cost): 13,086
-2025-10-09 16:48:13 - MODEL_1 - INFO -   - Skipped (errors): 0
-2025-10-09 16:48:13 - MODEL_1 - INFO - Total loaded: 34,173 usable records
-2025-10-09 16:48:13 - MODEL_1 - INFO - 
-2025-10-09 16:48:13 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:13 - MODEL_1 - INFO - DATA SPLIT
-2025-10-09 16:48:13 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:13 - MODEL_1 - INFO - Training samples: 27,339
-2025-10-09 16:48:13 - MODEL_1 - INFO - Test samples: 6,834
-2025-10-09 16:48:13 - MODEL_1 - INFO - Split ratio: 20.0%
-2025-10-09 16:48:13 - MODEL_1 - INFO - 
-2025-10-09 16:48:13 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:13 - MODEL_1 - INFO - FEATURE PREPARATION
-2025-10-09 16:48:13 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Features prepared: 21 features
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.5653
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.2712
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 137.5515
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 113.0771
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 115.3869
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 84.7262
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 74.8188
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 76.9477
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1378
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: -0.0809
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.4414
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.5936
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: -0.3665
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.8681
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.1496
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.7255
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 11.2528
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.3569
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.1391
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.1993
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.9619
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.3142
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 1: R² = 0.4267
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -12.1903
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.0521
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.7559
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 116.3895
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 117.4022
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 87.8652
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.1114
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.3845
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.2346
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0281
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.5702
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.7086
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.0260
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 5.0215
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 1.7217
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.2126
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.9071
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.6845
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.0492
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: -0.1674
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.8870
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.6937
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 2: R² = 0.4211
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -10.8970
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 48.5485
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 140.0934
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 115.3172
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 118.7415
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 87.8422
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 74.6737
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.1263
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1409
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0798
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.5840
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.8301
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.0323
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.8411
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 1.7940
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.3912
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.6473
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.4586
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 2.9583
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.5692
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.5672
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.3354
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 3: R² = 0.4607
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.4471
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.5881
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 139.5860
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 118.6927
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 117.4039
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 88.8066
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.5227
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 76.7351
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.0960
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0447
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.5697
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.7109
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: -0.1811
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.6961
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 1.8335
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.5550
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.9443
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.3111
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 2.6865
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.0907
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.8807
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.3528
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 4: R² = 0.4655
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.9940
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.8230
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.2341
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 114.6153
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 115.5151
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 86.2614
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 74.3687
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 76.9026
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1315
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: -0.0241
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.3474
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.7707
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: -0.1796
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 5.3760
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.4508
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.0627
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 11.2229
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.6642
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 2.8842
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.5672
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.8102
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.5912
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 5: R² = 0.4597
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -12.9543
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 50.1907
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.4921
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 113.8557
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 117.5331
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 86.8779
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.4840
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 78.0555
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1388
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0065
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.4059
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.6743
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.1050
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.9450
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.5571
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 4.9231
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 11.0856
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.4372
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.2775
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.1206
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.6258
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.1958
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 6: R² = 0.4526
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.7261
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.2680
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.4328
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 115.6895
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 116.0973
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 85.0862
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.0983
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.5015
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1704
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: -0.0418
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.3553
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.9505
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.1393
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.9168
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.5457
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.0186
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.8943
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.1938
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.0673
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.0504
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.6095
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.3400
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 7: R² = 0.4569
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.8132
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 48.5705
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.7065
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 119.8280
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 115.7917
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 86.3154
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 74.8702
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.4096
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1115
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0108
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.4825
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.8830
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: -0.2164
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.8111
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 1.9242
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.4997
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 11.1708
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.1380
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 2.8723
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.4365
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.9770
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.5677
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 8: R² = 0.4567
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.6322
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 48.5440
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 137.4242
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 115.8752
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 114.0437
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 85.1840
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.2236
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.5296
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1748
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: -0.0634
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.5978
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.3974
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.3391
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 5.1865
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.1456
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.1653
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 11.0360
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.3107
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 2.9290
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: -0.0503
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.8460
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.1149
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 9: R² = 0.4631
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -12.1704
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 50.5927
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 139.6940
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 118.4117
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 115.8383
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 87.3607
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.7876
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.4996
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.0970
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: 0.0307
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.4186
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.7454
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.4125
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.6851
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.5827
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 4.8587
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.7695
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.3829
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.4103
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.2813
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.5386
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.4677
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Fold 10: R² = 0.4777
-2025-10-09 16:48:14 - MODEL_1 - INFO - Mean R²: 0.4541
-2025-10-09 16:48:14 - MODEL_1 - INFO - Std R²: 0.0164
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - MODEL TRAINING
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
-2025-10-09 16:48:14 - MODEL_1 - INFO - Intercept: -11.8415
-2025-10-09 16:48:14 - MODEL_1 - INFO - Coefficient summary:
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveILSL: 49.3493
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH1: 138.6997
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH2: 116.1764
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH3: 116.3732
-2025-10-09 16:48:14 - MODEL_1 - INFO -   LiveRH4: 86.6368
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age21_30: 75.0932
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Age31Plus: 77.3071
-2025-10-09 16:48:14 - MODEL_1 - INFO -   BSum: 1.1433
-2025-10-09 16:48:14 - MODEL_1 - INFO -   FHFSum: -0.0008
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLFSum: 2.4771
-2025-10-09 16:48:14 - MODEL_1 - INFO -   SLBSum: 0.7261
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q16: 0.0106
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q18: 4.9347
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q20: 2.1707
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q21: 5.2405
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q23: 10.9943
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q28: 6.3933
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q33: 3.0265
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q34: 0.2095
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q36: 4.7706
-2025-10-09 16:48:14 - MODEL_1 - INFO -   Q43: 2.3969
-2025-10-09 16:48:14 - MODEL_1 - INFO - Model training complete
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - MAKING PREDICTIONS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Predictions complete
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - CALCULATING METRICS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Training R²: 0.4551
-2025-10-09 16:48:14 - MODEL_1 - INFO - Test R²: 0.4408
-2025-10-09 16:48:14 - MODEL_1 - INFO - RMSE (original): $33,398.68
-2025-10-09 16:48:14 - MODEL_1 - INFO - RMSE (sqrt scale): $79.37
-2025-10-09 16:48:14 - MODEL_1 - INFO - MAE: $21,933.70
-2025-10-09 16:48:14 - MODEL_1 - INFO - MAPE: 344.55%
-2025-10-09 16:48:14 - MODEL_1 - INFO - CV R² (mean ± std): 0.4541 ± 0.0164
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - SUBGROUP ANALYSIS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Calculated metrics for 10 subgroups
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - VARIANCE ANALYSIS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Variance metrics calculated
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - POPULATION SCENARIOS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - Calculated 4 population scenarios
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - GENERATING OUTPUTS
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - 
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - LATEX GENERATION
-2025-10-09 16:48:14 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:14 - MODEL_1 - INFO - LaTeX commands generated
-2025-10-09 16:48:14 - MODEL_1 - INFO - Model 5b comparison commands added
-2025-10-09 16:48:14 - MODEL_1 - INFO - Results saved
-2025-10-09 16:48:15 - MODEL_1 - INFO - Diagnostic plots saved
-2025-10-09 16:48:15 - MODEL_1 - INFO - 
-2025-10-09 16:48:15 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:15 - MODEL_1 - INFO - PIPELINE COMPLETE: MODEL 5B RE-EVALUATION (2024 DATA)
-2025-10-09 16:48:15 - MODEL_1 - INFO - ============================================================
-2025-10-09 16:48:15 - MODEL_1 - INFO - 
-2025-10-09 16:48:15 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:15 - MODEL_1 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-09 16:48:15 - MODEL_1 - INFO - ------------------------------------------------------------
-2025-10-09 16:48:15 - MODEL_1 - INFO - Training R²: 0.4551
-2025-10-09 16:48:15 - MODEL_1 - INFO - Test R²: 0.4408
-2025-10-09 16:48:15 - MODEL_1 - INFO - RMSE: $33,398.68
-2025-10-09 16:48:15 - MODEL_1 - INFO - MAE: $21,933.70
-2025-10-09 16:48:15 - MODEL_1 - INFO - MAPE: 344.55%
-2025-10-09 16:48:15 - MODEL_1 - INFO - CV R² (mean ± std): 0.4541 ± 0.0164
-2025-10-09 16:48:15 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:34 - MODEL_1 - INFO - 
+2025-10-10 13:39:34 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:34 - MODEL_1 - INFO - INITIALIZING MODEL 1: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-10 13:39:34 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:34 - MODEL_1 - INFO - Output directory: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_1
+2025-10-10 13:39:34 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:34 - MODEL_1 - INFO - Configuration:
+2025-10-10 13:39:34 - MODEL_1 - INFO -   - Outlier removal: True
+2025-10-10 13:39:34 - MODEL_1 - INFO -   - Outlier threshold: ±1.645 (studentized residuals)
+2025-10-10 13:39:34 - MODEL_1 - INFO -   - Transformation: sqrt
+2025-10-10 13:39:34 - MODEL_1 - INFO -   - Random seed: 42
+2025-10-10 13:39:34 - MODEL_1 - INFO - 
+2025-10-10 13:39:34 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:34 - MODEL_1 - INFO - STARTING PIPELINE: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-10 13:39:34 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:34 - MODEL_1 - INFO - 
+2025-10-10 13:39:34 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:34 - MODEL_1 - INFO - LOADING DATA: FY2024-2024
+2025-10-10 13:39:34 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:34 - MODEL_1 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-10 13:39:35 - MODEL_1 - INFO - Found 47259 records in 'data' key
+2025-10-10 13:39:37 - MODEL_1 - INFO - FY2024 Summary:
+2025-10-10 13:39:37 - MODEL_1 - INFO -   - Processed: 34,173
+2025-10-10 13:39:37 - MODEL_1 - INFO -   - Skipped (Usable=0): 0
+2025-10-10 13:39:37 - MODEL_1 - INFO -   - Skipped (no cost): 13,086
+2025-10-10 13:39:37 - MODEL_1 - INFO -   - Skipped (errors): 0
+2025-10-10 13:39:37 - MODEL_1 - INFO - Total loaded: 34,173 usable records
+2025-10-10 13:39:37 - MODEL_1 - INFO - 
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:37 - MODEL_1 - INFO - DATA SPLIT
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:37 - MODEL_1 - INFO - Training samples: 27,339
+2025-10-10 13:39:37 - MODEL_1 - INFO - Test samples: 6,834
+2025-10-10 13:39:37 - MODEL_1 - INFO - Split ratio: 20.0%
+2025-10-10 13:39:37 - MODEL_1 - INFO - 
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:37 - MODEL_1 - INFO - FEATURE PREPARATION
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:37 - MODEL_1 - INFO - Features prepared: 21 total features from 27339 records
+2025-10-10 13:39:37 - MODEL_1 - INFO - Feature breakdown:
+2025-10-10 13:39:37 - MODEL_1 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Numeric: 1 features [bsum]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-10 13:39:37 - MODEL_1 - INFO - Feature counts by type:
+2025-10-10 13:39:37 - MODEL_1 - INFO -   numeric: 1
+2025-10-10 13:39:37 - MODEL_1 - INFO -   categorical: 5
+2025-10-10 13:39:37 - MODEL_1 - INFO -   binary: 2
+2025-10-10 13:39:37 - MODEL_1 - INFO -   qsi: 10
+2025-10-10 13:39:37 - MODEL_1 - INFO -   interactions: 3
+2025-10-10 13:39:37 - MODEL_1 - INFO - Features prepared: 21 total features from 6834 records
+2025-10-10 13:39:37 - MODEL_1 - INFO - Feature breakdown:
+2025-10-10 13:39:37 - MODEL_1 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Numeric: 1 features [bsum]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-10 13:39:37 - MODEL_1 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-10 13:39:37 - MODEL_1 - INFO - Feature counts by type:
+2025-10-10 13:39:37 - MODEL_1 - INFO -   numeric: 1
+2025-10-10 13:39:37 - MODEL_1 - INFO -   categorical: 5
+2025-10-10 13:39:37 - MODEL_1 - INFO -   binary: 2
+2025-10-10 13:39:37 - MODEL_1 - INFO -   qsi: 10
+2025-10-10 13:39:37 - MODEL_1 - INFO -   interactions: 3
+2025-10-10 13:39:37 - MODEL_1 - INFO - Features prepared: 21 features
+2025-10-10 13:39:37 - MODEL_1 - INFO - 
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:37 - MODEL_1 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-10 13:39:37 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,159 observations (8.77%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.2%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 1: Removed 2159 outliers (8.77%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -5.5888
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0855
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 61.9585
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 115.2461
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 103.1403
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 101.9148
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 75.0240
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 62.9644
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.1939
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.2311
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 8.9351
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.5961
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.8577
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.7893
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.4315
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.2709
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.5520
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.7933
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.4976
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9926
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4238
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.3788
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 1: R² = 0.4148
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,182 observations (8.87%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 2: Removed 2182 outliers (8.87%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -7.2077
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: 0.0044
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 63.3877
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 116.1172
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 102.3333
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 103.2109
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 77.8874
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.4246
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.6175
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.7345
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.4406
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.1779
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.5503
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 18.0417
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.7057
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.2111
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.4137
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.6336
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 2.0330
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9704
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4920
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.3948
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 2: R² = 0.4118
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,190 observations (8.90%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 3: Removed 2190 outliers (8.90%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -5.5244
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0527
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 63.1454
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 116.6525
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 102.2466
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 104.3598
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 76.4014
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 62.8299
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.2829
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.5162
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.3113
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.1669
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.7706
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.5947
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.5255
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 0.8184
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.8010
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.3797
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.5937
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.8974
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4630
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.4277
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 3: R² = 0.4587
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,185 observations (8.88%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 4: Removed 2185 outliers (8.88%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -4.8724
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.2520
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 63.1882
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 114.9308
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 104.8954
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 102.9511
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 75.9390
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.0800
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 66.3341
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.4889
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.1291
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.7698
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.6046
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.6612
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.3549
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 0.5181
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.7353
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.8056
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.6929
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9590
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4806
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.6198
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 4: R² = 0.4578
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,179 observations (8.86%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 5: Removed 2179 outliers (8.86%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -7.0814
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0936
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 61.4192
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 114.6428
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 101.6678
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 101.2739
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 74.2752
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.3821
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 68.3110
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.8138
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.7090
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.8829
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.2114
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 18.0543
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.5200
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.0754
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 2.1567
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.7047
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 2.0711
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -3.0175
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.5411
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.5358
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 5: R² = 0.4490
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,181 observations (8.86%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 6: Removed 2181 outliers (8.86%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -8.1250
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0211
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 62.7901
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 117.2282
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 100.3738
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 105.3821
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 78.3027
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 64.0666
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 68.7628
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.7725
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.1914
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.9337
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.2130
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.7758
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.6155
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.1884
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.2466
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.5123
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.3892
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9279
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.5071
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.3300
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 6: R² = 0.4509
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,167 observations (8.81%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.2%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 7: Removed 2167 outliers (8.81%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -6.2526
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0747
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 62.4337
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 115.0858
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 102.9942
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 102.2033
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 74.5844
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.0473
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.9492
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.6883
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.3428
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.7948
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.2229
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.8738
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.2575
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.0528
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 0.8553
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.5739
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.6036
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9950
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4955
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.5166
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 7: R² = 0.4415
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,195 observations (8.92%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 8: Removed 2195 outliers (8.92%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -6.9843
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0796
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 62.1264
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 114.9324
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 105.3393
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 102.3505
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 75.8840
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 64.0681
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 68.1309
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.4183
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.2739
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.2406
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.9519
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 18.0382
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.2544
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 0.6839
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 2.0542
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.9568
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.7675
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9844
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4923
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.4367
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 8: R² = 0.4552
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,196 observations (8.93%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.1%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 9: Removed 2196 outliers (8.93%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -5.7080
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.1013
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 60.5755
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 114.7290
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 101.0812
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 101.3907
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 75.2459
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.1010
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.5048
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 4.1899
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.6181
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.8826
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.6000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.9781
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.4576
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 0.7027
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.6866
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.8297
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.5130
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -3.1528
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.6030
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.4480
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 9: R² = 0.4486
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,173 observations (8.83%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.2%
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 10: Removed 2173 outliers (8.83%)
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -6.7144
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.1636
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 63.7638
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 115.9613
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 106.8043
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 102.7919
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 76.7626
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 64.4833
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.9560
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.9554
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 8.9430
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.9150
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.1529
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.5333
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.3366
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.0624
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.6842
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.5329
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.8882
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9076
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4602
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.5334
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Fold 10: R² = 0.4661
+2025-10-10 13:39:38 - MODEL_1 - INFO - Mean R²: 0.4454
+2025-10-10 13:39:38 - MODEL_1 - INFO - Std R²: 0.0173
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - MODEL TRAINING
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Applying studentized residuals outlier detection...
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Threshold: |t_i| >= 1.645
+2025-10-10 13:39:38 - MODEL_1 - INFO - Outlier Detection Results:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Removed: 2,418 observations (8.84%)
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Studentized residuals - Mean: 0.0000, Std: 1.0000
+2025-10-10 13:39:38 - MODEL_1 - INFO -   % within threshold: 91.2%
+2025-10-10 13:39:38 - MODEL_1 - INFO - OLS model fitted with 21 coefficients
+2025-10-10 13:39:38 - MODEL_1 - INFO - Intercept: -6.4435
+2025-10-10 13:39:38 - MODEL_1 - INFO - Coefficient summary:
+2025-10-10 13:39:38 - MODEL_1 - INFO -   bsum: -0.0909
+2025-10-10 13:39:38 - MODEL_1 - INFO -   ILSL: 62.5666
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH1: 115.5917
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH2: 103.1006
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH3: 102.8033
+2025-10-10 13:39:38 - MODEL_1 - INFO -   RH4: 76.0579
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age21_30: 63.4084
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Age31Plus: 67.7419
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q16: 3.7001
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q18: 9.3252
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q20: 7.6133
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q21: 9.4680
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q23: 17.8566
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q28: 3.4517
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q33: 1.0152
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q34: 1.6831
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q36: 4.6675
+2025-10-10 13:39:38 - MODEL_1 - INFO -   Q43: 1.6782
+2025-10-10 13:39:38 - MODEL_1 - INFO -   FHFSum: -2.9800
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLFSum: -2.4960
+2025-10-10 13:39:38 - MODEL_1 - INFO -   SLBSum: 3.4620
+2025-10-10 13:39:38 - MODEL_1 - INFO - Model training complete
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - MAKING PREDICTIONS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Predictions complete
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - CALCULATING METRICS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Training R²: 0.6852
+2025-10-10 13:39:38 - MODEL_1 - INFO - Test R²: 0.4300
+2025-10-10 13:39:38 - MODEL_1 - INFO - RMSE (original): $33,718.68
+2025-10-10 13:39:38 - MODEL_1 - INFO - RMSE (sqrt scale): $79.71
+2025-10-10 13:39:38 - MODEL_1 - INFO - MAE: $21,798.59
+2025-10-10 13:39:38 - MODEL_1 - INFO - MAPE: 302.17%
+2025-10-10 13:39:38 - MODEL_1 - INFO - CV R² (mean ± std): 0.4454 ± 0.0173
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - SUBGROUP ANALYSIS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Calculated metrics for 10 subgroups
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - VARIANCE ANALYSIS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Variance metrics calculated
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - POPULATION SCENARIOS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - Calculated 4 population scenarios
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - GENERATING OUTPUTS
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - 
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - LATEX GENERATION
+2025-10-10 13:39:38 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:38 - MODEL_1 - INFO - LaTeX commands generated
+2025-10-10 13:39:38 - MODEL_1 - INFO - Results saved
+2025-10-10 13:39:41 - MODEL_1 - INFO - Diagnostic plots saved
+2025-10-10 13:39:41 - MODEL_1 - INFO - 
+2025-10-10 13:39:41 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:41 - MODEL_1 - INFO - PIPELINE COMPLETE: MODEL 5B RE-EVALUATION (2024 DATA)
+2025-10-10 13:39:41 - MODEL_1 - INFO - ============================================================
+2025-10-10 13:39:41 - MODEL_1 - INFO - 
+2025-10-10 13:39:41 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:41 - MODEL_1 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-10 13:39:41 - MODEL_1 - INFO - ------------------------------------------------------------
+2025-10-10 13:39:41 - MODEL_1 - INFO - Training R²: 0.6852
+2025-10-10 13:39:41 - MODEL_1 - INFO - Test R²: 0.4300
+2025-10-10 13:39:41 - MODEL_1 - INFO - RMSE: $33,718.68
+2025-10-10 13:39:41 - MODEL_1 - INFO - MAE: $21,798.59
+2025-10-10 13:39:41 - MODEL_1 - INFO - MAPE: 302.17%
+2025-10-10 13:39:41 - MODEL_1 - INFO - CV R² (mean ± std): 0.4454 ± 0.0173
+2025-10-10 13:39:41 - MODEL_1 - INFO - ------------------------------------------------------------

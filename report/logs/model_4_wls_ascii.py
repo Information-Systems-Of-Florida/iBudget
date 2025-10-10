@@ -720,7 +720,7 @@ def main():
     # Run pipeline with 2023-2024 data
     print("\n? Running complete pipeline...")
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         perform_cv=True
     )

@@ -67,17 +67,14 @@ class Model9RandomForest(BaseiBudgetModel):
     - 2 Summary Scores: BSum, FSum
     """
     
-    def __init__(self, use_fy2024_only: bool = True, use_sqrt_transform: bool = False):
+    def __init__(self, use_sqrt_transform: bool = False):
         """
         Initialize Model 9
         
         Args:
-            use_fy2024_only: If True, use only FY2024 data; if False, use 2023-2024
             use_sqrt_transform: If True, use sqrt transformation; if False, use original dollars
         """
         super().__init__(model_id=9, model_name="Random Forest")
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2023-2024"
         
         # ============================================================================
         # TRANSFORMATION CONTROL (Rule 7) - Test both approaches!
@@ -112,7 +109,6 @@ class Model9RandomForest(BaseiBudgetModel):
         self.training_time = None
         
         logger.info(f"Model 9 Random Forest initialized")
-        logger.info(f"Fiscal years: {self.fiscal_years_used}")
         logger.info(f"Hyperparameters: n_estimators={self.n_estimators}, max_depth={self.max_depth}")
     
     def split_data(self, test_size: float = 0.2, random_state: int = RANDOM_SEED) -> None:
@@ -144,13 +140,8 @@ class Model9RandomForest(BaseiBudgetModel):
         all_records = super().load_data()
         
         # Filter by fiscal year if requested
-        if self.use_fy2024_only:
-            filtered_records = [r for r in all_records if r.fiscal_year == 2024]
-            logger.info(f"Filtered to FY2024 only: {len(filtered_records)} records")
-            return filtered_records
-        else:
-            logger.info(f"Using all FY2023-2024 data: {len(all_records)} records")
-            return all_records
+        logger.info(f"Using all data: {len(all_records)} records")
+        return all_records
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -219,7 +210,7 @@ class Model9RandomForest(BaseiBudgetModel):
     
     def run_complete_pipeline(
         self,
-        fiscal_year_start: int = 2023,
+        fiscal_year_start: int = 2024,
         fiscal_year_end: int = 2024,
         test_size: float = 0.2,
         perform_cv: bool = True,
@@ -678,14 +669,13 @@ def main():
     
     # Initialize model
     model = Model9RandomForest(
-        use_fy2024_only=True,
         use_sqrt_transform=USE_SQRT
     )
     
     # Run complete pipeline
     # DO NOT pass random_state parameter - base class doesn't accept it
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
@@ -697,7 +687,7 @@ def main():
     print("RESULTS SUMMARY")
     print("="*80)
     
-    print(f"\n? Random Forest Configuration:")
+    print(f"\n Random Forest Configuration:")
     print(f"  ? Number of Trees: {model.n_estimators}")
     print(f"  ? Max Depth: {model.max_depth}")
     print(f"  ? Min Samples Split: {model.min_samples_split}")
@@ -706,7 +696,7 @@ def main():
     print(f"  ? Bootstrap: {model.bootstrap}")
     print(f"  ? OOB Score: {model.oob_score}")
     
-    print(f"\n? Data Summary:")
+    print(f"\n Data Summary:")
     print(f"  ? Total Records: {len(model.all_records)}")
     print(f"  ? Training Records: {model.metrics.get('training_samples', 0)}")
     print(f"  ? Test Records: {model.metrics.get('test_samples', 0)}")
@@ -714,7 +704,7 @@ def main():
     print(f"  ? Outliers Removed: 0 (Random Forest handles outliers naturally)")
     print(f"  ? Data Utilization: 100%")
     
-    print(f"\n? Performance Metrics:")
+    print(f"\n Performance Metrics:")
     print(f"  ? Training R^2: {model.metrics.get('r2_train', 0):.4f}")
     print(f"  ? Test R^2: {model.metrics.get('r2_test', 0):.4f}")
     print(f"  ? RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
@@ -723,24 +713,24 @@ def main():
     print(f"  ? CV R^2 (10-fold): {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
     
     if model.oob_r2 is not None:
-        print(f"\n? Random Forest Specific:")
+        print(f"\n Random Forest Specific:")
         print(f"  ? OOB R^2: {model.oob_r2:.4f}")
         print(f"  ? OOB RMSE: ${model.oob_error:,.2f}")
         print(f"  ? Mean Tree Depth: {model.mean_tree_depth:.1f}")
         print(f"  ? Training Time: {model.training_time:.2f} seconds")
     
-    print(f"\n? Accuracy Bands:")
+    print(f"\n Accuracy Bands:")
     print(f"  ? Within $1,000: {model.metrics.get('within_1k', 0):.1f}%")
     print(f"  ? Within $2,000: {model.metrics.get('within_2k', 0):.1f}%")
     print(f"  ? Within $5,000: {model.metrics.get('within_5k', 0):.1f}%")
     print(f"  ? Within $10,000: {model.metrics.get('within_10k', 0):.1f}%")
     print(f"  ? Within $20,000: {model.metrics.get('within_20k', 0):.1f}%")
     
-    print(f"\n? Top 5 Features by Importance:")
+    print(f"\n Top 5 Features by Importance:")
     for i, (feature, importance) in enumerate(model.top_features, 1):
         print(f"  {i}. {feature}: {importance:.4f}")
     
-    print(f"\n? Key Advantages:")
+    print(f"\n Key Advantages:")
     print(f"  ? No outlier removal (100% data retention)")
     print(f"  ? Automatic feature interaction detection")
     print(f"  ? Non-linear pattern capture")
@@ -754,14 +744,14 @@ def main():
     if renewcommands_file.exists():
         with open(renewcommands_file, 'r') as f:
             command_count = sum(1 for line in f if '\\renewcommand' in line)
-        print(f"\n? LaTeX Commands Generated: {command_count}")
+        print(f"\n LaTeX Commands Generated: {command_count}")
         if command_count < 80:
-            print(f"   ??  WARNING: Expected 100+ commands, got {command_count}")
+            print(f"     WARNING: Expected 100+ commands, got {command_count}")
         else:
-            print(f"   ? Command count looks good (expected 100+)")
+            print(f"    Command count looks good (expected 100+)")
     
-    print(f"\n? To change random seed, edit RANDOM_SEED = {RANDOM_SEED} at top of file")
-    print(f"? To change transformation, set USE_SQRT = {not USE_SQRT} in main()")
+    print(f"\n To change random seed, edit RANDOM_SEED = {RANDOM_SEED} at top of file")
+    print(f" To change transformation, set USE_SQRT = {not USE_SQRT} in main()")
     
     print("\n" + "="*80)
     print("Model 9 implementation complete!")

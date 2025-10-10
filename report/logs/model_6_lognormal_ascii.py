@@ -60,17 +60,14 @@ class Model6LogNormal(BaseiBudgetModel):
     - Built-in heteroscedasticity handling
     """
     
-    def __init__(self, use_fy2024_only: bool = True, use_sqrt_transform: bool = True):
+    def __init__(self, use_sqrt_transform: bool = False):
         """
         Initialize Model 6
         
         Args:
-            use_fy2024_only: Use only FY2024 data if True
             use_sqrt_transform: Use log(sqrt(Y)) if True, log(Y) if False
         """
         super().__init__(model_id=6, model_name="Log-Normal-GLM")
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2023-2024"
         
         # ============================================================================
         # TRANSFORMATION CONTROL - Rule 7
@@ -583,7 +580,7 @@ def main():
     # Run complete pipeline
     print("\n[*] Running complete pipeline...")
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,

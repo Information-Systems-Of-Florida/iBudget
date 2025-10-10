@@ -82,78 +82,114 @@ class Model1Linear(BaseiBudgetModel):
         self.coefficients = None
         self.intercept = None
     
+    # def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
+    #     """
+    #     Prepare features matching Model 5b EXACTLY (21 features)
+        
+    #     Model 5b Feature Specification from Tao & Niu (2015, Table 7):
+    #     1-5:   Living Settings (5 dummy variables, FH as reference)
+    #     6-7:   Age Groups (2 dummy variables, Age 3-20 as reference)
+    #     8:     BSum (behavioral sum)
+    #     9-11:  Interaction Terms (FHFSum, SLFSum, SLBSum)
+    #     12-21: QSI Questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
+        
+    #     Returns:
+    #         Tuple of (feature_matrix, feature_names)
+    #     """
+    #     features_list = []
+        
+    #     for record in records:
+    #         row_features = []
+            
+    #         # 1-5. Living Settings (5 dummy variables, FH as reference)
+    #         # Model 5b uses: ILSL, RH1, RH2, RH3, RH4 (FH = 0,0,0,0,0)
+    #         living = record.living_setting
+    #         row_features.extend([
+    #             1.0 if living == 'ILSL' else 0.0,  # LiveILSL
+    #             1.0 if living == 'RH1' else 0.0,   # LiveRH1
+    #             1.0 if living == 'RH2' else 0.0,   # LiveRH2
+    #             1.0 if living == 'RH3' else 0.0,   # LiveRH3
+    #             1.0 if living == 'RH4' else 0.0,   # LiveRH4
+    #         ])
+            
+    #         # 6-7. Age Groups (2 dummy variables, Age 3-20 as reference)
+    #         age_group = record.age_group
+    #         row_features.extend([
+    #             1.0 if age_group == 'Age21_30' else 0.0,   # Age21-30
+    #             1.0 if age_group == 'Age31Plus' else 0.0,  # Age31+
+    #         ])
+            
+    #         # 8. BSum (behavioral sum)
+    #         bsum = float(record.bsum or 0)
+    #         fsum = float(record.fsum or 0)
+    #         row_features.append(bsum)
+            
+    #         # 9-11. CRITICAL: Interaction Terms (Model 5b's key innovation)
+    #         # These capture how functional needs (FSum) and behavioral needs (BSum)
+    #         # interact with living settings
+    #         is_fh = 1.0 if living == 'FH' else 0.0
+    #         is_sl = 1.0 if living == 'ILSL' else 0.0  # Supported Living
+            
+    #         fhf_sum = is_fh * fsum  # FHFSum: Family Home × FSum
+    #         slf_sum = is_sl * fsum  # SLFSum: Supported Living × FSum
+    #         slb_sum = is_sl * bsum  # SLBSum: Supported Living × BSum
+            
+    #         row_features.extend([fhf_sum, slf_sum, slb_sum])
+            
+    #         # 12-21. QSI Questions (EXACT 10 from Model 5b)
+    #         qsi_questions = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
+    #         for q_num in qsi_questions:
+    #             value = getattr(record, f'q{q_num}', 0) or 0
+    #             row_features.append(float(value))
+            
+    #         features_list.append(row_features)
+        
+    #     # Feature names matching Model 5b Table 7
+    #     feature_names = [
+    #         'LiveILSL', 'LiveRH1', 'LiveRH2', 'LiveRH3', 'LiveRH4',
+    #         'Age21_30', 'Age31Plus',
+    #         'BSum',
+    #         'FHFSum', 'SLFSum', 'SLBSum',
+    #         'Q16', 'Q18', 'Q20', 'Q21', 'Q23', 'Q28', 'Q33', 'Q34', 'Q36', 'Q43'
+    #     ]
+        
+    #     return np.array(features_list), feature_names
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Prepare features matching Model 5b EXACTLY (21 features)
-        
-        Model 5b Feature Specification from Tao & Niu (2015, Table 7):
-        1-5:   Living Settings (5 dummy variables, FH as reference)
-        6-7:   Age Groups (2 dummy variables, Age 3-20 as reference)
-        8:     BSum (behavioral sum)
-        9-11:  Interaction Terms (FHFSum, SLFSum, SLBSum)
-        12-21: QSI Questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
-        
-        Returns:
-            Tuple of (feature_matrix, feature_names)
+        Model 1 feature preparation using generic configuration approach
+        Matches the original Model 5b specification exactly
         """
-        features_list = []
+        # Model 1 uses exactly 10 QSI items from Model 5b
+        model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
         
-        for record in records:
-            row_features = []
-            
-            # 1-5. Living Settings (5 dummy variables, FH as reference)
-            # Model 5b uses: ILSL, RH1, RH2, RH3, RH4 (FH = 0,0,0,0,0)
-            living = record.living_setting
-            row_features.extend([
-                1.0 if living == 'ILSL' else 0.0,  # LiveILSL
-                1.0 if living == 'RH1' else 0.0,   # LiveRH1
-                1.0 if living == 'RH2' else 0.0,   # LiveRH2
-                1.0 if living == 'RH3' else 0.0,   # LiveRH3
-                1.0 if living == 'RH4' else 0.0,   # LiveRH4
-            ])
-            
-            # 6-7. Age Groups (2 dummy variables, Age 3-20 as reference)
-            age_group = record.age_group
-            row_features.extend([
-                1.0 if age_group == 'Age21_30' else 0.0,   # Age21-30
-                1.0 if age_group == 'Age31Plus' else 0.0,  # Age31+
-            ])
-            
-            # 8. BSum (behavioral sum)
-            bsum = float(record.bsum or 0)
-            fsum = float(record.fsum or 0)
-            row_features.append(bsum)
-            
-            # 9-11. CRITICAL: Interaction Terms (Model 5b's key innovation)
-            # These capture how functional needs (FSum) and behavioral needs (BSum)
-            # interact with living settings
-            is_fh = 1.0 if living == 'FH' else 0.0
-            is_sl = 1.0 if living == 'ILSL' else 0.0  # Supported Living
-            
-            fhf_sum = is_fh * fsum  # FHFSum: Family Home × FSum
-            slf_sum = is_sl * fsum  # SLFSum: Supported Living × FSum
-            slb_sum = is_sl * bsum  # SLBSum: Supported Living × BSum
-            
-            row_features.extend([fhf_sum, slf_sum, slb_sum])
-            
-            # 12-21. QSI Questions (EXACT 10 from Model 5b)
-            qsi_questions = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
-            for q_num in qsi_questions:
-                value = getattr(record, f'q{q_num}', 0) or 0
-                row_features.append(float(value))
-            
-            features_list.append(row_features)
+        feature_config = {
+            'categorical': {
+                'living_setting': {
+                    'categories': ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'],
+                    'reference': 'FH'  # FH is reference, not included
+                }
+            },
+            'binary': {
+                'Age21_30': lambda r: 21 <= r.age <= 30,
+                'Age31Plus': lambda r: r.age > 30
+                # Age3_20 is reference, not included
+            },
+            'numeric': ['bsum'],  # Only BSum, not FSum or PSum (per Model 5b)
+            'interactions': [
+                # FH × FSum interaction
+                ('FHFSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum)),
+                # Supported Living × FSum interaction  
+                ('SLFSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.fsum)),
+                # Supported Living × BSum interaction
+                ('SLBSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.bsum))
+            ],
+            'qsi': model_5b_qsi  # Exactly 10 QSI items
+        }
         
-        # Feature names matching Model 5b Table 7
-        feature_names = [
-            'LiveILSL', 'LiveRH1', 'LiveRH2', 'LiveRH3', 'LiveRH4',
-            'Age21_30', 'Age31Plus',
-            'BSum',
-            'FHFSum', 'SLFSum', 'SLBSum',
-            'Q16', 'Q18', 'Q20', 'Q21', 'Q23', 'Q28', 'Q33', 'Q34', 'Q36', 'Q43'
-        ]
+        # Use the generic preparation method from base class
+        X, feature_names = self.prepare_features_from_spec(records, feature_config)
         
-        return np.array(features_list), feature_names
+        return X, feature_names
     
     def _fit_core(self, X: np.ndarray, y: np.ndarray) -> None:
         """

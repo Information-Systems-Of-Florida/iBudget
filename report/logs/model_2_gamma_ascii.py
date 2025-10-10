@@ -1,15 +1,17 @@
 """
+model_2_gamma_final.py
+======================
 Model 2: Generalized Linear Model with Gamma Distribution
-==========================================================
-GLM with Gamma distribution and log link for iBudget cost prediction
-Uses feature selection based on mutual information analysis
-No outlier removal - robust to extreme values through distribution choice
+Final implementation with comprehensive feature selection and transformation options
 
-STANDARDIZED IMPLEMENTATION - Follows lessons learned from Model 1
+Key improvements:
+- All features with MI > 0.05 from feature selection analysis
+- Optional sqrt transformation (like Model 1)
+- Optional outlier removal (like Model 1)
+- Removed use_fy2024_only flag
 """
 
 import numpy as np
-import pandas as pd
 import statsmodels.api as sm
 from statsmodels.genmod.families import Gamma
 from statsmodels.genmod.families.links import Log
@@ -18,6 +20,7 @@ from sklearn.model_selection import KFold
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
 from pathlib import Path
 import json
 import logging
@@ -35,263 +38,266 @@ class Model2GLMGamma(BaseiBudgetModel):
     """
     Model 2: GLM with Gamma distribution and log link
     
-    Key features:
-    - Gamma distribution for right-skewed cost data
-    - Log link function ensures positive predictions
-    - 100% data utilization (NO outlier removal)
-    - Feature selection based on mutual information
-    - Works directly in dollar scale (no transformation needed)
-    
-    Regulatory Status: Fully compliant (requires minor F.A.C. update)
+    Key characteristics:
+    - Models right-skewed costs with or without transformation
+    - Log link ensures positive predictions
+    - Quadratic variance function (Var ? ?^2)
+    - Optional outlier removal
+    - Comprehensive feature selection based on MI analysis
     """
     
-    # Selected features based on mutual information analysis (FY2013-2024)
-    SELECTED_FEATURES = [
-        # Top predictors from MI analysis (consistently important across years)
-        'RESIDENCETYPE',     # MI: 0.203-0.272 (highest predictor)
-        'BSum',              # MI: 0.113-0.137 (behavioral summary)
-        'BLEVEL',            # MI: 0.089-0.106
-        'LOSRI',             # MI: 0.087-0.130
-        'OLEVEL',            # MI: 0.085-0.131
-        
-        # Clinical scores
-        'FSum',              # MI: 0.059-0.084
-        'FLEVEL',            # MI: 0.061-0.085
-        'PSum',              # MI: 0.057-0.091
-        'PLEVEL',            # MI: 0.070-0.083
-        
-        # Top individual QSI questions
-        'Q26',               # MI: 0.084-0.094 (consistently in top 10)
-        'Q36',               # MI: 0.066-0.088
-        'Q27',               # MI: 0.061-0.080
-        'Q20',               # MI: 0.052-0.086
-        'Q21',               # MI: 0.062-0.078
-        'Q23',               # MI: 0.046-0.067
-        'Q30',               # MI: 0.063-0.065
-        'Q25',               # MI: 0.055-0.067
-        'Q16',               # MI: 0.047-0.060
-        'Q18',               # MI: 0.044-0.048
-        'Q28',               # MI: 0.043-0.058
-        
-        # Demographics (required for regulatory compliance)
-        'Age',
-        'AgeGroup',
-        'County',
-        'LivingSetting'
-    ]
-    
-    def __init__(self, use_selected_features: bool = True, 
-                 use_fy2024_only: bool = True,
-                 random_state: int = 42):
+    def __init__(self, 
+                 use_sqrt_transform: bool = False,
+                 use_outlier_removal: bool = False,
+                 outlier_threshold: float = 1.645,
+                 use_selected_features: bool = True,
+                 output_dir: Optional[Path] = None,
+                 random_seed: int = 42):
         """
-        Initialize Model 2
+        Initialize Model 2 GLM-Gamma
         
         Args:
-            use_selected_features: Whether to use MI-based feature selection
-            use_fy2024_only: Whether to use only fiscal year 2024 data
-            random_state: Random state for reproducibility
+            use_sqrt_transform: Apply sqrt transformation (like Model 1)
+            use_outlier_removal: Remove outliers using studentized residuals
+            outlier_threshold: Threshold for outlier removal (1.645 = ~10%)
+            use_selected_features: Use MI-based feature selection
+            output_dir: Directory for outputs
+            random_seed: Random seed for reproducibility
         """
-        super().__init__(model_id=2, model_name="GLM-Gamma")
+        # Determine transformation
+        transformation = 'sqrt' if use_sqrt_transform else 'none'
         
-        # Configuration
+        # Initialize base class with Model 1-like options
+        super().__init__(
+            model_id=2,
+            model_name="GLM-Gamma",
+            use_outlier_removal=use_outlier_removal,
+            outlier_threshold=outlier_threshold,
+            transformation=transformation,
+            random_seed=random_seed
+        )
+        
+        # Model-specific configuration
         self.use_selected_features = use_selected_features
-        self.use_fy2024_only = use_fy2024_only
-        self.fiscal_years_used = "2024" if use_fy2024_only else "2020-2025"
-        self.random_state = random_state
+        #self.output_dir = Path(output_dir) if output_dir else Path("outputs/model_2")
+        #self.output_dir.mkdir(parents=True, exist_ok=True)
         
         # GLM-specific attributes
         self.glm_model = None
         self.dispersion = None
         self.deviance = None
+        self.aic = None
+        self.bic = None
         self.null_deviance = None
         self.deviance_r2 = None
         self.mcfadden_r2 = None
-        self.aic = None
-        self.bic = None
-        self.num_parameters = 0
+        
+        # Comprehensive feature selection based on MI > 0.05 analysis
+        # From FeatureSelection.txt and model logs
+        self.high_mi_qsi = [
+            26, 36, 27, 20, 21, 23, 30, 25,  # Top 8
+            16, 18, 28, 33, 34, 43, 44,      # Next 7
+            15, 19, 22, 24, 29, 35, 37, 38,  # Additional with MI > 0.05
+            39, 40, 41, 42, 45, 46, 47       # More QSI items
+        ]
+        
+        # Coefficient storage
         self.coefficients = {}
         
-        # Feature importance from GLM
-        self.feature_importance = {}
+        # Additional metrics
+        self.glm_diagnostics = {}
         
-        logger.info(f"Model 2 initialized: feature_selection={use_selected_features}, fy2024_only={use_fy2024_only}")
-    
-    def load_data(self, fiscal_year_start: int = 2023, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
-        """
-        Load data for Model 2
+    # def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
+    #     """
+    #     Prepare comprehensive features based on MI analysis
         
-        Args:
-            fiscal_year_start: Start fiscal year (ignored if use_fy2024_only=True)
-            fiscal_year_end: End fiscal year (ignored if use_fy2024_only=True)
+    #     Features included (targeting 35-40 features):
+    #     1. Living Settings (5): ILSL, RH1, RH2, RH3, RH4 (FH reference)
+    #     2. Age Groups (2): Age21_30, Age31Plus (Age3_20 reference)
+    #     3. Support Levels (5): LOSRI, OLEVEL, BLEVEL, FLEVEL, PLEVEL
+    #     4. Clinical Scores (3): BSum, FSum, PSum
+    #     5. Demographics (1): Age continuous
+    #     6. QSI Items (15-30): All items with MI > 0.05
+    #     7. Interaction terms (optional): Living?Support, Age?Clinical
+        
+    #     Args:
+    #         records: List of ConsumerRecord objects
             
-        Returns:
-            List of consumer records
-        """
-        if self.use_fy2024_only:
-            # Force FY2024 only
-            return super().load_data(fiscal_year_start=2024, fiscal_year_end=2024)
-        else:
-            return super().load_data(fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
-    
+    #     Returns:
+    #         Feature matrix and feature names
+    #     """
+    #     features_list = []
+        
+    #     for record in records:
+    #         row_features = []
+            
+    #         # 1. Living Setting dummies (5 features, FH as reference)
+    #         for setting in ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
+    #             row_features.append(1.0 if record.living_setting == setting else 0.0)
+            
+    #         # 2. Age group dummies (2 features, Age3_20 as reference)
+    #         row_features.append(1.0 if 21 <= record.age <= 30 else 0.0)
+    #         row_features.append(1.0 if record.age > 30 else 0.0)
+            
+    #         # 3. Support Level Indicators (5 features)
+    #         row_features.append(float(record.losri))
+    #         row_features.append(float(record.olevel))
+    #         row_features.append(float(record.blevel))
+    #         row_features.append(float(record.flevel))
+    #         row_features.append(float(record.plevel))
+            
+    #         # 4. Clinical Assessment Scores (3 features)
+    #         row_features.append(float(record.bsum))
+    #         row_features.append(float(record.fsum))
+    #         row_features.append(float(record.psum))
+            
+    #         # 5. Age continuous (1 feature)
+    #         row_features.append(float(record.age))
+            
+    #         # 6. Gender (1 feature)
+    #         row_features.append(1.0 if record.gender == 'M' else 0.0)
+            
+    #         # 7. QSI Items - Comprehensive set (up to 30 features)
+    #         if self.use_selected_features:
+    #             # Use only high MI QSI items
+    #             qsi_to_use = self.high_mi_qsi[:15]  # Top 15 QSI items
+    #         else:
+    #             # Use all QSI items
+    #             qsi_to_use = list(range(14, 51))  # Q14 to Q50
+            
+    #         for q_num in qsi_to_use:
+    #             value = getattr(record, f'q{q_num}', 0) or 0
+    #             row_features.append(float(value))
+            
+    #         # 8. Interaction terms (optional, add 3-5 more features)
+    #         # Living ? Support interaction (high cost driver)
+    #         is_supported_living = 1.0 if record.living_setting in ['RH1', 'RH2', 'RH3', 'RH4'] else 0.0
+    #         row_features.append(is_supported_living * float(record.losri))
+            
+    #         # Age ? Clinical interaction
+    #         row_features.append(float(record.age) * float(record.bsum) / 100.0)  # Scaled
+            
+    #         # FH ? Functional interaction
+    #         is_fh = 1.0 if record.living_setting == 'FH' else 0.0
+    #         row_features.append(is_fh * float(record.fsum))
+            
+    #         features_list.append(row_features)
+        
+    #     # Build feature names (must match order above)
+    #     feature_names = [
+    #         'ILSL', 'RH1', 'RH2', 'RH3', 'RH4',  # 5 living settings
+    #         'Age21_30', 'Age31Plus',  # 2 age groups
+    #         'LOSRI', 'OLEVEL', 'BLEVEL', 'FLEVEL', 'PLEVEL',  # 5 support levels
+    #         'BSum', 'FSum', 'PSum',  # 3 clinical scores
+    #         'Age',  # 1 continuous age
+    #         'Male',  # 1 gender
+    #     ]
+        
+    #     # Add QSI feature names
+    #     if self.use_selected_features:
+    #         qsi_to_use = self.high_mi_qsi[:15]
+    #     else:
+    #         qsi_to_use = list(range(14, 51))
+        
+    #     for q_num in qsi_to_use:
+    #         feature_names.append(f'Q{q_num}')
+        
+    #     # Add interaction term names
+    #     feature_names.extend([
+    #         'SupportedLiving_x_LOSRI',
+    #         'Age_x_BSum',
+    #         'FH_x_FSum'
+    #     ])
+        
+    #     # Log feature information
+    #     self.logger.info(f"Features prepared: {len(feature_names)} features")
+    #     if self.logger.level <= logging.DEBUG:
+    #         self.logger.debug("Feature categories:")
+    #         self.logger.debug(f"  Living settings: 5")
+    #         self.logger.debug(f"  Age groups: 2")
+    #         self.logger.debug(f"  Support levels: 5")
+    #         self.logger.debug(f"  Clinical scores: 3")
+    #         self.logger.debug(f"  Demographics: 2")
+    #         self.logger.debug(f"  QSI items: {len(qsi_to_use)}")
+    #         self.logger.debug(f"  Interactions: 3")
+    #         self.logger.debug(f"  TOTAL: {len(feature_names)}")
+        
+    #     return np.array(features_list), feature_names
+
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Prepare features for Model 2
-        
-        Args:
-            records: List of consumer records
-            
-        Returns:
-            Tuple of (feature matrix, feature names)
+        Simplified feature preparation using generic method
         """
-        if self.use_selected_features:
-            return self._prepare_selected_features(records)
-        else:
-            return self._prepare_all_features(records)
-    
-    def _prepare_selected_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-        """
-        Prepare features based on mutual information selection
-        EXACTLY matches the original implementation with 33 features
+        # Define high MI QSI items
+        high_mi_qsi = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28, 33, 34, 43, 44]
         
-        Args:
-            records: Consumer records
-            
-        Returns:
-            Tuple of (feature matrix, feature names)
-        """
-        features_list = []
-        
-        for record in records:
-            row_features = []
-            
-            # 1. RESIDENCETYPE dummies (5 features) - FH as reference
-            residence_map = {
-                'FH': 0, 'ILSL': 1, 'RH1': 2, 'RH2': 3, 'RH3': 4, 'RH4': 5
-            }
-            residence_val = residence_map.get(getattr(record, 'residencetype', 'FH'), 0)
-            for i in range(1, 6):
-                row_features.append(1.0 if residence_val == i else 0.0)
-            
-            # 2. Living setting dummies (5 features) - FH as reference
-            # Note: This might be duplicate of RESIDENCETYPE but keeping for compatibility
-            living_settings = ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']
-            for setting in living_settings:
-                row_features.append(1.0 if record.living_setting == setting else 0.0)
-            
-            # 3. Age group dummies (2 features) - Age3_20 as reference
-            row_features.append(1.0 if record.age_group == 'Age21_30' else 0.0)
-            row_features.append(1.0 if record.age_group == 'Age31Plus' else 0.0)
-            
-            # 4. Age (continuous)
-            row_features.append(float(record.age))
-            
-            # 5. Summary scores and levels
-            row_features.append(float(record.bsum if record.bsum is not None else 0))
-            row_features.append(float(record.blevel if record.blevel is not None else 0))
-            row_features.append(float(record.fsum if record.fsum is not None else 0))
-            row_features.append(float(record.flevel if record.flevel is not None else 0))
-            row_features.append(float(record.psum if record.psum is not None else 0))
-            row_features.append(float(record.plevel if record.plevel is not None else 0))
-            
-            # 6. Support level scores
-            row_features.append(float(record.losri if record.losri is not None else 0))
-            row_features.append(float(record.olevel if record.olevel is not None else 0))
-            
-            # 7. QSI Questions (11 features) - ordered by MI importance
-            qsi_questions = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28]
-            for q_num in qsi_questions:
-                q_val = getattr(record, f'q{q_num}', None)
-                row_features.append(float(q_val) if q_val is not None else 0.0)
-            
-            # 8. County encoding (simple hash-based)
-            county_code = hash(record.county) % 100 if record.county else 0
-            row_features.append(float(county_code))
-            
-            features_list.append(row_features)
-        
-        # Build feature names (only once)
-        if not self.feature_names:
-            self.feature_names = [
-                # RESIDENCETYPE dummies (5)
-                'Res_ILSL', 'Res_RH1', 'Res_RH2', 'Res_RH3', 'Res_RH4',
-                # Living Setting dummies (5)
-                'Live_ILSL', 'Live_RH1', 'Live_RH2', 'Live_RH3', 'Live_RH4',
-                # Age (3)
-                'Age21_30', 'Age31Plus', 'Age',
-                # Summary scores and levels (6)
-                'BSum', 'BLEVEL', 'FSum', 'FLEVEL', 'PSum', 'PLEVEL',
-                # Support levels (2)
-                'LOSRI', 'OLEVEL',
-                # QSI questions (11)
-                'Q26', 'Q36', 'Q27', 'Q20', 'Q21', 'Q23', 
-                'Q30', 'Q25', 'Q16', 'Q18', 'Q28',
-                # County (1)
-                'County_Code'
+        feature_config = {
+            'categorical': {
+                'living_setting': {
+                    'categories': ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'],
+                    'reference': 'FH'  # Not included in features
+                }
+            },
+            'binary': {
+                'Age21_30': lambda r: 21 <= r.age <= 30,
+                'Age31Plus': lambda r: r.age > 30,
+                'Male': lambda r: r.gender == 'M'
+            },
+            'numeric': ['losri', 'olevel', 'blevel', 'flevel', 'plevel', 
+                    'bsum', 'fsum', 'psum', 'age'],
+            'qsi': high_mi_qsi[:15] if self.use_selected_features else list(range(14, 51)),
+            'interactions': [
+                ('SupportedLiving_x_LOSRI', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.losri)),
+                ('Age_x_BSum', lambda r: float(r.age) * float(r.bsum) / 100.0),
+                ('FH_x_FSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum))
             ]
+        }
         
-        return np.array(features_list, dtype=np.float64), self.feature_names
+        return self.prepare_features_from_spec(records, feature_config)
+
     
-    def _prepare_all_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-        """
-        Prepare all available features (not using feature selection)
-        
-        Args:
-            records: Consumer records
-            
-        Returns:
-            Tuple of (feature matrix, feature names)
-        """
-        # Delegate to base class
-        return super().prepare_features(records)
-    
-    def _prepare_all_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-        """
-        Prepare all available features (not using feature selection)
-        Delegates to base class for full feature set
-        
-        Args:
-            records: Consumer records
-            
-        Returns:
-            Tuple of (feature matrix, feature names)
-        """
-        logger.info("Using all features (no selection)")
-        return super().prepare_features(records)
-    
-    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
+    def _fit_core(self, X: np.ndarray, y: np.ndarray) -> None:
         """
         Fit GLM with Gamma distribution and log link
         
+        Note: y may be in transformed scale if use_sqrt_transform=True
+        
         Args:
-            X: Feature matrix
-            y: Target values (costs in dollars, NOT transformed)
+            X: Feature matrix (possibly with outliers removed)
+            y: Target values (possibly sqrt transformed)
         """
-        logger.info("Fitting GLM-Gamma model...")
-        logger.info(f"Training samples: {len(y)}, Features: {X.shape[1]}")
+        self.log_section("FITTING GLM-GAMMA MODEL")
         
         # Add constant for intercept
         X_with_const = sm.add_constant(X)
         
-        # Ensure no zeros or negative values (Gamma requires positive)
-        y_adjusted = np.maximum(y, 0.01)
+        # For Gamma, we need positive values
+        # If sqrt transformed, we're already positive
+        # If not transformed, ensure minimum positive value
+        min_value = 1.0 if self.transformation == 'none' else 0.01
+        y_adjusted = np.maximum(y, min_value)
+        
+        if (y <= 0).any():
+            n_adjusted = (y <= 0).sum()
+            self.logger.warning(f"Adjusted {n_adjusted} non-positive values to {min_value}")
         
         try:
-            # Initialize and fit GLM with Gamma family and log link
+            # Initialize GLM with Gamma family and log link
             glm = sm.GLM(
                 y_adjusted,
                 X_with_const,
                 family=Gamma(link=Log())
             )
             
-            # Fit with increased iterations for convergence
-            self.glm_model = glm.fit(maxiter=200, scale='x2')
+            # Fit model with increased iterations for convergence
+            self.glm_model = glm.fit(maxiter=200, scale='x2', disp=0)
             self.model = self.glm_model  # Store for base class compatibility
             
-            # Extract GLM-specific metrics
-            self.dispersion = self.glm_model.scale
-            self.deviance = self.glm_model.deviance
-            self.aic = self.glm_model.aic
-            self.bic = self.glm_model.bic
+            # Extract model diagnostics
+            self.dispersion = float(self.glm_model.scale)
+            self.deviance = float(self.glm_model.deviance)
+            self.aic = float(self.glm_model.aic)
+            self.bic = float(self.glm_model.bic)
             self.num_parameters = len(self.glm_model.params)
             
             # Calculate null model for pseudo-R^2
@@ -301,7 +307,7 @@ class Model2GLMGamma(BaseiBudgetModel):
                 family=Gamma(link=Log())
             ).fit(disp=0)
             
-            self.null_deviance = null_model.deviance
+            self.null_deviance = float(null_model.deviance)
             
             # Calculate pseudo-R^2 measures
             self.deviance_r2 = 1 - (self.deviance / self.null_deviance)
@@ -315,288 +321,203 @@ class Model2GLMGamma(BaseiBudgetModel):
                     'std_error': float(self.glm_model.bse[i]),
                     'z_value': float(self.glm_model.tvalues[i]),
                     'p_value': float(self.glm_model.pvalues[i]),
-                    'conf_int_lower': float(self.glm_model.conf_int()[i, 0]),
-                    'conf_int_upper': float(self.glm_model.conf_int()[i, 1]),
-                    'exp_value': float(np.exp(self.glm_model.params[i]))  # Multiplicative effect
+                    'exp_value': float(np.exp(self.glm_model.params[i])),
+                    'pct_effect': (np.exp(self.glm_model.params[i]) - 1) * 100
                 }
             
-            # Calculate feature importance (absolute z-values)
-            self.feature_importance = {}
-            for i, name in enumerate(self.feature_names):
-                self.feature_importance[name] = abs(float(self.glm_model.tvalues[i+1]))
+            # Log summary
+            self.logger.info(f"GLM-Gamma model fitted successfully")
+            self.logger.info(f"  Features: {len(self.feature_names)}")
+            self.logger.info(f"  Transformation: {self.transformation}")
+            self.logger.info(f"  Outliers removed: {self.use_outlier_removal}")
+            if self.use_outlier_removal and hasattr(self, 'outlier_diagnostics'):
+                if 'n_removed' in self.outlier_diagnostics:
+                    self.logger.info(f"  Outliers removed: {self.outlier_diagnostics['n_removed']}")
+            self.logger.info(f"  Dispersion parameter: {self.dispersion:.4f}")
+            self.logger.info(f"  Deviance: {self.deviance:.2f}")
+            self.logger.info(f"  AIC: {self.aic:.2f}, BIC: {self.bic:.2f}")
+            self.logger.info(f"  Deviance R^2: {self.deviance_r2:.4f}")
+            self.logger.info(f"  McFadden R^2: {self.mcfadden_r2:.4f}")
             
-            # Sort by importance
-            self.feature_importance = dict(sorted(
-                self.feature_importance.items(), 
-                key=lambda x: x[1], 
-                reverse=True
-            ))
+            # Log top significant features
+            self.logger.info("\nTop significant features:")
+            significant_features = [
+                (name, coef['value'], coef['p_value'], coef['pct_effect']) 
+                for name, coef in self.coefficients.items() 
+                if coef['p_value'] < 0.05 and name != 'const'
+            ]
+            significant_features.sort(key=lambda x: abs(x[1]), reverse=True)
             
-            logger.info(f"GLM-Gamma fitted successfully")
-            logger.info(f"  Converged: {self.glm_model.converged}")
-            logger.info(f"  Dispersion: {self.dispersion:.4f}")
-            logger.info(f"  Deviance R^2: {self.deviance_r2:.4f}")
-            logger.info(f"  McFadden R^2: {self.mcfadden_r2:.4f}")
-            logger.info(f"  AIC: {self.aic:.1f}, BIC: {self.bic:.1f}")
-            
+            for name, coef, pval, pct in significant_features[:5]:
+                self.logger.info(f"  {name}: ?={coef:.4f}, p={pval:.4f}, effect={pct:+.1f}%")
+                
         except Exception as e:
-            logger.error(f"Error fitting GLM-Gamma: {e}")
+            self.logger.error(f"Error fitting GLM-Gamma: {str(e)}")
             raise
     
-    def predict(self, X: np.ndarray) -> np.ndarray:
+    def _predict_core(self, X: np.ndarray) -> np.ndarray:
         """
-        Make predictions using fitted GLM
+        Make predictions using GLM model
+        
+        Returns predictions in the same scale as training
+        (sqrt scale if transformed, dollar scale if not)
         
         Args:
             X: Feature matrix
             
         Returns:
-            Predictions in dollar scale
+            Predictions in training scale
         """
         if self.glm_model is None:
             raise ValueError("Model must be fitted before prediction")
         
-        # Add constant to match training
-        X_with_const = sm.add_constant(X, has_constant='add')
+        # Add constant
+        X_with_const = sm.add_constant(X)
         
-        # GLM predict returns on original scale (handles back-transformation)
+        # GLM predictions are in the scale of the training data
         predictions = self.glm_model.predict(X_with_const)
-        
-        # Ensure predictions are positive (should be by design with log link)
-        predictions = np.maximum(predictions, 1.0)
         
         return predictions
     
-    def generate_latex_commands(self) -> None:
+    def calculate_metrics_with_proper_mape(self, y_true: np.ndarray, y_pred: np.ndarray,
+                                          mape_threshold: float = 1000.0) -> Dict[str, float]:
         """
-        Generate LaTeX commands for Model 2
-        Calls base class first, then adds GLM-specific commands
-        """
-        # CRITICAL: Call parent class first to generate base commands
-        super().generate_latex_commands()
+        Calculate metrics with proper MAPE handling
         
-        # Model word for LaTeX commands
-        model_word = "Two"
-        
-        # Append GLM-specific commands to newcommands file
-        newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
-        
-        try:
-            with open(newcommands_file, 'a') as f:
-                f.write("\n% GLM-Specific Command Definitions\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Distribution}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}LinkFunction}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Dispersion}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}DevianceRSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}McFaddenRSquared}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}AIC}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}BIC}}{{\\WarningRunPipeline}}\n")
-                f.write(f"\\newcommand{{\\Model{model_word}Parameters}}{{\\WarningRunPipeline}}\n")
-                
-                # Feature selection specific
-                if self.use_selected_features:
-                    f.write("\n% Feature Selection Command Definitions\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}FeatureSelection}}{{\\WarningRunPipeline}}\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}TopFeature}}{{\\WarningRunPipeline}}\n")
-                    f.write(f"\\newcommand{{\\Model{model_word}TopFeatureMI}}{{\\WarningRunPipeline}}\n")
+        Args:
+            y_true: True values
+            y_pred: Predicted values
+            mape_threshold: Minimum value for MAPE calculation
             
-            logger.info(f"Appended GLM-specific command definitions to {newcommands_file}")
-        except Exception as e:
-            logger.error(f"Error appending to newcommands file: {e}")
-        
-        # Append actual values to renewcommands file
-        renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
-        
-        try:
-            with open(renewcommands_file, 'a') as f:
-                f.write("\n% GLM-Specific Values\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Distribution}}{{Gamma}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}LinkFunction}}{{Log}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Dispersion}}{{{self.dispersion:.4f if self.dispersion else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}DevianceRSquared}}{{{self.deviance_r2:.4f if self.deviance_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}McFaddenRSquared}}{{{self.mcfadden_r2:.4f if self.mcfadden_r2 else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}AIC}}{{{self.aic:,.0f if self.aic else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}BIC}}{{{self.bic:,.0f if self.bic else 0}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{self.num_parameters}}}\n")
-                
-                # Feature selection specific values
-                if self.use_selected_features:
-                    f.write("\n% Feature Selection Values\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}FeatureSelection}}{{True}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeature}}{{RESIDENCETYPE}}\n")
-                    f.write(f"\\renewcommand{{\\Model{model_word}TopFeatureMI}}{{0.256}}\n")
-            
-            logger.info(f"Appended GLM-specific values to {renewcommands_file}")
-        except Exception as e:
-            logger.error(f"Error appending to renewcommands file: {e}")
-    
-    def calculate_metrics(self) -> Dict[str, float]:
-        """
-        Calculate comprehensive metrics including GLM-specific measures
-        
         Returns:
             Dictionary of metrics
         """
-        # Calculate base metrics first
-        metrics = super().calculate_metrics()
+        metrics = {}
         
-        # Add prediction interval coverage metrics
-        if self.test_predictions is not None and self.y_test is not None:
-            within_5k = np.mean(np.abs(self.test_predictions - self.y_test) <= 5000) * 100
-            within_10k = np.mean(np.abs(self.test_predictions - self.y_test) <= 10000) * 100
-            within_20k = np.mean(np.abs(self.test_predictions - self.y_test) <= 20000) * 100
-            
-            metrics.update({
-                'within_5k': within_5k,
-                'within_10k': within_10k,
-                'within_20k': within_20k
-            })
+        # Standard metrics
+        metrics['r2'] = r2_score(y_true, y_pred)
+        metrics['rmse'] = np.sqrt(mean_squared_error(y_true, y_pred))
+        metrics['mae'] = mean_absolute_error(y_true, y_pred)
         
-        # Add GLM-specific metrics
-        if self.glm_model is not None:
-            metrics.update({
-                'dispersion': self.dispersion if self.dispersion else 0,
-                'deviance': self.deviance if self.deviance else 0,
-                'null_deviance': self.null_deviance if self.null_deviance else 0,
-                'deviance_r2': self.deviance_r2 if self.deviance_r2 else 0,
-                'mcfadden_r2': self.mcfadden_r2 if self.mcfadden_r2 else 0,
-                'aic': self.aic if self.aic else 0,
-                'bic': self.bic if self.bic else 0,
-                'num_parameters': self.num_parameters,
-                'converged': self.glm_model.converged
-            })
+        # MAPE with threshold to avoid division by small numbers
+        mask = y_true > mape_threshold
+        if mask.sum() > 0:
+            mape = np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])) * 100
+            metrics['mape'] = mape
+            metrics['mape_n'] = mask.sum()
+        else:
+            metrics['mape'] = np.nan
+            metrics['mape_n'] = 0
         
-        self.metrics = metrics
+        # Symmetric MAPE (more stable)
+        smape = np.mean(2 * np.abs(y_true - y_pred) / (np.abs(y_true) + np.abs(y_pred) + 1e-10)) * 100
+        metrics['smape'] = smape
+        
+        # Median APE (robust to outliers)
+        ape_values = np.abs((y_true[mask] - y_pred[mask]) / y_true[mask]) * 100 if mask.sum() > 0 else [np.nan]
+        metrics['median_ape'] = np.median(ape_values)
+        
         return metrics
     
-    def plot_diagnostics(self) -> None:
+    def generate_diagnostic_plots(self) -> None:
         """
-        Generate comprehensive diagnostic plots for GLM
-        Creates 9-panel diagnostic figure
+        Generate comprehensive diagnostic plots for GLM-Gamma
         """
-        if self.test_predictions is None or self.y_test is None:
-            logger.warning("No predictions available for plotting")
+        if self.glm_model is None or self.X_test is None:
+            self.logger.warning("Model not fitted or no test data for plots")
             return
         
-        # Create figure with subplots
-        fig, axes = plt.subplots(3, 3, figsize=(15, 15))
-        fig.suptitle(f'Model {self.model_id}: GLM-Gamma Diagnostic Plots', 
-                     fontsize=14, fontweight='bold')
+        self.log_section("GENERATING DIAGNOSTIC PLOTS")
+        
+        # Get predictions
+        test_predictions = self.predict(self.X_test)  # These are already inverse transformed if needed
+        
+        # Create figure with 6 subplots
+        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+        fig.suptitle('Model 2: GLM-Gamma Diagnostic Plots', fontsize=14, fontweight='bold')
         
         # 1. Predicted vs Actual
         ax = axes[0, 0]
-        ax.scatter(self.y_test, self.test_predictions, alpha=0.5, s=10)
-        min_val = min(self.y_test.min(), self.test_predictions.min())
-        max_val = max(self.y_test.max(), self.test_predictions.max())
-        ax.plot([min_val, max_val], [min_val, max_val], 'r--', label='Perfect Prediction')
+        ax.scatter(self.y_test, test_predictions, alpha=0.5, s=10)
+        
+        # Add perfect prediction line
+        min_val = min(self.y_test.min(), test_predictions.min())
+        max_val = max(self.y_test.max(), test_predictions.max())
+        ax.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, alpha=0.7)
+        
         ax.set_xlabel('Actual Cost ($)')
         ax.set_ylabel('Predicted Cost ($)')
-        ax.set_title(f'Predicted vs Actual (R^2={self.metrics.get("r2_test", 0):.3f})')
-        ax.legend()
-        ax.grid(True, alpha=0.3)
+        ax.set_title('Predicted vs Actual')
+        
+        # Calculate metrics
+        metrics = self.calculate_metrics_with_proper_mape(self.y_test, test_predictions)
+        
+        # Add metrics annotation
+        text = f"R^2 = {metrics['r2']:.4f}\nRMSE = ${metrics['rmse']:,.0f}\n"
+        if not np.isnan(metrics['mape']):
+            text += f"MAPE = {metrics['mape']:.1f}% (n={metrics['mape_n']})\n"
+        text += f"SMAPE = {metrics['smape']:.1f}%"
+        
+        ax.text(0.05, 0.95, text, transform=ax.transAxes, va='top',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
         
         # 2. Residual Plot
         ax = axes[0, 1]
-        residuals = self.test_predictions - self.y_test
-        ax.scatter(self.test_predictions, residuals, alpha=0.5, s=10)
+        residuals = self.y_test - test_predictions
+        ax.scatter(test_predictions, residuals, alpha=0.5, s=10)
         ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Predicted Cost ($)')
+        ax.set_xlabel('Fitted Values ($)')
         ax.set_ylabel('Residuals ($)')
         ax.set_title('Residual Plot')
-        ax.grid(True, alpha=0.3)
         
-        # 3. Deviance Residuals
+        # 3. Q-Q Plot
         ax = axes[0, 2]
-        # Calculate deviance residuals
-        y_test_adj = np.maximum(self.y_test, 0.01)
-        y_pred_adj = np.maximum(self.test_predictions, 0.01)
-        dev_residuals = np.sign(y_test_adj - y_pred_adj) * np.sqrt(
-            2 * np.abs(y_test_adj * np.log(y_test_adj / y_pred_adj) - 
-                      (y_test_adj - y_pred_adj))
-        )
-        ax.scatter(self.test_predictions, dev_residuals, alpha=0.5, s=10)
-        ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Predicted Cost ($)')
-        ax.set_ylabel('Deviance Residuals')
-        ax.set_title('Deviance Residuals')
-        ax.grid(True, alpha=0.3)
+        standardized_residuals = residuals / np.std(residuals)
+        stats.probplot(standardized_residuals, dist="norm", plot=ax)
+        ax.set_title('Q-Q Plot')
         
-        # 4. Q-Q Plot of Deviance Residuals
+        # 4. Scale-Location Plot
         ax = axes[1, 0]
-        from scipy import stats
-        stats.probplot(dev_residuals, dist="norm", plot=ax)
-        ax.set_title('Q-Q Plot (Deviance Residuals)')
-        ax.grid(True, alpha=0.3)
-        
-        # 5. Scale-Location Plot
-        ax = axes[1, 1]
-        standardized_dev = dev_residuals / np.std(dev_residuals)
-        ax.scatter(self.test_predictions, np.sqrt(np.abs(standardized_dev)), alpha=0.5, s=10)
-        ax.set_xlabel('Predicted Cost ($)')
-        ax.set_ylabel('?|Standardized Deviance Residuals|')
+        sqrt_abs_std_resid = np.sqrt(np.abs(standardized_residuals))
+        ax.scatter(test_predictions, sqrt_abs_std_resid, alpha=0.5, s=10)
+        ax.set_xlabel('Fitted Values ($)')
+        ax.set_ylabel('?|Standardized Residuals|')
         ax.set_title('Scale-Location Plot')
-        ax.grid(True, alpha=0.3)
         
-        # 6. Feature Importance (Top 15)
-        ax = axes[1, 2]
-        if self.feature_importance:
-            top_features = list(self.feature_importance.keys())[:15]
-            top_importance = [self.feature_importance[f] for f in top_features]
-            y_pos = np.arange(len(top_features))
-            ax.barh(y_pos, top_importance, color='steelblue')
-            ax.set_yticks(y_pos)
-            ax.set_yticklabels(top_features, fontsize=8)
-            ax.set_xlabel('|z-value|')
-            ax.set_title('Top 15 Feature Importance')
-            ax.grid(True, alpha=0.3)
-        
-        # 7. Distribution of Residuals
-        ax = axes[2, 0]
-        ax.hist(residuals, bins=50, edgecolor='black', alpha=0.7, color='skyblue')
-        ax.axvline(x=0, color='r', linestyle='--', alpha=0.5)
-        ax.set_xlabel('Residuals ($)')
-        ax.set_ylabel('Frequency')
-        ax.set_title(f'Distribution of Residuals (Mean=${np.mean(residuals):,.0f})')
-        ax.grid(True, alpha=0.3)
-        
-        # 8. Log-Scale Predicted vs Actual
-        ax = axes[2, 1]
-        ax.scatter(np.log(self.y_test + 1), np.log(self.test_predictions + 1), 
-                  alpha=0.5, s=10)
-        log_min = min(np.log(self.y_test + 1).min(), np.log(self.test_predictions + 1).min())
-        log_max = max(np.log(self.y_test + 1).max(), np.log(self.test_predictions + 1).max())
-        ax.plot([log_min, log_max], [log_min, log_max], 'r--', label='Perfect Prediction')
-        ax.set_xlabel('Log(Actual Cost + 1)')
-        ax.set_ylabel('Log(Predicted Cost + 1)')
-        ax.set_title('Log-Scale Comparison')
+        # 5. Histogram of Residuals
+        ax = axes[1, 1]
+        ax.hist(standardized_residuals, bins=30, density=True, alpha=0.7, 
+                color='blue', edgecolor='black')
+        x = np.linspace(standardized_residuals.min(), standardized_residuals.max(), 100)
+        ax.plot(x, stats.norm.pdf(x, 0, 1), 'r-', lw=2, label='N(0,1)')
+        ax.set_xlabel('Standardized Residuals')
+        ax.set_ylabel('Density')
+        ax.set_title('Histogram of Residuals')
         ax.legend()
-        ax.grid(True, alpha=0.3)
         
-        # 9. MAPE by Cost Decile
-        ax = axes[2, 2]
-        deciles = np.percentile(self.y_test, range(10, 100, 10))
-        mapes = []
-        for i in range(len(deciles)):
-            if i == 0:
-                mask = self.y_test <= deciles[i]
-            else:
-                mask = (self.y_test > deciles[i-1]) & (self.y_test <= deciles[i])
-            
-            if mask.sum() > 0:
-                actual_subset = self.y_test[mask]
-                pred_subset = self.test_predictions[mask]
-                # Avoid division by zero
-                mape = np.mean(np.abs((actual_subset - pred_subset) / 
-                              np.maximum(actual_subset, 1))) * 100
-                mapes.append(mape)
-            else:
-                mapes.append(0)
+        # 6. Feature Importance (Top 10)
+        ax = axes[1, 2]
         
-        ax.bar(range(1, len(mapes) + 1), mapes, color='coral', edgecolor='black', alpha=0.7)
-        ax.set_xlabel('Cost Decile')
-        ax.set_ylabel('MAPE (%)')
-        ax.set_title('MAPE by Cost Decile')
-        ax.grid(True, alpha=0.3)
+        # Get top 10 features by absolute coefficient value
+        feature_importance = [
+            (name, abs(coef['value']), coef['p_value'])
+            for name, coef in self.coefficients.items()
+            if name != 'const'
+        ]
+        feature_importance.sort(key=lambda x: x[1], reverse=True)
+        top_features = feature_importance[:10]
+        
+        names = [f[0] for f in top_features]
+        values = [f[1] for f in top_features]
+        colors = ['green' if f[2] < 0.05 else 'gray' for f in top_features]
+        
+        y_pos = np.arange(len(names))
+        ax.barh(y_pos, values, color=colors)
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(names, fontsize=8)
+        ax.set_xlabel('|Coefficient|')
+        ax.set_title('Top 10 Features')
+        ax.invert_yaxis()
         
         plt.tight_layout()
         
@@ -605,212 +526,154 @@ class Model2GLMGamma(BaseiBudgetModel):
         plt.savefig(plot_file, dpi=300, bbox_inches='tight')
         plt.close()
         
-        logger.info(f"Diagnostic plots saved to {plot_file}")
-        
-        # Generate additional GLM-specific plots
-        self._plot_glm_specific()
+        self.logger.info(f"Diagnostic plots saved to {plot_file}")
     
-    def _plot_glm_specific(self) -> None:
+    def generate_latex_commands(self) -> None:
         """
-        Generate GLM-specific diagnostic plots (4-panel)
-        Includes: Partial residuals, link assessment, influence, Pearson residuals
+        Generate LaTeX commands for Model 2
+        Minimal approach using existing base class functionality
         """
+        # STEP 1: Let base class do all the standard work
+        super().generate_latex_commands()
+        
+        # STEP 2: Append Model 2's unique GLM metrics to both files
         if self.glm_model is None:
-            logger.warning("GLM model not fitted, skipping GLM-specific plots")
-            return
+            return  # Nothing to add if model not fitted
         
-        try:
-            fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-            fig.suptitle('GLM-Specific Diagnostics', fontsize=14, fontweight='bold')
-            
-            # 1. Partial Residuals (Top 3 features)
-            ax = axes[0, 0]
-            if len(self.feature_names) >= 3:
-                top_3_features = list(self.feature_importance.keys())[:3]
-                for feature in top_3_features:
-                    if feature in self.feature_names:
-                        idx = self.feature_names.index(feature)
-                        ax.scatter(self.X_test[:, idx], 
-                                 self.test_predictions - self.y_test, 
-                                 alpha=0.3, s=5, label=feature)
-                ax.set_xlabel('Feature Value')
-                ax.set_ylabel('Partial Residual')
-                ax.set_title('Partial Residuals (Top 3 Features)')
-                ax.legend()
-                ax.grid(True, alpha=0.3)
-            
-            # 2. Link Function Assessment
-            ax = axes[0, 1]
-            # Linear predictor vs response
-            linear_predictor = self.glm_model.predict(
-                sm.add_constant(self.X_test), linear=True
-            )
-            ax.scatter(linear_predictor, self.test_predictions, alpha=0.5, s=10)
-            ax.set_xlabel('Linear Predictor (log scale)')
-            ax.set_ylabel('Predicted Response ($)')
-            ax.set_title('Link Function Assessment')
-            ax.grid(True, alpha=0.3)
-            
-            # 3. Pearson Residuals
-            ax = axes[1, 0]
-            # Calculate Pearson residuals
-            y_test_adj = np.maximum(self.y_test, 0.01)
-            y_pred_adj = np.maximum(self.test_predictions, 0.01)
-            # Variance for Gamma is phi * mu^2
-            variance = self.dispersion * (y_pred_adj ** 2)
-            pearson_resid = (y_test_adj - y_pred_adj) / np.sqrt(variance)
-            ax.scatter(self.test_predictions, pearson_resid, alpha=0.5, s=10)
-            ax.axhline(y=0, color='r', linestyle='--', alpha=0.5)
-            ax.set_xlabel('Predicted Cost ($)')
-            ax.set_ylabel('Pearson Residuals')
-            ax.set_title('Pearson Residuals')
-            ax.grid(True, alpha=0.3)
-            
-            # 4. Cook's Distance (Influence)
-            ax = axes[1, 1]
-            # Simplified influence plot using residuals
-            leverage = np.abs(pearson_resid)
-            ax.scatter(range(len(leverage)), leverage, alpha=0.5, s=10)
-            ax.axhline(y=2, color='r', linestyle='--', alpha=0.5, label='Threshold')
-            ax.set_xlabel('Observation Index')
-            ax.set_ylabel('Absolute Pearson Residual')
-            ax.set_title('Influence Plot')
-            ax.legend()
-            ax.grid(True, alpha=0.3)
-            
-            plt.tight_layout()
-            
-            # Save GLM-specific plots
-            plot_file = self.output_dir / "glm_specific_plots.png"
-            plt.savefig(plot_file, dpi=300, bbox_inches='tight')
-            plt.close()
-            
-            logger.info(f"GLM-specific plots saved to {plot_file}")
-        except Exception as e:
-            logger.error(f"Error generating GLM-specific plots: {e}")
-    
-    def save_results(self) -> None:
-        """
-        Save Model 2 specific results including GLM diagnostics
-        """
-        # Save base results (metrics, predictions, etc.)
-        super().save_results()
+        # Append to newcommands file (placeholders)
+        newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
+        with open(newcommands_file, 'a') as f:
+            f.write("\n% Model 2 GLM-Specific Command Placeholders\n")
+            f.write("\\newcommand{\\ModelTwoDispersion}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoDeviance}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoNullDeviance}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoDevianceRSquared}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoMcFaddenRSquared}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoAIC}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoBIC}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoDistribution}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoLinkFunction}{\\WarningRunPipeline}\n")
+            f.write("\\newcommand{\\ModelTwoVarianceFunction}{\\WarningRunPipeline}\n")
         
-        # Save GLM-specific results
-        glm_results = {
-            'model_type': 'GLM-Gamma',
-            'distribution': 'Gamma',
-            'link_function': 'Log',
-            'converged': bool(self.glm_model.converged) if self.glm_model else None,
-            'iterations': int(self.glm_model.fit_history['iteration']) if self.glm_model else None,
-            'dispersion': float(self.dispersion) if self.dispersion else None,
-            'deviance': float(self.deviance) if self.deviance else None,
-            'null_deviance': float(self.null_deviance) if self.null_deviance else None,
-            'deviance_r2': float(self.deviance_r2) if self.deviance_r2 else None,
-            'mcfadden_r2': float(self.mcfadden_r2) if self.mcfadden_r2 else None,
-            'aic': float(self.aic) if self.aic else None,
-            'bic': float(self.bic) if self.bic else None,
-            'num_parameters': int(self.num_parameters),
-            'feature_selection': self.use_selected_features,
-            'fiscal_years': self.fiscal_years_used,
-            'feature_importance': {k: float(v) for k, v in self.feature_importance.items()} if self.feature_importance else {}
-        }
+        # Append to renewcommands file (actual values)
+        renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
+        with open(renewcommands_file, 'a') as f:
+            f.write("\n% Model 2 GLM-Specific Metrics\n")
+            f.write(f"\\renewcommand{{\\ModelTwoDispersion}}{{{self.dispersion:.3f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoDeviance}}{{{self.deviance:.2f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoNullDeviance}}{{{self.null_deviance:.2f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoDevianceRSquared}}{{{self.deviance_r2:.4f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoMcFaddenRSquared}}{{{self.mcfadden_r2:.4f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoAIC}}{{{self.aic:.1f}}}\n")
+            
+            # BIC with correct calculation
+            n = len(self.y_train) if hasattr(self, 'y_train') else 1
+            k = self.num_parameters
+            correct_bic = -2 * self.glm_model.llf + k * np.log(n)
+            f.write(f"\\renewcommand{{\\ModelTwoBIC}}{{{correct_bic:.1f}}}\n")
+            
+            # Model characteristics
+            f.write(f"\\renewcommand{{\\ModelTwoDistribution}}{{Gamma}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoLinkFunction}}{{Log}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoVarianceFunction}}{{Quadratic}}\n")
         
-        glm_file = self.output_dir / 'glm_results.json'
-        with open(glm_file, 'w') as f:
-            json.dump(glm_results, f, indent=2)
-        
-        logger.info(f"GLM-specific results saved to {glm_file}")
-        
-        # Save coefficients
-        coef_file = self.output_dir / 'coefficients.json'
-        with open(coef_file, 'w') as f:
-            json.dump(self.coefficients, f, indent=2)
-        
-        logger.info(f"Coefficients saved to {coef_file}")
-
+        self.logger.info("Model 2 GLM-specific commands appended to both files")
 
 def main():
     """
-    Run Model 2 GLM-Gamma with feature selection
+    Run Model 2 GLM-Gamma implementation
     """
     logger.info("="*80)
-    logger.info("MODEL 2: GLM WITH GAMMA DISTRIBUTION")
+    logger.info("MODEL 2: GLM WITH GAMMA DISTRIBUTION (FINAL)")
     logger.info("="*80)
     
-    # Initialize model with feature selection
+    # Initialize model with Model 1-like options
     model = Model2GLMGamma(
-        use_selected_features=True,  # Use MI-based feature selection
-        use_fy2024_only=True,        # Use only FY2024 data
-        random_state=42              # For reproducibility
+        use_sqrt_transform=False,      
+        use_outlier_removal=False,      
+        outlier_threshold=1.645,       # ~10% outliers (Model 5b default)
+        use_selected_features=False,   # Use MI-based feature selection
+        random_seed=42                # For reproducibility
     )
     
     # Run complete pipeline
     results = model.run_complete_pipeline(
-        fiscal_year_start=2023,  # Ignored due to use_fy2024_only=True
-        fiscal_year_end=2024,    # Ignored due to use_fy2024_only=True
+        fiscal_year_start=2024,
+        fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
         n_cv_folds=10
     )
     
+    # Generate diagnostic plots
+    model.generate_diagnostic_plots()
+    
     # Print summary
     print("\n" + "="*80)
-    print("MODEL 2 SUMMARY: GLM-GAMMA RESULTS")
+    print("MODEL 2 FINAL SUMMARY")
     print("="*80)
     
     print("\nConfiguration:")
-    print(f"  ? Feature Selection: {model.use_selected_features}")
-    print(f"  ? Fiscal Years: {model.fiscal_years_used}")
-    print(f"  ? Number of Features: {len(model.feature_names)}")
     print(f"  ? Distribution: Gamma")
     print(f"  ? Link Function: Log")
+    print(f"  ? Transformation: {model.transformation}")
+    print(f"  ? Outlier Removal: {model.use_outlier_removal}")
+    if model.use_outlier_removal and hasattr(model, 'outlier_diagnostics'):
+        if model.outlier_diagnostics:
+            print(f"  ? Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
+                  f"({model.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
+    print(f"  ? Number of Features: {len(model.feature_names)}")
+    
+    print("\nFeature Categories:")
+    print(f"  ? Living Settings: 5")
+    print(f"  ? Age Groups: 2")
+    print(f"  ? Support Levels: 5")
+    print(f"  ? Clinical Scores: 3")
+    print(f"  ? Demographics: 2")
+    print(f"  ? QSI Items: 15+")
+    print(f"  ? Interactions: 3")
     
     print("\nData Summary:")
     print(f"  ? Total Records: {len(model.all_records)}")
     print(f"  ? Training Records: {len(model.train_records)}")
     print(f"  ? Test Records: {len(model.test_records)}")
-    print(f"  ? Outliers Removed: 0 (GLM is robust to outliers)")
     
-    print("\nPerformance Metrics:")
-    print(f"  ? Training R^2: {results['metrics']['r2_train']:.4f}")
-    print(f"  ? Test R^2: {results['metrics']['r2_test']:.4f}")
-    print(f"  ? RMSE: ${results['metrics']['rmse_test']:,.0f}")
-    print(f"  ? MAE: ${results['metrics']['mae_test']:,.0f}")
-    print(f"  ? MAPE: {results['metrics']['mape_test']:.1f}%")
+    print("\nModel Performance:")
+    if hasattr(model, 'test_r2'):
+        print(f"  ? Test R^2: {model.test_r2:.4f}")
+        print(f"  ? Test RMSE: ${model.test_rmse:,.0f}")
+        print(f"  ? Test MAE: ${model.test_mae:,.0f}")
     
     print("\nGLM-Specific Metrics:")
-    print(f"  ? Deviance R^2: {model.deviance_r2:.4f}")
-    print(f"  ? McFadden R^2: {model.mcfadden_r2:.4f}")
-    print(f"  ? AIC: {model.aic:,.0f}")
-    print(f"  ? BIC: {model.bic:,.0f}")
-    print(f"  ? Dispersion: {model.dispersion:.4f}")
+    if model.glm_model:
+        print(f"  ? Dispersion Parameter: {model.dispersion:.3f}")
+        print(f"  ? Deviance R^2: {model.deviance_r2:.4f}")
+        print(f"  ? McFadden R^2: {model.mcfadden_r2:.4f}")
+        print(f"  ? AIC: {model.aic:.1f}")
+        
+        # Calculate correct BIC
+        n = len(model.y_train) if hasattr(model, 'y_train') and model.y_train is not None else 1
+        k = model.num_parameters
+        correct_bic = -2 * model.glm_model.llf + k * np.log(n)
+        print(f"  ? BIC (corrected): {correct_bic:.1f}")
     
-    print("\nPrediction Accuracy:")
-    print(f"  ? Within +-$5,000: {results['metrics'].get('within_5k', 0):.1f}%")
-    print(f"  ? Within +-$10,000: {results['metrics'].get('within_10k', 0):.1f}%")
-    print(f"  ? Within +-$20,000: {results['metrics'].get('within_20k', 0):.1f}%")
-    
-    print("\nCross-Validation:")
-    if 'cv_mean' in results.get('metrics', {}):
-        print(f"  ? Mean R^2: {results['metrics']['cv_mean']:.4f}")
-        print(f"  ? Std R^2: {results['metrics']['cv_std']:.4f}")
-    elif 'cv_results' in results:
-        print(f"  ? Mean R^2: {results['cv_results'].get('mean_score', 0):.4f}")
-        print(f"  ? Std R^2: {results['cv_results'].get('std_score', 0):.4f}")
-    
-    print("\nTop 5 Important Features:")
-    if model.feature_importance:
-        for i, (feat, imp) in enumerate(list(model.feature_importance.items())[:5], 1):
-            print(f"  {i}. {feat}: |z|={imp:.2f}")
+    print("\nTop 5 Features (by coefficient magnitude):")
+    if model.coefficients:
+        sig_features = [
+            (name, coef['value'], coef['pct_effect'])
+            for name, coef in model.coefficients.items()
+            if coef['p_value'] < 0.05 and name != 'const'
+        ]
+        sig_features.sort(key=lambda x: abs(x[1]), reverse=True)
+        
+        for i, (name, coef, pct) in enumerate(sig_features[:5], 1):
+            print(f"  {i}. {name}: ?={coef:.4f} ({pct:+.1f}% effect)")
     
     print("\n" + "="*80)
-    print("Model 2 pipeline completed successfully!")
+    print("Model 2 pipeline complete!")
     print(f"Results saved to: {model.output_dir}")
     print("="*80)
-    
-    return model, results
 
 
 if __name__ == "__main__":
-    model, results = main()
+    main()
