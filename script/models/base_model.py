@@ -176,6 +176,7 @@ class BaseiBudgetModel(ABC):
         # Model and metrics
         self.model = None
         self.metrics: Dict[str, float] = {}
+        self.cv_results: Dict[str, Any] = {}
         self.subgroup_metrics: Dict[str, Dict[str, float]] = {}
         self.variance_metrics: Dict[str, float] = {}
         self.population_scenarios: Dict[str, Dict[str, float]] = {}
@@ -617,7 +618,10 @@ class BaseiBudgetModel(ABC):
         # Remove outliers if enabled
         if self.use_outlier_removal:
             X, y, self.outlier_diagnostics = self.remove_outliers_studentized(X, y)
-        
+            # FIX: Update stored training data to match what was actually used
+            self.X_train = X
+            self.y_train = y        
+            
         # Apply transformation
         y_fit = self.apply_transformation(y)
         
@@ -701,7 +705,7 @@ class BaseiBudgetModel(ABC):
     # METRICS CALCULATION
     # ========================================================================
     
-    def calculate_metrics(self) -> Dict[str, float]:
+    def calculate_metricsX(self) -> Dict[str, float]:
         """Calculate performance metrics on original scale"""
         self.log_section("CALCULATING METRICS")
         
@@ -752,6 +756,86 @@ class BaseiBudgetModel(ABC):
         self.log_metrics_summary()
         
         return self.metrics  # Changed from: return metrics
+
+    def calculate_metrics(self) -> Dict[str, float]:
+        """Calculate performance metrics"""
+        self.log_section("CALCULATING METRICS")
+        
+        if self.test_predictions is None or self.y_test is None:
+            raise ValueError("Must run fit() and predict() before calculating metrics")
+        
+        # Get predictions in transformed scale (sqrt)
+        y_train_transformed = self.apply_transformation(self.y_train)
+        y_test_transformed = self.apply_transformation(self.y_test)
+        X_train_transformed = self.X_train
+        X_test_transformed = self.X_test
+        
+        # Get predictions in transformed scale
+        train_predictions_transformed = self._predict_core(X_train_transformed)
+        test_predictions_transformed = self._predict_core(X_test_transformed)
+        
+        # Calculate RMSE in TRANSFORMED (sqrt) scale - for fair comparison with 2015
+        rmse_train_sqrt = np.sqrt(mean_squared_error(y_train_transformed, train_predictions_transformed))
+        rmse_test_sqrt = np.sqrt(mean_squared_error(y_test_transformed, test_predictions_transformed))
+        
+        # Calculate RMSE in ORIGINAL scale (already have self.test_predictions in original scale)
+        rmse_train_original = np.sqrt(mean_squared_error(self.y_train, self.train_predictions))
+        rmse_test_original = np.sqrt(mean_squared_error(self.y_test, self.test_predictions))
+        
+        # R² scores
+        r2_train = r2_score(self.y_train, self.train_predictions)
+        r2_test = r2_score(self.y_test, self.test_predictions)
+        
+        # MAE (original scale only)
+        mae_train = mean_absolute_error(self.y_train, self.train_predictions)
+        mae_test = mean_absolute_error(self.y_test, self.test_predictions)
+        
+        # MAPE (original scale only) - but cap it to avoid extreme values
+        mape_train = np.mean(np.abs((self.y_train - self.train_predictions) / (self.y_train + 1e-10))) * 100
+        mape_test = np.mean(np.abs((self.y_test - self.test_predictions) / (self.y_test + 1e-10))) * 100
+        
+        # Accuracy bands (original scale)
+        for threshold in [1000, 2000, 5000, 10000, 20000]:
+            within = np.mean(np.abs(self.test_predictions - self.y_test) <= threshold) * 100
+            threshold_name = f'{threshold//1000}k' if threshold >= 1000 else str(threshold)
+            self.metrics[f'within_{threshold_name}'] = within
+        
+        # Store both scales
+        self.metrics.update({
+            'cv_mean': self.cv_results.get('cv_mean', self.cv_results.get('mean_score', 0)),
+            'cv_std': self.cv_results.get('cv_std', self.cv_results.get('std_score', 0)),
+            'r2_train': r2_train,
+            'r2_test': r2_test,
+            # ORIGINAL SCALE RMSE (for absolute dollar comparison)
+            'rmse_train': rmse_train_original,
+            'rmse_test': rmse_test_original,
+            # SQRT SCALE RMSE (for fair comparison with 2015 Model 5b)
+            'rmse_train_sqrt': rmse_train_sqrt,
+            'rmse_test_sqrt': rmse_test_sqrt,
+            # Other metrics
+            'mae_train': mae_train,
+            'mae_test': mae_test,
+            'mape_train': mape_train,
+            'mape_test': mape_test,
+            'training_samples': len(self.y_train),
+            'test_samples': len(self.y_test),
+        })
+        
+        self.logger.info("")
+        self.logger.info("------------------------------------------------------------")
+        self.logger.info("PERFORMANCE METRICS SUMMARY")
+        self.logger.info("------------------------------------------------------------")
+        self.logger.info(f"Training R²: {r2_train:.4f}")
+        self.logger.info(f"Test R²: {r2_test:.4f}")
+        self.logger.info(f"RMSE (original): ${rmse_test_original:,.2f}")
+        self.logger.info(f"RMSE (sqrt scale): ${rmse_test_sqrt:.2f}")  # ADD THIS LINE
+        self.logger.info(f"MAE: ${mae_test:,.2f}")
+        self.logger.info(f"MAPE: {mape_test:.2f}%")
+        if 'cv_mean' in self.metrics and 'cv_std' in self.metrics:
+            self.logger.info(f"CV R² (mean ± std): {self.metrics['cv_mean']:.4f} ± {self.metrics['cv_std']:.4f}")
+        self.logger.info("------------------------------------------------------------")
+        
+        return self.metrics
     
     def calculate_subgroup_metrics(self) -> Dict[str, Dict[str, float]]:
         """Calculate metrics by subgroup"""
@@ -930,10 +1014,10 @@ class BaseiBudgetModel(ABC):
         
         # Cross-validation
         if perform_cv:
-            cv_results = self.perform_cross_validation(n_splits=n_cv_folds)
-            self.metrics['cv_mean'] = cv_results.get('cv_mean', 0)
-            self.metrics['cv_std'] = cv_results.get('cv_std', 0)
-        
+            self.cv_results = self.perform_cross_validation(n_splits=n_cv_folds)  # Store in self.cv_results
+            self.metrics['cv_mean'] = self.cv_results.get('cv_mean', 0)
+            self.metrics['cv_std'] = self.cv_results.get('cv_std', 0)
+            
         # Fit model
         self.log_section("MODEL TRAINING")
         self.fit(self.X_train, self.y_train)
@@ -1013,6 +1097,7 @@ class BaseiBudgetModel(ABC):
             # Basic performance metrics
             print("DEBUG: Writing basic metrics newcommands")
             for metric in ['RSquaredTrain', 'RSquaredTest', 'RMSETrain', 'RMSETest',
+                        'RMSETrainSqrt', 'RMSETestSqrt',  
                         'MAETrain', 'MAETest', 'MAPETrain', 'MAPETest',
                         'CVMean', 'CVStd', 'CVCILower', 'CVCIUpper',
                         'TrainingSamples', 'TestSamples']:
@@ -1054,6 +1139,8 @@ class BaseiBudgetModel(ABC):
             f.write(f"\\newcommand{{\\Model{model_word}StudentizedResidualsMean}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}StudentizedResidualsStd}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}PctWithinThreshold}}{{\\WarningRunPipeline}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}OutliersRemoved}}{{\\WarningRunPipeline}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}OutlierPct}}{{\\WarningRunPipeline}}\n")
             
             # Number of features (common to all models)
             f.write(f"\\newcommand{{\\Model{model_word}NumFeatures}}{{\\WarningRunPipeline}}\n")
@@ -1070,6 +1157,8 @@ class BaseiBudgetModel(ABC):
             f.write(f"\\renewcommand{{\\Model{model_word}RSquaredTest}}{{{self.metrics.get('r2_test', 0):.4f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}RMSETrain}}{{{self.metrics.get('rmse_train', 0):,.2f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}RMSETest}}{{{self.metrics.get('rmse_test', 0):,.2f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}RMSETrainSqrt}}{{{self.metrics.get('rmse_train_sqrt', 0):.2f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}RMSETestSqrt}}{{{self.metrics.get('rmse_test_sqrt', 0):.2f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}MAETrain}}{{{self.metrics.get('mae_train', 0):,.2f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}MAETest}}{{{self.metrics.get('mae_test', 0):,.2f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}MAPETrain}}{{{self.metrics.get('mape_train', 0):.2f}}}\n")
@@ -1193,13 +1282,24 @@ class BaseiBudgetModel(ABC):
                     f.write(f"\\renewcommand{{\\Model{model_word}PctWithinThreshold}}{{{self.outlier_diagnostics['pct_within_threshold']:.1f}}}\n")
                 else:
                     f.write(f"\\renewcommand{{\\Model{model_word}PctWithinThreshold}}{{N/A}}\n")
+                    
+                if 'n_removed' in self.outlier_diagnostics:
+                    f.write(f"\\renewcommand{{\\Model{model_word}OutliersRemoved}}{{{self.outlier_diagnostics['n_removed']:,}}}\n")
+                else:
+                    f.write(f"\\renewcommand{{\\Model{model_word}OutliersRemoved}}{{0}}\n")
+                
+                if 'pct_removed' in self.outlier_diagnostics:
+                    f.write(f"\\renewcommand{{\\Model{model_word}OutlierPct}}{{{self.outlier_diagnostics['pct_removed']:.2f}}}\n")
+                else:
+                    f.write(f"\\renewcommand{{\\Model{model_word}OutlierPct}}{{0.00}}\n")                            
             else:
                 # No outlier removal - set to N/A
                 f.write(f"\n% Outlier Diagnostics (not used)\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}StudentizedResidualsMean}}{{N/A}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}StudentizedResidualsStd}}{{N/A}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}PctWithinThreshold}}{{N/A}}\n")
-            
+                f.write(f"\\renewcommand{{\\Model{model_word}OutliersRemoved}}{{0}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}OutlierPct}}{{0.00}}\n")            
             # Number of features
             f.write(f"\n% Model Configuration\n")
             f.write(f"\\renewcommand{{\\Model{model_word}NumFeatures}}{{{len(self.feature_names)}}}\n")
@@ -1249,3 +1349,240 @@ class BaseiBudgetModel(ABC):
         plt.close()
         
         self.logger.info("Diagnostic plots saved")
+        
+def generate_coefficient_commands(self, model_number: int, output_path: Path) -> Dict[str, float]:
+    """
+    Generate LaTeX commands for model coefficients
+    
+    Args:
+        model_number: Model identifier (1, 2, 3, etc.)
+        output_path: Directory to save coefficient commands
+        
+    Returns:
+        Dictionary mapping feature names to coefficient values
+    """
+    if not hasattr(self, 'model') or self.model is None:
+        logger.warning(f"Model {model_number}: No fitted model found")
+        return {}
+    
+    # Standard variable name mapping (all models should use this)
+    STANDARD_VAR_MAPPING = {
+        'LiveILSL': 'LiveILSL',
+        'LiveRH1': 'LiveRHOne', 
+        'LiveRH2': 'LiveRHTwo',
+        'LiveRH3': 'LiveRHThree',
+        'LiveRH4': 'LiveRHFour',
+        'Age21_30': 'AgeTwentyOneToThirty',
+        'Age31Plus': 'AgeThirtyOnePlus',
+        'BSum': 'BehavioralSum',
+        'FHFSum': 'FHFunctionalSum',
+        'SLFSum': 'SLFunctionalSum',
+        'SLBSum': 'SLBehavioralSum',
+        'Q16': 'QSixteen',
+        'Q18': 'QEighteen',
+        'Q20': 'QTwenty',
+        'Q21': 'QTwentyOne',
+        'Q23': 'QTwentyThree',
+        'Q28': 'QTwentyEight',
+        'Q33': 'QThirtyThree',
+        'Q34': 'QThirtyFour',
+        'Q36': 'QThirtySix',
+        'Q43': 'QFortyThree',
+        'Age': 'AgeContinuous',
+        # Add more as needed for other models
+    }
+    
+    coef_dict = {}
+    commands = []
+    
+    # Add intercept
+    intercept = self.model.intercept_
+    cmd_name = f"Model{model_number}Intercept"
+    commands.append(f"\\newcommand{{\\{cmd_name}}}{{{intercept:.4f}}}")
+    coef_dict['Intercept'] = intercept
+    
+    # Add each coefficient
+    if hasattr(self, 'feature_names'):
+        for feat_name, coef_val in zip(self.feature_names, self.model.coef_):
+            # Map to standard name
+            standard_name = STANDARD_VAR_MAPPING.get(feat_name, feat_name)
+            cmd_name = f"Model{model_number}Coef{standard_name}"
+            commands.append(f"\\newcommand{{\\{cmd_name}}}{{{coef_val:.4f}}}")
+            coef_dict[standard_name] = coef_val
+    
+    # Write to file
+    coef_file = output_path / f"model_{model_number}_coefficients.tex"
+    with open(coef_file, 'w') as f:
+        f.write(f"% Model {model_number} Coefficient Commands\n")
+        f.write("% Generated automatically - do not edit\n\n")
+        f.write('\n'.join(commands))
+    
+    logger.info(f"Model {model_number}: Generated {len(commands)} coefficient commands")
+    return coef_dict
+
+
+@staticmethod
+def generate_coefficient_comparison_table(
+    model_coefficients: Dict[int, Dict[str, float]],
+    output_path: Path,
+    include_2015: bool = True
+) -> None:
+    """
+    Generate LaTeX table comparing coefficients across models
+    
+    Args:
+        model_coefficients: Dict mapping model numbers to their coefficient dicts
+        output_path: Where to save the table
+        include_2015: Whether to include 2015 Model 5b baseline
+    """
+    
+    # Collect all unique variables across all models
+    all_vars = set()
+    for coef_dict in model_coefficients.values():
+        all_vars.update(coef_dict.keys())
+    
+    # Remove intercept - handle separately
+    all_vars.discard('Intercept')
+    
+    # Define variable order and groupings
+    VAR_ORDER = [
+        # Living settings
+        'LiveILSL', 'LiveRHOne', 'LiveRHTwo', 'LiveRHThree', 'LiveRHFour',
+        # Age groups
+        'AgeTwentyOneToThirty', 'AgeThirtyOnePlus', 'AgeContinuous',
+        # Subscales
+        'BehavioralSum', 'FHFunctionalSum', 'SLFunctionalSum', 'SLBehavioralSum',
+        # Individual QSI items
+        'QSixteen', 'QEighteen', 'QTwenty', 'QTwentyOne', 'QTwentyThree',
+        'QTwentyEight', 'QThirtyThree', 'QThirtyFour', 'QThirtySix', 'QFortyThree',
+    ]
+    
+    # Filter to only variables that exist
+    ordered_vars = [v for v in VAR_ORDER if v in all_vars]
+    # Add any remaining variables not in our order
+    ordered_vars.extend(sorted(all_vars - set(ordered_vars)))
+    
+    # Variable display names
+    VAR_LABELS = {
+        'LiveILSL': 'Supported/Independent Living',
+        'LiveRHOne': 'RH: Standard/Live-In',
+        'LiveRHTwo': 'RH: Behavior Focus',
+        'LiveRHThree': 'RH: Intensive Behavior',
+        'LiveRHFour': 'RH: CTEP/SMHC',
+        'AgeTwentyOneToThirty': 'Age 21--30',
+        'AgeThirtyOnePlus': 'Age 31+',
+        'AgeContinuous': 'Age (continuous)',
+        'BehavioralSum': 'Behavioral Status Sum (Q25--30)',
+        'FHFunctionalSum': 'FH: Functional Status Sum (Q14--24)',
+        'SLFunctionalSum': 'SL: Functional Status Sum (Q14--24)',
+        'SLBehavioralSum': 'SL: Behavioral Status Sum (Q25--30)',
+        'QSixteen': 'QSI Q16',
+        'QEighteen': 'QSI Q18',
+        'QTwenty': 'QSI Q20',
+        'QTwentyOne': 'QSI Q21',
+        'QTwentyThree': 'QSI Q23',
+        'QTwentyEight': 'QSI Q28',
+        'QThirtyThree': 'QSI Q33',
+        'QThirtyFour': 'QSI Q34',
+        'QThirtySix': 'QSI Q36',
+        'QFortyThree': 'QSI Q43',
+    }
+    
+    # Build LaTeX table
+    model_nums = sorted(model_coefficients.keys())
+    
+    # Column specification
+    if include_2015:
+        cols = 'l' + 'r' * (len(model_nums) + 1)  # +1 for 2015 column
+        header_cols = ['Variable', '2015'] + [f'Model {n}' for n in model_nums]
+    else:
+        cols = 'l' + 'r' * len(model_nums)
+        header_cols = ['Variable'] + [f'Model {n}' for n in model_nums]
+    
+    lines = []
+    lines.append('\\begin{table}[htbp]')
+    lines.append('\\centering')
+    lines.append('\\caption{Coefficient Comparison Across Models}')
+    lines.append('\\label{tab:coefficient-comparison}')
+    lines.append('\\small')
+    lines.append(f'\\begin{{tabular}}{{{cols}}}')
+    lines.append('\\toprule')
+    lines.append(' & '.join(header_cols) + ' \\\\')
+    lines.append('\\midrule')
+    
+    # Intercept row
+    if include_2015:
+        row = ['Intercept (base)', '\\ModelFiveBBaseValue']
+    else:
+        row = ['Intercept (base)']
+    
+    for model_num in model_nums:
+        coefs = model_coefficients[model_num]
+        if 'Intercept' in coefs:
+            row.append(f'\\Model{model_num}Intercept')
+        else:
+            row.append('---')
+    lines.append(' & '.join(row) + ' \\\\')
+    lines.append('\\midrule')
+    
+    # Variable rows grouped by category
+    current_group = None
+    for var_name in ordered_vars:
+        # Determine group for section headers
+        if var_name.startswith('Live'):
+            group = 'living'
+        elif var_name.startswith('Age'):
+            group = 'age'
+        elif 'Sum' in var_name:
+            group = 'subscales'
+        elif var_name.startswith('Q'):
+            group = 'qsi'
+        else:
+            group = 'other'
+        
+        # Add section header if new group
+        if group != current_group:
+            if current_group is not None:
+                lines.append('\\midrule')
+            
+            group_labels = {
+                'living': '\\multicolumn{' + str(len(header_cols)) + '}{l}{\\textbf{Living Settings}} \\\\',
+                'age': '\\multicolumn{' + str(len(header_cols)) + '}{l}{\\textbf{Age Groups}} \\\\',
+                'subscales': '\\multicolumn{' + str(len(header_cols)) + '}{l}{\\textbf{QSI Subscale Sums}} \\\\',
+                'qsi': '\\multicolumn{' + str(len(header_cols)) + '}{l}{\\textbf{Individual QSI Items}} \\\\',
+                'other': '\\multicolumn{' + str(len(header_cols)) + '}{l}{\\textbf{Other Variables}} \\\\',
+            }
+            lines.append(group_labels.get(group, ''))
+            current_group = group
+        
+        # Build row
+        var_label = VAR_LABELS.get(var_name, var_name)
+        
+        if include_2015:
+            # Check if 2015 had this variable
+            if var_name == 'AgeContinuous':
+                row = [var_label, '---']  # Age not in 2015
+            else:
+                row = [var_label, f'\\ModelFiveBCoef{var_name}']
+        else:
+            row = [var_label]
+        
+        for model_num in model_nums:
+            coefs = model_coefficients[model_num]
+            if var_name in coefs:
+                row.append(f'\\Model{model_num}Coef{var_name}')
+            else:
+                row.append('---')
+        
+        lines.append(' & '.join(row) + ' \\\\')
+    
+    lines.append('\\bottomrule')
+    lines.append('\\end{tabular}')
+    lines.append('\\end{table}')
+    
+    # Write to file
+    table_file = output_path / 'coefficient_comparison_table.tex'
+    with open(table_file, 'w') as f:
+        f.write('\n'.join(lines))
+    
+    logger.info(f"Coefficient comparison table written to {table_file}")        

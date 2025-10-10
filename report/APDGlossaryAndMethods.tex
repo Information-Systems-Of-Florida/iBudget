@@ -1,0 +1,62 @@
+%==========================================
+\section{Glossary}
+%==========================================
+\paragraph{VIF - Varianve Inflation Factor}
+quantifies how much the variance of a regression coefficient is inflated because its predictor is linearly correlated with other predictors (i.e., multicollinearity).
+
+
+%==========================================
+\section{Method Definition}
+%==========================================
+
+%------------------------------------------
+\subsection{Variance Inflation Factor (VIF)}\label{subsec:vif}
+%------------------------------------------
+
+\paragraph{Definition.}
+The \emph{Variance Inflation Factor} (VIF) quantifies how much the variance of an OLS coefficient is inflated due to linear dependence (multicollinearity) among predictors. For a given predictor $X_j$,
+\[
+\mathrm{VIF}_j \;=\; \frac{1}{1 - R_j^2},
+\]
+where $R_j^2$ is the coefficient of determination from the \emph{auxiliary regression} that regresses $X_j$ on all the other predictors $\{X_k: k\neq j\}$. If $X_j$ is orthogonal to the rest, $R_j^2{=}0$ and $\mathrm{VIF}_j{=}1$; as collinearity increases, $R_j^2\uparrow$ and $\mathrm{VIF}_j\uparrow$; under perfect collinearity, $R_j^2\to 1$ and $\mathrm{VIF}_j\to\infty$.
+
+A related OLS variance identity makes the role of VIF explicit:
+\[
+\mathrm{Var}(\hat\beta_j) \;=\; \frac{\sigma^2}{\mathrm{SST}_j}\,\mathrm{VIF}_j,
+\]
+with $\mathrm{SST}_j=\sum_i (x_{ij}-\bar x_j)^2$ the total variation of $X_j$.
+
+\paragraph{Computation (step-by-step).}
+For each predictor $X_j$:
+\begin{enumerate}
+  \item Regress $X_j$ on the other predictors $\{X_k: k\neq j\}$ (auxiliary OLS).
+  \item Record $R_j^2$ from that auxiliary regression.
+  \item Compute $\mathrm{VIF}_j = 1/(1-R_j^2)$.
+\end{enumerate}
+Centering or standardizing does not change VIF, but can improve numerical stability. If the auxiliary regression is singular (perfect collinearity), VIF is undefined (effectively infinite).
+
+\paragraph{Interpretation.}
+Rule-of-thumb thresholds:
+\begin{itemize}
+  \item $\mathrm{VIF}\approx 1$: no multicollinearity concern,
+  \item $\mathrm{VIF} > 5$: potentially problematic,
+  \item $\mathrm{VIF} > 10$: generally considered high and worth action.
+\end{itemize}
+
+\paragraph{Actions for high VIF.}
+\begin{itemize}
+  \item \textbf{Remove or combine} redundant predictors (retain the more informative one).
+  \item \textbf{Transform or re-encode} variables to reduce linear dependence.
+  \item \textbf{Regularize} (e.g., ridge) if the goal is prediction and you prefer shrinkage over removal.
+  \item \textbf{Iterative screen} (as used here): compute VIFs, drop the predictor with the largest VIF if it exceeds a threshold (e.g., 10), recompute, and repeat until all VIFs are below threshold.
+\end{itemize}
+
+\paragraph{Practical considerations.}
+\begin{itemize}
+  \item \textbf{Categorical predictors:} VIF is defined for single numeric columns. For multi-level categoricals represented by several dummies, a generalized measure (e.g., GVIF) is more appropriate. In our pipeline, VIF is applied only to \emph{continuous} features to avoid this complication.
+  \item \textbf{Near-duplicates and composites:} Domain sums (e.g., FSum/BSum/PSum) and their constituents often create high VIFs; pairwise redundancy rules plus VIF mitigate this.
+  \item \textbf{Small samples / near-singularity:} Expect unstable $R^2$ and large VIFs; consider dimensionality reduction or regularization.
+\end{itemize}
+
+\paragraph{Tiny example.}
+With predictors $(X_1,X_2,X_3)$, to obtain $\mathrm{VIF}_2$: regress $X_2$ on $(X_1,X_3)$, say $R_2^2{=}0.84$, then $\mathrm{VIF}_2 = 1/(1-0.84)=6.25$, indicating moderate multicollinearity for $X_2$.

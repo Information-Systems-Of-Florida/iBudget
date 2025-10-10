@@ -11,11 +11,11 @@
 
 \section{Executive Summary}
 
-Model 1 represents a \textbf{direct re-evaluation of Model 5b} (Tao \& Niu 2015) using fiscal year 2024 data. This model maintains the EXACT feature specification from Model 5b to enable direct performance comparison across the 9-year period from 2015 to 2024.
+Model 1 represents an exact \textbf{direct re-evaluation of Model 5b} (Tao \& Niu 2015) using fiscal year 2024 data. This model maintains the the feature specification from Model 5b to enable direct performance comparison across the 9-year period from 2015 to 2024.  
 
 \subsection{Purpose and Scope}
 
-The primary objective of Model 1 is to answer a critical question: \textit{Does Model 5b, which performed exceptionally well with FY2013--2014 data ($R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen), maintain its predictive power with 2024 data?} By preserving the exact same 21 features, transformation, and outlier detection methodology, we can isolate temporal changes in model performance from methodological changes.
+The primary objective of Model 1 is to answer a critical question: \textit{Does Model 5b, which performed exceptionally well with FY2013--2014 data ($R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen), maintain its predictive power with 2024 data?} By preserving the same 21 features, transformation, and outlier detection methodology, we can isolate temporal changes in model performance from methodological changes.
 
 \subsection{Key Findings}
 
@@ -82,7 +82,7 @@ where:
 
 \subsection{Feature Selection (21 Features)}
 
-Model 5b uses exactly \ModelOneNumFeatures{} features, organized into five categories:
+Model 5b uses  \ModelOneNumFeatures{} features, organized into five categories:
 
 \subsubsection{1. Living Settings (5 Dummy Variables)}
 
@@ -205,13 +205,15 @@ where:
 \textbf{Metric} & \textbf{Model 5b (2015)} & \textbf{Model 1 (2024)} \\
 \midrule
 $R^2$ & \ModelOneFiveBRSquaredTwoThousandFifteen & \MRSquaredTest \\
-RMSE & \$\ModelOneFiveBRMSETwoThousandFifteen{} (sqrt) & \$\MRMSETest{} (original) \\
+RMSE (sqrt scale) & \$\ModelOneFiveBRMSETwoThousandFifteen & \$\MRMSETestSqrt \\
+RMSE (original) & --- & \$\MRMSETest \\
 SBC & \ModelOneFiveBSBCTwoThousandFifteen & \ModelOneSBC \\
 Sample Size & 23,215 & \MTrainingSamples \\
 Outliers Removed & \ModelOneFiveBOutlierPctTwoThousandFifteen\% & \MOutlierPct\% \\
 \midrule
 \textbf{Change ($\Delta$)} & \textbf{---} & \textbf{---} \\
 $\Delta$$R^2$ & --- & \ModelOneRSquaredDeltaFromTwoThousandFifteen \\
+$\Delta$RMSE (sqrt) & --- & \ModelOneRMSEDeltaFromTwoThousandFifteen \\
 $\Delta$SBC & --- & \ModelOneSBCDeltaFromTwoThousandFifteen \\
 $\Delta$Outlier\% & --- & \ModelOneOutlierPctDeltaFromTwoThousandFifteen\% \\
 \bottomrule
@@ -225,6 +227,7 @@ $\Delta$Outlier\% & --- & \ModelOneOutlierPctDeltaFromTwoThousandFifteen\% \\
     \item \textbf{$\Delta$Outlier\%}: Change in percentage of outliers. Large changes may indicate distributional shifts in the population or cost structure.
 \end{itemize}
 
+\newpage
 % ============================================
 % INSERT UNIVERSAL TEMPLATE HERE
 % ============================================
@@ -273,7 +276,11 @@ The 9-year gap between Model 5b development (2014--2015) and this re-evaluation 
     \item \textbf{Cost Structure Changes}: Have policy changes, inflation, or service delivery changes altered cost patterns?
 \end{enumerate}
 
-\textbf{Key Finding:} [To be filled after running pipeline - discuss whether $R^2$ remained stable, improved, or declined, and what this suggests about Model 5b's long-term viability]
+\textbf{Key Finding:} Re-evaluation of Model 5b with 2024 data reveals substantial changes in model performance over the nine-year period. The coefficient of determination declined from $R^2 = 0.80$ in 2015 to $R^2 = 0.42$ in 2024 (a 37.57 percentage point reduction), while root mean squared error increased from \$30.82 to \$80.23 on the square-root scale. The Schwarz Bayesian Criterion deteriorated from 159,394 to 220,247, and the model now explains less than half the variance in individual support costs compared to its original specification.
+
+Several factors may contribute to this performance evolution: (1) demographic and clinical composition of the ISF population may have shifted over nine years, with changes in age distribution, living settings, or support need profiles; (2) relationships between support needs and costs may have evolved due to policy reforms, service delivery innovations, or differential cost inflation across service types; and (3) the 2015 feature set may no longer optimally capture current cost drivers.
+
+Temporal instability in predictive models over extended periods is expected rather than exceptional, particularly in dynamic policy environments. These findings provide strong empirical motivation for exploring alternative model specifications (Models 2--10) that may better align with current population characteristics and cost structures, and suggest that periodic re-calibration should be considered standard practice for long-term allocation systems.
 
 \section{Implementation Considerations}
 
@@ -289,7 +296,7 @@ The 9-year gap between Model 5b development (2014--2015) and this re-evaluation 
 Algorithm & Ordinary Least Squares (OLS) \\
 Transformation & Square-root \\
 Outlier Method & Studentized Residuals ($|t_i| \geq 1.645$) \\
-Features & \ModelOneNumFeatures{} (exact Model 5b specification) \\
+Features & \ModelOneNumFeatures{} ( Model 5b specification) \\
 Training Time & $< 1$ second \\
 Prediction Time & Instant (closed-form solution) \\
 Memory Requirements & Minimal (21 coefficients + intercept) \\
@@ -334,7 +341,7 @@ Model 1 is immediately deployable as it represents a direct update of the existi
 
 \subsection{Continuity and Change Management}
 
-Since Model 1 uses the exact same methodology as operational Model 5b:
+Since Model 1 uses the same methodology as operational Model 5b:
 \begin{itemize}
     \item \textbf{No new training required}: Staff already familiar with model structure
     \item \textbf{No system changes needed}: Existing iBudget calculator works with updated coefficients
@@ -362,8 +369,88 @@ Since Model 1 uses the exact same methodology as operational Model 5b:
     \item \textbf{Population Analysis}: Monitor demographic and support need trends that may affect predictability
 \end{itemize}
 
+
+% \section*{Proposed Allocation Algorithm: Model 1 Re-Calibration (2024)}
+
+% \subsection*{Algorithm Specification}
+
+% To calculate the Allocation Algorithm Amount for each client, the following weighted values, as applicable, shall be summed, and the resulting total then squared:
+
+% \begin{enumerate}[label=(\alph*)]
+%     \item The base value for all clients: \textbf{\ModelOneInterceptTrain}\footnote{Note: Negative base value represents fundamental shift in cost structure since 2015. Original 2015 value: \ModelFiveBBaseValue};
+    
+%     \item If the client is age 21 to 30: \textbf{\ModelOneCoefAgeTwentyOneToThirty} (2015: \ModelFiveBCoefAgeTwentyOneToThirty);
+    
+%     \item If the client is age 31 or older: \textbf{\ModelOneCoefAgeThirtyOnePlus} (2015: \ModelFiveBCoefAgeThirtyOnePlus);
+    
+%     \item If the client resides in supported or independent living, or the client resides in a licensed facility and does not receive residential habilitation services: \textbf{\ModelOneCoefLiveILSL} (2015: \ModelFiveBCoefLiveILSL);
+    
+%     \item If the client resides in a licensed residential facility that is designated to provide Standard or Live-In residential habilitation services: \textbf{\ModelOneCoefLiveRHOne} (2015: \ModelFiveBCoefLiveRHOne);
+    
+%     \item If the client resides in a licensed residential facility with a Behavior Focus designation: \textbf{\ModelOneCoefLiveRHTwo} (2015: \ModelFiveBCoefLiveRHTwo);
+    
+%     \item If the client resides in a licensed residential facility with an Intensive Behavior designation: \textbf{\ModelOneCoefLiveRHThree} (2015: \ModelFiveBCoefLiveRHThree);
+    
+%     \item If the client resides in a licensed residential facility that is a Comprehensive Transitional Education Program or provides Special Medical Home Care: \textbf{\ModelOneCoefLiveRHFour} (2015: \ModelFiveBCoefLiveRHFour);
+    
+%     \item The sum of the scores on the client questions in the QSI Behavioral Status Subscale (Questions 25--30), multiplied by \textbf{\ModelOneCoefBSum} (2015: \ModelFiveBCoefBSum);
+    
+%     \item If the client resides in the family home, the sum of the scores on the client questions in the QSI Functional Status Subscale (Questions 14--24), multiplied by \textbf{\ModelOneCoefFHFSum}\footnote{WARNING: Negative coefficient indicates inverse relationship between functional needs and costs in family homes---counterintuitive and likely indicates model misspecification.} (2015: \ModelFiveBCoefFHFSum);
+    
+%     \item If the client resides in supported or independent living, the sum of the scores on the client questions in the QSI Functional Status Subscale (Questions 14--24), multiplied by \textbf{\ModelOneCoefSLFSum} (2015: \ModelFiveBCoefSLFSum);
+    
+%     \item If the client resides in supported or independent living, the sum of the scores on the client questions in the QSI Behavioral Status Subscale (Questions 25--30), multiplied by \textbf{\ModelOneCoefSLBSum} (2015: \ModelFiveBCoefSLBSum);
+    
+%     \item The client's score on QSI Question 16, multiplied by \textbf{\ModelOneCoefQSixteen}\footnote{WARNING: Negative coefficient (2015: \ModelFiveBCoefQSixteen).} (2015: \ModelFiveBCoefQSixteen);
+    
+%     \item The client's score on QSI Question 18, multiplied by \textbf{\ModelOneCoefQEighteen} (2015: \ModelFiveBCoefQEighteen);
+    
+%     \item The client's score on QSI Question 20, multiplied by \textbf{\ModelOneCoefQTwenty} (2015: \ModelFiveBCoefQTwenty);
+    
+%     \item The client's score on QSI Question 21, multiplied by \textbf{\ModelOneCoefQTwentyOne} (2015: \ModelFiveBCoefQTwentyOne);
+    
+%     \item The client's score on QSI Question 23, multiplied by \textbf{\ModelOneCoefQTwentyThree} (2015: \ModelFiveBCoefQTwentyThree);
+    
+%     \item The client's score on QSI Question 28, multiplied by \textbf{\ModelOneCoefQTwentyEight} (2015: \ModelFiveBCoefQTwentyEight);
+    
+%     \item The client's score on QSI Question 33, multiplied by \textbf{\ModelOneCoefQThirtyThree} (2015: \ModelFiveBCoefQThirtyThree);
+    
+%     \item The client's score on QSI Question 34, multiplied by \textbf{\ModelOneCoefQThirtyFour} (2015: \ModelFiveBCoefQThirtyFour);
+    
+%     \item The client's score on QSI Question 36, multiplied by \textbf{\ModelOneCoefQThirtySix} (2015: \ModelFiveBCoefQThirtySix); and
+    
+%     \item The client's score on QSI Question 43, multiplied by \textbf{\ModelOneCoefQFortyThree} (2015: \ModelFiveBCoefQFortyThree).
+% \end{enumerate}
+
+% The squared result of the sum of the applicable values of paragraphs (a) through (v), above, then apportioned according to available funding, is the client's Allocation Algorithm Amount.
+
+% \subsection*{Critical Implementation Notes}
+
+% \begin{itemize}
+%     \item \textbf{Model Performance:} This re-calibrated algorithm exhibits $R^2 = \ModelOneRsquaredTest$, explaining only \ModelOneRsquaredTestPct\% of cost variance (compared to \ModelFiveBRsquaredTwoThousandFifteenPct\% in 2015).
+    
+%     \item \textbf{RMSE Performance:} Root mean squared error = \$\ModelOneRMSETestSqrt\ on the square-root scale (2015: \$\ModelFiveBRMSETwoThousandFifteen), representing a \ModelOneRMSEDeltaFromTwoThousandFifteen\% increase.
+    
+%     \item \textbf{Negative Coefficients:} Two concerning negative coefficients emerged:
+%     \begin{itemize}
+%         \item Family Home Functional Status (\ModelOneCoefFHFSum): Suggests higher functional needs predict \emph{lower} costs in family homes---counterintuitive.
+%         \item QSI Question 16 (\ModelOneCoefQSixteen): Inverted from 2015 positive coefficient (\ModelFiveBCoefQSixteen).
+%     \end{itemize}
+    
+%     \item \textbf{Coefficient Instability:} Several coefficients changed dramatically:
+%     \begin{itemize}
+%         \item Intensive Behavior facilities (RH3): \ModelFiveBCoefLiveRHThree\ to \ModelOneCoefLiveRHThree\ (\ModelOneDeltaCoefLiveRHThree\% change)
+%         \item CTEP/SMHC facilities (RH4): \ModelFiveBCoefLiveRHFour\ to \ModelOneCoefLiveRHFour\ (\ModelOneDeltaCoefLiveRHFour\% change)
+%         \item QSI Question 23: \ModelFiveBCoefQTwentyThree\ to \ModelOneCoefQTwentyThree\ (\ModelOneDeltaCoefQTwentyThree\% change)
+%     \end{itemize}
+    
+%     \item \textbf{Outlier Detection:} \ModelOneOutliersRemoved\ observations (\ModelOneOutlierPct\%) removed using studentized residuals (|t| $\geq$ 1.645), similar to 2015 rate (\ModelFiveBOutlierPctTwoThousandFifteen\%).
+    
+%     \item \textbf{Recommendation:} These coefficients are provided for \textbf{documentation purposes only}. Direct implementation is \textbf{not recommended} given poor model fit ($R^2$ = \ModelOneRsquaredTest), counterintuitive coefficients, and substantial prediction errors (RMSE = \$\ModelOneRMSETest).
+% \end{itemize}
+
 \section{Conclusion}
 
-Model 1 provides a rigorous assessment of Model 5b's continued viability with 2024 data. By maintaining exact feature and methodology consistency, we can directly attribute any performance changes to temporal factors (population shifts, cost structure changes) rather than modeling decisions.
+Model 1 provides a rigorous assessment of Model 5b's continued viability with 2024 data. By maintaining feature and methodology consistency, we can directly attribute any performance changes to temporal factors (population shifts, cost structure changes) rather than modeling decisions.
 
-\textbf{Key Takeaway:} [To be completed after pipeline run - state whether Model 5b remains viable, needs adjustment, or should be replaced]
+\textbf{Key Takeaway:} Model 5b has reached the end of its operational lifespan. After nine years of service, the model's predictive accuracy has declined to levels that could result in systematic over- or under-allocation of resources. This is not a failure of the original work but a natural consequence of population changes over time. The agency should transition to an updated model specification informed by current data, with regular re-evaluation built into governance processes to ensure continued accuracy.

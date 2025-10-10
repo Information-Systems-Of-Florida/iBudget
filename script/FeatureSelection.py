@@ -1,804 +1,1040 @@
 """
-Data Exploration and Feature Selection Tool
-Generates correlation matrices and uses mutual information for feature selection
-Produces one plot per fiscal year with n x n matrix of variable relationships
+Feature Selection (NumPy Edition) — iBudget / Florida APD
+
+Pandas-free pipeline:
+- Mutual Information (with permutation baseline enabled by default)
+- Spearman ρ (continuous↔continuous)
+- Bias-corrected Cramér’s V with chi-square validity screening (categorical↔categorical)
+- Bias-adjusted correlation ratio η (epsilon-squared) for categorical→continuous
+- Optional VIF screen for multicollinearity (continuous features)
+- Redundancy filtering across type pairs (configurable breadth)
+- Heatmaps, pairplots, LaTeX table and commands
+
+Outputs
+-------
+report/logs/FeatureSelection.txt
+report/logs/FeatureSelectionSummary.csv
+report/logs/TopFeaturesTable.tex
+report/logs/FeatureSelectionCommands.tex
+report/figures/*.png
 """
 
-import numpy as np
-import pandas as pd
+from __future__ import annotations
+
+import os
+import re
+import csv
+import math
 import pickle
 from pathlib import Path
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.feature_selection import mutual_info_regression
-from sklearn.preprocessing import LabelEncoder
-from scipy.stats import spearmanr, pearsonr
-import warnings
-warnings.filterwarnings('ignore')
-import sys
 from datetime import datetime
+from typing import Dict, List, Tuple, Any, Optional
 
-class TeeLogger:
-    """Class to duplicate stdout to both console and log file"""
-    def __init__(self, filename):
-        self.terminal = sys.stdout
-        self.log = open(filename, 'w')
-        
-    def write(self, message):
-        self.terminal.write(message)
-        self.log.write(message)
-        self.log.flush()  # Ensure immediate write
-        
-    def flush(self):
-        self.terminal.flush()
-        self.log.flush()
-        
-    def close(self):
-        self.log.close()
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import spearmanr, chi2_contingency
+from sklearn.preprocessing import LabelEncoder
+from sklearn.feature_selection import mutual_info_regression
 
-class DataExplorer:
-    """Class for exploring data relationships and feature selection"""
-    
-    def __init__(self, data_dir="data/cached"):
-        """Initialize with data directory path"""
-        self.data_dir = Path(data_dir)
-        self.variables = [
-            'FiscalYear', 'Age', 'GENDER', 'RACE', 'Ethnicity', 'County', 
-            'PrimaryDiagnosis', 'SecondaryDiagnosis', 'OtherDiagnosis', 
-            'MentalHealthDiag1', 'MentalHealthDiag2', 'DevelopmentalDisability', 
-            'RESIDENCETYPE', 'LivingSetting', 'AgeGroup', 
-            'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 
-            'Q23', 'Q24', 'Q25', 'Q26', 'Q27', 'Q28', 'Q29', 'Q30', 
-            'Q31a', 'Q31b', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 
-            'Q38', 'Q39', 'Q40', 'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 
-            'Q46', 'Q47', 'Q48', 'Q49', 'Q50', 
-            'FSum', 'BSum', 'PSum', 'FLEVEL', 'BLEVEL', 'PLEVEL', 'OLEVEL', 
-            'LOSRI', 'TotalCost'
-        ]
-        
-        # Filters for data quality
-        self.filters = {
-            'LateEntry': 0,
-            'EarlyExit': 0,
-            'MissingQSI': 0,
-            'InsufficientDays': 0
-        }
-        
-        # Find the data directory
-        self._find_data_directory()
-        
-    def _find_data_directory(self):
-        """Find the correct data directory"""
-        possible_paths = [
-            Path(self.data_dir),
-            Path("models/data/cached"),
-            Path("../../data/cached"),
-            Path("../data/cached"),
-            Path("data/cached")
-        ]
-        
-        for path in possible_paths:
-            if path.exists():
-                pkl_files = list(path.glob("fy*.pkl"))
-                if pkl_files:
-                    self.data_dir = path
-                    print(f"Found data directory: {path}")
-                    print(f"Found {len(pkl_files)} pickle files")
-                    return
-        
-        raise FileNotFoundError("Could not find data directory with pickle files")
-    
-    def load_fiscal_year_data(self, fiscal_year, return_counts=False):
-        """Load and filter data for a specific fiscal year"""
-        pickle_file = self.data_dir / f"fy{fiscal_year}.pkl"
-        
-        if not pickle_file.exists():
-            print(f"Warning: File not found for FY{fiscal_year}")
-            if return_counts:
-                return None, 0, 0
-            return None
-        
-        print(f"\nLoading FY{fiscal_year} data...")
-        with open(pickle_file, 'rb') as f:
-            data_dict = pickle.load(f)
-        
-        # Extract records
-        records_data = data_dict.get('data', [])
-        total_count = len(records_data)
-        print(f"Total records: {total_count}")
-        
-        # Apply filters
-        filtered_data = []
-        for record in records_data:
-            # Check all filter conditions
-            include_record = True
-            for filter_key, filter_value in self.filters.items():
-                if record.get(filter_key, 0) != filter_value:
-                    include_record = False
-                    break
-            
-            # Additional check for Usable flag if it exists
-            #if include_record and 'Usable' in record:
-            #    include_record = record['Usable'] == 1
-            
-            if include_record:
-                filtered_data.append(record)
-        
-        filtered_count = len(filtered_data)
-        print(f"Filtered records (quality checks passed): {filtered_count}")
-        
-        # Convert to DataFrame with only the variables we need
-        df_data = []
-        for record in filtered_data:
-            row = {}
-            for var in self.variables:
-                if var in record:
-                    value = record[var]
-                    # Clean cost fields
-                    if var in ['TotalCost', 'PositiveCost', 'Adjustments', 'BudgetAmount']:
-                        if isinstance(value, str):
-                            # Remove dollar signs and commas
-                            value = str(value).replace('$', '').replace(',', '')
-                            try:
-                                value = float(value)
-                            except:
-                                value = 0
-                    row[var] = value
-                else:
-                    row[var] = None
-            df_data.append(row)
-        
-        df = pd.DataFrame(df_data)
-        
-        # Remove columns with all missing values
-        df = df.dropna(axis=1, how='all')
-        
-        # Remove rows with missing TotalCost (our target variable)
-        df = df.dropna(subset=['TotalCost'])
-        
-        print(f"Final dataframe shape: {df.shape}")
-        print(f"Columns available: {list(df.columns)}")
-        
-        if return_counts:
-            return df, total_count, filtered_count
-        return df
-    
-    def encode_categorical_variables(self, df):
-        """Encode categorical variables for analysis"""
-        df_encoded = df.copy()
-        label_encoders = {}
-        
-        for col in df.columns:
-            if df[col].dtype == 'object':
-                # Handle missing values
-                df_encoded[col] = df_encoded[col].fillna('Missing')
-                
-                # Encode
-                le = LabelEncoder()
-                df_encoded[col] = le.fit_transform(df_encoded[col].astype(str))
-                label_encoders[col] = le
-        
-        return df_encoded, label_encoders
-    
-    def calculate_mutual_information(self, df, target_col='TotalCost', top_n=30):
-        """Calculate mutual information between features and target"""
-        # Prepare data
-        df_clean = df.dropna(subset=[target_col])
-        
-        # Encode categorical variables
-        df_encoded, _ = self.encode_categorical_variables(df_clean)
-        
-        # Separate features and target
-        feature_cols = [col for col in df_encoded.columns if col != target_col]
-        X = df_encoded[feature_cols].fillna(0)  # Fill remaining NaN with 0
-        y = df_encoded[target_col]
-        
-        # Calculate mutual information
-        mi_scores = mutual_info_regression(X, y, random_state=42)
-        
-        # Create results dataframe
-        mi_results = pd.DataFrame({
-            'Feature': feature_cols,
-            'MI_Score': mi_scores
-        }).sort_values('MI_Score', ascending=False)
-        
-        print(f"\nTop {top_n} Features by Mutual Information with {target_col}:")
-        print("="*60)
-        for idx, row in mi_results.head(top_n).iterrows():
-            print(f"{row['Feature']:30s}: {row['MI_Score']:.4f}")
-        
-        return mi_results
-    
-    def create_correlation_matrix(self, df, fiscal_year, method='pearson', subset_vars=None):
-        """Create and plot correlation matrix"""
-        # Use subset of variables if specified
-        if subset_vars:
-            cols_to_use = [col for col in subset_vars if col in df.columns]
-            df_subset = df[cols_to_use]
+from models.base_model import BaseiBudgetModel  # project logger
+
+
+# ------------------------- Defaults / Tunables -------------------------
+
+OUTPUT_ROOT = Path("../report")
+FIG_DIR = OUTPUT_ROOT / "figures"   # -> ../report/figures
+LOG_DIR = OUTPUT_ROOT / "logs"      # -> ../report/logs
+CMD_DIR = LOG_DIR                   # commands alongside logs
+
+
+VARS: List[str] = [
+    "Age", "GENDER", "RACE", "Ethnicity", "County",
+    "PrimaryDiagnosis", "SecondaryDiagnosis", "OtherDiagnosis",
+    "MentalHealthDiag1", "MentalHealthDiag2", "DevelopmentalDisability",
+    "RESIDENCETYPE", "LivingSetting", "AgeGroup",
+    "Q14", "Q15", "Q16", "Q17", "Q18", "Q19", "Q20", "Q21", "Q22",
+    "Q23", "Q24", "Q25", "Q26", "Q27", "Q28", "Q29", "Q30",
+    "Q31a", "Q31b", "Q32", "Q33", "Q34", "Q35", "Q36", "Q37",
+    "Q38", "Q39", "Q40", "Q41", "Q42", "Q43", "Q44", "Q45",
+    "Q46", "Q47", "Q48", "Q49", "Q50",
+    "FSum", "BSum", "PSum", "FLEVEL", "BLEVEL", "PLEVEL", "OLEVEL",
+    "LOSRI", "TotalCost"
+]
+
+CATEGORICAL: set = {
+    "GENDER", "RACE", "Ethnicity", "County",
+    "PrimaryDiagnosis", "SecondaryDiagnosis", "OtherDiagnosis",
+    "MentalHealthDiag1", "MentalHealthDiag2", "DevelopmentalDisability",
+    "RESIDENCETYPE", "LivingSetting", "AgeGroup",
+    "FLEVEL", "BLEVEL", "PLEVEL", "OLEVEL"
+}
+
+FILTERS = {"LateEntry": 0, "EarlyExit": 0, "MissingQSI": 0, "InsufficientDays": 0}
+MISSING = "__MISSING__"
+MAX_CARDINALITY_FOR_CRAMERS = 50
+MAX_CATEGORICAL_FOR_MATRIX = 25
+ETA_PAIR_LIMIT = 500
+PAIRPLOT_SAMPLE = 1000
+RANDOM_STATE = 42
+
+REDUNDANCY_MAX_FEATURES: Optional[int] = 100  # None = scan all
+
+# Chi-square validity rules
+CHI2_MIN_EXPECTED = 1.0
+CHI2_MIN_PROP_GE5 = 0.80
+
+
+# ------------------------- Logger -------------------------
+
+class FeatureSelectionJob(BaseiBudgetModel):
+    def prepare_features(self, records):
+        return None, []
+    def _fit_core(self, X, y):
+        return None
+    def _predict_core(self, X):
+        return None
+
+def get_ibudget_logger():
+    job = FeatureSelectionJob(model_id=99, model_name="FeatureSelection", use_outlier_removal=False)
+    return job, job.logger
+
+
+
+# ------------------------- Utilities -------------------------
+
+def _is_missing(arr: np.ndarray) -> np.ndarray:
+    """
+    Vectorized missing detector:
+    - float: np.isnan
+    - int/uint: no missing
+    - object: True for None or NaN
+    """
+    if arr.dtype.kind == "f":
+        return np.isnan(arr)
+    if arr.dtype.kind in ("i", "u"):
+        return np.zeros(arr.shape, dtype=bool)
+    is_none = np.vectorize(lambda x: x is None, otypes=[bool])(arr)
+    is_nan = np.vectorize(lambda x: (isinstance(x, float) and math.isnan(x)), otypes=[bool])(arr)
+    return np.logical_or(is_none, is_nan)
+
+
+def _sanitize_suffix(s: str) -> str:
+    safe = re.sub(r"[^a-z0-9_-]", "_", s.lower())
+    return re.sub(r"_+", "_", safe).strip("_-")
+
+
+def _latex_escape(text: str) -> str:
+    repl = {
+        "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#",
+        "_": r"\_", "{": r"\{", "}": r"\}", "~": r"\textasciitilde{}",
+        "^": r"\textasciicircum{}", "\\": r"\textbackslash{}",
+    }
+    return "".join(repl.get(c, c) for c in text)
+
+
+# ------------------------- Association Metrics -------------------------
+
+def _collapse_rare(levels: np.ndarray, min_freq: int = 25) -> np.ndarray:
+    """
+    Normalize missing to sentinel, cast to string labels, then collapse rare levels.
+    """
+    levels = np.asarray(levels, dtype=object)
+    # replace None/NaN with sentinel, then cast to str so np.unique won't compare unlike types
+    levels = np.where(_is_missing(levels), MISSING, levels).astype(str)
+    uniq, inv, counts = np.unique(levels, return_inverse=True, return_counts=True)
+    rare = set(uniq[counts < min_freq])
+    if rare:
+        mask = np.isin(levels, list(rare))
+        levels[mask] = "__OTHER__"
+    return levels
+
+
+def _contingency(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """
+    Build contingency table with normalized string labels (no mixed None/str).
+    """
+    a = np.asarray(a, dtype=object)
+    b = np.asarray(b, dtype=object)
+    a = np.where(_is_missing(a), MISSING, a).astype(str)
+    b = np.where(_is_missing(b), MISSING, b).astype(str)
+    ua, ia = np.unique(a, return_inverse=True)
+    ub, ib = np.unique(b, return_inverse=True)
+    tbl = np.zeros((ua.size, ub.size), dtype=int)
+    np.add.at(tbl, (ia, ib), 1)
+    return tbl
+
+
+
+def _chi2_expected_ok(tbl: np.ndarray) -> bool:
+    if tbl.sum() == 0:
+        return False
+    chi2, p, dof, expected = chi2_contingency(tbl, correction=False)
+    if np.any(expected < CHI2_MIN_EXPECTED):
+        return False
+    prop_ge5 = np.mean(expected >= 5)
+    return prop_ge5 >= CHI2_MIN_PROP_GE5
+
+
+def cramers_v_corrected(a: np.ndarray, b: np.ndarray) -> float:
+    a2 = _collapse_rare(a)
+    b2 = _collapse_rare(b)
+    tbl = _contingency(a2, b2)
+    n = tbl.sum()
+    if n <= 1:
+        return 0.0
+    try:
+        if not _chi2_expected_ok(tbl):
+            return 0.0
+        chi2, _, _, _ = chi2_contingency(tbl, correction=False)
+    except (ValueError, TypeError, ZeroDivisionError):
+        return 0.0
+    r, k = tbl.shape
+    phi2 = max(0.0, (chi2 / n) - ((r - 1) * (k - 1)) / (n - 1))
+    r_corr = r - ((r - 1) ** 2) / (n - 1)
+    k_corr = k - ((k - 1) ** 2) / (n - 1)
+    denom = min(r_corr - 1.0, k_corr - 1.0)
+    if (not np.isfinite(phi2)) or (not np.isfinite(denom)) or denom <= 0.0:
+        return 0.0
+    val = math.sqrt(phi2 / denom)
+    return 0.0 if not np.isfinite(val) else float(val)
+
+
+def spearman_corr(x: np.ndarray, y: np.ndarray) -> float:
+    if x.size < 3 or y.size < 3:
+        return 0.0
+    rho, _ = spearmanr(x, y)
+    return float(rho) if np.isfinite(rho) else 0.0
+
+
+def correlation_ratio_eta(cat: np.ndarray, cont: np.ndarray) -> float:
+    """
+    Returns η = sqrt(ε²), ε² uses epsilon-squared with df correction:
+        ε² = (SS_between - (k-1)*MS_within) / SS_total
+    Requires n > k and n ≥ 3.
+    """
+    miss_cat = _is_missing(cat)
+    miss_cont = ~np.isfinite(cont)
+    mask = ~(miss_cat | miss_cont)
+    cat = cat[mask].astype(object)
+    cont = cont[mask].astype(float)
+    n = cont.size
+    if n < 3:
+        return 0.0
+
+    cat = _collapse_rare(cat)
+    levels = np.unique(cat)
+    k = levels.size
+    if k < 2 or n <= k:
+        return 0.0
+
+    gm = cont.mean()
+    ss_total = float(((cont - gm) ** 2).sum())
+    if ss_total == 0.0:
+        return 0.0
+
+    ss_between = 0.0
+    ss_within = 0.0
+    for lev in levels:
+        sel = (cat == lev)
+        if not sel.any():
+            continue
+        grp = cont[sel]
+        m = grp.mean()
+        ss_between += grp.size * (m - gm) ** 2
+        ss_within += float(((grp - m) ** 2).sum())
+
+    df_within = n - k
+    if df_within <= 0:
+        return 0.0
+    ms_within = ss_within / df_within
+    eps2 = (ss_between - (k - 1) * ms_within) / ss_total
+    eps2 = max(0.0, eps2)
+    val = math.sqrt(eps2)
+    return 0.0 if not np.isfinite(val) else float(val)
+
+
+# ------------------------- Encoding / Imputation -------------------------
+
+def encode_and_impute(arrs: Dict[str, np.ndarray]) -> Tuple[Dict[str, np.ndarray], Dict[str, LabelEncoder]]:
+    encoded: Dict[str, np.ndarray] = {}
+    encoders: Dict[str, LabelEncoder] = {}
+
+    for name, col in arrs.items():
+        col = np.asarray(col)
+        if name in CATEGORICAL:
+            miss_mask = _is_missing(col)
+            col2 = np.where(miss_mask, MISSING, col).astype(str)
+            le = LabelEncoder()
+            encoded[name] = le.fit_transform(col2).astype(float)
+            encoders[name] = le
         else:
-            df_subset = df
-        
-        # Encode categorical variables
-        df_encoded, _ = self.encode_categorical_variables(df_subset)
-        
-        # Fill NaN values with 0 for correlation calculation
-        df_encoded = df_encoded.fillna(0)
-        
-        # Calculate correlation matrix
-        if method == 'pearson':
-            corr_matrix = df_encoded.corr(method='pearson')
-        elif method == 'spearman':
-            corr_matrix = df_encoded.corr(method='spearman')
-        else:
-            raise ValueError("Method must be 'pearson' or 'spearman'")
-        
-        return corr_matrix, df_encoded
-    
-    def plot_correlation_matrix(self, corr_matrix, fiscal_year, title_suffix=""):
-        """Plot correlation matrix as heatmap"""
-        n_vars = len(corr_matrix)
-        
-        # Adjust figure size based on number of variables
-        if n_vars > 30:
-            fig_size = (20, 16)
-            annot = False
-            font_scale = 0.6
-        elif n_vars > 20:
-            fig_size = (16, 14)
-            annot = False
-            font_scale = 0.7
-        else:
-            fig_size = (12, 10)
-            annot = True
-            font_scale = 0.8
-        
-        plt.figure(figsize=fig_size)
-        
-        # Set font scale
-        sns.set(font_scale=font_scale)
-        
-        # Create heatmap
-        mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
-        sns.heatmap(corr_matrix, 
-                    mask=mask,
-                    cmap='coolwarm', 
-                    center=0,
-                    square=True,
-                    linewidths=0.5,
-                    cbar_kws={"shrink": 0.8},
-                    annot=annot,
-                    fmt='.2f' if annot else None,
-                    vmin=-1, vmax=1)
-        
-        plt.title(f'FY{fiscal_year} Correlation Matrix{title_suffix}', fontsize=14, fontweight='bold')
-        plt.xticks(rotation=45, ha='right', fontsize=8)
-        plt.yticks(rotation=0, fontsize=8)
-        plt.tight_layout()
-        
-        # Save figure
-        save_dir = Path('../report/figures')
-        save_dir.mkdir(parents=True, exist_ok=True)
-        filename = save_dir / f'fy{fiscal_year}_correlation_matrix{title_suffix.replace(" ", "_").lower()}.png'
-        plt.savefig(filename, dpi=300, bbox_inches='tight')
-        print(f"Saved plot: {filename}")
-        
-        plt.show()
-        
-        return corr_matrix
-    
-    def analyze_feature_relationships(self, df, target_col='TotalCost', top_features=15):
-        """Analyze relationships between top features and target"""
-        # Get mutual information scores
-        mi_results = self.calculate_mutual_information(df, target_col)
-        
-        # Get top features
-        top_feature_names = mi_results.head(top_features)['Feature'].tolist()
-        
-        # Add target column if not in list
-        if target_col not in top_feature_names:
-            top_feature_names.append(target_col)
-        
-        return top_feature_names, mi_results
-    
-    def create_pairplot_for_top_features(self, df, fiscal_year, features_to_plot, sample_size=1000):
-        """Create pairwise plots for top features"""
-        # Sample data if too large
-        if len(df) > sample_size:
-            df_sample = df.sample(n=sample_size, random_state=42)
-            print(f"Using sample of {sample_size} records for pairplot")
-        else:
-            df_sample = df
-        
-        # Select only numeric columns from features_to_plot
-        numeric_features = []
-        for feat in features_to_plot:
-            if feat in df_sample.columns:
-                if df_sample[feat].dtype in ['int64', 'float64']:
-                    numeric_features.append(feat)
-                else:
-                    # Try to convert to numeric
-                    try:
-                        df_sample[feat] = pd.to_numeric(df_sample[feat], errors='coerce')
-                        numeric_features.append(feat)
-                    except:
-                        pass
-        
-        if len(numeric_features) > 1:
-            # Create pairplot
-            plt.figure(figsize=(15, 15))
-            df_plot = df_sample[numeric_features].dropna()
-            
-            # Create custom pairplot
-            n_features = len(numeric_features)
-            fig, axes = plt.subplots(n_features, n_features, figsize=(15, 15))
-            
-            for i in range(n_features):
-                for j in range(n_features):
-                    ax = axes[i, j]
-                    
-                    if i == j:
-                        # Diagonal: histogram
-                        ax.hist(df_plot[numeric_features[i]], bins=30, alpha=0.7)
-                        ax.set_ylabel('')
-                    else:
-                        # Off-diagonal: scatter plot
-                        ax.scatter(df_plot[numeric_features[j]], 
-                                 df_plot[numeric_features[i]], 
-                                 alpha=0.3, s=1)
-                    
-                    # Labels
-                    if i == n_features - 1:
-                        ax.set_xlabel(numeric_features[j], fontsize=8, rotation=45)
-                    else:
-                        ax.set_xlabel('')
-                    
-                    if j == 0:
-                        ax.set_ylabel(numeric_features[i], fontsize=8)
-                    else:
-                        ax.set_ylabel('')
-                    
-                    ax.tick_params(labelsize=6)
-            
-            plt.suptitle(f'FY{fiscal_year} Top Features Pairplot', fontsize=14, fontweight='bold')
-            plt.tight_layout()
-            
-            # Save figure
-            save_dir = Path('../report/figures')
-            save_dir.mkdir(parents=True, exist_ok=True)
-            filename = save_dir / f'fy{fiscal_year}_pairplot_top_features.png'
-            plt.savefig(filename, dpi=150, bbox_inches='tight')
-            print(f"Saved pairplot: {filename}")
-            
-            plt.show()
-    
-    def generate_summary_report(self, all_mi_results, output_dir='../report/logs'):
-        """Generate a comprehensive summary report of feature selection results"""
-        output_path = Path(output_dir)
-        output_path.mkdir(parents=True, exist_ok=True)
-        
-        report_file = output_path / 'FeatureSelectionSummary.csv'
-        
-        # Compile all MI scores across years
-        all_features = set()
-        for mi_results in all_mi_results.values():
-            all_features.update(mi_results['Feature'].tolist())
-        
-        # Create summary dataframe
-        summary_data = []
-        for feature in all_features:
-            feature_row = {'Feature': feature}
-            for year, mi_results in all_mi_results.items():
-                year_data = mi_results[mi_results['Feature'] == feature]
-                if not year_data.empty:
-                    feature_row[f'MI_{year}'] = year_data.iloc[0]['MI_Score']
-                else:
-                    feature_row[f'MI_{year}'] = 0.0
-            
-            # Calculate statistics
-            mi_values = [v for k, v in feature_row.items() if k.startswith('MI_')]
-            feature_row['Mean_MI'] = np.mean(mi_values)
-            feature_row['Std_MI'] = np.std(mi_values)
-            feature_row['Max_MI'] = np.max(mi_values)
-            feature_row['Min_MI'] = np.min(mi_values)
-            feature_row['Years_in_Top10'] = sum(1 for year, mi_results in all_mi_results.items() 
-                                                if feature in mi_results.head(10)['Feature'].tolist())
-            feature_row['Years_in_Top20'] = sum(1 for year, mi_results in all_mi_results.items() 
-                                                if feature in mi_results.head(20)['Feature'].tolist())
-            
-            summary_data.append(feature_row)
-        
-        # Create and save summary dataframe
-        summary_df = pd.DataFrame(summary_data)
-        summary_df = summary_df.sort_values('Mean_MI', ascending=False)
-        summary_df.to_csv(report_file, index=False)
-        
-        print(f"\nFeature selection summary report saved to: {report_file}")
-        
-        # Also create a LaTeX table for top features
-        latex_file = output_path / 'TopFeaturesTable.tex'
-        top_features = summary_df.head(15)
-        
-        with open(latex_file, 'w') as f:
-            f.write("% Top 15 Features by Mean Mutual Information\n")
-            f.write("% Automatically generated by feature selection analysis\n")
-            f.write("\\begin{table}[htbp]\n")
-            f.write("\\centering\n")
-            f.write("\\caption{Top 15 features ranked by mean mutual information across fiscal years 2020-2025 (automatically generated)}\n")
-            f.write("\\label{tab:top-features-mi}\n")
-            f.write("\\small\n")  # Make table slightly smaller to fit
-            f.write("\\begin{tabular}{lcccccc}\n")
-            f.write("\\hline\n")
-            f.write("\\textbf{Feature} & \\textbf{Mean MI} & \\textbf{Std MI} & \\textbf{Max MI} & \\textbf{Min MI} & \\textbf{Top 10} & \\textbf{Top 20} \\\\\n")
-            f.write("\\hline\n")
-            
-            for _, row in top_features.iterrows():
-                f.write(f"{row['Feature']} & {row['Mean_MI']:.4f} & {row['Std_MI']:.4f} & ")
-                f.write(f"{row['Max_MI']:.4f} & {row['Min_MI']:.4f} & ")
-                f.write(f"{int(row['Years_in_Top10'])}/6 & {int(row['Years_in_Top20'])}/6 \\\\\n")
-            
-            f.write("\\hline\n")
-            f.write("\\end{tabular}\n")
-            f.write("\\end{table}\n")
-        
-        print(f"LaTeX table saved to: {latex_file}")
-        
-        return summary_df
-    
-    def generate_latex_commands_enhanced(self, all_mi_results, fiscal_years, all_statistics, output_dir='../report/logs'):
-        """Generate comprehensive LaTeX newcommand definitions for all quantitative values"""
-        output_path = Path(output_dir)
-        output_path.mkdir(parents=True, exist_ok=True)
-        
-        commands_file = output_path / 'FeatureSelectionCommands.tex'
-        
-        # Calculate aggregate statistics
-        total_records_all = [stats['total_records'] for stats in all_statistics.values()]
-        filtered_records_all = [stats['filtered_records'] for stats in all_statistics.values()]
-        final_records_all = [stats['final_records'] for stats in all_statistics.values()]
-        feature_counts_all = [stats['num_features'] for stats in all_statistics.values()]
-        
-        # Get consistent features across years
-        consistent_features = {}
-        for mi_results in all_mi_results.values():
-            top_10 = mi_results.head(10)['Feature'].tolist()
-            for feat in top_10:
-                consistent_features[feat] = consistent_features.get(feat, 0) + 1
-        
-        # Count features appearing in all years
-        features_all_years = sum(1 for feat, count in consistent_features.items() if count == len(fiscal_years))
-        features_most_years = sum(1 for feat, count in consistent_features.items() if count >= len(fiscal_years)-1)
-        
-        # Get top MI scores
-        top_mi_scores = {}
-        for fy, mi_results in all_mi_results.items():
-            if len(mi_results) > 0:
-                top_feature = mi_results.iloc[0]
-                top_mi_scores[fy] = {
-                    'feature': top_feature['Feature'],
-                    'score': top_feature['MI_Score']
-                }
-        
-        # Number to word mapping for years
-        year_words = {
-            2020: 'TwoThousandTwenty',
-            2021: 'TwoThousandTwentyOne',
-            2022: 'TwoThousandTwentyTwo',
-            2023: 'TwoThousandTwentyThree',
-            2024: 'TwoThousandTwentyFour',
-            2025: 'TwoThousandTwentyFive'
-        }
-        
-        # Write LaTeX commands
-        with open(commands_file, 'w') as f:
-            f.write("% Automatically generated LaTeX commands for Feature Selection chapter\n")
-            f.write(f"% Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write("% Include this file in your LaTeX document with \\input{logs/FeatureSelectionCommands.tex}\n\n")
-            
-            # Dataset size commands
-            f.write("% Dataset sizes - Total records before filtering\n")
-            f.write(f"\\newcommand{{\\FSMinRecordsTotal}}{{{min(total_records_all):,}}}\n")
-            f.write(f"\\newcommand{{\\FSMaxRecordsTotal}}{{{max(total_records_all):,}}}\n")
-            f.write(f"\\newcommand{{\\FSMeanRecordsTotal}}{{{int(np.mean(total_records_all)):,}}}\n")
-            
-            f.write("\n% Dataset sizes - Records after filtering\n")
-            f.write(f"\\newcommand{{\\FSMinRecordsFiltered}}{{{min(filtered_records_all):,}}}\n")
-            f.write(f"\\newcommand{{\\FSMaxRecordsFiltered}}{{{max(filtered_records_all):,}}}\n")
-            f.write(f"\\newcommand{{\\FSMeanRecordsFiltered}}{{{int(np.mean(filtered_records_all)):,}}}\n")
-            
-            f.write("\n% Dataset sizes - Final records for analysis\n")
-            f.write(f"\\newcommand{{\\FSMinRecordsFinal}}{{{min(final_records_all):,}}}\n")
-            f.write(f"\\newcommand{{\\FSMaxRecordsFinal}}{{{max(final_records_all):,}}}\n")
-            
-            f.write("\n% Fiscal year range\n")
-            f.write(f"\\newcommand{{\\FSNumFiscalYears}}{{{len(fiscal_years)}}}\n")
-            f.write(f"\\newcommand{{\\FSFirstYear}}{{{min(fiscal_years)}}}\n")
-            f.write(f"\\newcommand{{\\FSLastYear}}{{{max(fiscal_years)}}}\n")
-            f.write(f"\\newcommand{{\\FSYearRange}}{{{min(fiscal_years)}--{max(fiscal_years)}}}\n")
-            
-            # Feature counts
-            f.write("\n% Feature counts\n")
-            f.write(f"\\newcommand{{\\FSNumCandidateVariables}}{{{max(feature_counts_all)}}}\n")
-            f.write(f"\\newcommand{{\\FSNumVariablesAnalyzed}}{{{len(self.variables)}}}\n")
-            f.write(f"\\newcommand{{\\FSNumConsistentFeatures}}{{{features_all_years}}}\n")
-            f.write(f"\\newcommand{{\\FSNumMostlyConsistent}}{{{features_most_years}}}\n")
-            f.write(f"\\newcommand{{\\FSTopTenThreshold}}{{10}}\n")
-            f.write(f"\\newcommand{{\\FSTopTwentyThreshold}}{{20}}\n")
-            
-            # QSI ranges
-            f.write("\n% QSI Question ranges\n")
-            f.write(f"\\newcommand{{\\FSQSIFunctionalStart}}{{14}}\n")
-            f.write(f"\\newcommand{{\\FSQSIFunctionalEnd}}{{24}}\n")
-            f.write(f"\\newcommand{{\\FSQSIBehavioralStart}}{{25}}\n")
-            f.write(f"\\newcommand{{\\FSQSIBehavioralEnd}}{{30}}\n")
-            f.write(f"\\newcommand{{\\FSQSIPhysicalStart}}{{32}}\n")
-            f.write(f"\\newcommand{{\\FSQSIPhysicalEnd}}{{50}}\n")
-            
-            # Thresholds
-            f.write("\n% Statistical thresholds\n")
-            f.write(f"\\newcommand{{\\FSMIThreshold}}{{0.03}}\n")
-            f.write(f"\\newcommand{{\\FSCorrelationThreshold}}{{0.85}}\n")
-            f.write(f"\\newcommand{{\\FSAbsCorrelationThreshold}}{{0.85}}\n")
-            f.write(f"\\newcommand{{\\FSMissingDataThreshold}}{{20}}\n")
-            f.write(f"\\newcommand{{\\FSTemporalConsistencyYears}}{{3}}\n")
-            f.write(f"\\newcommand{{\\FSTopNFeatures}}{{20}}\n")
-            f.write(f"\\newcommand{{\\FSVarianceExplained}}{{89}}\n")
-            f.write(f"\\newcommand{{\\FSBootstrapStability}}{{95}}\n")
-            f.write(f"\\newcommand{{\\FSBootstrapSamples}}{{95}}\n")
-            
-            # Year-specific statistics
-            f.write("\n% Year-specific record counts and statistics\n")
-            for fy in fiscal_years:
-                if fy in all_statistics and fy in year_words:
-                    stats = all_statistics[fy]
-                    fy_word = year_words[fy]
-                    f.write(f"\\newcommand{{\\FSRecordsTotalFY{fy_word}}}{{{stats['total_records']:,}}}\n")
-                    f.write(f"\\newcommand{{\\FSRecordsFilteredFY{fy_word}}}{{{stats['filtered_records']:,}}}\n")
-                    f.write(f"\\newcommand{{\\FSRecordsFinalFY{fy_word}}}{{{stats['final_records']:,}}}\n")
-                    f.write(f"\\newcommand{{\\FSNumFeaturesFY{fy_word}}}{{{stats['num_features']}}}\n")
-                    
-                    # Top correlation
-                    if 'top_correlation' in stats:
-                        f.write(f"\\newcommand{{\\FSTopCorrelationFY{fy_word}}}{{{stats['top_correlation']:.4f}}}\n")
-                        f.write(f"\\newcommand{{\\FSTopCorrelationFeatureFY{fy_word}}}{{{stats['top_correlation_feature']}}}\n")
-            
-            # Top MI scores by year
-            f.write("\n% Top MI scores by year\n")
-            for fy, scores in top_mi_scores.items():
-                if fy in year_words:
-                    fy_word = year_words[fy]
-                    f.write(f"\\newcommand{{\\FSTopFeatureFY{fy_word}}}{{{scores['feature']}}}\n")
-                    f.write(f"\\newcommand{{\\FSTopMIFY{fy_word}}}{{{scores['score']:.4f}}}\n")
-            
-            # Mean MI scores for top features across all years
-            f.write("\n% Mean MI scores for top consistent features\n")
-            for feat_name in ['RESIDENCETYPE', 'BSum', 'LOSRI', 'BLEVEL', 'OLEVEL', 'Q26']:
-                mi_values = []
-                min_mi = 1.0
-                max_mi = 0.0
-                for mi_results in all_mi_results.values():
-                    feat_data = mi_results[mi_results['Feature'] == feat_name]
-                    if not feat_data.empty:
-                        val = feat_data.iloc[0]['MI_Score']
-                        mi_values.append(val)
-                        min_mi = min(min_mi, val)
-                        max_mi = max(max_mi, val)
-                
-                if mi_values:
-                    mean_mi = np.mean(mi_values)
-                    feat_clean = feat_name.replace('_', '')
-                    f.write(f"\\newcommand{{\\FSRangeMI{feat_clean}}}{{{min_mi:.3f}--{max_mi:.3f}}}\n")
-            
-            # Additional MI ranges for other important features
-            for feat_name in ['FSum', 'PSum', 'County']:
-                mi_values = []
-                min_mi = 1.0
-                max_mi = 0.0
-                for mi_results in all_mi_results.values():
-                    feat_data = mi_results[mi_results['Feature'] == feat_name]
-                    if not feat_data.empty:
-                        val = feat_data.iloc[0]['MI_Score']
-                        mi_values.append(val)
-                        min_mi = min(min_mi, val)
-                        max_mi = max(max_mi, val)
-                
-                if mi_values:
-                    feat_clean = feat_name.replace('_', '')
-                    f.write(f"\\newcommand{{\\FSRangeMI{feat_clean}}}{{{min_mi:.3f}--{max_mi:.3f}}}\n")
-        
-        print(f"\nLaTeX commands file saved to: {commands_file}")
-        return commands_file
-    
-    def run_complete_analysis(self):
-        """Run complete analysis for all fiscal years"""
-        # Find available fiscal years
-        pkl_files = sorted(self.data_dir.glob("fy*.pkl"))
-        fiscal_years = []
-        for file in pkl_files:
+            miss_mask = _is_missing(col)
+            num = np.empty(col.shape, dtype=float)
             try:
-                fy = int(file.stem[2:])
-                fiscal_years.append(fy)
-            except:
+                num[~miss_mask] = col[~miss_mask].astype(float, copy=False)
+            except (ValueError, TypeError):
+                num[~miss_mask] = np.fromiter((float(x) for x in col[~miss_mask]), dtype=float, count=np.count_nonzero(~miss_mask))
+            num[miss_mask] = np.nan
+            med = np.nanmedian(num) if np.any(~np.isnan(num)) else 0.0
+            num = np.where(np.isnan(num), med, num)
+            encoded[name] = num
+
+    return encoded, encoders
+
+
+def _nonconstant_feature_names(encoded: Dict[str, np.ndarray]) -> List[str]:
+    names = []
+    for n, col in encoded.items():
+        if n == "TotalCost":
+            continue
+        if n in CATEGORICAL:
+            if np.unique(col).size > 1:
+                names.append(n)
+        else:
+            if np.std(col) > 0:
+                names.append(n)
+    return names
+
+
+def design_matrix(encoded: Dict[str, np.ndarray]) -> Tuple[np.ndarray, np.ndarray, List[str], np.ndarray]:
+    names = _nonconstant_feature_names(encoded)
+    X = np.column_stack([encoded[n] for n in names]).astype(float) if names else np.zeros((len(encoded["TotalCost"]), 0), dtype=float)
+    y = encoded["TotalCost"].astype(float)
+    discrete_mask = np.array([n in CATEGORICAL for n in names], dtype=bool)
+    return X, y, names, discrete_mask
+
+
+# ------------------------- VIF Screen (continuous) -------------------------
+
+def _vif_screen(encoded: Dict[str, np.ndarray], names: List[str], vif_threshold: float = 10.0) -> List[str]:
+    cont = [n for n in names if n not in CATEGORICAL]
+    if len(cont) < 2:
+        return []
+
+    X = np.column_stack([encoded[n] for n in cont]).astype(float)
+    X = (X - X.mean(axis=0)) / (X.std(axis=0) + 1e-12)
+
+    keep = list(range(X.shape[1]))
+    dropped = []
+
+    while True:
+        worst_vif = 0.0
+        worst_j = None
+        for j in list(keep):
+            others = [k for k in keep if k != j]
+            if not others:
                 continue
-        
-        print(f"Found fiscal years: {fiscal_years}")
-        
-        # Results storage
-        all_mi_results = {}
-        all_statistics = {}
-        
-        for fiscal_year in fiscal_years:
-            print(f"\n{'='*80}")
-            print(f"ANALYZING FISCAL YEAR {fiscal_year}")
-            print(f"{'='*80}")
-            
-            # Load data with counts
-            df, total_count, filtered_count = self.load_fiscal_year_data(fiscal_year, return_counts=True)
-            if df is None or df.empty:
-                print(f"Skipping FY{fiscal_year} - no data available")
+            Xj = X[:, j]
+            Xo = X[:, others]
+            Xo_aug = np.column_stack([np.ones(Xo.shape[0]), Xo])
+            try:
+                beta, _, _, _ = np.linalg.lstsq(Xo_aug, Xj, rcond=None)
+                y_hat = Xo_aug @ beta
+                ss_res = float(((Xj - y_hat) ** 2).sum())
+                ss_tot = float(((Xj - Xj.mean()) ** 2).sum())
+                r2 = 0.0 if ss_tot == 0.0 else max(0.0, min(1.0, 1.0 - ss_res / ss_tot))
+                vif = float(1.0 / max(1e-12, (1.0 - r2)))
+            except (np.linalg.LinAlgError, ValueError, TypeError, ZeroDivisionError):
+                vif = 0.0
+            if np.isfinite(vif) and vif > worst_vif:
+                worst_vif = vif
+                worst_j = j
+        if worst_j is not None and worst_vif > vif_threshold:
+            dropped.append(cont[worst_j])
+            keep.remove(worst_j)
+        else:
+            break
+    return dropped
+
+
+# ------------------------- MI -------------------------
+
+def compute_mutual_information(
+    X: np.ndarray,
+    y: np.ndarray,
+    names: List[str],
+    discrete_mask: np.ndarray,
+    *,
+    permutation_baseline_reps: int = 10,
+    rng: np.random.Generator | None = None
+) -> List[Tuple[str, float, str]]:
+    if X.shape[1] == 0:
+        return []
+    base_mi = mutual_info_regression(X, y, discrete_features=discrete_mask, random_state=RANDOM_STATE)
+    adj_mi = base_mi.copy()
+    if permutation_baseline_reps and permutation_baseline_reps > 0:
+        rng = rng or np.random.default_rng(RANDOM_STATE)
+        baselines = np.zeros_like(base_mi)
+        for _ in range(permutation_baseline_reps):
+            y_perm = rng.permutation(y)
+            baselines += mutual_info_regression(X, y_perm, discrete_features=discrete_mask, random_state=RANDOM_STATE)
+        baselines /= float(permutation_baseline_reps)
+        adj_mi = np.maximum(0.0, base_mi - baselines)
+    rows = [(n, float(s), "Categorical" if d else "Continuous") for n, s, d in zip(names, adj_mi, discrete_mask)]
+    rows.sort(key=lambda t: t[1], reverse=True)
+    return rows
+
+
+# ------------------------- Matrices & Plots -------------------------
+
+def continuous_corr_matrix(encoded: Dict[str, np.ndarray], names: List[str]) -> Tuple[np.ndarray | None, List[str]]:
+    cont_names = [n for n in names if n not in CATEGORICAL]
+    if not cont_names:
+        return None, []
+    k = len(cont_names)
+    M = np.eye(k, dtype=float)
+    cols = [encoded[n].astype(float) for n in cont_names]
+    for i in range(k):
+        for j in range(i + 1, k):
+            rho = spearman_corr(cols[i], cols[j])
+            M[i, j] = M[j, i] = rho
+    return M, cont_names
+
+
+def categorical_cramers_matrix(arrs_orig: Dict[str, np.ndarray], cat_names: List[str]) -> Tuple[np.ndarray | None, List[str]]:
+    # normalize and compute cardinality safely
+    def _card(col: np.ndarray) -> int:
+        col = np.asarray(col, dtype=object)
+        col = np.where(_is_missing(col), MISSING, col).astype(str)
+        return np.unique(col).size
+
+    high_card = sum(1 for c in cat_names if _card(arrs_orig[c]) > MAX_CARDINALITY_FOR_CRAMERS)
+    if high_card > 3:
+        return None, []
+    if len(cat_names) > MAX_CATEGORICAL_FOR_MATRIX:
+        # pick by non-missing prevalence
+        def _present_count(col: np.ndarray) -> int:
+            col = np.asarray(col, dtype=object)
+            return int(np.count_nonzero(~_is_missing(col)))
+        cat_names = sorted(cat_names, key=lambda c: _present_count(arrs_orig[c]), reverse=True)[:MAX_CATEGORICAL_FOR_MATRIX]
+    k = len(cat_names)
+    if k < 2:
+        return None, []
+    M = np.eye(k, dtype=float)
+    cols = [arrs_orig[c] for c in cat_names]
+    for i in range(k):
+        for j in range(i + 1, k):
+            try:
+                v = cramers_v_corrected(cols[i], cols[j])
+            except (ValueError, TypeError, ZeroDivisionError):
+                v = 0.0
+            M[i, j] = M[j, i] = v if np.isfinite(v) else 0.0
+    return M, cat_names
+
+
+
+def mixed_eta_matrix(arrs_orig: Dict[str, np.ndarray], cat_names: List[str], cont_names: List[str]) -> Tuple[np.ndarray | None, List[str], List[str]]:
+    if not cat_names or not cont_names:
+        return None, [], []
+    if len(cat_names) * len(cont_names) > ETA_PAIR_LIMIT:
+        cat_names = sorted(cat_names, key=lambda c: np.count_nonzero(~_is_missing(arrs_orig[c])), reverse=True)[:10]
+        cont_scores = []
+        cont_keep = []
+        for c in cont_names:
+            if c == "TotalCost":
                 continue
-            
-            # Store statistics
-            all_statistics[fiscal_year] = {
-                'total_records': total_count,
-                'filtered_records': filtered_count,
-                'final_records': len(df),
-                'num_features': len(df.columns)
-            }
-            
-            # Analyze feature importance with mutual information
-            print("\n1. MUTUAL INFORMATION ANALYSIS")
-            print("-" * 40)
-            top_features, mi_results = self.analyze_feature_relationships(df, 'TotalCost', top_features=20)
-            all_mi_results[fiscal_year] = mi_results
-            
-            # Create correlation matrix for all variables
-            print("\n2. FULL CORRELATION MATRIX")
-            print("-" * 40)
-            corr_matrix_all, df_encoded_all = self.create_correlation_matrix(df, fiscal_year, method='spearman')
-            self.plot_correlation_matrix(corr_matrix_all, fiscal_year, " - All Variables (Spearman)")
-            
-            # Store correlation with target
-            if 'TotalCost' in df_encoded_all.columns:
-                target_correlations = df_encoded_all.corr()['TotalCost'].abs().sort_values(ascending=False)
-                all_statistics[fiscal_year]['top_correlation'] = target_correlations.iloc[1]  # Skip TotalCost itself
-                all_statistics[fiscal_year]['top_correlation_feature'] = target_correlations.index[1]
-            
-            # Create correlation matrix for top features only
-            print("\n3. TOP FEATURES CORRELATION MATRIX")
-            print("-" * 40)
-            corr_matrix_top, df_encoded_top = self.create_correlation_matrix(
-                df, fiscal_year, method='spearman', subset_vars=top_features
+            try:
+                rho = spearman_corr(arrs_orig[c].astype(float), arrs_orig["TotalCost"].astype(float))
+            except (ValueError, TypeError):
+                rho = 0.0
+            cont_scores.append(abs(rho))
+            cont_keep.append(c)
+        idx = np.argsort(cont_scores)[::-1][:10]
+        cont_names = [cont_keep[i] for i in idx]
+    R, C = len(cat_names), len(cont_names)
+    M = np.zeros((R, C), dtype=float)
+    for i, cat in enumerate(cat_names):
+        for j, cont in enumerate(cont_names):
+            try:
+                eta = correlation_ratio_eta(arrs_orig[cat], arrs_orig[cont].astype(float))
+            except (ValueError, TypeError, ZeroDivisionError):
+                eta = 0.0
+            M[i, j] = eta if np.isfinite(eta) else 0.0
+    return M, cat_names, cont_names
+
+
+def _plot_matrix(matrix: np.ndarray, row_labels: List[str], col_labels: List[str], fy: int, title_suffix: str, kind: str, logger):
+    if matrix is None:
+        return
+    n_rows, n_cols = matrix.shape
+    n_vars = max(n_rows, n_cols)
+    if n_vars > 30:
+        fig_size = (20, 16)
+    elif n_vars > 20:
+        fig_size = (16, 14)
+    else:
+        fig_size = (12, 10)
+    plt.figure(figsize=fig_size)
+    if kind in ("cramers_v", "eta"):
+        vmin, vmax, cmap, cbar_label = 0, 1, "YlOrRd", ("Cramér's V" if kind == "cramers_v" else "Correlation ratio η")
+    else:
+        vmin, vmax, cmap, cbar_label = -1, 1, "coolwarm", "Spearman ρ"
+    mat = matrix
+    if n_rows == n_cols:
+        mask = np.triu(np.ones_like(mat, dtype=bool))
+        mat = np.where(mask, np.nan, mat)
+    im = plt.imshow(mat, cmap=cmap, vmin=vmin, vmax=vmax)
+    plt.title(f"FY{fy} {title_suffix}", fontsize=14, fontweight="bold")
+    cbar = plt.colorbar(im, fraction=0.046, pad=0.04)
+    cbar.set_label(cbar_label, rotation=90)
+    plt.xticks(range(n_cols), col_labels, rotation=45, ha="right", fontsize=8)
+    plt.yticks(range(n_rows), row_labels, fontsize=8)
+    plt.gca().set_xticks(np.arange(-.5, n_cols, 1), minor=True)
+    plt.gca().set_yticks(np.arange(-.5, n_rows, 1), minor=True)
+    plt.grid(which="minor", color=(0, 0, 0, 0.1), linestyle="-", linewidth=0.5)
+    plt.tight_layout()
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    safe = _sanitize_suffix(title_suffix)
+    fname = FIG_DIR / (f"fy{fy}_{safe}.png" if safe else f"fy{fy}.png")
+    plt.savefig(fname, dpi=300, bbox_inches="tight")
+    plt.close()
+    logger.info(f"Saved plot: {fname}")
+
+
+# ------------------------- Data IO -------------------------
+
+def _find_year_file(data_dir: Path, fy: int) -> Path:
+    for name in (f"fy{fy}.pkl", f"fy{fy}_data.pkl", f"FY{fy}_data.pkl", f"{fy}_data.pkl"):
+        p = data_dir / name
+        if p.exists():
+            return p
+    raise FileNotFoundError(f"Could not find data file for FY{fy}")
+
+
+def _load_year_records(data_dir: Path, fy: int) -> List[Any]:
+    """Load FY pickle and normalize to a list of record-like objects."""
+    p = _find_year_file(data_dir, fy)
+    with open(p, "rb") as f:
+        obj = pickle.load(f)
+
+    # If already a list, use it directly
+    if isinstance(obj, list):
+        return obj
+
+    # If dict: look for a list of rows under common keys
+    if isinstance(obj, dict):
+        for k in ("records", "rows", "data"):
+            v = obj.get(k)
+            if isinstance(v, list):
+                return v
+        # last resort: if values look like rows, flatten them
+        for v in obj.values():
+            if isinstance(v, list):
+                return v
+
+    # If it's any other iterable (e.g., numpy array), make a list
+    try:
+        return list(obj)
+    except Exception:
+        # Fallback: wrap single object
+        return [obj]
+
+def _get_field(rec: Any, key: str, default=None):
+    """
+    Safely extract a field from various record shapes:
+    - dict-like: r.get(key)
+    - attribute-style: getattr(r, key)
+    - mapping with __getitem__: r[key]
+    Falls back to `default` if not found.
+    """
+    # dict-like
+    if isinstance(rec, dict):
+        return rec.get(key, default)
+    # attribute-style
+    try:
+        if hasattr(rec, key):
+            return getattr(rec, key)
+    except Exception:
+        pass
+    # mapping / row-like
+    try:
+        return rec[key]
+    except Exception:
+        return default
+
+
+def _filter_records(records: List[Any], logger=None) -> List[Any]:
+    """
+    Apply quality filters if the record structure exposes the expected flags.
+    If it does not, skip filtering and log a note (to avoid crashing or dropping all rows).
+    """
+    if not records:
+        return records
+
+    # Check whether at least one record exposes all filter flags
+    sample = records[0]
+    can_filter = all(_get_field(sample, k, None) is not None for k in FILTERS.keys())
+
+    if not can_filter:
+        if logger:
+            logger.info("Quality filter fields not found on record; skipping quality filters for this year.")
+        return records
+
+    out = []
+    for r in records:
+        keep = True
+        for k, v in FILTERS.items():
+            if _get_field(r, k, None) != v:
+                keep = False
+                break
+        if keep:
+            out.append(r)
+    return out
+
+
+def _build_column_arrays(records: List[Any]) -> Dict[str, np.ndarray]:
+    cols = {v: [] for v in VARS}
+    for r in records:
+        for v in VARS:
+            val = _get_field(r, v, None)
+            if v == "TotalCost" and isinstance(val, str):
+                try:
+                    val = float(val.replace("$", "").replace(",", ""))
+                except (ValueError, AttributeError):
+                    val = None
+            cols[v].append(val)
+
+    arrs = {k: np.array(v, dtype=object) for k, v in cols.items()}
+
+    # Build mask: TotalCost is finite and > 0
+    tc_obj = np.asarray(arrs["TotalCost"], dtype=object)
+    miss = _is_missing(tc_obj)
+
+    tc_float = np.empty(tc_obj.shape, dtype=float)
+    try:
+        tc_float[~miss] = tc_obj[~miss].astype(float, copy=False)
+    except (ValueError, TypeError):
+        tc_float[~miss] = np.fromiter((float(x) for x in tc_obj[~miss]),
+                                      dtype=float,
+                                      count=np.count_nonzero(~miss))
+    tc_float[miss] = np.nan
+
+    keep = np.isfinite(tc_float) & (tc_float > 0.0)
+
+    # Apply mask to every column
+    for k in arrs:
+        arrs[k] = arrs[k][keep]
+
+    return arrs
+
+
+
+
+# ------------------------- Year analysis -------------------------
+
+def analyze_year(
+    logger,
+    data_dir: Path,
+    fy: int,
+    *,
+    permutation_baseline_reps: int = 10
+) -> Tuple[Dict[str, np.ndarray], Dict[str, np.ndarray], Dict[str, LabelEncoder], List[Tuple[str, float, str]], Dict[str, Any]]:
+    logger.info("=" * 80)
+    logger.info(f"FISCAL YEAR {fy}")
+    logger.info("=" * 80)
+
+    records = _load_year_records(data_dir, fy)
+    total_count = len(records)
+    records = _filter_records(records, logger=logger)
+    filtered_count = len(records)
+    logger.info(f"Total records: {total_count}")
+    logger.info(f"After quality filters: {filtered_count}")
+
+    arrs_orig = _build_column_arrays(records)
+    final_records = len(arrs_orig["TotalCost"])
+    logger.info(f"Final with TotalCost > 0: {final_records}")
+    if final_records < 30:
+        logger.info(f"Sample size is small (n={final_records}); association estimates may be unstable.")
+    if final_records == 0:
+        logger.warning("No usable records for this year; skipping year.")
+        return arrs_orig, {}, {}, [], {
+            "total_records": total_count,
+            "filtered_records": filtered_count,
+            "final_records": final_records,
+            "num_features": 0,
+            "num_categorical": 0,
+            "num_continuous": 0
+        }
+
+    encoded, encoders = encode_and_impute(arrs_orig)
+    X, y, feature_names, discrete_mask = design_matrix(encoded)
+
+    # Optional VIF screen on continuous features
+    vif_drops = _vif_screen(encoded, feature_names, vif_threshold=10.0)
+    if vif_drops:
+        feature_names = [n for n in feature_names if n not in vif_drops]
+        X = np.column_stack([encoded[n] for n in feature_names]).astype(float) if feature_names else np.zeros((len(encoded["TotalCost"]), 0), dtype=float)
+        discrete_mask = np.array([n in CATEGORICAL for n in feature_names], dtype=bool)
+        logger.info(f"VIF screen dropped {len(vif_drops)} feature(s): {', '.join(sorted(vif_drops))}")
+
+    hc = [n for n in feature_names if n in {"County", "SecondaryDiagnosis", "OtherDiagnosis"}]
+    if hc:
+        logger.info(f"High-cardinality categoricals present: {hc}")
+
+    logger.info("")
+    logger.info("1. MUTUAL INFORMATION ANALYSIS")
+    logger.info("-" * 40)
+    mi_rows = compute_mutual_information(X, y, feature_names, discrete_mask,
+                                         permutation_baseline_reps=permutation_baseline_reps)
+    for n, s, t in mi_rows[:20]:
+        logger.info(f"{n:30s}: {s:.4f} ({t})")
+
+    stats = {
+        "total_records": total_count,
+        "filtered_records": filtered_count,
+        "final_records": final_records,
+        "num_features": len(feature_names),
+        "num_categorical": sum(1 for n in feature_names if n in CATEGORICAL),
+        "num_continuous": sum(1 for n in feature_names if n not in CATEGORICAL),
+    }
+
+    # Correlation (continuous)
+    logger.info("")
+    logger.info("2. CORRELATION MATRIX (CONTINUOUS ONLY)")
+    logger.info("-" * 40)
+    cont_corr, cont_names = continuous_corr_matrix(encoded, feature_names)
+    if cont_corr is not None:
+        _plot_matrix(cont_corr, cont_names, cont_names, fy, " - Continuous (Spearman)", "correlation", logger)
+        if "TotalCost" in cont_names:
+            tc = cont_names.index("TotalCost")
+            tmp = np.abs(cont_corr[tc, :]).copy()
+            tmp[tc] = -np.inf
+            j = int(np.argmax(tmp))
+            stats["top_correlation"] = float(np.abs(cont_corr[tc, j]))
+            stats["top_correlation_feature"] = cont_names[j]
+
+    # Categorical associations
+    logger.info("")
+    logger.info("3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)")
+    logger.info("-" * 40)
+    cat_names = [n for n in feature_names if n in CATEGORICAL]
+    cramers, cat_labels = categorical_cramers_matrix(arrs_orig, cat_names)
+    if cramers is not None:
+        _plot_matrix(cramers, cat_labels, cat_labels, fy, " - Categorical (Cramers V)", "cramers_v", logger)
+
+    # Mixed (η)
+    logger.info("")
+    logger.info("4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)")
+    logger.info("-" * 40)
+    cont_only = [n for n in feature_names if n not in CATEGORICAL]
+    eta_mat, eta_rows, eta_cols = mixed_eta_matrix(arrs_orig, cat_names, cont_only)
+    if eta_mat is not None:
+        _plot_matrix(eta_mat, eta_rows, eta_cols, fy, " - Mixed (Correlation Ratio)", "eta", logger)
+
+    # Pairplot on continuous
+    logger.info("")
+    logger.info("5. PAIRWISE PLOTS (CONTINUOUS ONLY)")
+    logger.info("-" * 40)
+    top_features = [n for (n, _, _) in mi_rows[:20]]
+    cont_top = [f for f in top_features[:7] if f not in CATEGORICAL]
+    if "TotalCost" not in cont_top:
+        cont_top.append("TotalCost")
+    _pairplot_continuous(encoded, cont_top[:7], fy, logger)
+
+    return arrs_orig, encoded, encoders, mi_rows, stats
+
+
+def _pairplot_continuous(encoded: Dict[str, np.ndarray], features: List[str], fy: int, logger):
+    feats = [f for f in features if f not in CATEGORICAL and f in encoded]
+    if len(feats) < 2:
+        logger.info("Not enough continuous features for pairplot.")
+        return
+    n = len(encoded[feats[0]])
+    idx = np.arange(n)
+    if n > PAIRPLOT_SAMPLE:
+        rng = np.random.default_rng(RANDOM_STATE)
+        idx = rng.choice(idx, size=PAIRPLOT_SAMPLE, replace=False)
+    data = [encoded[f].astype(float)[idx] for f in feats]
+    k = len(feats)
+    fig, axes = plt.subplots(k, k, figsize=(15, 15))
+    for i in range(k):
+        for j in range(k):
+            ax = axes[i, j]
+            if i == j:
+                ax.hist(data[i], bins=30, alpha=0.7)
+            else:
+                ax.scatter(data[j], data[i], alpha=0.3, s=2)
+            if i == k - 1:
+                ax.set_xlabel(feats[j], fontsize=8)
+            else:
+                ax.set_xlabel("")
+            if j == 0:
+                ax.set_ylabel(feats[i], fontsize=8)
+            else:
+                ax.set_ylabel("")
+    plt.suptitle(f"FY{fy} - Continuous Features", fontsize=14, fontweight="bold")
+    plt.tight_layout()
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    fname = FIG_DIR / f"fy{fy}_pairplot_top_features.png"
+    plt.savefig(fname, dpi=300, bbox_inches="tight")
+    plt.close()
+    logger.info(f"Saved pairplot: {fname}")
+
+
+# ------------------------- Redundancy filter -------------------------
+
+def redundancy_filter(
+    top_mi_rows: List[Tuple[str, float, str]],
+    encoded: Dict[str, np.ndarray],
+    arrs_orig: Dict[str, np.ndarray],
+    threshold: float = 0.9,
+    max_features: int | None = REDUNDANCY_MAX_FEATURES
+) -> List[Tuple[str, float, str]]:
+    names_scanned = [r[0] for r in (top_mi_rows if max_features is None else top_mi_rows[:max_features])]
+    to_drop = set()
+    name_to_mi = {n: s for n, s, _ in top_mi_rows}
+
+    for i, f1 in enumerate(names_scanned):
+        if f1 in to_drop:
+            continue
+        for f2 in names_scanned[i + 1:]:
+            if f2 in to_drop:
+                continue
+            if f1 not in encoded or f2 not in encoded:
+                continue
+
+            is_cat1, is_cat2 = (f1 in CATEGORICAL), (f2 in CATEGORICAL)
+            try:
+                if is_cat1 and is_cat2:
+                    assoc = cramers_v_corrected(arrs_orig[f1], arrs_orig[f2])
+                elif (not is_cat1) and (not is_cat2):
+                    assoc = abs(spearman_corr(encoded[f1], encoded[f2]))
+                else:
+                    assoc = correlation_ratio_eta(arrs_orig[f1], encoded[f2]) if is_cat1 \
+                            else correlation_ratio_eta(arrs_orig[f2], encoded[f1])
+            except (ValueError, TypeError, ZeroDivisionError):
+                assoc = 0.0
+
+            if not np.isfinite(assoc):
+                assoc = 0.0
+
+            if assoc > threshold and name_to_mi.get(f2, 0.0) < name_to_mi.get(f1, 0.0):
+                to_drop.add(f2)
+
+    return [row for row in top_mi_rows if row[0] not in to_drop]
+
+
+# ------------------------- Reporting -------------------------
+
+def _write_summary_csv(rows: List[dict], path: Path):
+    fields = ["Feature", "Mean_MI", "Std_MI", "Max_MI", "Min_MI", "Years_in_Top10", "Years_in_Top20"]
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for r in rows:
+            w.writerow(r)
+
+
+def _generate_summary_and_tex(all_mi_by_year: Dict[int, List[Tuple[str, float, str]]],
+                              fyears: List[int],
+                              logger):
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    all_features = set()
+    for rows in all_mi_by_year.values():
+        all_features.update([r[0] for r in rows])
+    summary_rows = []
+    for feat in sorted(all_features):
+        scores = []
+        y10 = y20 = 0
+        for _, rows in all_mi_by_year.items():
+            top10 = [r[0] for r in rows[:10]]
+            top20 = [r[0] for r in rows[:20]]
+            if feat in top10:
+                y10 += 1
+            if feat in top20:
+                y20 += 1
+            found = next((s for (n, s, _) in rows if n == feat), None)
+            if found is not None:
+                scores.append(found)
+        mean_mi = float(np.mean(scores)) if scores else 0.0
+        std_mi  = float(np.std(scores)) if scores else 0.0
+        max_mi  = float(np.max(scores)) if scores else 0.0
+        min_mi  = float(np.min(scores)) if scores else 0.0
+        summary_rows.append({
+            "Feature": feat,
+            "Mean_MI": round(mean_mi, 6),
+            "Std_MI": round(std_mi, 6),
+            "Max_MI": round(max_mi, 6),
+            "Min_MI": round(min_mi, 6),
+            "Years_in_Top10": y10,
+            "Years_in_Top20": y20,
+        })
+    summary_rows.sort(key=lambda d: d["Mean_MI"], reverse=True)
+    csv_path = LOG_DIR / "FeatureSelectionSummary.csv"
+    _write_summary_csv(summary_rows, csv_path)
+    logger.info(f"Summary saved to: {csv_path}")
+
+    num_years = len(fyears)
+    tex_path = LOG_DIR / "TopFeaturesTable.tex"
+    top15 = summary_rows[:15]
+    with open(tex_path, "w", encoding="utf-8") as f:
+        f.write("% Top 15 Features by Mean Mutual Information\n")
+        f.write("% Automatically generated - do not edit manually\n")
+        f.write("% Note: MI values are not directly comparable across distributions/years\n")
+        f.write("\\begin{table}[htbp]\n\\centering\n")
+        f.write(f"\\caption{{Top 15 features by mean MI across {num_years} fiscal years. ")
+        f.write("Note: MI values are not directly comparable across distributions or years.}\n")
+        f.write("\\label{tab:top-features-mi}\n\\small\n")
+        f.write("\\begin{tabular}{lcccccc}\n\\hline\n")
+        f.write("\\textbf{Feature} & \\textbf{Mean MI} & \\textbf{Std MI} & \\textbf{Max MI} & \\textbf{Min MI} & \\textbf{Top 10} & \\textbf{Top 20} \\\\\n")
+        f.write("\\hline\n")
+        for row in top15:
+            name = _latex_escape(row["Feature"])
+            f.write(f"{name} & {row['Mean_MI']:.4f} & {row['Std_MI']:.4f} & "
+                    f"{row['Max_MI']:.4f} & {row['Min_MI']:.4f} & "
+                    f"{int(row['Years_in_Top10'])}/{num_years} & {int(row['Years_in_Top20'])}/{num_years} \\\\\n")
+        f.write("\\hline\n\\end{tabular}\n\\end{table}\n")
+    logger.info(f"LaTeX table saved to: {tex_path}")
+    return summary_rows
+
+
+def _write_commands_tex(all_mi_by_year: Dict[int, List[Tuple[str, float, str]]],
+                        fyears: List[int],
+                        stats_by_year: Dict[int, dict],
+                        logger):
+    CMD_DIR.mkdir(parents=True, exist_ok=True)
+    path = CMD_DIR / "FeatureSelectionCommands.tex"
+    if not stats_by_year:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write("% Feature Selection LaTeX Commands - No years processed\n")
+            f.write(f"% Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("\\newcommand{\\FSNumFiscalYears}{0}\n")
+        logger.info(f"LaTeX commands saved to: {path}")
+        return
+
+    totals = [stats_by_year[fy]["total_records"] for fy in stats_by_year]
+    filtered = [stats_by_year[fy]["filtered_records"] for fy in stats_by_year]
+    finals = [stats_by_year[fy]["final_records"] for fy in stats_by_year]
+    feats = [stats_by_year[fy]["num_features"] for fy in stats_by_year]
+
+    counts = {}
+    for rows in all_mi_by_year.values():
+        for feat in [r[0] for r in rows[:10]]:
+            counts[feat] = counts.get(feat, 0) + 1
+    features_all_years = sum(1 for _, c in counts.items() if c == len(fyears))
+    features_most_years = sum(1 for _, c in counts.items() if c >= max(1, len(fyears) - 1))
+
+    top_mi_scores = {fy: {"feature": rows[0][0], "score": rows[0][1]} for fy, rows in all_mi_by_year.items() if rows}
+
+    year_words = {
+        2020: "TwoThousandTwenty", 2021: "TwoThousandTwentyOne",
+        2022: "TwoThousandTwentyTwo", 2023: "TwoThousandTwentyThree",
+        2024: "TwoThousandTwentyFour", 2025: "TwoThousandTwentyFive"
+    }
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("% Feature Selection LaTeX Commands - iBudget\n")
+        f.write(f"% Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("% Include with: \\input{report/logs/FeatureSelectionCommands.tex}\n\n")
+        f.write(f"\\newcommand{{\\FSNumFiscalYears}}{{{len(fyears)}}}\n\n")
+        f.write("% Methodological note\n")
+        f.write("\\newcommand{\\FSNoteMI}{Mutual information is not on a universal scale across years; consider z-scoring per year before averaging.}\n\n")
+        f.write("% Dataset sizes\n")
+        f.write(f"\\newcommand{{\\FSMinRecordsTotal}}{{{min(totals):,}}}\n")
+        f.write(f"\\newcommand{{\\FSMaxRecordsTotal}}{{{max(totals):,}}}\n")
+        f.write(f"\\newcommand{{\\FSMeanRecordsTotal}}{{{int(np.mean(totals)):,}}}\n\n")
+        f.write(f"\\newcommand{{\\FSMinRecordsFiltered}}{{{min(filtered):,}}}\n")
+        f.write(f"\\newcommand{{\\FSMaxRecordsFiltered}}{{{max(filtered):,}}}\n\n")
+        f.write(f"\\newcommand{{\\FSMinRecordsFinal}}{{{min(finals):,}}}\n")
+        f.write(f"\\newcommand{{\\FSMaxRecordsFinal}}{{{max(finals):,}}}\n\n")
+        f.write("% Feature counts\n")
+        f.write(f"\\newcommand{{\\FSNumCandidateVariables}}{{{max(feats)}}}\n")
+        f.write(f"\\newcommand{{\\FSFeaturesAllYears}}{{{features_all_years}}}\n")
+        f.write(f"\\newcommand{{\\FSFeaturesMostYears}}{{{features_most_years}}}\n\n")
+        for fy in fyears:
+            if fy not in stats_by_year:
+                continue
+            yrw = year_words.get(fy, str(fy))
+            s = stats_by_year[fy]
+            f.write(f"% FY{fy}\n")
+            f.write(f"\\newcommand{{\\FSRecordsTotalFY{yrw}}}{{{s['total_records']:,}}}\n")
+            f.write(f"\\newcommand{{\\FSRecordsFilteredFY{yrw}}}{{{s['filtered_records']:,}}}\n")
+            f.write(f"\\newcommand{{\\FSRecordsFinalFY{yrw}}}{{{s['final_records']:,}}}\n")
+            if fy in top_mi_scores:
+                ftr = top_mi_scores[fy]["feature"]
+                sc = top_mi_scores[fy]["score"]
+                f.write(f"\\newcommand{{\\FSTopFeatureFY{yrw}}}{{{_latex_escape(ftr)}}}\n")
+                f.write(f"\\newcommand{{\\FSTopMIFY{yrw}}}{{{sc:.4f}}}\n\n")
+    logger.info(f"LaTeX commands saved to: {path}")
+
+
+# ------------------------- Orchestration -------------------------
+
+def run_feature_selection(
+    *,
+    fiscal_years: List[int] | None = None,
+    permutation_baseline_reps: int = 10,
+    redundancy_max_features: int | None = REDUNDANCY_MAX_FEATURES
+):
+    base, logger = get_ibudget_logger()
+    base.log_section("Feature Selection Analysis (NumPy)", "=")
+    logger.info(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+    data_dir = Path("models/data/cached")
+    if not data_dir.exists():
+        raise FileNotFoundError(f"Data directory not found: {data_dir.resolve()}")
+
+
+    years = fiscal_years or [2025, 2024, 2023, 2022, 2021, 2020]
+
+
+    all_mi_by_year: Dict[int, List[Tuple[str, float, str]]] = {}
+    stats_by_year: Dict[int, dict] = {}
+
+    for fy in years:
+        try:
+            arrs_orig, encoded, encoders, mi_rows, stats = analyze_year(
+                logger, data_dir, fy, permutation_baseline_reps=permutation_baseline_reps
             )
-            self.plot_correlation_matrix(corr_matrix_top, fiscal_year, " - Top MI Features (Spearman)")
-            
-            # Create pairplot for top numeric features
-            print("\n4. PAIRWISE FEATURE PLOTS")
-            print("-" * 40)
-            # Select top 6 numeric features for pairplot (to keep it readable)
-            top_numeric_features = []
-            for feat in top_features[:7]:  # Including TotalCost
-                if feat in df.columns:
-                    if df[feat].dtype in ['int64', 'float64'] or feat in ['TotalCost']:
-                        top_numeric_features.append(feat)
-            
-            if 'TotalCost' not in top_numeric_features:
-                top_numeric_features.append('TotalCost')
-            
-            self.create_pairplot_for_top_features(df, fiscal_year, top_numeric_features[:7])
-            
-            # Statistical summary
-            print("\n5. STATISTICAL SUMMARY")
-            print("-" * 40)
-            print(f"Total records after filtering: {len(df)}")
-            print(f"Number of features: {len(df.columns)}")
-            print(f"Target variable (TotalCost) statistics:")
-            print(df['TotalCost'].describe())
-            
-            # Store TotalCost statistics
-            all_statistics[fiscal_year]['totalcost_mean'] = df['TotalCost'].mean()
-            all_statistics[fiscal_year]['totalcost_std'] = df['TotalCost'].std()
-            all_statistics[fiscal_year]['totalcost_min'] = df['TotalCost'].min()
-            all_statistics[fiscal_year]['totalcost_max'] = df['TotalCost'].max()
-            
-            # Feature correlations with target
-            print("\n6. TOP CORRELATIONS WITH TOTALCOST")
-            print("-" * 40)
-            if 'TotalCost' in df_encoded_all.columns:
-                target_correlations = df_encoded_all.corr()['TotalCost'].abs().sort_values(ascending=False)
-                print("Top 15 features by absolute correlation with TotalCost:")
-                for feat, corr in target_correlations.head(16).items():  # 16 to skip TotalCost itself
-                    if feat != 'TotalCost':
-                        print(f"  {feat:30s}: {corr:.4f}")
-        
-        # Summary across all years
-        print(f"\n{'='*80}")
-        print("SUMMARY ACROSS ALL FISCAL YEARS")
-        print(f"{'='*80}")
-        
-        # Compare top features across years
-        print("\nTop 10 Features by Mutual Information (by year):")
-        for fy, mi_results in all_mi_results.items():
-            print(f"\nFY{fy}:")
-            for idx, row in mi_results.head(10).iterrows():
-                print(f"  {row['Feature']:25s}: {row['MI_Score']:.4f}")
-        
-        # Find consistently important features
-        print("\nConsistently Important Features (appearing in top 10 across years):")
-        feature_counts = {}
-        for mi_results in all_mi_results.values():
-            top_10 = mi_results.head(10)['Feature'].tolist()
-            for feat in top_10:
-                feature_counts[feat] = feature_counts.get(feat, 0) + 1
-        
-        # Sort by frequency
-        consistent_features = sorted(feature_counts.items(), key=lambda x: x[1], reverse=True)
-        for feat, count in consistent_features:
-            if count > 1:  # Appears in at least 2 years
-                print(f"  {feat:30s}: appears in {count}/{len(all_mi_results)} years")
-        
-        # Generate comprehensive summary report
-        print("\n" + "="*80)
-        print("GENERATING SUMMARY REPORTS")
-        print("="*80)
-        summary_df = self.generate_summary_report(all_mi_results)
-        
-        # Generate LaTeX commands with statistics
-        self.generate_latex_commands_enhanced(all_mi_results, fiscal_years, all_statistics)
-        
-        return all_mi_results
+        except FileNotFoundError as e:
+            logger.info(f"Skipping FY{fy}: {e}")
+            continue
+
+        if mi_rows:
+            before = {n for (n, _, _) in mi_rows}
+            mi_rows = redundancy_filter(mi_rows, encoded, arrs_orig, threshold=0.9, max_features=redundancy_max_features)
+            after = {n for (n, _, _) in mi_rows}
+            dropped = sorted(before - after)
+            if dropped:
+                logger.info(f"Redundancy filter dropped {len(dropped)} feature(s): {', '.join(dropped)}")
+
+        all_mi_by_year[fy] = mi_rows
+        stats_by_year[fy] = stats
+
+    eff_years = list(all_mi_by_year.keys())
+    logger.info("=" * 80)
+    logger.info("CROSS-YEAR CONSISTENCY ANALYSIS")
+    logger.info(f"Processed {len(eff_years)} years: {eff_years}")
+    logger.info("=" * 80)
+    feature_counts: Dict[str, int] = {}
+    for rows in all_mi_by_year.values():
+        for feat in [r[0] for r in rows[:10]]:
+            feature_counts[feat] = feature_counts.get(feat, 0) + 1
+    for feat, count in sorted(feature_counts.items(), key=lambda kv: kv[1], reverse=True):
+        if count > 1:
+            logger.info(f"  {feat:30s}: {count}/{len(eff_years)} years")
+
+    if not eff_years:
+        logger.info("No fiscal years processed. Skipping reports.")
+        return
+
+    logger.info("=" * 80)
+    logger.info("GENERATING REPORTS")
+    logger.info("=" * 80)
+    _generate_summary_and_tex(all_mi_by_year, eff_years, logger)
+    _write_commands_tex(all_mi_by_year, eff_years, stats_by_year, logger)
+
+    logger.info("=" * 80)
+    logger.info("ANALYSIS COMPLETE")
+    logger.info("=" * 80)
+    logger.info(f"Log file: {LOG_DIR / 'model_99_log.txt'}")
+    logger.info(f"Figures:   {FIG_DIR}")
+    logger.info(f"Summary:   {LOG_DIR / 'FeatureSelectionSummary.csv'}")
+    logger.info(f"LaTeX:     {LOG_DIR / 'TopFeaturesTable.tex'}")
+    logger.info(f"Commands:  {CMD_DIR / 'FeatureSelectionCommands.tex'}")
 
 
-def main():
-    """Main execution function"""
-    # Set up logging to file
-    log_dir = Path('../report/logs')
-    log_dir.mkdir(parents=True, exist_ok=True)
-    log_file = log_dir / 'FeatureSelection.txt'
-    
-    # Create logger to duplicate output
-    logger = TeeLogger(str(log_file))
-    sys.stdout = logger
-    
-    # Add timestamp to log
-    print(f"Feature Selection Analysis Log")
-    print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("="*80)
-    
-    print("="*80)
-    print("DATA EXPLORATION AND FEATURE SELECTION ANALYSIS")
-    print("Using Mutual Information for Feature Selection")
-    print("="*80)
-    
-    # Initialize explorer
-    explorer = DataExplorer()
-    
-    # Run complete analysis
-    results = explorer.run_complete_analysis()
-    
-    print("\n" + "="*80)
-    print("ANALYSIS COMPLETE")
-    print("="*80)
-    print("\nGenerated outputs:")
-    print("  - Correlation matrices for each fiscal year")
-    print("  - Mutual information scores for feature importance")
-    print("  - Pairwise plots for top features")
-    print("  - Statistical summaries and comparisons")
-    print(f"  - Analysis log saved to: {log_file}")
-    
-    print("\nMutual Information Interpretation:")
-    print("  - Higher MI scores indicate stronger dependency with TotalCost")
-    print("  - MI captures both linear and non-linear relationships")
-    print("  - MI = 0 indicates independence between variables")
-    print("  - Use top MI features for predictive modeling")
-    
-    # Close logger
-    sys.stdout = logger.terminal  # Restore original stdout
-    logger.close()
-    
-    print(f"\nLog file saved to: {log_file}")
-    
-    return results
-
+# ------------------------- CLI -------------------------
 
 if __name__ == "__main__":
-    results = main()
+    run_feature_selection(permutation_baseline_reps=10, redundancy_max_features=100)

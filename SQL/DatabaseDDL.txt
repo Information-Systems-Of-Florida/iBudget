@@ -1,6 +1,167 @@
 USE [APD]
 GO
-/****** Object:  Table [dbo].[tbl_Budgets]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[ADPSample]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ADPSample](
+	[CaseNo] [bigint] NOT NULL,
+	[FiscalYear] [int] NULL,
+	[BeginDate] [datetime] NULL,
+	[ENDDATE] [datetime] NULL,
+	[IndexSubObjectCode] [varchar](100) NULL,
+	[ConsumerCounty] [varchar](100) NULL,
+	[GeographicDifferential] [varchar](100) NULL,
+	[ProviderRateType] [varchar](100) NULL,
+	[PROC] [varchar](25) NULL,
+	[Service] [varchar](200) NULL,
+	[UnitType] [varchar](100) NULL,
+	[UnitsPer] [numeric](19, 2) NULL,
+	[UnitsOfMeasure] [varchar](50) NULL,
+	[TotalUnits] [numeric](19, 4) NULL,
+	[VendorId] [bigint] NULL,
+	[ProviderName] [varchar](200) NULL,
+	[ProviderMedcId] [varchar](20) NULL,
+	[Rate] [numeric](19, 4) NULL,
+	[TotalAmount] [numeric](19, 2) NULL,
+	[PlannedServiceId] [bigint] NULL,
+	[PlanId] [bigint] NULL,
+	[RH1] [numeric](19, 2) NULL,
+	[RH2] [numeric](19, 2) NULL,
+	[RH3] [numeric](19, 2) NULL,
+	[RH4] [numeric](19, 2) NULL,
+	[PIN] [varchar](20) NULL,
+	[SSN] [varchar](20) NULL,
+	[iConnect_Category] [varchar](100) NULL,
+	[SBPG_C1] [varchar](50) NULL,
+	[Region2] [varchar](50) NULL,
+	[MedicaidId] [varchar](20) NULL,
+	[LNAME] [varchar](50) NULL,
+	[FNAME] [varchar](50) NULL,
+	[MI] [varchar](10) NULL,
+	[SFX] [varchar](10) NULL,
+	[RACE] [varchar](50) NULL,
+	[SEX] [varchar](10) NULL,
+	[DOB] [datetime] NULL,
+	[MEDC_ID] [varchar](20) NULL,
+	[CNTY_RECMD] [varchar](50) NULL,
+	[CNTY_RESID] [varchar](50) NULL,
+	[REGION_NAME] [varchar](100) NULL,
+	[CNTY_RESID_NAME] [varchar](100) NULL,
+	[PrimDisabilityDescription] [varchar](200) NULL,
+	[SecondaryDisabilityDescription] [varchar](200) NULL,
+	[OtherDisabilityDescription] [varchar](200) NULL,
+	[Status_Description] [varchar](200) NULL,
+	[Category] [varchar](100) NULL,
+	[GroupedProgCompDescript] [varchar](200) NULL,
+	[ProgCompDesc] [varchar](200) NULL,
+	[Worker_Dist] [varchar](50) NULL,
+	[Worker_SD] [varchar](50) NULL,
+	[Worker_Unit] [varchar](50) NULL,
+	[Worker_Code] [varchar](50) NULL,
+	[Worker_First_Name] [varchar](100) NULL,
+	[Worker_Last_Name] [varchar](100) NULL,
+	[Worker_SSN] [varchar](20) NULL,
+	[WSC_File] [varchar](50) NULL,
+	[WL_Priority] [varchar](100) NULL,
+	[CurrentAge] [int] NULL,
+	[AGE50P] [numeric](19, 2) NULL,
+	[AGE60P] [numeric](19, 2) NULL,
+	[AGE70P] [numeric](19, 2) NULL,
+	[DUPLICATE] [varchar](10) NULL,
+	[CLIENTID] [bigint] NULL,
+	[CompletedDate] [datetime] NULL,
+	[FuncationalStatus] [int] NULL,
+	[BehavioralStatus] [int] NULL,
+	[PhysicalStatus] [int] NULL,
+	[EstLevel] [int] NULL,
+	[FunctSum] [int] NULL,
+	[BehavSum] [int] NULL,
+	[PhysSum] [int] NULL,
+	[Q14] [int] NULL,
+	[Q15] [int] NULL,
+	[Q16] [int] NULL,
+	[Q17] [int] NULL,
+	[Q18] [int] NULL,
+	[Q19] [int] NULL,
+	[Q20] [int] NULL,
+	[Q21] [int] NULL,
+	[Q22] [int] NULL,
+	[Q23] [int] NULL,
+	[Q24] [int] NULL,
+	[Q25] [int] NULL,
+	[Q26] [int] NULL,
+	[Q27] [int] NULL,
+	[Q28] [int] NULL,
+	[Q29] [int] NULL,
+	[Q30] [int] NULL,
+	[Q31a] [int] NULL,
+	[Q31b] [int] NULL,
+	[Q32] [int] NULL,
+	[Q33] [int] NULL,
+	[Q34] [int] NULL,
+	[Q35] [int] NULL,
+	[Q36] [int] NULL,
+	[Q37] [int] NULL,
+	[Q38] [int] NULL,
+	[Q39] [int] NULL,
+	[Q40] [int] NULL,
+	[Q41] [int] NULL,
+	[Q42] [int] NULL,
+	[Q43] [int] NULL,
+	[Q44] [int] NULL,
+	[Q45] [int] NULL,
+	[Q46] [int] NULL,
+	[Q47] [int] NULL,
+	[Q48] [int] NULL,
+	[Q49] [int] NULL,
+	[Q50] [int] NULL,
+	[Q51A] [int] NULL,
+	[Q13a] [int] NULL,
+	[Q13b] [int] NULL,
+	[Q13c] [int] NULL,
+	[RATERID] [bigint] NULL,
+	[Days_Since_QSI] [int] NULL,
+	[ResHabFlag] [numeric](19, 2) NULL,
+	[FamilyHome] [numeric](19, 2) NULL,
+	[IndLiving_SuppLvg] [numeric](19, 2) NULL,
+	[ResHabSrvcPlan_notResHabLivSetting_Flag] [numeric](19, 2) NULL,
+	[Intercept] [numeric](19, 2) NULL,
+	[Live2ILSL] [numeric](19, 2) NULL,
+	[Live2RH1] [numeric](19, 2) NULL,
+	[Live2RH2] [numeric](19, 2) NULL,
+	[Live2RH3] [numeric](19, 2) NULL,
+	[Live2RH4] [numeric](19, 2) NULL,
+	[Age21_30] [numeric](19, 2) NULL,
+	[Age30plus] [numeric](19, 2) NULL,
+	[BSum] [numeric](19, 2) NULL,
+	[FHFSum] [numeric](19, 2) NULL,
+	[SLFSum] [numeric](19, 2) NULL,
+	[SLBSum] [numeric](19, 2) NULL,
+	[Q_16] [numeric](19, 2) NULL,
+	[Q_18] [numeric](19, 2) NULL,
+	[Q_20] [numeric](19, 2) NULL,
+	[Q_21] [numeric](19, 2) NULL,
+	[Q_23] [numeric](19, 2) NULL,
+	[Q_28] [numeric](19, 2) NULL,
+	[Q_33] [numeric](19, 2) NULL,
+	[Q_34] [numeric](19, 2) NULL,
+	[Q_36] [numeric](19, 2) NULL,
+	[Q_43] [numeric](19, 2) NULL,
+	[CoefficientsSum] [numeric](19, 2) NULL,
+	[AlgorithmAmtModel5b] [numeric](19, 2) NULL,
+	[CALCULATE] [varchar](50) NULL,
+	[InvalidAlgorithmLivingSetting] [numeric](19, 2) NULL,
+	[ClientLivingSetting] [varchar](50) NULL,
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_ADPSample] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Budgets]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -27,7 +188,7 @@ CREATE TABLE [dbo].[tbl_Budgets](
 	[DateTimeStamp] [datetime] NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Claims_MMIS]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Claims_MMIS]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -52,10 +213,11 @@ CREATE TABLE [dbo].[tbl_Claims_MMIS](
 	[ClaimType] [char](1) NULL,
 	[ClaimSubType] [char](1) NULL,
 	[CreateDate] [datetime] NULL,
-	[Id] [bigint] IDENTITY(1,1) NOT NULL
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Age] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_ConsumerContacts]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_ConsumerContacts]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +240,7 @@ CREATE TABLE [dbo].[tbl_ConsumerContacts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Consumers]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Consumers]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +318,7 @@ CREATE TABLE [dbo].[tbl_Consumers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Diagnosis]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Diagnosis]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +342,7 @@ CREATE TABLE [dbo].[tbl_Diagnosis](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_EZBudget]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_EZBudget]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,13 +389,14 @@ CREATE TABLE [dbo].[tbl_EZBudget](
 	[UserStamp] [varchar](100) NULL,
 	[EZBudgetAssessId] [bigint] NOT NULL,
 	[AlgorithmAmt] [float] NULL,
+	[ISFCal] [float] NULL,
  CONSTRAINT [PK_EZBudget] PRIMARY KEY CLUSTERED 
 (
 	[EZBudgetAssessId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Model5b_Predictions]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Model5b_Predictions]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -258,13 +421,18 @@ CREATE TABLE [dbo].[tbl_Model5b_Predictions](
 	[CreatedDate] [datetime] NULL,
 	[CreatedBy] [varchar](100) NULL,
 	[RunID] [bigint] NOT NULL,
+	[Claims] [float] NULL,
+	[Prediction] [float] NULL,
+	[ModelCoefficients] [nvarchar](max) NULL,
+	[CalibrationDate] [datetime] NULL,
+	[ModelVersion] [varchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[PredictionID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_PlannedServices]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_PlannedServices]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -309,7 +477,7 @@ CREATE TABLE [dbo].[tbl_PlannedServices](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Plans]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Plans]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -338,7 +506,7 @@ CREATE TABLE [dbo].[tbl_Plans](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_QSIAssessments]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_QSIAssessments]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -405,13 +573,14 @@ CREATE TABLE [dbo].[tbl_QSIAssessments](
 	[UserStamp] [varchar](100) NULL,
 	[AssessID] [bigint] NOT NULL,
 	[LegacyAssessID] [bigint] NULL,
+	[ISFCal] [float] NULL,
  CONSTRAINT [PK_QSIAssessments] PRIMARY KEY CLUSTERED 
 (
 	[AssessID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_QSIAssessmentsLegacy]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_QSIAssessmentsLegacy]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -478,7 +647,7 @@ CREATE TABLE [dbo].[tbl_QSIAssessmentsLegacy](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_QSIQuestions]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_QSIQuestions]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -496,7 +665,7 @@ CREATE TABLE [dbo].[tbl_QSIQuestions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Rates]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_Rates]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -529,7 +698,7 @@ CREATE TABLE [dbo].[tbl_Rates](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_SANs]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_SANs]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -574,7 +743,7 @@ CREATE TABLE [dbo].[tbl_SANs](
 	[UserStamp] [varchar](100) NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_ServiceCodes]    Script Date: 9/23/2025 2:32:03 PM ******/
+/****** Object:  Table [dbo].[tbl_ServiceCodes]    Script Date: 10/9/2025 4:10:47 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -611,4 +780,1951 @@ CREATE TABLE [dbo].[tbl_ServiceCodes](
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[tbl_Model5b_Predictions] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Calculate_ISFCal_EZBudget]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Calculate_ISFCal_EZBudget]
+    @CaseNo bigint = NULL,  -- Optional: Calculate for specific case only
+    @Debug bit = 0           -- Optional: Show debug information
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Declare variables for tracking
+    DECLARE @RowsUpdated int = 0;
+    DECLARE @StartTime datetime = GETDATE();
+    
+    -- Create temp table for calculations
+    CREATE TABLE #ISFCalculations (
+        EZBudgetAssessId bigint,
+        CASENO bigint,
+        BaseValue float,
+        AgeWeight float,
+        LivingSettingWeight float,
+        BehavioralSum float,
+        FunctionalSum float,
+        InteractionFHF float,
+        InteractionSLF float,
+        InteractionSLB float,
+        Q16Weight float,
+        Q18Weight float,
+        Q20Weight float,
+        Q21Weight float,
+        Q23Weight float,
+        Q28Weight float,
+        Q33Weight float,
+        Q34Weight float,
+        Q36Weight float,
+        Q43Weight float,
+        TotalSum float,
+        ISFCal float
+    );
+    
+    -- Insert calculations into temp table
+    INSERT INTO #ISFCalculations
+    SELECT 
+        e.EZBudgetAssessId,
+        e.CASENO,
+        -- Base value for all individuals
+        27.5720 AS BaseValue,
+        
+        -- Age weight
+        CASE 
+            WHEN ISNUMERIC(e.CurrentAge) = 1 THEN
+                CASE 
+                    WHEN CAST(e.CurrentAge AS int) BETWEEN 21 AND 30 THEN 47.8473
+                    WHEN CAST(e.CurrentAge AS int) >= 31 THEN 48.9634
+                    ELSE 0
+                END
+            ELSE 0
+        END AS AgeWeight,
+        
+        -- Living Setting weight
+        CASE 
+            WHEN e.LivingSetting LIKE '%Independent Living%' 
+                OR e.LivingSetting LIKE '%Supported Living%' THEN 35.8220
+            WHEN e.LivingSetting LIKE '%Standard%Live-In%' THEN 90.6294
+            WHEN e.LivingSetting LIKE '%Behavior Focus%' THEN 131.7576
+            WHEN e.LivingSetting LIKE '%Intensive Behavior%' THEN 209.4558
+            WHEN e.LivingSetting LIKE '%CTEP%' 
+                OR e.LivingSetting LIKE '%Special Medical Home Care%' THEN 267.0995
+            ELSE 0 -- Family Home (base case)
+        END AS LivingSettingWeight,
+        
+        -- Behavioral Sum (Q25-Q30) * 0.4954
+        (ISNULL(TRY_CAST(e.Q25 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q26 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q27 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q28 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q29 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q30 AS float), 0)) * 0.4954 AS BehavioralSum,
+        
+        -- Functional Sum (Q14-Q24)
+        (ISNULL(TRY_CAST(e.Q14 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q15 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q16 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q17 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q18 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q19 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q20 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q21 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q22 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q23 AS float), 0) + 
+         ISNULL(TRY_CAST(e.Q24 AS float), 0)) AS FunctionalSum,
+        
+        -- Interaction: Family Home * Functional Sum * 0.6349
+        CASE 
+            WHEN e.LivingSetting LIKE '%Family Home%' THEN
+                (ISNULL(TRY_CAST(e.Q14 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q15 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q16 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q17 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q18 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q19 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q20 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q21 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q22 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q23 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q24 AS float), 0)) * 0.6349
+            ELSE 0
+        END AS InteractionFHF,
+        
+        -- Interaction: ILSL * Functional Sum * 2.0529
+        CASE 
+            WHEN e.LivingSetting LIKE '%Independent Living%' 
+                OR e.LivingSetting LIKE '%Supported Living%' THEN
+                (ISNULL(TRY_CAST(e.Q14 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q15 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q16 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q17 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q18 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q19 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q20 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q21 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q22 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q23 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q24 AS float), 0)) * 2.0529
+            ELSE 0
+        END AS InteractionSLF,
+        
+        -- Interaction: ILSL * Behavioral Sum * 1.4501
+        CASE 
+            WHEN e.LivingSetting LIKE '%Independent Living%' 
+                OR e.LivingSetting LIKE '%Supported Living%' THEN
+                (ISNULL(TRY_CAST(e.Q25 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q26 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q27 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q28 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q29 AS float), 0) + 
+                 ISNULL(TRY_CAST(e.Q30 AS float), 0)) * 1.4501
+            ELSE 0
+        END AS InteractionSLB,
+        
+        -- Individual question weights
+        ISNULL(TRY_CAST(e.Q16 AS float), 0) * 2.4984 AS Q16Weight,
+        ISNULL(TRY_CAST(e.Q18 AS float), 0) * 5.8537 AS Q18Weight,
+        ISNULL(TRY_CAST(e.Q20 AS float), 0) * 2.6772 AS Q20Weight,
+        ISNULL(TRY_CAST(e.Q21 AS float), 0) * 2.7878 AS Q21Weight,
+        ISNULL(TRY_CAST(e.Q23 AS float), 0) * 6.3555 AS Q23Weight,
+        ISNULL(TRY_CAST(e.Q28 AS float), 0) * 2.2803 AS Q28Weight,
+        ISNULL(TRY_CAST(e.Q33 AS float), 0) * 1.2233 AS Q33Weight,
+        ISNULL(TRY_CAST(e.Q34 AS float), 0) * 2.1764 AS Q34Weight,
+        ISNULL(TRY_CAST(e.Q36 AS float), 0) * 2.6734 AS Q36Weight,
+        ISNULL(TRY_CAST(e.Q43 AS float), 0) * 1.9304 AS Q43Weight,
+        
+        0 AS TotalSum,  -- Will be calculated next
+        0 AS ISFCal     -- Will be calculated next
+        
+    FROM [dbo].[tbl_EZBudget] e
+    WHERE (@CaseNo IS NULL OR e.CASENO = @CaseNo);
+    
+    -- Calculate TotalSum (sum of all weighted values)
+    UPDATE #ISFCalculations
+    SET TotalSum = BaseValue + AgeWeight + LivingSettingWeight + BehavioralSum + 
+                   InteractionFHF + InteractionSLF + InteractionSLB +
+                   Q16Weight + Q18Weight + Q20Weight + Q21Weight + Q23Weight + 
+                   Q28Weight + Q33Weight + Q34Weight + Q36Weight + Q43Weight;
+    
+    -- Calculate ISFCal (square of TotalSum)
+    UPDATE #ISFCalculations
+    SET ISFCal = POWER(TotalSum, 2);
+    
+    -- Show debug information if requested
+    IF @Debug = 1
+    BEGIN
+        SELECT TOP 10
+            EZBudgetAssessId,
+            CASENO,
+            BaseValue,
+            AgeWeight,
+            LivingSettingWeight,
+            BehavioralSum,
+            InteractionFHF,
+            InteractionSLF,
+            InteractionSLB,
+            TotalSum,
+            ISFCal
+        FROM #ISFCalculations
+        ORDER BY EZBudgetAssessId;
+    END
+    
+    -- Update the main table with calculated ISFCal values
+    UPDATE e
+    SET e.ISFCal = c.ISFCal
+    FROM [dbo].[tbl_EZBudget] e
+    INNER JOIN #ISFCalculations c ON e.EZBudgetAssessId = c.EZBudgetAssessId;
+    
+    SET @RowsUpdated = @@ROWCOUNT;
+    
+    -- Clean up
+    DROP TABLE #ISFCalculations;
+    
+    -- Return summary
+    SELECT 
+        @RowsUpdated AS RowsUpdated,
+        DATEDIFF(SECOND, @StartTime, GETDATE()) AS ExecutionTimeSeconds,
+        'ISFCal calculation completed for tbl_EZBudget' AS Status;
+    
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Calculate_ISFCal_QSIAssessments]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Calculate_ISFCal_QSIAssessments]
+    @CaseNo bigint = NULL,  -- Optional: Calculate for specific case only
+    @Debug bit = 0           -- Optional: Show debug information
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Declare variables for tracking
+    DECLARE @RowsUpdated int = 0;
+    DECLARE @StartTime datetime = GETDATE();
+    
+    -- Create temp table for calculations
+    CREATE TABLE #ISFCalculations (
+        AssessID bigint,
+        CASENO bigint,
+        ResidenceType varchar(200),
+        CurrentAge int,
+        BaseValue float,
+        AgeWeight float,
+        LivingSettingWeight float,
+        BehavioralSum float,
+        FunctionalSum float,
+        InteractionFHF float,
+        InteractionSLF float,
+        InteractionSLB float,
+        Q16Weight float,
+        Q18Weight float,
+        Q20Weight float,
+        Q21Weight float,
+        Q23Weight float,
+        Q28Weight float,
+        Q33Weight float,
+        Q34Weight float,
+        Q36Weight float,
+        Q43Weight float,
+        TotalSum float,
+        ISFCal float
+    );
+    
+    -- Insert calculations into temp table
+    -- Join with tbl_Consumers to get RESIDENCETYPE and age
+    INSERT INTO #ISFCalculations
+    SELECT 
+        q.AssessID,
+        q.CASENO,
+        c.RESIDENCETYPE,
+        DATEDIFF(YEAR, c.DOB, GETDATE()) AS CurrentAge,
+        
+        -- Base value for all individuals
+        27.5720 AS BaseValue,
+        
+        -- Age weight
+        CASE 
+            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) BETWEEN 21 AND 30 THEN 47.8473
+            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) >= 31 THEN 48.9634
+            ELSE 0
+        END AS AgeWeight,
+        
+        -- Living Setting weight based on RESIDENCETYPE mapping
+        CASE 
+            -- ILSL: Independent Living, Supported Living, or facilities without RH services
+            WHEN c.RESIDENCETYPE IN ('Independent Living', 'Supported Living') THEN 35.8220
+            WHEN c.RESIDENCETYPE LIKE '%Nursing Home%' 
+                AND NOT EXISTS (
+                    SELECT 1 FROM [dbo].[tbl_PlannedServices] ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.Service LIKE '%Residential Habilitation%'
+                ) THEN 35.8220
+                
+            -- RH1: Standard Residential Habilitation or Live-In
+            -- Most APD Licensed Facilities fall into this category by default
+            WHEN c.RESIDENCETYPE LIKE 'APD Licensed Facility%Small Group Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'APD Licensed Facility%Large Group Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'APD Licensed Facility%Foster Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'DCF Licensed Home%Small Group Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'DCF Licensed Home%Large Group Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'DCF Licensed Home%Foster Home%' THEN 90.6294
+            WHEN c.RESIDENCETYPE = 'DCF Licensed Home' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'AHCA Licensed Assisted Living%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'AHCA Licensed Adult Family Care%' THEN 90.6294
+            WHEN c.RESIDENCETYPE LIKE 'AHCA Licensed Private ICF/DD%' THEN 90.6294
+            
+            -- RH2: Behavior Focus (would need additional data to identify)
+            -- This would typically be identified by facility designation
+            -- For now, using Residential Habilitation Center as proxy
+            WHEN c.RESIDENCETYPE LIKE '%Residential Habilitation Center%' THEN 131.7576
+            
+            -- RH3: Intensive Behavior
+            -- APD Developmental Disabilities Centers and Defendant Programs
+            WHEN c.RESIDENCETYPE LIKE 'APD Developmental Disabilities Center%' THEN 209.4558
+            WHEN c.RESIDENCETYPE LIKE 'APD Developmental Disabilities Defendant%' THEN 209.4558
+            WHEN c.RESIDENCETYPE LIKE '%Psychiatric%' THEN 209.4558
+            WHEN c.RESIDENCETYPE LIKE 'Mental Health Placement%' THEN 209.4558
+            
+            -- RH4: CTEP or Special Medical Home Care
+            -- This would need to be identified by specific program enrollment
+            -- For now, leaving as placeholder
+            
+            -- Family Home (base case)
+            WHEN c.RESIDENCETYPE = 'Family Home' THEN 0
+            
+            -- Default to 0 for unmapped types
+            ELSE 0
+        END AS LivingSettingWeight,
+        
+        -- Behavioral Sum (Q25-Q30) * 0.4954
+        (ISNULL(TRY_CAST(q.Q25 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q26 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q27 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q28 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q29 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q30 AS float), 0)) * 0.4954 AS BehavioralSum,
+        
+        -- Functional Sum (Q14-Q24)
+        (ISNULL(TRY_CAST(q.Q14 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q15 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q16 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q17 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q18 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q19 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q20 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q21 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q22 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q23 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q24 AS float), 0)) AS FunctionalSum,
+        
+        -- Interaction: Family Home * Functional Sum * 0.6349
+        CASE 
+            WHEN c.RESIDENCETYPE = 'Family Home' THEN
+                (ISNULL(TRY_CAST(q.Q14 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q15 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q16 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q17 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q18 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q19 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q20 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q21 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q22 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q23 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q24 AS float), 0)) * 0.6349
+            ELSE 0
+        END AS InteractionFHF,
+        
+        -- Interaction: ILSL * Functional Sum * 2.0529
+        CASE 
+            WHEN c.RESIDENCETYPE IN ('Independent Living', 'Supported Living') THEN
+                (ISNULL(TRY_CAST(q.Q14 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q15 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q16 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q17 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q18 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q19 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q20 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q21 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q22 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q23 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q24 AS float), 0)) * 2.0529
+            ELSE 0
+        END AS InteractionSLF,
+        
+        -- Interaction: ILSL * Behavioral Sum * 1.4501
+        CASE 
+            WHEN c.RESIDENCETYPE IN ('Independent Living', 'Supported Living') THEN
+                (ISNULL(TRY_CAST(q.Q25 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q26 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q27 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q28 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q29 AS float), 0) + 
+                 ISNULL(TRY_CAST(q.Q30 AS float), 0)) * 1.4501
+            ELSE 0
+        END AS InteractionSLB,
+        
+        -- Individual question weights
+        ISNULL(TRY_CAST(q.Q16 AS float), 0) * 2.4984 AS Q16Weight,
+        ISNULL(TRY_CAST(q.Q18 AS float), 0) * 5.8537 AS Q18Weight,
+        ISNULL(TRY_CAST(q.Q20 AS float), 0) * 2.6772 AS Q20Weight,
+        ISNULL(TRY_CAST(q.Q21 AS float), 0) * 2.7878 AS Q21Weight,
+        ISNULL(TRY_CAST(q.Q23 AS float), 0) * 6.3555 AS Q23Weight,
+        ISNULL(TRY_CAST(q.Q28 AS float), 0) * 2.2803 AS Q28Weight,
+        ISNULL(TRY_CAST(q.Q33 AS float), 0) * 1.2233 AS Q33Weight,
+        ISNULL(TRY_CAST(q.Q34 AS float), 0) * 2.1764 AS Q34Weight,
+        ISNULL(TRY_CAST(q.Q36 AS float), 0) * 2.6734 AS Q36Weight,
+        ISNULL(TRY_CAST(q.Q43 AS float), 0) * 1.9304 AS Q43Weight,
+        
+        0 AS TotalSum,  -- Will be calculated next
+        0 AS ISFCal     -- Will be calculated next
+        
+    FROM [dbo].[tbl_QSIAssessments] q
+    INNER JOIN [dbo].[tbl_Consumers] c ON q.CASENO = c.CASENO
+    WHERE (@CaseNo IS NULL OR q.CASENO = @CaseNo);
+    
+    -- Calculate TotalSum (sum of all weighted values)
+    UPDATE #ISFCalculations
+    SET TotalSum = BaseValue + AgeWeight + LivingSettingWeight + BehavioralSum + 
+                   InteractionFHF + InteractionSLF + InteractionSLB +
+                   Q16Weight + Q18Weight + Q20Weight + Q21Weight + Q23Weight + 
+                   Q28Weight + Q33Weight + Q34Weight + Q36Weight + Q43Weight;
+    
+    -- Calculate ISFCal (square of TotalSum)
+    UPDATE #ISFCalculations
+    SET ISFCal = POWER(TotalSum, 2);
+    
+    -- Show debug information if requested
+    IF @Debug = 1
+    BEGIN
+        -- Show calculation breakdown for first 10 records
+        SELECT TOP 10
+            AssessID,
+            CASENO,
+            ResidenceType,
+            CurrentAge,
+            BaseValue,
+            AgeWeight,
+            LivingSettingWeight,
+            BehavioralSum,
+            InteractionFHF,
+            InteractionSLF,
+            InteractionSLB,
+            TotalSum,
+            ISFCal
+        FROM #ISFCalculations
+        ORDER BY AssessID;
+        
+        -- Show residence type mapping summary
+        SELECT 
+            ResidenceType,
+            COUNT(*) AS Count,
+            AVG(LivingSettingWeight) AS AvgLivingSettingWeight,
+            MIN(ISFCal) AS MinISFCal,
+            AVG(ISFCal) AS AvgISFCal,
+            MAX(ISFCal) AS MaxISFCal
+        FROM #ISFCalculations
+        GROUP BY ResidenceType
+        ORDER BY COUNT(*) DESC;
+    END
+    
+    -- Update the main table with calculated ISFCal values
+    UPDATE q
+    SET q.ISFCal = c.ISFCal
+    FROM [dbo].[tbl_QSIAssessments] q
+    INNER JOIN #ISFCalculations c ON q.AssessID = c.AssessID;
+    
+    SET @RowsUpdated = @@ROWCOUNT;
+    
+    -- Clean up
+    DROP TABLE #ISFCalculations;
+    
+    -- Return summary
+    SELECT 
+        @RowsUpdated AS RowsUpdated,
+        DATEDIFF(SECOND, @StartTime, GETDATE()) AS ExecutionTimeSeconds,
+        'ISFCal calculation completed for tbl_QSIAssessments' AS Status;
+    
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Calculate_Model5b_iBudget]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Calculate_Model5b_iBudget]
+    @CaseNo BIGINT = NULL,  -- Optional: Calculate for specific case
+    @BatchSize INT = 1000    -- Optional: Process in batches for large datasets
+AS
+-- =============================================
+-- USAGE EXAMPLES:
+-- =============================================
+-- Calculate for all consumers:
+-- EXEC sp_Calculate_Model5b_iBudget;
+
+-- Calculate for specific consumer:
+-- EXEC sp_Calculate_Model5b_iBudget @CaseNo = 12345;
+
+-- Process in batches:
+-- EXEC sp_Calculate_Model5b_iBudget @BatchSize = 500;
+
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Create temporary table for results
+    IF OBJECT_ID('tempdb..#Model5bResults') IS NOT NULL
+        DROP TABLE #Model5bResults;
+    
+    CREATE TABLE #Model5bResults (
+        CaseNo BIGINT,
+        AssessID BIGINT,
+        ReviewDate DATETIME,
+        LivingSetting VARCHAR(10),
+        Age INT,
+        AgeGroup VARCHAR(20),
+        BSum INT,
+        FSum INT,
+        PSum INT,
+        FHFSum INT,
+        SLFSum INT,
+        SLBSum INT,
+        SqrtPrediction DECIMAL(19, 4),
+        PredictedBudget DECIMAL(19, 2),
+        CalculationDate DATETIME DEFAULT GETDATE()
+    );
+    
+    -- Model 5b Coefficients (from Table 4 in the document)
+    DECLARE @Intercept DECIMAL(19, 4) = 27.5720;
+    DECLARE @Live_ILSL DECIMAL(19, 4) = 35.8220;
+    DECLARE @Live_RH1 DECIMAL(19, 4) = 90.6294;
+    DECLARE @Live_RH2 DECIMAL(19, 4) = 131.7576;
+    DECLARE @Live_RH3 DECIMAL(19, 4) = 209.4558;
+    DECLARE @Live_RH4 DECIMAL(19, 4) = 267.0995;
+    DECLARE @Age21_30 DECIMAL(19, 4) = 47.8473;
+    DECLARE @Age31Plus DECIMAL(19, 4) = 48.9634;
+    DECLARE @BSumCoeff DECIMAL(19, 4) = 0.4954;
+    DECLARE @FHFSumCoeff DECIMAL(19, 4) = 0.6349;
+    DECLARE @SLFSumCoeff DECIMAL(19, 4) = 2.0529;
+    DECLARE @SLBSumCoeff DECIMAL(19, 4) = 1.4501;
+    DECLARE @Q16Coeff DECIMAL(19, 4) = 2.4984;
+    DECLARE @Q18Coeff DECIMAL(19, 4) = 5.8537;
+    DECLARE @Q20Coeff DECIMAL(19, 4) = 2.6772;
+    DECLARE @Q21Coeff DECIMAL(19, 4) = 2.7878;
+    DECLARE @Q23Coeff DECIMAL(19, 4) = 6.3555;
+    DECLARE @Q28Coeff DECIMAL(19, 4) = 2.2803;
+    DECLARE @Q33Coeff DECIMAL(19, 4) = 1.2233;
+    DECLARE @Q34Coeff DECIMAL(19, 4) = 2.1764;
+    DECLARE @Q36Coeff DECIMAL(19, 4) = 2.6734;
+    DECLARE @Q43Coeff DECIMAL(19, 4) = 1.9304;
+    
+    -- Process QSI assessments
+    ;WITH QSIData AS (
+        SELECT 
+            q.CASENO,
+            q.AssessID,
+            q.REVIEWDATE,
+            c.DOB,
+            -- Calculate age
+            DATEDIFF(YEAR, c.DOB, COALESCE(q.REVIEWDATE, GETDATE())) - 
+                CASE 
+                    WHEN DATEADD(YEAR, DATEDIFF(YEAR, c.DOB, COALESCE(q.REVIEWDATE, GETDATE())), c.DOB) > COALESCE(q.REVIEWDATE, GETDATE())
+                    THEN 1 
+                    ELSE 0 
+                END AS Age,
+            
+            -- Determine Living Setting based on actual service codes in your database
+            CASE 
+                -- RH4: Special Medical Home Care (CTEP and Special Medical)
+                WHEN EXISTS (
+                    SELECT 1 FROM dbo.tbl_PlannedServices ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.ServiceCode IN (
+                        'S9122UC',     -- (4240) Special Medical Home Care
+                        'T2025UC',     -- (4600) Enhanced Intensive Behavioral Residential Habilitation, Day
+                        'T2025UCSE',   -- (4602) Enhanced Intensive Behavioral Residential Habilitation Medical, Day
+                        'T2023UCSE',   -- (4603) Enhanced Intensive Behavioral Residential Habilitation Medical, Month
+                        'T2023UCTG'    -- (4601) Enhanced Intensive Behavioral Residential Habilitation, Month
+                    )
+                    AND ps.PlannedServiceStatus IN ('Approved', 'Region Review Approved', 'State Review Approved')
+                ) THEN 'RH4'
+                
+                -- RH3: Intensive Behavioral (Day Level 1-6)
+                WHEN EXISTS (
+                    SELECT 1 FROM dbo.tbl_PlannedServices ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.ServiceCode IN (
+                        'T2016UC',     -- (4500) Residential Habilitation - Intensive Behavioral - Day Level 1
+                        'T2016UCHM',   -- (4501) Residential Habilitation - Intensive Behavioral - Day Level 2
+                        'T2016UCHN',   -- (4502) Residential Habilitation - Intensive Behavioral - Day Level 3
+                        'T2016UCHO',   -- (4503) Residential Habilitation - Intensive Behavioral - Day Level 4
+                        'T2016UCHP',   -- (4504) Residential Habilitation - Intensive Behavioral - Day Level 5
+                        'T2016UCSC'    -- (4505) Residential Habilitation - Intensive Behavioral - Day Level 6
+                    )
+                    AND ps.PlannedServiceStatus = 'Active'
+                ) THEN 'RH3'
+                
+                -- RH2: Behavioral Focus
+                WHEN EXISTS (
+                    SELECT 1 FROM dbo.tbl_PlannedServices ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.ServiceCode IN (
+                        'T2020UC',     -- (4172) Residential Habilitation - Behavioral Focus - Minimal (day)
+                        'T2020UCHI',   -- (4173) Residential Habilitation - Behavioral Focus - Moderate (day)
+                        'T2020UCHM',   -- (4170) Residential Habilitation - Behavioral Focus - Extensive 1 (day)
+                        'T2020UCHN',   -- (4171) Residential Habilitation - Behavioral Focus - Extensive 2 (day)
+                        'T2023UCHM',   -- (4183) Residential Habilitation - Behavioral Focus - Minimal (month)
+                        'T2023UCHN',   -- (4184) Residential Habilitation - Behavioral Focus - Moderate (month)
+                        'T2023UCHO',   -- (4181) Residential Habilitation - Behavioral Focus - Extensive 1 (month)
+                        'T2023UCHP'    -- (4182) Residential Habilitation - Behavioral Focus - Extensive 2 (month)
+                    )
+                    AND ps.PlannedServiceStatus = 'Active'
+                ) THEN 'RH2'
+                
+                -- RH1: Standard Residential Habilitation (including Live In)
+                WHEN EXISTS (
+                    SELECT 1 FROM dbo.tbl_PlannedServices ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.ServiceCode IN (
+                        'H0043UC',     -- (4176) Residential Habilitation - Basic (day)
+                        'H0043UCHI',   -- (4177) Residential Habilitation - Minimal (day)
+                        'H0043UCHM',   -- (4178) Residential Habilitation - Moderate (day)
+                        'H0043UCHN',   -- (4179) Residential Habilitation - Extensive 1 (day)
+                        'H0043UCHO',   -- (4180) Residential Habilitation - Extensive 2 (day)
+                        'H0043UCSC',   -- (4175) Res.Hab. - Live In
+                        'T2023UC',     -- (4186) Residential Habilitation - Basic (month)
+                        'T2023UCSC',   -- (4187) Residential Habilitation - Minimal (month)
+                        'T2023UCU4',   -- (4188) Residential Habilitation - Moderate (month)
+                        'T2023UCU6',   -- (4189) Residential Habilitation - Extensive 1 (month)
+                        'T2023UCU9'    -- (4190) Residential Habilitation - Extensive 2 (month)
+                    )
+                    AND ps.PlannedServiceStatus = 'Active'
+                ) THEN 'RH1'
+                
+                -- ILSL: Supported Living Coaching (97535UC is the main code)
+                WHEN EXISTS (
+                    SELECT 1 FROM dbo.tbl_PlannedServices ps 
+                    WHERE ps.CaseNo = q.CASENO 
+                    AND ps.ServiceCode = '97535UC' -- (4290) Supported Living Coaching
+                    AND ps.PlannedServiceStatus = 'Active'
+                ) THEN 'ILSL'
+                
+                -- Check RESIDENCETYPE as fallback
+                WHEN c.RESIDENCETYPE LIKE '%Residential%' THEN 'RH1'
+                WHEN c.RESIDENCETYPE LIKE '%Behavior%' THEN 'RH2'
+                WHEN c.RESIDENCETYPE LIKE '%Intensive%' THEN 'RH3'
+                WHEN c.RESIDENCETYPE LIKE '%Special Medical%' THEN 'RH4'
+                WHEN c.RESIDENCETYPE LIKE '%Support%' OR c.RESIDENCETYPE LIKE '%Independent%' THEN 'ILSL'
+                
+                -- Default to Family Home if no residential services
+                ELSE 'FH'
+            END AS LivingSetting,
+            
+            -- Convert QSI scores to integers (they're stored as varchar)
+            CAST(ISNULL(q.Q14, '0') AS INT) AS Q14,
+            CAST(ISNULL(q.Q15, '0') AS INT) AS Q15,
+            CAST(ISNULL(q.Q16, '0') AS INT) AS Q16,
+            CAST(ISNULL(q.Q17, '0') AS INT) AS Q17,
+            CAST(ISNULL(q.Q18, '0') AS INT) AS Q18,
+            CAST(ISNULL(q.Q19, '0') AS INT) AS Q19,
+            CAST(ISNULL(q.Q20, '0') AS INT) AS Q20,
+            CAST(ISNULL(q.Q21, '0') AS INT) AS Q21,
+            CAST(ISNULL(q.Q22, '0') AS INT) AS Q22,
+            CAST(ISNULL(q.Q23, '0') AS INT) AS Q23,
+            CAST(ISNULL(q.Q24, '0') AS INT) AS Q24,
+            CAST(ISNULL(q.Q25, '0') AS INT) AS Q25,
+            CAST(ISNULL(q.Q26, '0') AS INT) AS Q26,
+            CAST(ISNULL(q.Q27, '0') AS INT) AS Q27,
+            CAST(ISNULL(q.Q28, '0') AS INT) AS Q28,
+            CAST(ISNULL(q.Q29, '0') AS INT) AS Q29,
+            CAST(ISNULL(q.Q30, '0') AS INT) AS Q30,
+            CAST(ISNULL(q.Q32, '0') AS INT) AS Q32,
+            CAST(ISNULL(q.Q33, '0') AS INT) AS Q33,
+            CAST(ISNULL(q.Q34, '0') AS INT) AS Q34,
+            CAST(ISNULL(q.Q35, '0') AS INT) AS Q35,
+            CAST(ISNULL(q.Q36, '0') AS INT) AS Q36,
+            CAST(ISNULL(q.Q37, '0') AS INT) AS Q37,
+            CAST(ISNULL(q.Q38, '0') AS INT) AS Q38,
+            CAST(ISNULL(q.Q39, '0') AS INT) AS Q39,
+            CAST(ISNULL(q.Q40, '0') AS INT) AS Q40,
+            CAST(ISNULL(q.Q41, '0') AS INT) AS Q41,
+            CAST(ISNULL(q.Q42, '0') AS INT) AS Q42,
+            CAST(ISNULL(q.Q43, '0') AS INT) AS Q43,
+            CAST(ISNULL(q.Q44, '0') AS INT) AS Q44,
+            CAST(ISNULL(q.Q45, '0') AS INT) AS Q45,
+            CAST(ISNULL(q.Q46, '0') AS INT) AS Q46,
+            CAST(ISNULL(q.Q47, '0') AS INT) AS Q47,
+            CAST(ISNULL(q.Q48, '0') AS INT) AS Q48,
+            CAST(ISNULL(q.Q49, '0') AS INT) AS Q49,
+            CAST(ISNULL(q.Q50, '0') AS INT) AS Q50
+        FROM dbo.tbl_QSIAssessments q
+        INNER JOIN dbo.tbl_Consumers c ON q.CASENO = c.CASENO
+        WHERE (@CaseNo IS NULL OR q.CASENO = @CaseNo)
+            -- Remove strict STATUS filter - check for any non-null status
+            AND q.STATUS IS NOT NULL
+            -- Get most recent assessment per consumer
+            AND q.AssessID = (
+                SELECT TOP 1 q2.AssessID 
+                FROM dbo.tbl_QSIAssessments q2 
+                WHERE q2.CASENO = q.CASENO 
+                    AND q2.STATUS IS NOT NULL
+                ORDER BY q2.REVIEWDATE DESC, q2.AssessID DESC
+            )
+    ),
+    CalculatedSums AS (
+        SELECT 
+            *,
+            -- Calculate FSum (Functional Sum: Q14-Q24)
+            Q14 + Q15 + Q16 + Q17 + Q18 + Q19 + Q20 + Q21 + Q22 + Q23 + Q24 AS FSum,
+            -- Calculate BSum (Behavioral Sum: Q25-Q30)
+            Q25 + Q26 + Q27 + Q28 + Q29 + Q30 AS BSum,
+            -- Calculate PSum (Physical Sum: Q32-Q50)
+            Q32 + Q33 + Q34 + Q35 + Q36 + Q37 + Q38 + Q39 + Q40 + 
+            Q41 + Q42 + Q43 + Q44 + Q45 + Q46 + Q47 + Q48 + Q49 + Q50 AS PSum,
+            -- Determine age group
+            CASE 
+                WHEN Age < 21 THEN 'Under21'
+                WHEN Age >= 21 AND Age <= 30 THEN 'Age21-30'
+                ELSE 'Age31Plus'
+            END AS AgeGroup
+        FROM QSIData
+    ),
+    InteractionTerms AS (
+        SELECT 
+            *,
+            -- Calculate interaction terms
+            CASE WHEN LivingSetting = 'FH' THEN FSum ELSE 0 END AS FHFSum,
+            CASE WHEN LivingSetting = 'ILSL' THEN FSum ELSE 0 END AS SLFSum,
+            CASE WHEN LivingSetting = 'ILSL' THEN BSum ELSE 0 END AS SLBSum
+        FROM CalculatedSums
+    )
+    INSERT INTO #Model5bResults (
+        CaseNo, AssessID, ReviewDate, LivingSetting, Age, AgeGroup, 
+        BSum, FSum, PSum, FHFSum, SLFSum, SLBSum, 
+        SqrtPrediction, PredictedBudget
+    )
+    SELECT 
+        CASENO,
+        AssessID,
+        REVIEWDATE,
+        LivingSetting,
+        Age,
+        AgeGroup,
+        BSum,
+        FSum,
+        PSum,
+        FHFSum,
+        SLFSum,
+        SLBSum,
+        -- Calculate square-root scale prediction
+        @Intercept +
+        -- Living setting effects (FH is reference level with coefficient 0)
+        CASE LivingSetting
+            WHEN 'ILSL' THEN @Live_ILSL
+            WHEN 'RH1' THEN @Live_RH1
+            WHEN 'RH2' THEN @Live_RH2
+            WHEN 'RH3' THEN @Live_RH3
+            WHEN 'RH4' THEN @Live_RH4
+            ELSE 0 -- FH (reference)
+        END +
+        -- Age effects (Under 21 is reference level with coefficient 0)
+        CASE AgeGroup
+            WHEN 'Age21-30' THEN @Age21_30
+            WHEN 'Age31Plus' THEN @Age31Plus
+            ELSE 0 -- Under 21 (reference)
+        END +
+        -- Sum scores and interaction terms
+        (@BSumCoeff * BSum) +
+        (@FHFSumCoeff * FHFSum) +
+        (@SLFSumCoeff * SLFSum) +
+        (@SLBSumCoeff * SLBSum) +
+        -- QSI question effects
+        (@Q16Coeff * Q16) +
+        (@Q18Coeff * Q18) +
+        (@Q20Coeff * Q20) +
+        (@Q21Coeff * Q21) +
+        (@Q23Coeff * Q23) +
+        (@Q28Coeff * Q28) +
+        (@Q33Coeff * Q33) +
+        (@Q34Coeff * Q34) +
+        (@Q36Coeff * Q36) +
+        (@Q43Coeff * Q43) AS SqrtPrediction,
+        -- Square the prediction to get budget amount
+        POWER(
+            @Intercept +
+            CASE LivingSetting
+                WHEN 'ILSL' THEN @Live_ILSL
+                WHEN 'RH1' THEN @Live_RH1
+                WHEN 'RH2' THEN @Live_RH2
+                WHEN 'RH3' THEN @Live_RH3
+                WHEN 'RH4' THEN @Live_RH4
+                ELSE 0
+            END +
+            CASE AgeGroup
+                WHEN 'Age21-30' THEN @Age21_30
+                WHEN 'Age31Plus' THEN @Age31Plus
+                ELSE 0
+            END +
+            (@BSumCoeff * BSum) +
+            (@FHFSumCoeff * FHFSum) +
+            (@SLFSumCoeff * SLFSum) +
+            (@SLBSumCoeff * SLBSum) +
+            (@Q16Coeff * Q16) +
+            (@Q18Coeff * Q18) +
+            (@Q20Coeff * Q20) +
+            (@Q21Coeff * Q21) +
+            (@Q23Coeff * Q23) +
+            (@Q28Coeff * Q28) +
+            (@Q33Coeff * Q33) +
+            (@Q34Coeff * Q34) +
+            (@Q36Coeff * Q36) +
+            (@Q43Coeff * Q43), 
+            2
+        ) AS PredictedBudget
+    FROM InteractionTerms;
+    
+    -- Return results
+    -- Join with consumer contacts if names are needed
+    SELECT 
+        r.CaseNo,
+        -- Get primary contact names if available
+        cc.FIRSTNAME AS ContactFirstName,
+        cc.LASTNAME AS ContactLastName,
+        c.PRIMARYWORKER AS PrimaryWorker,
+        c.County,
+        c.Region,
+        c.RESIDENCETYPE,
+        r.AssessID,
+        r.ReviewDate,
+        r.LivingSetting AS CalculatedLivingSetting,
+        r.Age,
+        r.AgeGroup,
+        r.BSum AS BehavioralSum,
+        r.FSum AS FunctionalSum,
+        r.PSum AS PhysicalSum,
+        r.FHFSum AS FamilyHomeFunctionalInteraction,
+        r.SLFSum AS ILSLFunctionalInteraction,
+        r.SLBSum AS ILSLBehavioralInteraction,
+        r.SqrtPrediction AS SquareRootPrediction,
+        r.PredictedBudget AS PredictedBudgetAmount,
+        r.CalculationDate
+    FROM #Model5bResults r
+    INNER JOIN dbo.tbl_Consumers c ON r.CaseNo = c.CASENO
+    LEFT JOIN dbo.tbl_ConsumerContacts cc ON c.CASENO = cc.CASENO 
+        AND cc.Active = 1
+        AND cc.RELATIONSHIP IN ('Self', 'Legal Guardian', 'Parent')
+    ORDER BY r.CaseNo;
+    
+    -- Store results in permanent table for tracking with RunID
+    IF OBJECT_ID('dbo.tbl_Model5b_Predictions', 'U') IS NOT NULL
+    BEGIN
+        DECLARE @RunID bigint
+        SELECT @RunID = MAX(RunID) FROM tbl_Model5b_Predictions
+        SET @RunID = ISNULL(@RunID, 0) + 1
+        
+        INSERT INTO dbo.tbl_Model5b_Predictions
+        SELECT *, GETDATE() AS CreatedDate, SYSTEM_USER AS CreatedBy, @RunID AS RunID
+        FROM #Model5bResults;
+    END
+    
+    -- Clean up
+    DROP TABLE #Model5bResults;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetiBudgetModelData]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*CREATE NONCLUSTERED INDEX IX_Consumers_Status_CaseNo 
+ON tbl_Consumers(Status, CASENO) INCLUDE (DOB, RESIDENCETYPE);
+
+CREATE NONCLUSTERED INDEX IX_Claims_CaseNo_ServiceDate 
+ON tbl_Claims_MMIS(CaseNo, ServiceDate) INCLUDE (PaidAmt);
+
+CREATE NONCLUSTERED INDEX IX_QSI_CaseNo_ApproveDate 
+ON tbl_QSIAssessments(CASENO, APPROVEDATE) WHERE STATUS = 'Complete';
+*/
+
+/*
+================================================================================
+Stored Procedure: sp_GetiBudgetModelData
+Purpose: Extract standardized dataset for all iBudget models (1-10)
+Database: APD
+Author: iBudget Algorithm Study Team
+Created: 2024
+================================================================================
+This procedure returns all data needed for the 10 alternative models.
+Individual models can select which columns to use.
+================================================================================
+*/
+
+CREATE   PROCEDURE [dbo].[sp_GetiBudgetModelData]
+    @FiscalYearStart INT = 2019,
+    @FiscalYearEnd INT = 2021,
+    @IncludeDetailedDiagnostics BIT = 1
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Declare fiscal year boundaries
+    DECLARE @FY_Table TABLE (
+        FiscalYear INT,
+        StartDate DATE,
+        EndDate DATE
+    );
+    
+    -- Populate fiscal years (Sept 1 - Aug 31)
+    DECLARE @Year INT = @FiscalYearStart;
+    WHILE @Year <= @FiscalYearEnd
+    BEGIN
+        INSERT INTO @FY_Table (FiscalYear, StartDate, EndDate)
+        VALUES (
+            @Year,
+            CAST(CONCAT(@Year - 1, '-09-01') AS DATE),
+            CAST(CONCAT(@Year, '-08-31') AS DATE)
+        );
+        SET @Year = @Year + 1;
+    END;
+    
+    -- CTE for Consumer-Year combinations
+    WITH ConsumerYearBase AS (
+        SELECT 
+            c.CASENO,
+            c.Id as ConsumerID,
+            fy.FiscalYear,
+            fy.StartDate as FY_StartDate,
+            fy.EndDate as FY_EndDate,
+            c.DOB,
+            DATEDIFF(YEAR, c.DOB, fy.StartDate) as Age,
+            c.GENDER,
+            c.RACE,
+            c.ETHNICITYLOOKUP as Ethnicity,
+            c.RESIDENCETYPE,
+            c.County,
+            c.District,
+            c.Region,
+            c.PrimaryDiagnosis,
+            c.SecondaryDiagnosis,
+            c.OtherDiagnosis,
+            c.MentalHealthDiag1,
+            c.MentalHealthDiag2,
+            c.DevelopmentalDisability,
+            c.OPENDATE,
+            c.CLOSEDATE,
+            c.MedicaidId,
+            c.PRIMARYWORKER,
+            c.CBCFlag,
+            c.Competency,
+            
+            -- Calculate days in system during fiscal year
+            CASE 
+                WHEN c.OPENDATE > fy.EndDate OR 
+                     (c.CLOSEDATE IS NOT NULL AND c.CLOSEDATE < fy.StartDate) 
+                THEN 0
+                ELSE DATEDIFF(DAY,
+                    CASE 
+                        WHEN c.OPENDATE > fy.StartDate THEN c.OPENDATE 
+                        ELSE fy.StartDate 
+                    END,
+                    CASE 
+                        WHEN c.CLOSEDATE IS NULL OR c.CLOSEDATE > fy.EndDate THEN fy.EndDate 
+                        ELSE c.CLOSEDATE 
+                    END
+                ) + 1
+            END as DaysInSystem,
+            
+            -- Entry/Exit timing flags
+            CASE 
+                WHEN c.OPENDATE > fy.StartDate AND 
+                     DATEDIFF(DAY, fy.StartDate, c.OPENDATE) > 30 
+                THEN 1 ELSE 0 
+            END as LateEntry,
+            
+            CASE 
+                WHEN c.CLOSEDATE IS NOT NULL AND 
+                     c.CLOSEDATE < fy.EndDate AND
+                     DATEDIFF(DAY, c.CLOSEDATE, fy.EndDate) > 30 
+                THEN 1 ELSE 0 
+            END as EarlyExit
+            
+        FROM tbl_Consumers c
+        CROSS JOIN @FY_Table fy
+        WHERE c.Status = 'ACTIVE' 
+            OR (c.Status = 'CLOSED' AND c.CLOSEDATE >= fy.StartDate)
+    ),
+    
+    -- CTE for QSI Assessment Data
+    QSIAssessmentData AS (
+        SELECT 
+            q.CASENO,
+            q.AssessID,
+            q.APPROVEDATE,
+            q.STATUS as QSI_Status,
+            
+            -- Individual QSI Questions (Q14-Q35 are primary assessment items)
+            ISNULL(TRY_CAST(q.Q14 as INT), 0) as Q14,  -- Vision
+            ISNULL(TRY_CAST(q.Q15 as INT), 0) as Q15,  -- Hearing
+            ISNULL(TRY_CAST(q.Q16 as INT), 0) as Q16,  -- Eating
+            ISNULL(TRY_CAST(q.Q17 as INT), 0) as Q17,  -- Ambulation
+            ISNULL(TRY_CAST(q.Q18 as INT), 0) as Q18,  -- Transfers
+            ISNULL(TRY_CAST(q.Q19 as INT), 0) as Q19,  -- Toileting
+            ISNULL(TRY_CAST(q.Q20 as INT), 0) as Q20,  -- Hygiene
+            ISNULL(TRY_CAST(q.Q21 as INT), 0) as Q21,  -- Dressing
+            ISNULL(TRY_CAST(q.Q22 as INT), 0) as Q22,  -- Communications
+            ISNULL(TRY_CAST(q.Q23 as INT), 0) as Q23,  -- Self-Protection
+            ISNULL(TRY_CAST(q.Q24 as INT), 0) as Q24,  -- Evacuation ability
+            
+            ISNULL(TRY_CAST(q.Q25 as INT), 0) as Q25,  -- Hurtful to Self/Self Injurious
+            ISNULL(TRY_CAST(q.Q26 as INT), 0) as Q26,  -- Aggressive/Hurtful to Others
+            ISNULL(TRY_CAST(q.Q27 as INT), 0) as Q27,  -- Destructive to Property
+            ISNULL(TRY_CAST(q.Q28 as INT), 0) as Q28,  -- Inappropriate Sexual Behavior
+            ISNULL(TRY_CAST(q.Q29 as INT), 0) as Q29,  -- Running Away
+            ISNULL(TRY_CAST(q.Q30 as INT), 0) as Q30,  -- Other Behaviors
+            
+            ISNULL(TRY_CAST(q.Q31a as INT), 0) as Q31a,
+            ISNULL(TRY_CAST(q.Q31b as INT), 0) as Q31b,
+            ISNULL(TRY_CAST(q.Q32 as INT), 0) as Q32,  -- Injury from Self-Injurious
+            ISNULL(TRY_CAST(q.Q33 as INT), 0) as Q33,  -- Injury from Aggression
+            ISNULL(TRY_CAST(q.Q34 as INT), 0) as Q34,  -- Mechanical Restraints
+            ISNULL(TRY_CAST(q.Q35 as INT), 0) as Q35,  -- Emergency Chemical Restraint
+            
+            -- Additional QSI Questions (Q36-Q50)
+            ISNULL(TRY_CAST(q.Q36 as INT), 0) as Q36,  -- Psychotropic Medications
+            ISNULL(TRY_CAST(q.Q37 as INT), 0) as Q37,  -- Gastrointestinal Conditions
+            ISNULL(TRY_CAST(q.Q38 as INT), 0) as Q38,  -- Seizures
+            ISNULL(TRY_CAST(q.Q39 as INT), 0) as Q39,  -- Anti-Epileptic Medication
+            ISNULL(TRY_CAST(q.Q40 as INT), 0) as Q40,  -- Skin Breakdown
+            ISNULL(TRY_CAST(q.Q41 as INT), 0) as Q41,  -- Bowel Function
+            ISNULL(TRY_CAST(q.Q42 as INT), 0) as Q42,  -- Nutrition
+            ISNULL(TRY_CAST(q.Q43 as INT), 0) as Q43,  -- Physician Treatment
+            ISNULL(TRY_CAST(q.Q44 as INT), 0) as Q44,  -- Chronic Healthcare Needs
+            ISNULL(TRY_CAST(q.Q45 as INT), 0) as Q45,  -- Individual's Injuries
+            ISNULL(TRY_CAST(q.Q46 as INT), 0) as Q46,  -- Falls
+            ISNULL(TRY_CAST(q.Q47 as INT), 0) as Q47,  -- Physician Visits/Nursing
+            ISNULL(TRY_CAST(q.Q48 as INT), 0) as Q48,  -- Emergency Room Visits
+            ISNULL(TRY_CAST(q.Q49 as INT), 0) as Q49,  -- Hospital Admission
+            ISNULL(TRY_CAST(q.Q50 as INT), 0) as Q50,  -- Days Missed
+            
+            -- Calculate Functional Sum (Q14-Q24)
+            (ISNULL(TRY_CAST(q.Q14 as INT), 0) + ISNULL(TRY_CAST(q.Q15 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q16 as INT), 0) + ISNULL(TRY_CAST(q.Q17 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q18 as INT), 0) + ISNULL(TRY_CAST(q.Q19 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q20 as INT), 0) + ISNULL(TRY_CAST(q.Q21 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q22 as INT), 0) + ISNULL(TRY_CAST(q.Q23 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q24 as INT), 0)) as FSum,
+             
+            -- Calculate Behavioral Sum (Q25-Q30)
+            (ISNULL(TRY_CAST(q.Q25 as INT), 0) + ISNULL(TRY_CAST(q.Q26 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q27 as INT), 0) + ISNULL(TRY_CAST(q.Q28 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q29 as INT), 0) + ISNULL(TRY_CAST(q.Q30 as INT), 0)) as BSum,
+             
+            -- Calculate Physical Sum (Q32-Q50)
+            (ISNULL(TRY_CAST(q.Q32 as INT), 0) + ISNULL(TRY_CAST(q.Q33 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q34 as INT), 0) + ISNULL(TRY_CAST(q.Q35 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q36 as INT), 0) + ISNULL(TRY_CAST(q.Q37 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q38 as INT), 0) + ISNULL(TRY_CAST(q.Q39 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q40 as INT), 0) + ISNULL(TRY_CAST(q.Q41 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q42 as INT), 0) + ISNULL(TRY_CAST(q.Q43 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q44 as INT), 0) + ISNULL(TRY_CAST(q.Q45 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q46 as INT), 0) + ISNULL(TRY_CAST(q.Q47 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q48 as INT), 0) + ISNULL(TRY_CAST(q.Q49 as INT), 0) + 
+             ISNULL(TRY_CAST(q.Q50 as INT), 0)) as PSum,
+             
+            -- QSI Level Scores
+            q.FLEVEL,  -- Functional Level
+            q.BLEVEL,  -- Behavioral Level  
+            q.PLEVEL,  -- Physical Level
+            q.OLEVEL,  -- Overall Level
+            q.LOSRI,   -- Level of Support Rating
+            
+            ROW_NUMBER() OVER (PARTITION BY q.CASENO ORDER BY q.APPROVEDATE DESC) as QSI_Rank
+            
+        FROM tbl_QSIAssessments q
+        WHERE q.STATUS = 'Complete'
+    ),
+    
+    -- CTE for Claims/Cost Data
+    ClaimsAggregated AS (
+        SELECT 
+            cl.CaseNo,
+            fy.FiscalYear,
+            SUM(cl.PaidAmt) as TotalPaidClaims,
+            COUNT(DISTINCT cl.ServiceDate) as ServiceDays,
+            COUNT(DISTINCT cl.ProcCode) as UniqueProcedures,
+            COUNT(DISTINCT cl.ProviderMedcId) as UniqueProviders,
+            MIN(cl.ServiceDate) as FirstServiceDate,
+            MAX(cl.ServiceDate) as LastServiceDate,
+            SUM(CASE WHEN cl.PaidAmt > 0 THEN cl.PaidAmt ELSE 0 END) as PositivePaidAmount,
+            SUM(CASE WHEN cl.PaidAmt < 0 THEN cl.PaidAmt ELSE 0 END) as NegativeAdjustments,
+            COUNT(*) as TotalClaimLines,
+            AVG(CAST(cl.Age as FLOAT)) as AvgAge
+            
+        FROM tbl_Claims_MMIS cl
+        INNER JOIN @FY_Table fy ON 
+            cl.ServiceDate >= fy.StartDate AND 
+            cl.ServiceDate <= fy.EndDate
+		WHERE cl.Age IS NOT NULL 
+        GROUP BY cl.CaseNo, fy.FiscalYear
+    ),
+    
+    -- CTE for Budget Data (if needed by some models)
+    BudgetData AS (
+        SELECT 
+            b.CaseNo,
+            b.FiscalYear,
+            b.BudgetAmount,
+            b.AnnualizedAmount,
+            b.AmountEncumbered,
+            b.BudgetType,
+            b.BudgetStatus
+        FROM tbl_Budgets b
+        WHERE b.BudgetStatus ='Budget Approved'
+    ),
+    
+    -- CTE to identify consumers with multiple QSI assessments in a fiscal year
+    MultipleQSIFlags AS (
+        SELECT 
+            q.CASENO,
+            fy.FiscalYear,
+            COUNT(DISTINCT q.AssessID) as QSI_Count,
+            CASE WHEN COUNT(DISTINCT q.AssessID) > 1 THEN 1 ELSE 0 END as HasMultipleQSI
+        FROM tbl_QSIAssessments q
+        INNER JOIN @FY_Table fy ON 
+            q.APPROVEDATE >= DATEADD(MONTH, -3, fy.StartDate) AND 
+            q.APPROVEDATE <= DATEADD(MONTH, 3, fy.EndDate)
+        WHERE q.STATUS = 'Complete'
+        GROUP BY q.CASENO, fy.FiscalYear
+    )
+    
+    -- Main SELECT combining all data
+    SELECT 
+        -- Consumer Demographics
+        cyb.CASENO,
+        cyb.ConsumerID,
+        cyb.FiscalYear,
+        cyb.Age,
+        cyb.GENDER,
+        cyb.RACE,
+        cyb.Ethnicity,
+        cyb.County,
+        cyb.District,
+        cyb.Region,
+        
+        -- Diagnosis Information
+        cyb.PrimaryDiagnosis,
+        cyb.SecondaryDiagnosis,
+        cyb.OtherDiagnosis,
+        cyb.MentalHealthDiag1,
+        cyb.MentalHealthDiag2,
+        cyb.DevelopmentalDisability,
+        
+        -- Living Setting (Original)
+        cyb.RESIDENCETYPE,
+        
+        -- Aggregated Living Setting (6 levels for models)
+        /*
+        CASE 
+            WHEN cyb.RESIDENCETYPE = 'FH' OR cyb.RESIDENCETYPE LIKE 'Family%' 
+                THEN 'FH'
+            WHEN cyb.RESIDENCETYPE IN ('ILSL', 'NC', 'LTRC', 'GH') OR 
+                 cyb.RESIDENCETYPE LIKE 'Independent%' OR 
+                 cyb.RESIDENCETYPE LIKE 'Supported%' OR
+                 cyb.RESIDENCETYPE LIKE 'Group%'
+                THEN 'ILSL'
+            WHEN cyb.RESIDENCETYPE IN ('RH1', 'RH2', 'RH3', 'RH4', 'RH5', 'RHLI') OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Standard%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Basic%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Minimal%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Moderate%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Extensive 1%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Extensive 2%' OR
+                 cyb.RESIDENCETYPE LIKE 'Residential Habilitation%Live In%'
+                THEN 'RH1'
+            WHEN cyb.RESIDENCETYPE LIKE '%Behavior Focus%' OR 
+                 cyb.RESIDENCETYPE LIKE '%Behavioral Focus%' OR
+                 cyb.RESIDENCETYPE IN ('RHBF1', 'RHBF2', 'RHBF3', 'RHBF4') 
+                THEN 'RH2'
+            WHEN cyb.RESIDENCETYPE LIKE '%Intensive Behavior%' OR 
+                 cyb.RESIDENCETYPE LIKE '%Intensive Behavioral%' OR
+                 cyb.RESIDENCETYPE IN ('RHIB1', 'RHIB2', 'RHIB3', 'RHIB4') 
+                THEN 'RH3'
+            WHEN cyb.RESIDENCETYPE LIKE '%CTEP%' OR 
+                 cyb.RESIDENCETYPE LIKE '%Special Medical%' OR
+                 cyb.RESIDENCETYPE = 'SHC' OR
+                 cyb.RESIDENCETYPE IN ('RHCTEP1', 'RHCTEP2', 'RHCTEP3', 'RHCTEP4') 
+                THEN 'RH4'
+            ELSE 'FH'  -- Default to Family Home if not classified
+        END as LivingSetting,
+        */
+        CASE 
+            -- Family Home
+            WHEN cyb.RESIDENCETYPE LIKE 'Family Home%' 
+                THEN 'FH'
+            
+            -- Independent/Supported Living
+            WHEN cyb.RESIDENCETYPE LIKE 'Supported Living%' 
+                OR cyb.RESIDENCETYPE LIKE 'Independent Living%'
+                THEN 'ILSL'
+            
+            -- RH1: Small Group Homes (Standard)
+            WHEN cyb.RESIDENCETYPE LIKE '%Small Group Home%'
+                AND cyb.RESIDENCETYPE NOT LIKE '%Behavior%'
+                THEN 'RH1'
+            
+            -- RH2: Behavior Focus
+            WHEN cyb.RESIDENCETYPE LIKE '%Behavior%'
+                OR cyb.RESIDENCETYPE LIKE '%Residential Habilitation%'
+                THEN 'RH2'
+            
+            -- RH3: Large Group Homes / ICF
+            WHEN cyb.RESIDENCETYPE LIKE '%Large Group Home%'
+                OR cyb.RESIDENCETYPE LIKE '%ICF%'
+                THEN 'RH3'
+            
+            -- RH4: Special Medical / Nursing
+            WHEN cyb.RESIDENCETYPE LIKE '%Nursing%'
+                OR cyb.RESIDENCETYPE LIKE '%Assisted Living%'
+                THEN 'RH4'
+            
+            ELSE 'FH'
+        END as LivingSetting,
+        
+        -- Age Groups (3 categories)
+        CASE 
+            WHEN cyb.Age <= 20 THEN 'Age3_20'
+            WHEN cyb.Age BETWEEN 21 AND 30 THEN 'Age21_30'
+            ELSE 'Age31Plus'
+        END as AgeGroup,
+        
+        -- QSI Assessment Data (all questions)
+        qsi.Q14, qsi.Q15, qsi.Q16, qsi.Q17, qsi.Q18, qsi.Q19, qsi.Q20,
+        qsi.Q21, qsi.Q22, qsi.Q23, qsi.Q24, qsi.Q25, qsi.Q26, qsi.Q27,
+        qsi.Q28, qsi.Q29, qsi.Q30, qsi.Q31a, qsi.Q31b, qsi.Q32, qsi.Q33,
+        qsi.Q34, qsi.Q35, qsi.Q36, qsi.Q37, qsi.Q38, qsi.Q39, qsi.Q40,
+        qsi.Q41, qsi.Q42, qsi.Q43, qsi.Q44, qsi.Q45, qsi.Q46, qsi.Q47,
+        qsi.Q48, qsi.Q49, qsi.Q50,
+        
+        -- QSI Summary Scores
+        qsi.FSum,  -- Functional Sum (Q14-Q24)
+        qsi.BSum,  -- Behavioral Sum (Q25-Q30)
+        qsi.PSum,  -- Physical Sum (Q32-Q50)
+        
+        -- QSI Levels
+        qsi.FLEVEL,
+        qsi.BLEVEL,
+        qsi.PLEVEL,
+        qsi.OLEVEL,
+        qsi.LOSRI,
+        
+        -- Cost/Claims Data
+        ISNULL(cl.TotalPaidClaims, 0) as TotalCost,
+        ISNULL(cl.PositivePaidAmount, 0) as PositiveCost,
+        ISNULL(cl.NegativeAdjustments, 0) as Adjustments,
+        ISNULL(cl.ServiceDays, 0) as ServiceDays,
+        ISNULL(cl.UniqueProcedures, 0) as UniqueProcedures,
+        ISNULL(cl.UniqueProviders, 0) as UniqueProviders,
+        ISNULL(cl.TotalClaimLines, 0) as ClaimLines,
+        ISNULL(cl.AvgAge, 0) as AvgAge, 
+        
+        -- Budget Data (optional for some models)
+        ISNULL(bd.BudgetAmount, 0) as BudgetAmount,
+        ISNULL(bd.AnnualizedAmount, 0) as AnnualizedBudget,
+        
+        -- System Participation
+        cyb.DaysInSystem,
+        cyb.LateEntry,
+        cyb.EarlyExit,
+        
+        -- Data Quality Flags
+        CASE WHEN qsi.CASENO IS NULL THEN 1 ELSE 0 END as MissingQSI,
+        ISNULL(mq.HasMultipleQSI, 0) as HasMultipleQSI,
+        CASE WHEN ISNULL(cl.TotalPaidClaims, 0) <= 0 THEN 1 ELSE 0 END as NoPositiveCost,
+        CASE WHEN cyb.DaysInSystem < 30 THEN 1 ELSE 0 END as InsufficientDays,
+        
+        -- Usability Flag (for exclusion criteria)
+        CASE 
+            WHEN cyb.DaysInSystem >= 30 AND
+                 cyb.LateEntry = 0 AND
+                 cyb.EarlyExit = 0 AND
+                 qsi.CASENO IS NOT NULL AND
+                 ISNULL(mq.HasMultipleQSI, 0) = 0 AND
+                 ISNULL(cl.TotalPaidClaims, 0) > 0 AND
+                 ISNULL(cl.ServiceDays, 0) >= 30
+            THEN 1 
+            ELSE 0 
+        END as Usable,
+        
+        -- Additional metadata
+        cyb.FY_StartDate,
+        cyb.FY_EndDate,
+        qsi.APPROVEDATE as QSI_ApprovalDate,
+        cl.FirstServiceDate,
+        cl.LastServiceDate
+        
+    FROM ConsumerYearBase cyb
+    LEFT JOIN QSIAssessmentData qsi ON 
+        cyb.CASENO = qsi.CASENO AND 
+        qsi.QSI_Rank = 1  -- Most recent QSI
+    LEFT JOIN ClaimsAggregated cl ON 
+        cyb.CASENO = cl.CaseNo AND 
+        cyb.FiscalYear = cl.FiscalYear
+    LEFT JOIN BudgetData bd ON 
+        cyb.CASENO = bd.CaseNo AND 
+        CAST(cyb.FiscalYear as VARCHAR(10)) = bd.FiscalYear
+    LEFT JOIN MultipleQSIFlags mq ON 
+        cyb.CASENO = mq.CASENO AND 
+        cyb.FiscalYear = mq.FiscalYear
+    WHERE 
+        cyb.DaysInSystem > 0  -- Consumer was in system during fiscal year
+		and qsi.Q14 is not null
+    ORDER BY 
+        cyb.CASENO, 
+        cyb.FiscalYear;
+        
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Outliers]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Stored Procedure: sp_Outliers
+-- Purpose: Analyze data quality and identify exclusions for iBudget model calibration
+-- Compatible with SQL Server 2008 and later
+-- =============================================
+
+create PROCEDURE [dbo].[sp_Outliers]
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- =============================================
+    -- CONFIGURATION SECTION
+    -- =============================================
+    DECLARE @StartMonth INT = 9  -- September
+    DECLARE @StartDay INT = 1
+    
+    -- =============================================
+    -- Clean up any existing temp tables
+    -- =============================================
+    IF OBJECT_ID('tempdb..#FiscalYearClaims') IS NOT NULL
+        DROP TABLE #FiscalYearClaims
+    
+    IF OBJECT_ID('tempdb..#ConsumerYearSummary') IS NOT NULL
+        DROP TABLE #ConsumerYearSummary
+    
+    IF OBJECT_ID('tempdb..#MidYearQSI') IS NOT NULL
+        DROP TABLE #MidYearQSI
+    
+    IF OBJECT_ID('tempdb..#ExclusionAnalysis') IS NOT NULL
+        DROP TABLE #ExclusionAnalysis
+    
+    -- =============================================
+    -- Assign fiscal years to all claims
+    -- =============================================
+    SELECT 
+        c.CaseNo,
+        c.ServiceDate,
+        c.PaidAmt,
+        CASE 
+            WHEN MONTH(c.ServiceDate) >= @StartMonth 
+            THEN YEAR(c.ServiceDate)
+            ELSE YEAR(c.ServiceDate) - 1
+        END AS FiscalYear,
+        q.APPROVEDATE as QSI_Date,
+        q.QSI_RowNum
+    INTO #FiscalYearClaims
+    FROM tbl_Claims_MMIS c
+    LEFT JOIN (
+        SELECT 
+            CaseNo,
+            APPROVEDATE,
+            ROW_NUMBER() OVER (PARTITION BY CaseNo, APPROVEDATE ORDER BY APPROVEDATE) as QSI_RowNum,
+            ROW_NUMBER() OVER (PARTITION BY CaseNo ORDER BY APPROVEDATE DESC) as rn
+        FROM tbl_QSIAssessments
+    ) q ON c.CaseNo = q.CaseNo 
+        AND q.rn = 1
+        AND q.APPROVEDATE <= c.ServiceDate
+    
+    -- =============================================
+    -- Create consumer-fiscal year summary
+    -- =============================================
+    SELECT 
+        CaseNo,
+        FiscalYear,
+        COUNT(DISTINCT ServiceDate) as ServiceDays,
+        SUM(PaidAmt) as TotalPaidAmt,
+        MIN(ServiceDate) as FirstServiceDate,
+        MAX(ServiceDate) as LastServiceDate,
+        DATEDIFF(DAY, 
+            CONVERT(DATE, CAST(FiscalYear AS VARCHAR(4)) + '-09-01'),
+            MIN(ServiceDate)) as DaysFromFYStart,
+        DATEDIFF(DAY, 
+            MAX(ServiceDate),
+            DATEADD(DAY, -1, CONVERT(DATE, CAST(FiscalYear + 1 AS VARCHAR(4)) + '-09-01'))) as DaysToFYEnd,
+        COUNT(DISTINCT QSI_Date) as QSI_Count
+    INTO #ConsumerYearSummary
+    FROM #FiscalYearClaims
+    GROUP BY CaseNo, FiscalYear
+    
+    -- =============================================
+    -- Identify mid-year QSI changes
+    -- =============================================
+    ;WITH QSI_FY AS (
+        SELECT 
+            CaseNo,
+            APPROVEDATE,
+            CASE 
+                WHEN MONTH(APPROVEDATE) >= @StartMonth 
+                THEN YEAR(APPROVEDATE)
+                ELSE YEAR(APPROVEDATE) - 1
+            END AS FiscalYear
+        FROM tbl_QSIAssessments
+    )
+    SELECT 
+        CaseNo,
+        FiscalYear,
+        COUNT(DISTINCT APPROVEDATE) as QSI_Changes_In_Year
+    INTO #MidYearQSI
+    FROM QSI_FY
+    GROUP BY CaseNo, FiscalYear
+    HAVING COUNT(DISTINCT APPROVEDATE) > 1
+    
+    -- =============================================
+    -- Create exclusion flags
+    -- =============================================
+    SELECT 
+        cys.*,
+        CASE WHEN ISNULL(mq.QSI_Changes_In_Year, 0) > 1 THEN 1 ELSE 0 END as Flag_MidYearQSI,
+        CASE WHEN cys.DaysFromFYStart > 30 THEN 1 ELSE 0 END as Flag_LateEntry,
+        CASE WHEN cys.DaysToFYEnd > 30 THEN 1 ELSE 0 END as Flag_EarlyExit,
+        CASE WHEN ISNULL(cys.TotalPaidAmt, 0) = 0 THEN 1 ELSE 0 END as Flag_NoCosts,
+        CASE WHEN ISNULL(cys.TotalPaidAmt, 0) < 0 THEN 1 ELSE 0 END as Flag_NegativeCosts,
+        CASE WHEN cys.ServiceDays < 30 THEN 1 ELSE 0 END as Flag_InsufficientService,
+        CASE WHEN ISNULL(cys.QSI_Count, 0) = 0 THEN 1 ELSE 0 END as Flag_NoQSI
+    INTO #ExclusionAnalysis
+    FROM #ConsumerYearSummary cys
+    LEFT JOIN #MidYearQSI mq 
+        ON cys.CaseNo = mq.CaseNo 
+        AND cys.FiscalYear = mq.FiscalYear
+    
+    -- =============================================
+    -- RESULT SET 1: Overall Summary Statistics
+    -- =============================================
+    DECLARE @RecordCount INT
+    SELECT @RecordCount = COUNT(*) FROM #ExclusionAnalysis
+    
+    SELECT 
+        'Overall Statistics' as ReportSection,
+        COUNT(DISTINCT CaseNo) as TotalUniqueConsumers,
+        COUNT(*) as TotalConsumerYears,
+        COUNT(DISTINCT FiscalYear) as TotalFiscalYears,
+        MIN(FiscalYear) as EarliestFiscalYear,
+        MAX(FiscalYear) as LatestFiscalYear,
+        AVG(TotalPaidAmt) as AvgAnnualCost,
+        STDEV(TotalPaidAmt) as StDevAnnualCost,
+        MIN(TotalPaidAmt) as MinAnnualCost,
+        MAX(TotalPaidAmt) as MaxAnnualCost,
+        (SELECT MAX(TotalPaidAmt) FROM 
+            (SELECT TOP 25 PERCENT TotalPaidAmt 
+             FROM #ExclusionAnalysis 
+             WHERE TotalPaidAmt IS NOT NULL
+             ORDER BY TotalPaidAmt) AS Q1) as Q1_Cost,
+        (SELECT MAX(TotalPaidAmt) FROM 
+            (SELECT TOP 50 PERCENT TotalPaidAmt 
+             FROM #ExclusionAnalysis 
+             WHERE TotalPaidAmt IS NOT NULL
+             ORDER BY TotalPaidAmt) AS Q2) as Median_Cost,
+        (SELECT MAX(TotalPaidAmt) FROM 
+            (SELECT TOP 75 PERCENT TotalPaidAmt 
+             FROM #ExclusionAnalysis 
+             WHERE TotalPaidAmt IS NOT NULL
+             ORDER BY TotalPaidAmt) AS Q3) as Q3_Cost,
+        (SELECT MIN(TotalPaidAmt) FROM 
+            (SELECT TOP 5 PERCENT TotalPaidAmt 
+             FROM #ExclusionAnalysis 
+             WHERE TotalPaidAmt IS NOT NULL
+             ORDER BY TotalPaidAmt DESC) AS P95) as P95_Cost,
+        (SELECT MIN(TotalPaidAmt) FROM 
+            (SELECT TOP 1 PERCENT TotalPaidAmt 
+             FROM #ExclusionAnalysis 
+             WHERE TotalPaidAmt IS NOT NULL
+             ORDER BY TotalPaidAmt DESC) AS P99) as P99_Cost
+    FROM #ExclusionAnalysis
+    
+    -- =============================================
+    -- RESULT SET 2: Exclusion Summary by Reason
+    -- =============================================
+    SELECT 
+        'Exclusion Summary' as ReportSection,
+        SUM(Flag_MidYearQSI) as Count_MidYearQSI,
+        CAST(100.0 * SUM(Flag_MidYearQSI) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_MidYearQSI,
+        SUM(Flag_LateEntry) as Count_LateEntry,
+        CAST(100.0 * SUM(Flag_LateEntry) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_LateEntry,
+        SUM(Flag_EarlyExit) as Count_EarlyExit,
+        CAST(100.0 * SUM(Flag_EarlyExit) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_EarlyExit,
+        SUM(Flag_NoCosts) as Count_NoCosts,
+        CAST(100.0 * SUM(Flag_NoCosts) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_NoCosts,
+        SUM(Flag_NegativeCosts) as Count_NegativeCosts,
+        CAST(100.0 * SUM(Flag_NegativeCosts) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_NegativeCosts,
+        SUM(Flag_InsufficientService) as Count_InsufficientService,
+        CAST(100.0 * SUM(Flag_InsufficientService) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_InsufficientService,
+        SUM(Flag_NoQSI) as Count_NoQSI,
+        CAST(100.0 * SUM(Flag_NoQSI) / NULLIF(@RecordCount, 0) AS DECIMAL(5,2)) as Pct_NoQSI
+    FROM #ExclusionAnalysis
+    
+    -- =============================================
+    -- RESULT SET 3: Consumer Level Analysis
+    -- =============================================
+    ;WITH ConsumerSummary AS (
+        SELECT 
+            CaseNo,
+            COUNT(*) as YearsOfData,
+            SUM(CASE WHEN Flag_MidYearQSI = 0 
+                    AND Flag_LateEntry = 0 
+                    AND Flag_EarlyExit = 0 
+                    AND Flag_NoCosts = 0 
+                    AND Flag_NegativeCosts = 0 
+                    AND Flag_InsufficientService = 0 
+                    AND Flag_NoQSI = 0 
+                THEN 1 ELSE 0 END) as UsableYears,
+            AVG(TotalPaidAmt) as AvgAnnualCost,
+            MIN(FiscalYear) as FirstYear,
+            MAX(FiscalYear) as LastYear
+        FROM #ExclusionAnalysis
+        GROUP BY CaseNo
+    )
+    SELECT 
+        'Consumer Level Summary' as ReportSection,
+        COUNT(*) as TotalConsumers,
+        SUM(CASE WHEN UsableYears >= 1 THEN 1 ELSE 0 END) as ConsumersWithUsableData,
+        CAST(100.0 * SUM(CASE WHEN UsableYears >= 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS DECIMAL(5,2)) as Pct_ConsumersUsable,
+        SUM(CASE WHEN UsableYears >= 2 THEN 1 ELSE 0 END) as ConsumersWithMultiYear,
+        CAST(100.0 * SUM(CASE WHEN UsableYears >= 2 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS DECIMAL(5,2)) as Pct_ConsumersMultiYear,
+        AVG(CAST(YearsOfData AS FLOAT)) as AvgYearsPerConsumer,
+        AVG(CAST(UsableYears AS FLOAT)) as AvgUsableYearsPerConsumer
+    FROM ConsumerSummary
+    
+    -- =============================================
+    -- RESULT SET 4: Fiscal Year Distribution
+    -- =============================================
+    SELECT 
+        FiscalYear,
+        COUNT(DISTINCT CaseNo) as ConsumersInYear,
+        COUNT(*) as TotalRecords,
+        SUM(CASE WHEN Flag_MidYearQSI = 0 
+                AND Flag_LateEntry = 0 
+                AND Flag_EarlyExit = 0 
+                AND Flag_NoCosts = 0 
+                AND Flag_NegativeCosts = 0 
+                AND Flag_InsufficientService = 0 
+                AND Flag_NoQSI = 0 
+            THEN 1 ELSE 0 END) as UsableRecords,
+        AVG(TotalPaidAmt) as AvgCost,
+        STDEV(TotalPaidAmt) as StDevCost
+    FROM #ExclusionAnalysis
+    GROUP BY FiscalYear
+    ORDER BY FiscalYear
+    
+    -- =============================================
+    -- RESULT SET 5: Exclusion Overlap Analysis
+    -- =============================================
+    SELECT 
+        'Exclusion Overlap' as ReportSection,
+        SUM(CASE WHEN (Flag_MidYearQSI + Flag_LateEntry + Flag_EarlyExit + 
+                      Flag_NoCosts + Flag_NegativeCosts + Flag_InsufficientService + 
+                      Flag_NoQSI) = 0 THEN 1 ELSE 0 END) as NoExclusions,
+        SUM(CASE WHEN (Flag_MidYearQSI + Flag_LateEntry + Flag_EarlyExit + 
+                      Flag_NoCosts + Flag_NegativeCosts + Flag_InsufficientService + 
+                      Flag_NoQSI) = 1 THEN 1 ELSE 0 END) as OneExclusion,
+        SUM(CASE WHEN (Flag_MidYearQSI + Flag_LateEntry + Flag_EarlyExit + 
+                      Flag_NoCosts + Flag_NegativeCosts + Flag_InsufficientService + 
+                      Flag_NoQSI) = 2 THEN 1 ELSE 0 END) as TwoExclusions,
+        SUM(CASE WHEN (Flag_MidYearQSI + Flag_LateEntry + Flag_EarlyExit + 
+                      Flag_NoCosts + Flag_NegativeCosts + Flag_InsufficientService + 
+                      Flag_NoQSI) >= 3 THEN 1 ELSE 0 END) as ThreeOrMoreExclusions
+    FROM #ExclusionAnalysis
+    
+    -- =============================================
+    -- RESULT SET 6: Cost Distribution for Included vs Excluded
+    -- =============================================
+    SELECT 
+        CASE WHEN Flag_MidYearQSI = 0 
+                AND Flag_LateEntry = 0 
+                AND Flag_EarlyExit = 0 
+                AND Flag_NoCosts = 0 
+                AND Flag_NegativeCosts = 0 
+                AND Flag_InsufficientService = 0 
+                AND Flag_NoQSI = 0 
+            THEN 'Included' 
+            ELSE 'Excluded' 
+        END as DataStatus,
+        COUNT(*) as RecordCount,
+        AVG(TotalPaidAmt) as AvgCost,
+        STDEV(TotalPaidAmt) as StDevCost,
+        MIN(TotalPaidAmt) as MinCost,
+        MAX(TotalPaidAmt) as MaxCost
+    FROM #ExclusionAnalysis
+    GROUP BY 
+        CASE WHEN Flag_MidYearQSI = 0 
+                AND Flag_LateEntry = 0 
+                AND Flag_EarlyExit = 0 
+                AND Flag_NoCosts = 0 
+                AND Flag_NegativeCosts = 0 
+                AND Flag_InsufficientService = 0 
+                AND Flag_NoQSI = 0 
+            THEN 'Included' 
+            ELSE 'Excluded' 
+        END
+    
+    -- =============================================
+    -- RESULT SET 7: Detailed Records for Python Analysis  
+    -- =============================================
+    SELECT 
+        CaseNo,
+        FiscalYear,
+        TotalPaidAmt,
+        ServiceDays,
+        DaysFromFYStart,
+        DaysToFYEnd,
+        Flag_MidYearQSI,
+        Flag_LateEntry,
+        Flag_EarlyExit,
+        Flag_NoCosts,
+        Flag_NegativeCosts,
+        Flag_InsufficientService,
+        Flag_NoQSI,
+        CASE WHEN Flag_MidYearQSI = 0 
+                AND Flag_LateEntry = 0 
+                AND Flag_EarlyExit = 0 
+                AND Flag_NoCosts = 0 
+                AND Flag_NegativeCosts = 0 
+                AND Flag_InsufficientService = 0 
+                AND Flag_NoQSI = 0 
+            THEN 1 ELSE 0 END as IsUsable
+    FROM #ExclusionAnalysis
+    ORDER BY CaseNo, FiscalYear
+    
+    -- =============================================
+    -- Clean up
+    -- =============================================
+    IF OBJECT_ID('tempdb..#FiscalYearClaims') IS NOT NULL
+        DROP TABLE #FiscalYearClaims
+    
+    IF OBJECT_ID('tempdb..#ConsumerYearSummary') IS NOT NULL
+        DROP TABLE #ConsumerYearSummary
+    
+    IF OBJECT_ID('tempdb..#MidYearQSI') IS NOT NULL
+        DROP TABLE #MidYearQSI
+    
+    IF OBJECT_ID('tempdb..#ExclusionAnalysis') IS NOT NULL
+        DROP TABLE #ExclusionAnalysis
+    
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Pull_Model5b_CalibrationData]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Pull_Model5b_CalibrationData]
+    @StartDate datetime = '2024-07-01',
+    @EndDate datetime = '2025-06-30',
+    @Debug bit = 0
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Create temp table for latest QSI assessments
+    CREATE TABLE #LatestQSI (
+        CaseNo bigint,
+        AssessID bigint,
+        ReviewDate datetime,
+        RowNum int
+    );
+    
+    -- Get latest QSI assessment for each consumer who has claims in the period
+    WITH ClaimConsumers AS (
+        SELECT DISTINCT CaseNo
+        FROM [dbo].[tbl_Claims_MMIS]
+        WHERE ServiceDate >= @StartDate 
+        AND ServiceDate < @EndDate
+    ),
+    RankedQSI AS (
+        SELECT 
+            q.CaseNo,
+            q.AssessID,
+            q.ReviewDate,
+            ROW_NUMBER() OVER (PARTITION BY q.CaseNo ORDER BY q.ReviewDate DESC, q.AssessID DESC) as RowNum
+        FROM [dbo].[tbl_QSIAssessments] q
+        INNER JOIN ClaimConsumers c ON q.CaseNo = c.CaseNo
+    )
+    INSERT INTO #LatestQSI
+    SELECT CaseNo, AssessID, ReviewDate, RowNum
+    FROM RankedQSI
+    WHERE RowNum = 1;
+    
+    -- Main query to pull all data needed for calibration
+    SELECT 
+        -- Consumer identifiers
+        q.CaseNo,
+        q.AssessID,
+        q.ReviewDate,
+        
+        -- Demographics from tbl_Consumers
+        c.DOB,
+        DATEDIFF(YEAR, c.DOB, GETDATE()) AS CurrentAge,
+        CASE 
+            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) BETWEEN 21 AND 30 THEN 'Age21-30'
+            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) >= 31 THEN 'Age31+'
+            ELSE 'Under21'
+        END AS AgeGroup,
+        
+        -- Living Setting with standardized mapping
+        c.RESIDENCETYPE,
+        CASE 
+            -- Family Home (reference category)
+            WHEN c.RESIDENCETYPE LIKE '%Family Home%' THEN 'FH'
+            
+            -- Independent Living/Supported Living
+            WHEN c.RESIDENCETYPE LIKE '%Independent Living%' 
+                OR c.RESIDENCETYPE LIKE '%Supported Living%' THEN 'ILSL'
+            
+            -- Standard Residential (RH1) - Small Group Homes and Foster Homes
+            WHEN c.RESIDENCETYPE LIKE '%Small Group Home%' 
+                OR c.RESIDENCETYPE LIKE '%Foster Home%'
+                OR c.RESIDENCETYPE LIKE '%Adult Family Care Home%' THEN 'RH1'
+            
+            -- Behavior Focus (RH2) - Large Group Homes
+            WHEN c.RESIDENCETYPE LIKE '%Large Group Home%' THEN 'RH2'
+            
+            -- Intensive Behavior (RH3) - ICF/DD, Assisted Living, Nursing Home
+            WHEN c.RESIDENCETYPE LIKE '%ICF/DD%'
+                OR c.RESIDENCETYPE LIKE '%Assisted Living%'
+                OR c.RESIDENCETYPE LIKE '%Nursing Home%' THEN 'RH3'
+            
+            -- CTEP/Special Medical (RH4) - Centers, Hospitals, Special Facilities
+            WHEN c.RESIDENCETYPE LIKE '%Developmental Disabilities Center%'
+                OR c.RESIDENCETYPE LIKE '%Residential Habilitation Center%'
+                OR c.RESIDENCETYPE LIKE '%Hospital%'
+                OR c.RESIDENCETYPE LIKE '%Defendant Program%'
+                OR c.RESIDENCETYPE LIKE '%Commitment Facility%'
+                OR c.RESIDENCETYPE LIKE '%Mental Health%' THEN 'RH4'
+            
+            -- Other/Unknown
+            ELSE 'OTHER'
+        END AS LivingSettingCategory,
+        
+        -- QSI Questions needed for Model 5b
+        -- Note: Only including questions that exist and are needed for the model
+        q.Q14, q.Q15, q.Q16, q.Q17, q.Q18, q.Q19, q.Q20,
+        q.Q21, q.Q22, q.Q23, q.Q24, q.Q25, q.Q26, q.Q27,
+        q.Q28, q.Q29, q.Q30, 
+        q.Q33, q.Q34, q.Q36, q.Q43,
+        
+        -- Calculated sums for Model5b
+        -- Behavioral Sum (Q25-Q30)
+        (ISNULL(TRY_CAST(q.Q25 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q26 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q27 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q28 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q29 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q30 AS float), 0)) AS BSum,
+        
+        -- Functional Sum (Q14-Q24)
+        (ISNULL(TRY_CAST(q.Q14 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q15 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q16 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q17 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q18 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q19 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q20 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q21 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q22 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q23 AS float), 0) + 
+         ISNULL(TRY_CAST(q.Q24 AS float), 0)) AS FSum,
+        
+        -- Total Claims Amount
+        claims.TotalClaims,
+        claims.ClaimCount,
+        
+        -- Data Quality Flag
+        CASE 
+            WHEN q.Q14 IS NULL OR q.Q15 IS NULL OR q.Q16 IS NULL OR q.Q17 IS NULL OR
+                 q.Q18 IS NULL OR q.Q19 IS NULL OR q.Q20 IS NULL OR q.Q21 IS NULL OR
+                 q.Q22 IS NULL OR q.Q23 IS NULL OR q.Q24 IS NULL OR q.Q25 IS NULL OR
+                 q.Q26 IS NULL OR q.Q27 IS NULL OR q.Q28 IS NULL OR q.Q29 IS NULL OR
+                 q.Q30 IS NULL OR q.Q33 IS NULL OR q.Q34 IS NULL OR q.Q36 IS NULL OR
+                 q.Q43 IS NULL THEN 1
+            ELSE 0
+        END AS HasMissingQSI,
+        
+        CASE 
+            WHEN c.DOB IS NULL OR c.RESIDENCETYPE IS NULL THEN 1
+            ELSE 0
+        END AS HasMissingDemographics
+        
+    FROM #LatestQSI lq
+    INNER JOIN [dbo].[tbl_QSIAssessments] q ON lq.CaseNo = q.CaseNo AND lq.AssessID = q.AssessID
+    INNER JOIN [dbo].[tbl_Consumers] c ON q.CaseNo = c.CASENO
+    INNER JOIN (
+        -- Aggregate claims for the period
+        SELECT 
+            CaseNo,
+            SUM(PaidAmt) AS TotalClaims,
+            COUNT(*) AS ClaimCount
+        FROM [dbo].[tbl_Claims_MMIS]
+        WHERE ServiceDate >= @StartDate 
+        AND ServiceDate < @EndDate
+        GROUP BY CaseNo
+    ) claims ON q.CaseNo = claims.CaseNo
+    ORDER BY q.CaseNo;
+    
+    -- Debug information
+    IF @Debug = 1
+    BEGIN
+        SELECT 
+            'Total Consumers with Claims' AS Metric,
+            COUNT(DISTINCT CaseNo) AS Count
+        FROM [dbo].[tbl_Claims_MMIS]
+        WHERE ServiceDate >= @StartDate 
+        AND ServiceDate < @EndDate;
+        
+        SELECT 
+            'Consumers with QSI Assessments' AS Metric,
+            COUNT(*) AS Count
+        FROM #LatestQSI;
+        
+        SELECT 
+            'Living Setting Distribution' AS Metric,
+            LivingSettingCategory,
+            COUNT(*) AS Count
+        FROM (
+            SELECT 
+                CASE 
+                    WHEN c.RESIDENCETYPE LIKE '%Family Home%' THEN 'FH'
+                    WHEN c.RESIDENCETYPE LIKE '%Independent Living%' 
+                        OR c.RESIDENCETYPE LIKE '%Supported Living%' THEN 'ILSL'
+                    WHEN c.RESIDENCETYPE LIKE '%Small Group Home%' 
+                        OR c.RESIDENCETYPE LIKE '%Foster Home%'
+                        OR c.RESIDENCETYPE LIKE '%Adult Family Care Home%' THEN 'RH1'
+                    WHEN c.RESIDENCETYPE LIKE '%Large Group Home%' THEN 'RH2'
+                    WHEN c.RESIDENCETYPE LIKE '%ICF/DD%'
+                        OR c.RESIDENCETYPE LIKE '%Assisted Living%'
+                        OR c.RESIDENCETYPE LIKE '%Nursing Home%' THEN 'RH3'
+                    WHEN c.RESIDENCETYPE LIKE '%Developmental Disabilities Center%'
+                        OR c.RESIDENCETYPE LIKE '%Residential Habilitation Center%'
+                        OR c.RESIDENCETYPE LIKE '%Hospital%'
+                        OR c.RESIDENCETYPE LIKE '%Defendant Program%'
+                        OR c.RESIDENCETYPE LIKE '%Commitment Facility%'
+                        OR c.RESIDENCETYPE LIKE '%Mental Health%' THEN 'RH4'
+                    ELSE 'OTHER'
+                END AS LivingSettingCategory
+            FROM #LatestQSI lq
+            INNER JOIN [dbo].[tbl_Consumers] c ON lq.CaseNo = c.CASENO
+        ) AS LivingSettings
+        GROUP BY LivingSettingCategory;
+    END
+    
+    -- Clean up
+    DROP TABLE #LatestQSI;
+    
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_SaveModelMetrics]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Save model metrics
+CREATE   PROCEDURE [dbo].[sp_SaveModelMetrics]
+    @ModelID INT,
+    @ModelName VARCHAR(100),
+    @MetricType VARCHAR(50),
+    @MetricValue DECIMAL(18,6),
+    @DataSet VARCHAR(20)  -- 'train', 'test', 'cv'
+AS
+BEGIN
+    INSERT INTO tbl_ModelMetrics (
+        ModelID, ModelName, MetricType, 
+        MetricValue, DataSet, Timestamp
+    )
+    VALUES (
+        @ModelID, @ModelName, @MetricType,
+        @MetricValue, @DataSet, GETDATE()
+    )
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_SaveModelPredictions]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Save model predictions
+CREATE   PROCEDURE [dbo].[sp_SaveModelPredictions]
+    @ModelID INT,
+    @ModelName VARCHAR(100),
+    @ConsumerID INT,
+    @PredictedBudget DECIMAL(18,2),
+    @FiscalYear VARCHAR(10)
+AS
+BEGIN
+    INSERT INTO tbl_ModelPredictions (
+        ModelID, ModelName, ConsumerID, 
+        PredictedBudget, FiscalYear, PredictionDate
+    )
+    VALUES (
+        @ModelID, @ModelName, @ConsumerID,
+        @PredictedBudget, @FiscalYear, GETDATE()
+    )
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Update_Model5b_Claims]    Script Date: 10/9/2025 4:10:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Update_Model5b_Claims]
+    @StartDate datetime = '2024-07-01',
+    @EndDate datetime = '2025-06-30',
+    @RunID bigint = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Update Claims amount for existing predictions
+    UPDATE p
+    SET p.Claims = c.TotalClaims
+    FROM [dbo].[tbl_Model5b_Predictions] p
+    INNER JOIN (
+        SELECT 
+            CaseNo,
+            SUM(PaidAmt) AS TotalClaims
+        FROM [dbo].[tbl_Claims_MMIS]
+        WHERE ServiceDate >= @StartDate 
+        AND ServiceDate < @EndDate
+        GROUP BY CaseNo
+    ) c ON p.CaseNo = c.CaseNo
+    WHERE (@RunID IS NULL OR p.RunID = @RunID);
+    
+    -- Return count of updated records
+    SELECT @@ROWCOUNT AS RecordsUpdated;
+    
+END
+
 GO

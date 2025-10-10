@@ -54,9 +54,9 @@ class Model1Linear(BaseiBudgetModel):
     MODEL_5B_OUTLIER_PCT_2015 = 9.40
     
     def __init__(self,  
-             use_sqrt_transform: bool = False,
-             use_outlier_removal: bool = False,
-             outlier_threshold: float = 1.645
+             use_sqrt_transform: bool = True, # This is the default value. Any passed value overrides it
+             use_outlier_removal: bool = True,# This is the default value. Any passed value overrides it
+             outlier_threshold: float = 1.645  # This is the default value. Any passed value overrides it
              ):
         """
         Initialize Model 1
@@ -119,10 +119,6 @@ class Model1Linear(BaseiBudgetModel):
                 1.0 if age_group == 'Age31Plus' else 0.0,  # Age31+
             ])
             
-            # 8. Age (continuous) - NEW FEATURE
-            age = float(record.age or 0)
-            row_features.append(age)            
-            
             # 8. BSum (behavioral sum)
             bsum = float(record.bsum or 0)
             fsum = float(record.fsum or 0)
@@ -152,7 +148,6 @@ class Model1Linear(BaseiBudgetModel):
         feature_names = [
             'LiveILSL', 'LiveRH1', 'LiveRH2', 'LiveRH3', 'LiveRH4',
             'Age21_30', 'Age31Plus',
-            'Age',
             'BSum',
             'FHFSum', 'SLFSum', 'SLBSum',
             'Q16', 'Q18', 'Q20', 'Q21', 'Q23', 'Q28', 'Q33', 'Q34', 'Q36', 'Q43'
@@ -253,7 +248,8 @@ class Model1Linear(BaseiBudgetModel):
             f.write(f"\\newcommand{{\\Model{model_word}SBC}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}SBCDeltaFromTwoThousandFifteen}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}OutlierPctDeltaFromTwoThousandFifteen}}{{\\WarningRunPipeline}}\n")
-        
+            f.write(f"\\newcommand{{\\Model{model_word}RMSEDeltaFromTwoThousandFifteen}}{{\\WarningRunPipeline}}\n")
+                
         # Add Model 5b-specific renewcommands
         with open(renewcommands_file, 'a') as f:
             f.write("\n% Model 5b (2015) Benchmark Values\n")
@@ -262,6 +258,12 @@ class Model1Linear(BaseiBudgetModel):
             f.write(f"\\renewcommand{{\\Model{model_word}FiveBRMSETwoThousandFifteen}}{{{self.MODEL_5B_RMSE_2015:.2f}}}\n")
             f.write(f"\\renewcommand{{\\Model{model_word}FiveBOutlierPctTwoThousandFifteen}}{{{self.MODEL_5B_OUTLIER_PCT_2015:.2f}}}\n")
             
+            # Add RMSE delta in sqrt scale for fair comparison
+            if 'rmse_test_sqrt' in self.metrics:
+                delta_rmse = self.metrics['rmse_test_sqrt'] - self.MODEL_5B_RMSE_2015
+                sign = '+' if delta_rmse >= 0 else ''
+                f.write(f"\\renewcommand{{\\Model{model_word}RMSEDeltaFromTwoThousandFifteen}}{{{sign}{delta_rmse:.2f}}}\n")
+
             # Delta calculations
             if 'r2_delta_from_2015' in self.metrics:
                 delta_r2 = self.metrics['r2_delta_from_2015']
@@ -281,8 +283,11 @@ class Model1Linear(BaseiBudgetModel):
                 delta_pct = pct_removed - self.MODEL_5B_OUTLIER_PCT_2015
                 sign = '+' if delta_pct >= 0 else ''
                 f.write(f"\\renewcommand{{\\Model{model_word}OutlierPctDeltaFromTwoThousandFifteen}}{{{sign}{delta_pct:.2f}}}\n")
-        
-        self.logger.info("Model 5b comparison commands added")
+            else:
+                # If no outlier diagnostics, the delta is just the negative of the 2015 value
+                delta_pct = -self.MODEL_5B_OUTLIER_PCT_2015
+                f.write(f"\\renewcommand{{\\Model{model_word}OutlierPctDeltaFromTwoThousandFifteen}}{{{delta_pct:.2f}}}\n")        
+                self.logger.info("Model 5b comparison commands added")
     
     def plot_diagnostics(self) -> None:
         """Generate enhanced diagnostic plots with Model 5b comparison"""
@@ -411,8 +416,8 @@ def main():
     print("MODEL 1: RE-EVALUATION OF MODEL 5B WITH 2024 DATA")
     print("=" * 80)
     print()
-    print("This model replicates Model 5b (Tao & Niu 2015) specification, plus Age:")
-    print("  - 21 features (same as Model 5b) + Age")
+    print("This model replicates Model 5b (Tao & Niu 2015) specification exactly:")
+    print("  - 21 features (includes 5 living, 2 age dummies, BSum, 3 interactions, 10 QSI)")
     print("  - Square-root transformation")
     print("  - Studentized residuals outlier detection (|t_i| >= 1.645)")
     print("  - Ordinary Least Squares regression")
@@ -423,9 +428,9 @@ def main():
     
     # Initialize model with sqrt transform (Model 5b default)
     model = Model1Linear(
-                #use_sqrt_transform=False,      # sqrt transformation
-                #use_outlier_removal=False,      # enable outlier removal
-                #outlier_threshold=1.645        # ~10% outliers (Model 5b default)        
+                use_sqrt_transform=True,      # sqrt transformation
+                use_outlier_removal=True,      # enable outlier removal
+                outlier_threshold=1.645        # ~10% outliers (Model 5b default)        
             )
     
     # Run complete pipeline
