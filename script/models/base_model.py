@@ -124,13 +124,12 @@ class BaseiBudgetModel(ABC):
     - _predict_core(X) → predict in fitted scale
     """
     
-    def __init__(self,
-                 model_id: int,
-                 model_name: str,
-                 use_outlier_removal: bool = False,
-                 outlier_threshold: float = 1.645,
-                 transformation: str = 'none',
-                 random_seed: int = 42):
+    def __init__(self, model_id: int, model_name: str, 
+                    transformation: str = 'none',
+                    use_outlier_removal: bool = False,
+                    outlier_threshold: float = 3,
+                    random_seed: int = 42,
+                    log_suffix: str = None):
         """
         Initialize base model
         
@@ -182,20 +181,19 @@ class BaseiBudgetModel(ABC):
         self.population_scenarios: Dict[str, Dict[str, float]] = {}
         
         # Output directory
-        #self.output_dir = Path(f"report/models/model_{model_id}")
-        #self.output_dir.mkdir(parents=True, exist_ok=True)
         # Make path relative to script location
         script_dir = Path(__file__).parent
-        self.output_dir = script_dir / "../../report/models" / f"model_{model_id}"
-        self.output_dir = self.output_dir.resolve()  # Convert to absolute path
-        self.output_dir.mkdir(parents=True, exist_ok=True)        
+        self.output_dir_relative = Path("../../report/models") / f"model_{model_id}"
+        self.output_dir = (script_dir / self.output_dir_relative).resolve()  # Keep absolute for operations
+        self.output_dir.mkdir(parents=True, exist_ok=True)     
         
-        # Set up logging
+        # Set up logging with optional suffix
+        self.log_suffix = log_suffix
         self._setup_logging()
-        
+                
         # Log initialization
         self.log_section(f"INITIALIZING MODEL {self.model_id}: {self.model_name.upper()}", "=")
-        self.logger.info(f"Output directory: {self.output_dir}")
+        self.logger.info(f"Output directory: {self.output_dir_relative}")  # Log the relative path        
         self.logger.info("=" * 60)
         self.logger.info(f"Configuration:")
         self.logger.info(f"  - Outlier removal: {use_outlier_removal}")
@@ -208,7 +206,11 @@ class BaseiBudgetModel(ABC):
         """Set up model-specific logging"""
         log_dir = Path("../../report/logs")
         log_dir.mkdir(parents=True, exist_ok=True)
-        log_filename = log_dir / f"model_{self.model_id}_log.txt"
+        # Build log filename with optional suffix
+        if self.log_suffix:
+            log_filename = log_dir / f"model_{self.model_id}_log_{self.log_suffix}.txt"
+        else:
+            log_filename = log_dir / f"model_{self.model_id}_log.txt"        
         
         self.logger = logging.getLogger(f"MODEL_{self.model_id}")
         self.logger.setLevel(logging.INFO)
@@ -254,7 +256,213 @@ class BaseiBudgetModel(ABC):
                                f"{self.metrics.get('cv_std', 0):.4f}")
         
         self.logger.info("-" * 60)
+
+    def log_feature_importance(self, feature_stats, model_type="Model"):
+            """
+            Generic method to log feature importance/coefficients for any model.
+            
+            Args:
+                feature_stats: Dict or list where each item has at minimum 'name' and a value metric
+                            Examples:
+                            - GLM: {'name': 'feat1', 'coefficient': 1.2, 'p_value': 0.01, ...}
+                            - RF: {'name': 'feat1', 'importance': 0.15}
+                            - XGBoost: {'name': 'feat1', 'gain': 0.23}
+                model_type: String describing the model (e.g., "GLM-Gamma", "Random Forest")
+            """
+            self.logger.info("")
+            self.logger.info("=" * 80)
+            self.logger.info(f"{model_type} Feature Analysis (All {len(feature_stats)} Features)")
+            self.logger.info("=" * 80)
+            
+            # Convert dict to list if needed
+            if isinstance(feature_stats, dict):
+                feature_list = []
+                for name, data in feature_stats.items():
+                    if isinstance(data, dict):
+                        feature_list.append({'name': name, **data})
+                    else:
+                        # Simple value (like RF importance)
+                        feature_list.append({'name': name, 'value': data})
+            else:
+                feature_list = feature_stats
+            
+            # Determine the main metric to sort by
+            if feature_list:
+                first_item = feature_list[0]
+                if 'coefficient' in first_item:
+                    # GLM-style: sort by absolute coefficient
+                    feature_list.sort(key=lambda x: abs(x.get('coefficient', 0)), reverse=True)
+                    metric_name = "coefficient"
+                elif 'importance' in first_item:
+                    # RandomForest-style
+                    feature_list.sort(key=lambda x: x.get('importance', 0), reverse=True)
+                    metric_name = "importance"
+                elif 'gain' in first_item:
+                    # XGBoost-style
+                    feature_list.sort(key=lambda x: x.get('gain', 0), reverse=True)
+                    metric_name = "gain"
+                else:
+                    # Generic: use first numeric value found
+                    metric_name = "value"
+                    feature_list.sort(key=lambda x: abs(x.get('value', 0)), reverse=True)
+                
+                # Check if we have p-values for significance separation
+                has_pvalues = 'p_value' in first_item
+                
+                if has_pvalues:
+                    # Separate by significance
+                    sig_features = [f for f in feature_list if f.get('p_value', 1) < 0.05]
+                    non_sig_features = [f for f in feature_list if f.get('p_value', 1) >= 0.05]
+                    
+                    if sig_features:
+                        self.logger.info(f"Significant Features (p < 0.05): {len(sig_features)} features")
+                        self.logger.info("-" * 60)
+                        for idx, feat in enumerate(sig_features, 1):
+                            self._format_feature_line(idx, feat, metric_name)
+                    
+                    if non_sig_features:
+                        self.logger.info(f"Non-Significant Features (p >= 0.05): {len(non_sig_features)} features")
+                        self.logger.info("-" * 60)
+                        for idx, feat in enumerate(non_sig_features, 1):
+                            self._format_feature_line(idx, feat, metric_name)
+                else:
+                    # No p-values: just list all features
+                    self.logger.info(f"Features sorted by {metric_name}:")
+                    self.logger.info("-" * 60)
+                    for idx, feat in enumerate(feature_list, 1):
+                        self._format_feature_line(idx, feat, metric_name)
+            
+            self.logger.info("=" * 80)
+        
+    def _format_feature_line(self, idx, feat, primary_metric):
+        """Format a single feature line based on available metrics."""
+        name = feat.get('name', 'unknown')
+        parts = [f"  {idx:3d}. {name:30s}"]
+        
+        # Add the primary metric
+        if primary_metric == 'coefficient' and 'coefficient' in feat:
+            parts.append(f"β={feat['coefficient']:8.4f}")
+        elif primary_metric == 'importance' and 'importance' in feat:
+            parts.append(f"importance={feat['importance']:8.4f}")
+        elif primary_metric == 'gain' and 'gain' in feat:
+            parts.append(f"gain={feat['gain']:8.4f}")
+        elif 'value' in feat:
+            parts.append(f"value={feat['value']:8.4f}")
+        
+        # Add additional stats if available
+        if 'std_error' in feat:
+            parts.append(f"SE={feat['std_error']:7.4f}")
+        if 'p_value' in feat:
+            if feat['p_value'] < 0.0001:
+                parts.append("p<0.0001")
+            else:
+                parts.append(f"p={feat['p_value']:7.4f}")
+        if 'effect_pct' in feat:
+            parts.append(f"effect={feat['effect_pct']:+8.1f}%")
+        if 'z_value' in feat:
+            parts.append(f"z={feat['z_value']:6.2f}")
+        
+        self.logger.info(" ".join(parts))
+        
+    def log_all_features(self, features_data, title="Sorted Features (by coefficient magnitude)"):
+        """Log all model features with their statistics.
+        
+        Args:
+            features_data: Dict or list of dicts with feature statistics
+            title: Section title for the feature listing
+        """
+        self.logger.info("")
+        self.logger.info("=" * 80)
+        self.logger.info(title)
+        self.logger.info("=" * 80)
+        
+        # Convert to list of dicts if needed
+        if isinstance(features_data, dict):
+            # If it's a simple dict of feature_name: value
+            if features_data and not isinstance(next(iter(features_data.values())), dict):
+                features_list = [{'name': k, 'value': v} for k, v in features_data.items()]
+            else:
+                # If it's a dict of feature_name: dict_of_stats
+                features_list = [{'name': k, **v} for k, v in features_data.items()]
+        else:
+            features_list = features_data
+        
+        # Sort by absolute coefficient if available
+        if features_list and 'coefficient' in features_list[0]:
+            features_list.sort(key=lambda x: abs(x.get('coefficient', 0)), reverse=True)
+        elif features_list and 'importance' in features_list[0]:
+            features_list.sort(key=lambda x: x.get('importance', 0), reverse=True)
+        
+        # Separate by significance if p-values exist
+        if features_list and 'p_value' in features_list[0]:
+            sig_features = [f for f in features_list if f.get('p_value', 1) < 0.05]
+            non_sig_features = [f for f in features_list if f.get('p_value', 1) >= 0.05]
+            
+            # Log significant features
+            if sig_features:
+                self.logger.info(f"Significant Features (p < 0.05): {len(sig_features)} features")
+                self.logger.info("-" * 60)
+                for idx, feat in enumerate(sig_features, 1):
+                    self._log_single_feature(idx, feat)
+            
+            # Log non-significant features
+            if non_sig_features:
+                self.logger.info("")
+                self.logger.info(f"Non-Significant Features (p >= 0.05): {len(non_sig_features)} features")
+                self.logger.info("-" * 60)
+                for idx, feat in enumerate(non_sig_features, 1):
+                    self._log_single_feature(idx, feat)
+        else:
+            # Just log all features if no p-values
+            for idx, feat in enumerate(features_list, 1):
+                self._log_single_feature(idx, feat)
+        
+        self.logger.info("=" * 80)
     
+    def _log_single_feature(self, idx, feature):
+        """Helper to log a single feature's statistics."""
+        name = feature.get('name', 'unknown')
+        parts = [f"  {idx:3d}. {name:30s}"]
+        
+        if 'coefficient' in feature:
+            parts.append(f"β={feature['coefficient']:8.4f}")
+        if 'std_error' in feature:
+            parts.append(f"SE={feature['std_error']:7.4f}")
+        if 'p_value' in feature:
+            if feature['p_value'] < 0.0001:
+                parts.append("p<0.0001")
+            else:
+                parts.append(f"p={feature['p_value']:7.4f}")
+        if 'effect_pct' in feature:
+            parts.append(f"effect={feature['effect_pct']:+8.1f}%")
+        if 'importance' in feature:
+            parts.append(f"importance={feature['importance']:8.4f}")
+        
+        self.logger.info(" ".join(parts))
+            
+    def log_final_summary(self, summary_dict):
+        """Log the final model summary consistently."""
+        self.log_section(f"MODEL {self.model_id} FINAL SUMMARY", "=")
+        
+        for key, value in summary_dict.items():
+            if isinstance(value, dict):
+                self.logger.info(f"{key}:") # \n
+                for sub_key, sub_value in value.items():
+                    self.logger.info(f"  • {sub_key}: {sub_value}")
+            elif isinstance(value, list):
+                self.logger.info(f"{key}:") # \n
+                for item in value:
+                    self.logger.info(f"  • {item}")
+            else:
+                self.logger.info(f"{key}: {value}")
+        
+        self.logger.info("")
+        self.logger.info("=" * 80)
+        self.logger.info(f"Model {self.model_id} pipeline complete!")
+        self.logger.info(f"Results saved to: {self.output_dir_relative}")
+        #self.logger.info(f"Results saved to: {self.output_dir}")
+        self.logger.info("=" * 80)
+            
     # ========================================================================
     # TRANSFORMATION METHODS
     # ========================================================================
@@ -778,6 +986,22 @@ class BaseiBudgetModel(ABC):
     # ========================================================================
     # CROSS-VALIDATION
     # ========================================================================
+
+    def predict_original(self, X: np.ndarray) -> np.ndarray:
+        """
+        Unified hook to get predictions in ORIGINAL dollar scale for ANY model.
+
+        Default behavior:
+        1) Call _predict_core(X) → fitted-scale predictions
+        2) Inverse-transform to original dollars
+        3) Enforce non-negativity
+
+        Child models that ALREADY return original-scale predictions inside
+        _predict_core() should override this method to just return their predictions.
+        """
+        y_pred_fitted = self._predict_core(X)
+        y_pred_original = self.inverse_transformation(y_pred_fitted)
+        return np.maximum(0.0, y_pred_original)
     
     def perform_cross_validation(self, n_splits: int = 10) -> Dict[str, Any]:
         """Perform k-fold CV with proper preprocessing per fold"""
@@ -811,11 +1035,11 @@ class BaseiBudgetModel(ABC):
             self._fit_core(X_fold_train, y_fold_train_fit)
             
             # Predict
-            y_fold_pred_fitted = self._predict_core(X_fold_val)
-            
-            # Inverse transform
-            y_fold_pred_original = self.inverse_transformation(y_fold_pred_fitted)
-            y_fold_pred_original = np.maximum(0, y_fold_pred_original)
+            ##y_fold_pred_fitted = self._predict_core(X_fold_val)
+            ## Inverse transform
+            ##y_fold_pred_original = self.inverse_transformation(y_fold_pred_fitted)
+            ##y_fold_pred_original = np.maximum(0, y_fold_pred_original)
+            y_fold_pred_original = self.predict_original(X_fold_val)
             
             # Evaluate on original scale
             score = r2_score(y_fold_val_original, y_fold_pred_original)
@@ -826,8 +1050,13 @@ class BaseiBudgetModel(ABC):
         cv_mean = np.mean(cv_scores)
         cv_std = np.std(cv_scores)
         
-        self.logger.info(f"Mean R²: {cv_mean:.4f}")
-        self.logger.info(f"Std R²: {cv_std:.4f}")
+        self.logger.info("")
+        self.logger.info("Cross-validation summary:")
+        self.logger.info(f"  Mean R²: {cv_mean:.4f}")
+        self.logger.info(f"  Std R²: {cv_std:.4f}")
+        self.logger.info(f"  Min R²: {min(cv_scores):.4f} (Fold {cv_scores.index(min(cv_scores))+1})")
+        self.logger.info(f"  Max R²: {max(cv_scores):.4f} (Fold {cv_scores.index(max(cv_scores))+1})")
+        self.logger.info(f"  95% CI: [{cv_mean - 1.96*cv_std:.4f}, {cv_mean + 1.96*cv_std:.4f}]")
         
         return {
             'cv_mean': cv_mean,
@@ -1049,8 +1278,17 @@ class BaseiBudgetModel(ABC):
         self.subgroup_metrics = subgroup_metrics
         self.logger.info(f"Calculated metrics for {len(subgroup_metrics)} subgroups")
         
+        # Log detailed subgroup results
+        self.logger.info("")
+        for subgroup_name, metrics in subgroup_metrics.items():
+            self.logger.info(f"  {subgroup_name}:")
+            self.logger.info(f"    N: {metrics['n']:,}")
+            self.logger.info(f"    R²: {metrics['r2']:.4f}")
+            self.logger.info(f"    RMSE: ${metrics['rmse']:,.2f}")
+            self.logger.info(f"    Bias: ${metrics['bias']:+,.2f}")
+        
         return subgroup_metrics
-    
+        
     def calculate_variance_metrics(self) -> Dict[str, float]:
         """Calculate variance and stability metrics"""
         self.log_section("VARIANCE ANALYSIS")
@@ -1067,6 +1305,13 @@ class BaseiBudgetModel(ABC):
         
         self.variance_metrics = variance_metrics
         self.logger.info("Variance metrics calculated")
+        
+        # Log detailed variance metrics
+        self.logger.info("")
+        self.logger.info(f"  Coefficient of Variation (Actual): {variance_metrics['cv_actual']:.4f}")
+        self.logger.info(f"  Coefficient of Variation (Predicted): {variance_metrics['cv_predicted']:.4f}")
+        self.logger.info(f"  95% Prediction Interval Width: ${variance_metrics['prediction_interval']:,.2f}")
+        self.logger.info(f"  Actual-Predicted Correlation: {variance_metrics['budget_actual_corr']:.4f}")
         
         return variance_metrics
     
@@ -1113,6 +1358,16 @@ class BaseiBudgetModel(ABC):
         self.population_scenarios = scenarios
         self.logger.info(f"Calculated {len(scenarios)} population scenarios")
         
+        # Log detailed scenario results
+        self.logger.info("")
+        self.logger.info(f"  Base budget: $1,200,000,000")
+        for scenario_name, metrics in scenarios.items():
+            self.logger.info(f"  {scenario_name}:")
+            self.logger.info(f"    Clients served: {metrics['clients_served']:,}")
+            self.logger.info(f"    Avg allocation: ${metrics['avg_allocation']:,.2f}")
+            self.logger.info(f"    Waitlist change: {metrics['waitlist_change']:+,}")
+            self.logger.info(f"    Waitlist %: {metrics['waitlist_pct']:+.1f}%")
+        
         return scenarios
     
     # ========================================================================
@@ -1145,6 +1400,11 @@ class BaseiBudgetModel(ABC):
         self.X_test, _ = self.prepare_features(self.test_records)
         self.y_test = np.array([r.total_cost for r in self.test_records])
         self.logger.info(f"Features prepared: {len(self.feature_names)} features")
+        self.logger.info(f"  Training shape: {self.X_train.shape}")
+        self.logger.info(f"  Test shape: {self.X_test.shape}")
+        self.logger.info(f"  Target range: ${self.y_train.min():,.2f} - ${self.y_train.max():,.2f}")
+        self.logger.info(f"  Target mean: ${self.y_train.mean():,.2f}")
+        self.logger.info(f"  Target median: ${np.median(self.y_train):,.2f}")
         
         # Cross-validation
         if perform_cv:
@@ -1437,9 +1697,21 @@ class BaseiBudgetModel(ABC):
             # Number of features
             f.write(f"\n% Model Configuration\n")
             f.write(f"\\renewcommand{{\\Model{model_word}NumFeatures}}{{{len(self.feature_names)}}}\n")
+                        
+        # Count commands generated
+        with open(newcommands_file, 'r') as f:
+            newcommands = f.readlines()
+            new_count = len([l for l in newcommands if l.strip().startswith('\\newcommand')])
         
-                
-        self.logger.info("LaTeX commands generated")
+        with open(renewcommands_file, 'r') as f:
+            renewcommands = f.readlines()
+            renew_count = len([l for l in renewcommands if l.strip().startswith('\\renewcommand')])
+        
+        self.logger.info("LaTeX commands generated:")
+        self.logger.info(f"  - Newcommands file: {self.output_dir_relative / f'model_{self.model_id}_newcommands.tex'}")
+        self.logger.info(f"    ({new_count} placeholder commands)")
+        self.logger.info(f"  - Renewcommands file: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        self.logger.info(f"    ({renew_count} value commands)")
     
         
     def save_results(self) -> None:
@@ -1455,7 +1727,12 @@ class BaseiBudgetModel(ABC):
             })
             pred_df.to_csv(self.output_dir / "predictions.csv", index=False)
         
-        self.logger.info("Results saved")
+        # Log what was saved
+        self.logger.info("Results saved:")
+        self.logger.info(f"  - Metrics JSON: {self.output_dir_relative / 'metrics.json'}")
+        if self.test_predictions is not None:
+            self.logger.info(f"  - Predictions CSV: {self.output_dir_relative / 'predictions.csv'}")
+            self.logger.info(f"    ({len(self.test_predictions):,} predictions)")
     
     def plot_diagnostics(self) -> None:
         """Generate diagnostic plots (2x3 grid)"""
@@ -1482,7 +1759,7 @@ class BaseiBudgetModel(ABC):
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
         
-        self.logger.info("Diagnostic plots saved")
+        self.logger.info(f"Diagnostic plots saved to {self.output_dir_relative / 'diagnostic_plots.png'}")
         
 def generate_coefficient_commands(self, model_number: int, output_path: Path) -> Dict[str, float]:
     """

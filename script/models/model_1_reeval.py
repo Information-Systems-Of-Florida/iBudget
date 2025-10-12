@@ -24,7 +24,7 @@ Purpose: Direct comparison of Model 5b performance with 9 years of new data
 """
 
 import numpy as np
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional, Any
 from pathlib import Path
 import sys
 
@@ -56,15 +56,21 @@ class Model1Linear(BaseiBudgetModel):
     def __init__(self,  
              use_sqrt_transform: bool = True, # This is the default value. Any passed value overrides it
              use_outlier_removal: bool = True,# This is the default value. Any passed value overrides it
-             outlier_threshold: float = 1.645  # This is the default value. Any passed value overrides it
+             outlier_threshold: float = 1.645,  # This is the default value. Any passed value overrides it
+             feature_config: Optional[Dict[str, Any]] = None,  
+             random_seed: int = 42,
+            log_suffix: Optional[str] = None
              ):
         """
-        Initialize Model 1
+        Initialize Model 1 Linear
         
-    Args:
-        use_sqrt_transform: Apply sqrt transformation
-        use_outlier_removal: Remove outliers via studentized residuals
-        outlier_threshold: Threshold for |t_i| (1.645 = ~10%, 2.0 = ~5%)    
+        Args:
+            use_sqrt_transform: Apply sqrt transformation (Model 5b default)
+            use_outlier_removal: Remove outliers using studentized residuals
+            outlier_threshold: Threshold for outlier removal (1.645 = ~10%)
+            feature_config: Optional feature configuration from pipeline  # ADD THIS
+            random_seed: Random seed for reproducibility
+            log_suffix: Optional suffix for log files 
         """
         super().__init__(
             model_id=1,
@@ -72,8 +78,13 @@ class Model1Linear(BaseiBudgetModel):
             use_outlier_removal=use_outlier_removal,
             outlier_threshold=outlier_threshold,
             transformation='sqrt' if use_sqrt_transform else 'none',
-            random_seed=42
+            random_seed=42,
+            log_suffix=log_suffix
         )
+        
+        # Store feature configuration  
+        if feature_config: 
+            self.feature_config = feature_config
             
         # Store transform flag for reporting
         self.use_sqrt_transform = use_sqrt_transform
@@ -82,83 +93,16 @@ class Model1Linear(BaseiBudgetModel):
         self.coefficients = None
         self.intercept = None
     
-    # def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-    #     """
-    #     Prepare features matching Model 5b EXACTLY (21 features)
-        
-    #     Model 5b Feature Specification from Tao & Niu (2015, Table 7):
-    #     1-5:   Living Settings (5 dummy variables, FH as reference)
-    #     6-7:   Age Groups (2 dummy variables, Age 3-20 as reference)
-    #     8:     BSum (behavioral sum)
-    #     9-11:  Interaction Terms (FHFSum, SLFSum, SLBSum)
-    #     12-21: QSI Questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
-        
-    #     Returns:
-    #         Tuple of (feature_matrix, feature_names)
-    #     """
-    #     features_list = []
-        
-    #     for record in records:
-    #         row_features = []
-            
-    #         # 1-5. Living Settings (5 dummy variables, FH as reference)
-    #         # Model 5b uses: ILSL, RH1, RH2, RH3, RH4 (FH = 0,0,0,0,0)
-    #         living = record.living_setting
-    #         row_features.extend([
-    #             1.0 if living == 'ILSL' else 0.0,  # LiveILSL
-    #             1.0 if living == 'RH1' else 0.0,   # LiveRH1
-    #             1.0 if living == 'RH2' else 0.0,   # LiveRH2
-    #             1.0 if living == 'RH3' else 0.0,   # LiveRH3
-    #             1.0 if living == 'RH4' else 0.0,   # LiveRH4
-    #         ])
-            
-    #         # 6-7. Age Groups (2 dummy variables, Age 3-20 as reference)
-    #         age_group = record.age_group
-    #         row_features.extend([
-    #             1.0 if age_group == 'Age21_30' else 0.0,   # Age21-30
-    #             1.0 if age_group == 'Age31Plus' else 0.0,  # Age31+
-    #         ])
-            
-    #         # 8. BSum (behavioral sum)
-    #         bsum = float(record.bsum or 0)
-    #         fsum = float(record.fsum or 0)
-    #         row_features.append(bsum)
-            
-    #         # 9-11. CRITICAL: Interaction Terms (Model 5b's key innovation)
-    #         # These capture how functional needs (FSum) and behavioral needs (BSum)
-    #         # interact with living settings
-    #         is_fh = 1.0 if living == 'FH' else 0.0
-    #         is_sl = 1.0 if living == 'ILSL' else 0.0  # Supported Living
-            
-    #         fhf_sum = is_fh * fsum  # FHFSum: Family Home × FSum
-    #         slf_sum = is_sl * fsum  # SLFSum: Supported Living × FSum
-    #         slb_sum = is_sl * bsum  # SLBSum: Supported Living × BSum
-            
-    #         row_features.extend([fhf_sum, slf_sum, slb_sum])
-            
-    #         # 12-21. QSI Questions (EXACT 10 from Model 5b)
-    #         qsi_questions = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
-    #         for q_num in qsi_questions:
-    #             value = getattr(record, f'q{q_num}', 0) or 0
-    #             row_features.append(float(value))
-            
-    #         features_list.append(row_features)
-        
-    #     # Feature names matching Model 5b Table 7
-    #     feature_names = [
-    #         'LiveILSL', 'LiveRH1', 'LiveRH2', 'LiveRH3', 'LiveRH4',
-    #         'Age21_30', 'Age31Plus',
-    #         'BSum',
-    #         'FHFSum', 'SLFSum', 'SLBSum',
-    #         'Q16', 'Q18', 'Q20', 'Q21', 'Q23', 'Q28', 'Q33', 'Q34', 'Q36', 'Q43'
-    #     ]
-        
-    #     return np.array(features_list), feature_names
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
         Model 1 feature preparation using generic configuration approach
         Matches the original Model 5b specification exactly
         """
+                
+        # If feature_config provided from pipeline, use it
+        if hasattr(self, 'feature_config') and self.feature_config is not None:
+            return self.prepare_features_from_spec(records, self.feature_config)
+            
         # Model 1 uses exactly 10 QSI items from Model 5b
         model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
         
@@ -187,9 +131,10 @@ class Model1Linear(BaseiBudgetModel):
         }
         
         # Use the generic preparation method from base class
-        X, feature_names = self.prepare_features_from_spec(records, feature_config)
+        #X, feature_names = self.prepare_features_from_spec(records, feature_config)
+        #return X, feature_names
         
-        return X, feature_names
+        return self.prepare_features_from_spec(records, feature_config)
     
     def _fit_core(self, X: np.ndarray, y: np.ndarray) -> None:
         """
@@ -227,6 +172,16 @@ class Model1Linear(BaseiBudgetModel):
             Predictions in transformed scale (base class will inverse transform)
         """
         return self.model.predict(X)
+
+    def predict_original(self, X: np.ndarray) -> np.ndarray:
+        """
+        Override base-class hook for CV and evaluation.
+        Model 1’s _predict_core() outputs predictions on the fitted √-cost scale,
+        so we must inverse-transform them here to return dollar-scale predictions.
+        """
+        y_pred_fitted = self._predict_core(X)           # predictions on √-scale
+        y_pred_original = self.inverse_transformation(y_pred_fitted)  # square → dollars
+        return np.maximum(0.0, y_pred_original)
     
     def calculate_metrics(self) -> Dict[str, float]:
         """Calculate metrics with Model 5b comparison"""
@@ -442,32 +397,38 @@ class Model1Linear(BaseiBudgetModel):
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
         
-        self.logger.info(f"Diagnostic plots saved")
+        self.logger.info(f"Diagnostic plots saved to {self.output_dir_relative / 'diagnostic_plots.png'}")
 
 
 def main():
     """Run Model 1 pipeline"""
     
-    print("=" * 80)
-    print("MODEL 1: RE-EVALUATION OF MODEL 5B WITH 2024 DATA")
-    print("=" * 80)
-    print()
-    print("This model replicates Model 5b (Tao & Niu 2015) specification exactly:")
-    print("  - 21 features (includes 5 living, 2 age dummies, BSum, 3 interactions, 10 QSI)")
-    print("  - Square-root transformation")
-    print("  - Studentized residuals outlier detection (|t_i| >= 1.645)")
-    print("  - Ordinary Least Squares regression")
-    print()
-    print("Purpose: Direct comparison of Model 5b performance across 9 years")
-    print("=" * 80)
-    print()
-    
     # Initialize model with sqrt transform (Model 5b default)
+    use_sqrt = True
+    use_outlier = True
+    suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     model = Model1Linear(
-                use_sqrt_transform=True,      # sqrt transformation
-                use_outlier_removal=True,      # enable outlier removal
-                outlier_threshold=1.645        # ~10% outliers (Model 5b default)        
-            )
+                use_sqrt_transform = use_sqrt,      # sqrt transformation
+                use_outlier_removal = use_outlier,      # enable outlier removal
+                outlier_threshold = 1.645,        # ~10% outliers (Model 5b default)
+                log_suffix = suffix  # Optional log suffix
+            )    
+    
+    model.logger.info("=" * 80)
+    model.logger.info("MODEL 1: RE-EVALUATION OF MODEL 5B WITH 2024 DATA")
+    model.logger.info("=" * 80)
+    model.logger.info("")
+    model.logger.info("This model replicates Model 5b (Tao & Niu 2015) specification exactly:")
+    model.logger.info("  - 21 features (includes 5 living, 2 age dummies, BSum, 3 interactions, 10 QSI)")
+    if use_sqrt: 
+        model.logger.info("  - Square-root transformation")
+    if use_outlier:
+        model.logger.info("  - Studentized residuals outlier detection (|t_i| >= 1.645)")
+    model.logger.info("  - Ordinary Least Squares regression")
+    model.logger.info("")
+    model.logger.info("Purpose: Direct comparison of Model 5b performance across 9 years")
+    model.logger.info("=" * 80)
+    model.logger.info("")
     
     # Run complete pipeline
     results = model.run_complete_pipeline(
@@ -478,46 +439,46 @@ def main():
         n_cv_folds=10
     )
 
-    print("\n" + "="*80)
-    print("SUBGROUP DIAGNOSTICS")
-    print("="*80)
-    print(f"Subgroups generated: {list(model.subgroup_metrics.keys())}")
-    print("="*80)
+    model.logger.info("="*80)
+    model.logger.info("SUBGROUP DIAGNOSTICS")
+    model.logger.info("="*80)
+    model.logger.info(f"Subgroups generated: {list(model.subgroup_metrics.keys())}")
+    model.logger.info("="*80)
     
-    print()
-    print("=" * 80)
-    print("MODEL 5b COMPARISON SUMMARY")
-    print("=" * 80)
-    print(f"Model 5b (2015):")
-    print(f"  R^2 = {model.MODEL_5B_R2_2015:.4f}")
-    print(f"  SBC = {model.MODEL_5B_SBC_2015:,.1f}")
-    print(f"  RMSE = ${model.MODEL_5B_RMSE_2015:.2f} (sqrt scale)")
-    print(f"  Outliers = {model.MODEL_5B_OUTLIER_PCT_2015:.2f}%")
-    print()
-    print(f"Model 1 (2024):")
-    print(f"  R^2 = {model.metrics.get('r2_test', 0):.4f}")
-    if 'sbc' in model.metrics:
-        print(f"  SBC = {model.metrics['sbc']:,.1f}")
-    print(f"  RMSE = ${model.metrics.get('rmse_test', 0):,.2f} (original scale)")
+    model.logger.info("")
+    model.logger.info("=" * 80)
+    model.logger.info("MODEL 5b COMPARISON SUMMARY")
+    model.logger.info("=" * 80)
+    model.logger.info(f"Model 5b (2015):")
+    model.logger.info(f"  R^2 = {model.MODEL_5B_R2_2015:.4f}")
+    model.logger.info(f"  SBC = {model.MODEL_5B_SBC_2015:,.1f}")
+    model.logger.info(f"  RMSE = ${model.MODEL_5B_RMSE_2015:.2f} (sqrt scale)")
     if model.outlier_diagnostics:
-        print(f"  Outliers = {model.outlier_diagnostics.get('pct_removed', 0):.2f}%")
-    print()
-    print(f"Delta:")
+        model.logger.info(f"  Outliers = {model.MODEL_5B_OUTLIER_PCT_2015:.2f}%")
+    model.logger.info("")
+    model.logger.info(f"Model 1 (2024):")
+    model.logger.info(f"  R^2 = {model.metrics.get('r2_test', 0):.4f}")
+    if 'sbc' in model.metrics:
+        model.logger.info(f"  SBC = {model.metrics['sbc']:,.1f}")
+    model.logger.info(f"  RMSE = ${model.metrics.get('rmse_test_sqrt', 0):,.2f} (sqrt scale)")
+    model.logger.info(f"  RMSE = ${model.metrics.get('rmse_test', 0):,.2f} (original scale)")
+    if model.outlier_diagnostics:
+        model.logger.info(f"  Outliers = {model.outlier_diagnostics.get('pct_removed', 0):.2f}%")
+    model.logger.info("")
+    model.logger.info(f"Delta:")
     if 'r2_delta_from_2015' in model.metrics:
         delta = model.metrics['r2_delta_from_2015']
-        print(f"  Delta R^2 = {delta:+.4f} ({abs(delta)*100:.2f}% {'improvement' if delta > 0 else 'decline'})")
+        model.logger.info(f"  Delta R^2 = {delta:+.4f} ({abs(delta)*100:.2f}% {'improvement' if delta > 0 else 'decline'})")
     if 'sbc_delta_from_2015' in model.metrics:
         delta_sbc = model.metrics['sbc_delta_from_2015']
-        print(f"  Delta SBC = {delta_sbc:+,.1f} ({'better' if delta_sbc < 0 else 'worse'})")
+        model.logger.info(f"  Delta SBC = {delta_sbc:+,.1f} ({'better' if delta_sbc < 0 else 'worse'})")
     if model.outlier_diagnostics:
         delta_outlier = model.outlier_diagnostics.get('pct_removed', 0) - model.MODEL_5B_OUTLIER_PCT_2015
-        print(f"  Delta Outlier% = {delta_outlier:+.2f}%")
-    print("=" * 80)
+        model.logger.info(f"  Delta Outlier% = {delta_outlier:+.2f}%")
+    model.logger.info("=" * 80)
     
     return results
 
 
 if __name__ == "__main__":
-    import os
-    print("CWD:", os.getcwd())
     main()

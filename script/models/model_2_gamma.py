@@ -51,8 +51,9 @@ class Model2GLMGamma(BaseiBudgetModel):
                  use_outlier_removal: bool = False,
                  outlier_threshold: float = 1.645,
                  use_selected_features: bool = True,
-                 output_dir: Optional[Path] = None,
-                 random_seed: int = 42):
+                 random_seed: int = 42,
+                 log_suffix: Optional[str] = None
+                 ):
         """
         Initialize Model 2 GLM-Gamma
         
@@ -64,6 +65,12 @@ class Model2GLMGamma(BaseiBudgetModel):
             output_dir: Directory for outputs
             random_seed: Random seed for reproducibility
         """
+        # ****************************************************************************
+        # WARNING : The flag 'use_sqrt_transform' here is for research only. 
+        # A Gamma model already assumes E[Y]>0 and Var(Y)=μ²φ. 
+        # Applying sqrt(Y) then Gamma on sqrt(Y) breaks the distributional assumption.
+        # I leave the capability to tranform  only for didactical purposes
+        # ****************************************************************************
         # Determine transformation
         transformation = 'sqrt' if use_sqrt_transform else 'none'
         
@@ -73,14 +80,13 @@ class Model2GLMGamma(BaseiBudgetModel):
             model_name="GLM-Gamma",
             use_outlier_removal=use_outlier_removal,
             outlier_threshold=outlier_threshold,
-            transformation=transformation,
-            random_seed=random_seed
+            transformation='none',
+            random_seed=random_seed,
+            log_suffix = log_suffix
         )
         
         # Model-specific configuration
         self.use_selected_features = use_selected_features
-        #self.output_dir = Path(output_dir) if output_dir else Path("outputs/model_2")
-        #self.output_dir.mkdir(parents=True, exist_ok=True)
         
         # GLM-specific attributes
         self.glm_model = None
@@ -107,127 +113,15 @@ class Model2GLMGamma(BaseiBudgetModel):
         # Additional metrics
         self.glm_diagnostics = {}
         
-    # def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-    #     """
-    #     Prepare comprehensive features based on MI analysis
-        
-    #     Features included (targeting 35-40 features):
-    #     1. Living Settings (5): ILSL, RH1, RH2, RH3, RH4 (FH reference)
-    #     2. Age Groups (2): Age21_30, Age31Plus (Age3_20 reference)
-    #     3. Support Levels (5): LOSRI, OLEVEL, BLEVEL, FLEVEL, PLEVEL
-    #     4. Clinical Scores (3): BSum, FSum, PSum
-    #     5. Demographics (1): Age continuous
-    #     6. QSI Items (15-30): All items with MI > 0.05
-    #     7. Interaction terms (optional): Living×Support, Age×Clinical
-        
-    #     Args:
-    #         records: List of ConsumerRecord objects
-            
-    #     Returns:
-    #         Feature matrix and feature names
-    #     """
-    #     features_list = []
-        
-    #     for record in records:
-    #         row_features = []
-            
-    #         # 1. Living Setting dummies (5 features, FH as reference)
-    #         for setting in ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
-    #             row_features.append(1.0 if record.living_setting == setting else 0.0)
-            
-    #         # 2. Age group dummies (2 features, Age3_20 as reference)
-    #         row_features.append(1.0 if 21 <= record.age <= 30 else 0.0)
-    #         row_features.append(1.0 if record.age > 30 else 0.0)
-            
-    #         # 3. Support Level Indicators (5 features)
-    #         row_features.append(float(record.losri))
-    #         row_features.append(float(record.olevel))
-    #         row_features.append(float(record.blevel))
-    #         row_features.append(float(record.flevel))
-    #         row_features.append(float(record.plevel))
-            
-    #         # 4. Clinical Assessment Scores (3 features)
-    #         row_features.append(float(record.bsum))
-    #         row_features.append(float(record.fsum))
-    #         row_features.append(float(record.psum))
-            
-    #         # 5. Age continuous (1 feature)
-    #         row_features.append(float(record.age))
-            
-    #         # 6. Gender (1 feature)
-    #         row_features.append(1.0 if record.gender == 'M' else 0.0)
-            
-    #         # 7. QSI Items - Comprehensive set (up to 30 features)
-    #         if self.use_selected_features:
-    #             # Use only high MI QSI items
-    #             qsi_to_use = self.high_mi_qsi[:15]  # Top 15 QSI items
-    #         else:
-    #             # Use all QSI items
-    #             qsi_to_use = list(range(14, 51))  # Q14 to Q50
-            
-    #         for q_num in qsi_to_use:
-    #             value = getattr(record, f'q{q_num}', 0) or 0
-    #             row_features.append(float(value))
-            
-    #         # 8. Interaction terms (optional, add 3-5 more features)
-    #         # Living × Support interaction (high cost driver)
-    #         is_supported_living = 1.0 if record.living_setting in ['RH1', 'RH2', 'RH3', 'RH4'] else 0.0
-    #         row_features.append(is_supported_living * float(record.losri))
-            
-    #         # Age × Clinical interaction
-    #         row_features.append(float(record.age) * float(record.bsum) / 100.0)  # Scaled
-            
-    #         # FH × Functional interaction
-    #         is_fh = 1.0 if record.living_setting == 'FH' else 0.0
-    #         row_features.append(is_fh * float(record.fsum))
-            
-    #         features_list.append(row_features)
-        
-    #     # Build feature names (must match order above)
-    #     feature_names = [
-    #         'ILSL', 'RH1', 'RH2', 'RH3', 'RH4',  # 5 living settings
-    #         'Age21_30', 'Age31Plus',  # 2 age groups
-    #         'LOSRI', 'OLEVEL', 'BLEVEL', 'FLEVEL', 'PLEVEL',  # 5 support levels
-    #         'BSum', 'FSum', 'PSum',  # 3 clinical scores
-    #         'Age',  # 1 continuous age
-    #         'Male',  # 1 gender
-    #     ]
-        
-    #     # Add QSI feature names
-    #     if self.use_selected_features:
-    #         qsi_to_use = self.high_mi_qsi[:15]
-    #     else:
-    #         qsi_to_use = list(range(14, 51))
-        
-    #     for q_num in qsi_to_use:
-    #         feature_names.append(f'Q{q_num}')
-        
-    #     # Add interaction term names
-    #     feature_names.extend([
-    #         'SupportedLiving_x_LOSRI',
-    #         'Age_x_BSum',
-    #         'FH_x_FSum'
-    #     ])
-        
-    #     # Log feature information
-    #     self.logger.info(f"Features prepared: {len(feature_names)} features")
-    #     if self.logger.level <= logging.DEBUG:
-    #         self.logger.debug("Feature categories:")
-    #         self.logger.debug(f"  Living settings: 5")
-    #         self.logger.debug(f"  Age groups: 2")
-    #         self.logger.debug(f"  Support levels: 5")
-    #         self.logger.debug(f"  Clinical scores: 3")
-    #         self.logger.debug(f"  Demographics: 2")
-    #         self.logger.debug(f"  QSI items: {len(qsi_to_use)}")
-    #         self.logger.debug(f"  Interactions: 3")
-    #         self.logger.debug(f"  TOTAL: {len(feature_names)}")
-        
-    #     return np.array(features_list), feature_names
-
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
         Simplified feature preparation using generic method
         """
+        
+        # If feature_config provided from pipeline, use it
+        if hasattr(self, 'feature_config') and self.feature_config is not None:
+            return self.prepare_features_from_spec(records, self.feature_config)
+            
         # Define high MI QSI items
         high_mi_qsi = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28, 33, 34, 43, 44]
         
@@ -274,7 +168,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         # For Gamma, we need positive values
         # If sqrt transformed, we're already positive
         # If not transformed, ensure minimum positive value
-        min_value = 1.0 if self.transformation == 'none' else 0.01
+        min_value = 1.0 if self.transformation == 'none' else 0.05
         y_adjusted = np.maximum(y, min_value)
         
         if (y <= 0).any():
@@ -290,15 +184,19 @@ class Model2GLMGamma(BaseiBudgetModel):
             )
             
             # Fit model with increased iterations for convergence
-            self.glm_model = glm.fit(maxiter=200, scale='x2', disp=0)
+            self.glm_model = glm.fit(maxiter=200, disp=0)  # Do **not** use 'scale'. Let Gamma estimate dispersion
             self.model = self.glm_model  # Store for base class compatibility
             
-            # Extract model diagnostics
+            # Core model attributes
             self.dispersion = float(self.glm_model.scale)
             self.deviance = float(self.glm_model.deviance)
             self.aic = float(self.glm_model.aic)
-            self.bic = float(self.glm_model.bic)
             self.num_parameters = len(self.glm_model.params)
+
+            # BIC is not on GLMResults; compute manually
+            n = int(X_with_const.shape[0])
+            k = int(len(self.glm_model.params))   # includes intercept
+            self.bic = float(n * np.log(self.deviance / max(n, 1)) + k * np.log(max(n, 1)))            
             
             # Calculate null model for pseudo-R²
             null_model = sm.GLM(
@@ -310,9 +208,20 @@ class Model2GLMGamma(BaseiBudgetModel):
             self.null_deviance = float(null_model.deviance)
             
             # Calculate pseudo-R² measures
-            self.deviance_r2 = 1 - (self.deviance / self.null_deviance)
-            self.mcfadden_r2 = 1 - (self.glm_model.llf / null_model.llf)
-            
+            # Null model with intercept only
+            null_X = np.ones((len(y_adjusted), 1))
+            null_model = sm.GLM(y_adjusted, null_X, family=Gamma(link=Log())).fit(disp=0)
+            self.null_deviance = float(null_model.deviance)
+
+            # Pseudo-R² metrics
+            eps = 1e-12
+            self.deviance_r2 = float(1.0 - (self.deviance / max(self.null_deviance, eps)))
+            #self.mcfadden_r2 = float(1.0 - (self.glm_model.llf / max(null_model.llf, -eps)))
+            if null_model.llf == 0:
+                self.mcfadden_r2 = np.nan
+            else:
+                self.mcfadden_r2 = 1.0 - (self.glm_model.llf / null_model.llf)
+
             # Store coefficients with statistics
             coef_names = ['const'] + self.feature_names
             for i, name in enumerate(coef_names):
@@ -339,17 +248,21 @@ class Model2GLMGamma(BaseiBudgetModel):
             self.logger.info(f"  Deviance R²: {self.deviance_r2:.4f}")
             self.logger.info(f"  McFadden R²: {self.mcfadden_r2:.4f}")
             
-            # Log top significant features
-            self.logger.info("\nTop significant features:")
-            significant_features = [
-                (name, coef['value'], coef['p_value'], coef['pct_effect']) 
-                for name, coef in self.coefficients.items() 
-                if coef['p_value'] < 0.05 and name != 'const'
-            ]
-            significant_features.sort(key=lambda x: abs(x[1]), reverse=True)
+            # Prepare feature list for base class logging method
+            feature_list = []
+            for name, coef_data in self.coefficients.items():
+                if name != 'const':  # Skip intercept
+                    feature_list.append({
+                        'name': name,
+                        'coefficient': coef_data['value'],
+                        'std_error': coef_data['std_error'],
+                        'p_value': coef_data['p_value'],
+                        'effect_pct': coef_data['pct_effect'],
+                        'z_value': coef_data.get('z_value', None)
+                    })
             
-            for name, coef, pval, pct in significant_features[:5]:
-                self.logger.info(f"  {name}: β={coef:.4f}, p={pval:.4f}, effect={pct:+.1f}%")
+            # Use base class method to log ALL features
+            self.log_feature_importance(feature_list, model_type="GLM-Gamma")
                 
         except Exception as e:
             self.logger.error(f"Error fitting GLM-Gamma: {str(e)}")
@@ -378,6 +291,18 @@ class Model2GLMGamma(BaseiBudgetModel):
         predictions = self.glm_model.predict(X_with_const)
         
         return predictions
+
+    def predict_original(self, X: np.ndarray) -> np.ndarray:
+        """
+        Override base-class hook.
+        Model 2 (Gamma + log link) already returns predictions in original dollar scale
+        inside _predict_core(), so we just call it directly.
+
+        This prevents the base class from applying inverse_transformation() again
+        during cross-validation or evaluation.
+        """
+        y_pred = self._predict_core(X)
+        return np.maximum(0.0, y_pred)
     
     def calculate_metrics_with_proper_mape(self, y_true: np.ndarray, y_pred: np.ndarray,
                                           mape_threshold: float = 1000.0) -> Dict[str, float]:
@@ -554,27 +479,21 @@ class Model2GLMGamma(BaseiBudgetModel):
             f.write("\\newcommand{\\ModelTwoDistribution}{\\WarningRunPipeline}\n")
             f.write("\\newcommand{\\ModelTwoLinkFunction}{\\WarningRunPipeline}\n")
             f.write("\\newcommand{\\ModelTwoVarianceFunction}{\\WarningRunPipeline}\n")
-        
-        # Append to renewcommands file (actual values)
+            f.write("\\newcommand{\\ModelTwoParameters}{\\WarningRunPipeline}\n")
+
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         with open(renewcommands_file, 'a') as f:
-            f.write("\n% Model 2 GLM-Specific Metrics\n")
-            f.write(f"\\renewcommand{{\\ModelTwoDispersion}}{{{self.dispersion:.3f}}}\n")
-            f.write(f"\\renewcommand{{\\ModelTwoDeviance}}{{{self.deviance:.2f}}}\n")
+            f.write("\n% GLM-Specific Values\n")
+            f.write("\\renewcommand{\\ModelTwoDistribution}{Gamma}\n")
+            f.write("\\renewcommand{\\ModelTwoLinkFunction}{Log}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoDispersion}}{{{self.dispersion:.4f}}}\n")
             f.write(f"\\renewcommand{{\\ModelTwoNullDeviance}}{{{self.null_deviance:.2f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoDeviance}}{{{self.deviance:.2f}}}\n")
             f.write(f"\\renewcommand{{\\ModelTwoDevianceRSquared}}{{{self.deviance_r2:.4f}}}\n")
             f.write(f"\\renewcommand{{\\ModelTwoMcFaddenRSquared}}{{{self.mcfadden_r2:.4f}}}\n")
             f.write(f"\\renewcommand{{\\ModelTwoAIC}}{{{self.aic:.1f}}}\n")
-            
-            # BIC with correct calculation
-            n = len(self.y_train) if hasattr(self, 'y_train') else 1
-            k = self.num_parameters
-            correct_bic = -2 * self.glm_model.llf + k * np.log(n)
-            f.write(f"\\renewcommand{{\\ModelTwoBIC}}{{{correct_bic:.1f}}}\n")
-            
-            # Model characteristics
-            f.write(f"\\renewcommand{{\\ModelTwoDistribution}}{{Gamma}}\n")
-            f.write(f"\\renewcommand{{\\ModelTwoLinkFunction}}{{Log}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoBIC}}{{{self.bic:.1f}}}\n")
+            f.write(f"\\renewcommand{{\\ModelTwoParameters}}{{{len(self.glm_model.params)}}}\n")
             f.write(f"\\renewcommand{{\\ModelTwoVarianceFunction}}{{Quadratic}}\n")
         
         self.logger.info("Model 2 GLM-specific commands appended to both files")
@@ -588,12 +507,19 @@ def main():
     logger.info("="*80)
     
     # Initialize model with Model 1-like options
+    # ****************************************************************************
+    # WARNING : The flag 'use_sqrt_transform' here is for research only. 
+    # A Gamma model already assumes E[Y]>0 and Var(Y)=μ²φ. 
+    # Applying sqrt(Y) then Gamma on sqrt(Y) breaks the distributional assumption.
+    # I leave the capability to tranform  only for didactical purposes
+    # ****************************************************************************
     model = Model2GLMGamma(
-        use_sqrt_transform=False,      
+        use_sqrt_transform=False,     # Didactic purpose. Should ALWAYS be False for Gamma
         use_outlier_removal=False,      
-        outlier_threshold=1.645,       # ~10% outliers (Model 5b default)
-        use_selected_features=False,   # Use MI-based feature selection
-        random_seed=42                # For reproducibility
+        outlier_threshold=1.645,      # ~10% outliers (Model 5b default) 
+        use_selected_features=False,  # Use MI-based feature selection
+        random_seed=42,                # For reproducibility
+        log_suffix="gamma_no_outliers_v1"
     )
     
     # Run complete pipeline
@@ -609,55 +535,60 @@ def main():
     model.generate_diagnostic_plots()
     
     # Print summary
-    print("\n" + "="*80)
-    print("MODEL 2 FINAL SUMMARY")
-    print("="*80)
+    model.logger.info("=" * 80)
+    # Log final summary to BOTH file and console
+    model.log_section("MODEL 2 FINAL SUMMARY", "=")
     
-    print("\nConfiguration:")
-    print(f"  • Distribution: Gamma")
-    print(f"  • Link Function: Log")
-    print(f"  • Transformation: {model.transformation}")
-    print(f"  • Outlier Removal: {model.use_outlier_removal}")
+    # Build summary for logging
+    summary_lines = []
+    summary_lines.append("\nConfiguration:")
+    summary_lines.append(f"  • Distribution: Gamma")
+    summary_lines.append(f"  • Link Function: Log")
+    summary_lines.append(f"  • Transformation: {model.transformation}")
+    summary_lines.append(f"  • Outlier Removal: {model.use_outlier_removal}")
+    
     if model.use_outlier_removal and hasattr(model, 'outlier_diagnostics'):
         if model.outlier_diagnostics:
-            print(f"  • Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
-                  f"({model.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
-    print(f"  • Number of Features: {len(model.feature_names)}")
+            summary_lines.append(f"  • Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
+                               f"({model.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
     
-    print("\nFeature Categories:")
-    print(f"  • Living Settings: 5")
-    print(f"  • Age Groups: 2")
-    print(f"  • Support Levels: 5")
-    print(f"  • Clinical Scores: 3")
-    print(f"  • Demographics: 2")
-    print(f"  • QSI Items: 15+")
-    print(f"  • Interactions: 3")
+    summary_lines.append(f"  • Number of Features: {len(model.feature_names)}")
     
-    print("\nData Summary:")
-    print(f"  • Total Records: {len(model.all_records)}")
-    print(f"  • Training Records: {len(model.train_records)}")
-    print(f"  • Test Records: {len(model.test_records)}")
+    summary_lines.append("\nFeature Categories:")
+    summary_lines.append(f"  • Living Settings: 5")
+    summary_lines.append(f"  • Age Groups: 2")
+    summary_lines.append(f"  • Support Levels: 5")
+    summary_lines.append(f"  • Clinical Scores: 3")
+    summary_lines.append(f"  • Demographics: 2")
+    summary_lines.append(f"  • QSI Items: 15+")
+    summary_lines.append(f"  • Interactions: 3")
     
-    print("\nModel Performance:")
-    if hasattr(model, 'test_r2'):
-        print(f"  • Test R²: {model.test_r2:.4f}")
-        print(f"  • Test RMSE: ${model.test_rmse:,.0f}")
-        print(f"  • Test MAE: ${model.test_mae:,.0f}")
+    summary_lines.append("\nData Summary:")
+    summary_lines.append(f"  • Total Records: {len(model.all_records)}")
+    summary_lines.append(f"  • Training Records: {len(model.train_records)}")
+    summary_lines.append(f"  • Test Records: {len(model.test_records)}")
     
-    print("\nGLM-Specific Metrics:")
+    summary_lines.append("\nModel Performance:")
+    if model.metrics:
+        summary_lines.append(f"  • Training R²: {model.metrics.get('r2_train', 0):.4f}")
+        summary_lines.append(f"  • Test R²: {model.metrics.get('r2_test', 0):.4f}")
+        summary_lines.append(f"  • RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
+        summary_lines.append(f"  • MAE: ${model.metrics.get('mae_test', 0):,.2f}")
+        summary_lines.append(f"  • CV R² (mean ± std): {model.metrics.get('cv_mean', 0):.4f} ± {model.metrics.get('cv_std', 0):.4f}")
+    
+    summary_lines.append("\nGLM-Specific Metrics:")
     if model.glm_model:
-        print(f"  • Dispersion Parameter: {model.dispersion:.3f}")
-        print(f"  • Deviance R²: {model.deviance_r2:.4f}")
-        print(f"  • McFadden R²: {model.mcfadden_r2:.4f}")
-        print(f"  • AIC: {model.aic:.1f}")
+        summary_lines.append(f"  • Dispersion Parameter: {model.dispersion:.3f}")
+        summary_lines.append(f"  • Deviance R²: {model.deviance_r2:.4f}")
+        summary_lines.append(f"  • McFadden R²: {model.mcfadden_r2:.4f}")
+        summary_lines.append(f"  • AIC: {model.aic:.1f}")
         
-        # Calculate correct BIC
         n = len(model.y_train) if hasattr(model, 'y_train') and model.y_train is not None else 1
         k = model.num_parameters
         correct_bic = -2 * model.glm_model.llf + k * np.log(n)
-        print(f"  • BIC (corrected): {correct_bic:.1f}")
+        summary_lines.append(f"  • BIC (corrected): {correct_bic:.1f}")
     
-    print("\nTop 5 Features (by coefficient magnitude):")
+    summary_lines.append("\nTop 5 Features (by coefficient magnitude):")
     if model.coefficients:
         sig_features = [
             (name, coef['value'], coef['pct_effect'])
@@ -667,13 +598,25 @@ def main():
         sig_features.sort(key=lambda x: abs(x[1]), reverse=True)
         
         for i, (name, coef, pct) in enumerate(sig_features[:5], 1):
-            print(f"  {i}. {name}: β={coef:.4f} ({pct:+.1f}% effect)")
+            summary_lines.append(f"  {i}. {name}: β={coef:.4f} ({pct:+.1f}% effect)")
     
+    # Write everything to log file
+    for line in summary_lines:
+        model.logger.info(line)
+    
+    model.logger.info("")
+    model.logger.info("=" * 80)
+    model.logger.info("Model 2 pipeline complete!")
+    model.logger.info(f"Results saved to: {model.output_dir_relative}")
+    model.logger.info("=" * 80)
+    
+    # Also print a brief summary to console for immediate visibility
     print("\n" + "="*80)
-    print("Model 2 pipeline complete!")
-    print(f"Results saved to: {model.output_dir}")
+    print("MODEL 2 COMPLETE - See log file for detailed summary")
+    print(f"Test R²: {model.metrics.get('r2_test', 0):.4f}")
+    print(f"RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
+    print(f"Results saved to: {model.output_dir_relative}")
     print("="*80)
-
 
 if __name__ == "__main__":
     main()

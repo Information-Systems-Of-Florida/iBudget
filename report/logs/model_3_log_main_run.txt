@@ -1,0 +1,15 @@
+2025-10-12 07:44:28 - MODEL_3 - INFO - 
+2025-10-12 07:44:28 - MODEL_3 - INFO - ============================================================
+2025-10-12 07:44:28 - MODEL_3 - INFO - INITIALIZING MODEL 3: ROBUST LINEAR REGRESSION (HUBER M-ESTIMATION)
+2025-10-12 07:44:28 - MODEL_3 - INFO - ============================================================
+2025-10-12 07:44:28 - MODEL_3 - INFO - Output directory: ..\..\report\models\model_3
+2025-10-12 07:44:28 - MODEL_3 - INFO - ============================================================
+2025-10-12 07:44:28 - MODEL_3 - INFO - Configuration:
+2025-10-12 07:44:28 - MODEL_3 - INFO -   - Outlier removal: False
+2025-10-12 07:44:28 - MODEL_3 - INFO -   - Transformation: sqrt
+2025-10-12 07:44:28 - MODEL_3 - INFO -   - Random seed: 42
+2025-10-12 07:44:28 - MODEL_3 - INFO - Model 3: Robust Linear Regression initialized
+2025-10-12 07:44:28 - MODEL_3 - INFO -   Epsilon (Huber constant): 1.35
+2025-10-12 07:44:28 - MODEL_3 - INFO -   Max iterations: 100
+2025-10-12 07:44:28 - MODEL_3 - INFO -   Transformation: sqrt
+2025-10-12 07:44:28 - MODEL_3 - INFO -   Outlier handling: Adaptive weights (no removal)

@@ -29,52 +29,58 @@
 \usepackage{listingsutf8}
 
 % ********* Font definiton ************
+\usepackage{t1enc} % as usual
+%\usepackage[latin1]{inputenc} % as usual
+%\usepackage{times}		
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{pmboxdraw}  % For box drawing characters
 %\usepackage{fontspec}
-%\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support
+%\setmainfont{Latin Modern Roman} % Or any other font with good Unicode support 
 \usepackage{fontawesome5}
 \usepackage{pifont} 
+%\usepackage{roboto}
+\usepackage{lmodern}
+%\usepackage{mathptmx}  	%mathematical fonts for use with times, I encountered some problems using this package together with pdftex, which I was not able to resolve
 
 % ********* Macro for Models ************
 \input{model_template_setup.tex}
 
-%\usepackage[fontsize=10pt]{scrextend} 
-%\setmargins{2.5cm}{2.5cm}{15cm}{23cm}{14pt}{3cm}{0pt}{2cm}
-% \setmargins{3.5cm}%			% left edge
-% 		   {2.5cm}%     % top edge
-%            {14.7cm}%		% text width
-%            {21.42cm}%   % text hight
-%            {14pt}%			% header hight
-%            {3cm}%   	  % header distance
-%            {0pt}%				% footer hight
-%            {2cm}%    	  % footer distance         
-
-%\usepackage{t1enc} % as usual
-%\usepackage[latin1]{inputenc} % as usual
-%\usepackage{times}		
-%\usepackage{mathptmx}  	%mathematical fonts for use with times, I encountered some problems using this package togather with pdftex, which I was not able to resolve
+% ********* Headers & Footers ***********
+\usepackage{fancyhdr} % this is for headers and footers
+\setlength{\headheight}{18pt} % fix header height
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\includegraphics[width=1cm]{../assets/ISF-logo-tight.png}} % 
+\rhead{\footnotesize{\sc{iBudget}}} 
+\setcounter{page}{1} 
+\lfoot{\sc{\footnotesize Version $\TheVersion$. Planned obsolescence. Discard after: \TheObsolescenceDate} } 
+%\cfoot{\sc{\footnotesize }}
+\rfoot{\sc{\footnotesize Page \thepage \hspace{0.005cm} of \pageref*{TotPages}}} % \ThePageCount
+%%************************************************
 
 % ********* Graphics definition *******
+% WARNING: The order of the following libraries matter. DO NOT CHANGE
 %\usepackage[pdftex]{graphicx} % required to import graphic files
 \usepackage{color} %allows to mark some entries in the tables with color
 \usepackage[pdftex]{graphicx}
 \usepackage{tcolorbox}
 \usepackage{eso-pic} % these two are required to add the little picture on top of every page
 \usepackage{everyshi} % these two are required to add the little picture on top of every page
-\renewcommand{\floatpagefraction}{0.7} %default:0.5 allows two big pictures on one page
+\usepackage{tikz} 
+\usetikzlibrary{decorations.pathreplacing}
 
 %********** Enabling landscape orientation *******
 \usepackage{rotating}
 
+%********** Watermark *******
 \usepackage{draftwatermark}
 \SetWatermarkText{\phantom{} \\DRAFT}
-\SetWatermarkScale{4} % Adjust size
-\SetWatermarkColor[gray]{0.9} % Set color and transparency
+\SetWatermarkScale{1} % Adjust size
+\SetWatermarkColor[gray]{0.95} % Set color and transparency
 
 %********** Enybeling Hyperlinks *******
-\usepackage[pdfborder=000,pdftex=true]{hyperref}% this enables jumping from a reference and table of content in the pdf file to its target
+\usepackage{hyperref}% this enables jumping from a reference and table of content in the pdf file to its target
 
 % ********* Table layout **************
 \usepackage{booktabs}	  	%design of table, has an excellent documentation
@@ -85,40 +91,8 @@
 \captionnamefont{\footnotesize\sffamily} % defines the font of the caption name (e.g. Figure: or Table:)
 \captiontitlefont{\footnotesize\sffamily} % defines the font of the caption text (same as above, but not bold)
 \setlength{\abovecaptionskip}{0mm} %lowers the distace of captions to the figure
-
 \usepackage{sidecap}
-\usepackage{tikz}
-\usetikzlibrary{decorations.pathreplacing}
 
-% ********* Header and Footer **********
-% This is something to play with forever. I use here the advanced settings of the KOMA script
-%\usepackage{scrlayer-scrpage} %scrpage2} %header and footer using the options for the KOMA script
-%\renewcommand{\headfont}{\footnotesize\sffamily} % font for the header
-%\renewcommand{\pnumfont}{\footnotesize\sffamily} % font for the pagenumbers
-
-%the following lines define the pagestyle for the main document
-% \defpagestyle{cb}{%
-% (\textwidth,0pt)% sets the border line above the header
-% {\pagemark\hfill\headmark\hfill}% doublesided, left page
-% {\hfill\headmark\hfill\pagemark}% doublesided, right page
-% {\hfill\headmark\hfill\pagemark}%  onesided
-% (\textwidth,1pt)}% sets the border line below the header
-% %
-% {(\textwidth,1pt)% sets the border line above the footer
-% {\scshape Preliminary report \hfill Correlates of Student Success 2020}% doublesided, left page
-% {\scshape Correlates of Student Success 2020 \hfill Preliminary report}% doublesided, right page
-% {\scshape Correlates of Student Success 2020 \hfill Preliminary report} % one sided printing
-% (\textwidth,0pt)% sets the border line below the footer
-% }
-
-% %this defines the page style for the first pages: all empty
-% \renewpagestyle{plain}%
-% 	{(\textwidth,0pt)%
-% 		{\hfill}{\hfill}{\hfill}%
-% 	(\textwidth,0pt)}%
-% 	{(\textwidth,0pt)%	
-% 		{\hfill}{\hfill}{\hfill}%
-% 	(\textwidth,0pt)}
 
 %********** Footnotes **********
 \renewcommand{\footnoterule}{\rule{5cm}{0.2mm} \vspace{0.3cm}} %increases the distance of footnotes from the text
@@ -131,39 +105,23 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
-%################ End Preferences #####################
 
-%********** Begin Frontmatter **********
+%********** Background **********
+% \usepackage[pages=some]{background}
+% %\backgroundsetup{
+% %scale=1.0,color=black,opacity=1,angle=0,
+% %contents={
+% %  \includegraphics[width=1.25\paperwidth,height=1.3\paperheight]{../figures/cover/BackgroundCover}
+% %  }
+% %}
+% \backgroundsetup{
+% scale=1.0,color=black,opacity=1,angle=0,
+% contents={
+%   \includegraphics[width=0.5\paperwidth,height=0.5\paperheight]{../figures/cover/BackgroundCover}
+%   }
+% }
 
-\pagestyle{plain} % on headers or footers on the first page
-
-%########################### MACROS #################################
-
-
-\usepackage{fancyhdr} % this is for headers and footers
-\usepackage[pages=some]{background}
-%\backgroundsetup{
-%scale=1.0,color=black,opacity=1,angle=0,
-%contents={
-%  \includegraphics[width=1.25\paperwidth,height=1.3\paperheight]{../figures/cover/BackgroundCover}
-%  }
-%}
-\backgroundsetup{
-scale=1.0,color=black,opacity=1,angle=0,
-contents={
-  \includegraphics[width=0.5\paperwidth,height=0.5\paperheight]{../figures/cover/BackgroundCover}
-  }
-}
-%%************************************************
-\pagestyle{fancyplain}
-\fancyhf{}
-\lhead{\includegraphics[width=1cm]{../assets/ISF-logo-tight.png}} % 
-\rhead{\footnotesize{\sc{iBudget- ISF}}} 
-\setcounter{page}{1} 
-\lfoot{Version $\alpha 0.1$. Obsolescence date: 10/14/2025}%\today -
-%\cfoot{\sc{\footnotesize }}
-\rfoot{Page \thepage \hspace{0.005cm} of \pageref*{TotPages}} % \ThePageCount
-%%************************************************
+%################## Macros & Definitions #############################
 
 %\hypersetup{colorlinks=true, linkcolor=blue, filecolor=blue, pagecolor=blue, urlcolor=blue}
 %Text styles
@@ -176,6 +134,9 @@ contents={
 \newcommand\textstyleInput[1]{\texttt{\textbf{\textcolor[rgb]{0.0,0.45,0.0}{#1}}}}
 \newcommand\textstyleOutput[1]{\texttt{{\textcolor[rgb]{0.0,0.75,0.0}{#1}}}} 
 
+\renewcommand{\floatpagefraction}{0.7} %default:0.5 allows two big pictures on one page
+
+%*********** Specialized math symbols ***************
 \newcommand{\low}{\textnormal{\tiny\textit{low}}\hspace{-5pt}}
 \newcommand{\high}{\textnormal{\tiny \textit{high}}\hspace{-5pt}}
 \newcommand{\vv}{{\bf v}}
@@ -205,9 +166,8 @@ contents={
 \newcommand{\z}{\textbf{z}}
 \newcommand{\A}{\textbf{A}}
 \newcommand{\Sbb}{\textbf{S}}
-\newcommand\bb{\textbf{b}}
-\newcommand\vs{\vspace{0.2in}}
-%\newcommand{\vs}{\vspace*{0.1in}\noindent}
+\newcommand{\bb}{\textbf{b}}
+\newcommand{\vs}{\vspace{0.2in}}
 
 % Define commands for the symbols with tikz
 % \newcommand{\greencheck}{%
@@ -233,11 +193,6 @@ contents={
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
    \noindent \textbf{Example~\theexample. #1} \rmfamily}{\medskip}
 
-
-\newcommand\BeginCode{\medskip\begin{minipage}{0.9\textwidth} \color{Input} \begin{verbatim}} % \vspace{0.1cm}
-\newcommand\EndCode{\vspace{0.01cm}\end{minipage}} % \vspace{0.01cm}
-
-\newcommand\s{\color{Input}\ttfamily} % Code snippet. Use: {\s code here}
 
 \newcounter{QaA}
 \newenvironment{EQA}[1][]{\refstepcounter{QaA} \color{HW} Record your explanation as answer \#\theQaA. #1 }{\medskip}
@@ -309,7 +264,6 @@ contents={
 % Command definition for all models
 \newcommand{\WarningRunPipeline}{\textcolor{red}{[RUN PIPELINE]}}
 
-
 % Load variable definitions per model
 
 \IfFileExists{models/model_1/model_1_newcommands.tex}{\input{models/model_1/model_1_newcommands.tex}}{}
@@ -322,4 +276,3 @@ contents={
 \IfFileExists{models/model_8/model_8_newcommands.tex}{\input{models/model_8/model_8_newcommands.tex}}{}
 \IfFileExists{models/model_9/model_9_newcommands.tex}{\input{models/model_9/model_9_newcommands.tex}}{}
 \IfFileExists{models/model_10/model_10_newcommands.tex}{\input{models/model_10/model_10_newcommands.tex}}{}
-

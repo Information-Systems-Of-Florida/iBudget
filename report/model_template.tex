@@ -11,7 +11,7 @@
 
 \subsection{Overall Performance}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Overall Performance Metrics}
 \begin{tabular}{lcc}
@@ -30,7 +30,7 @@ Sample Size & \multicolumn{2}{c}{\MTrainingSamples{} training, \MTestSamples{} t
 
 \subsection{Accuracy Bands}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Prediction Accuracy Within Error Thresholds}
 \begin{tabular}{lc}
@@ -48,7 +48,7 @@ Within \$20,000 & \MWithinTwentyK\% \\
 
 \subsection{Cross-Validation Results}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{10-Fold Cross-Validation Performance}
 \begin{tabular}{lc}
@@ -66,7 +66,7 @@ Standard Deviation & \MCVStd \\
 \section{Subgroup Analysis}
 
 \subsection{Performance by Living Setting}
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Model Performance by Living Setting}
 \begin{tabular}{lcccc}
@@ -81,7 +81,7 @@ Residential Habilitation (RH1--4) & \MSubgroupLivingRHOneFourN & \MSubgroupLivin
 \end{table}
 
 \subsection{Performance by Age Group}
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Model Performance by Age Group}
 \begin{tabular}{lcccc}
@@ -97,7 +97,7 @@ Ages 31+ & \MSubgroupAgeAgeThirtyOnePlusN & \MSubgroupAgeAgeThirtyOnePlusRSquare
 
 \subsection{Performance by Cost Quartile}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Model Performance by Cost Quartile}
 \begin{tabular}{lcccc}
@@ -121,7 +121,7 @@ Q4 (High Cost) & \MSubgroupCostQFourHighN & \MSubgroupCostQFourHighRSquared & \$
 
 \section{Variance and Stability Metrics}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Model Variance and Stability Metrics}
 \begin{tabular}{lc}
@@ -145,7 +145,7 @@ Budget-Actual Correlation & \MBudgetActualCorr \\
 
 \section{Population Impact Scenarios}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Population Served Analysis --- \$1.2B Fixed Budget}
 \begin{tabular}{lrrr}
@@ -170,7 +170,7 @@ Category Focused & \MPopcategoryfocusedClients & \$\MPopcategoryfocusedAvgAlloc 
 
 \section{Model Diagnostics}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{models/model_\themodel/diagnostic_plots.png}
     \caption{Model Diagnostic Plots --- Shows actual vs.\ predicted, residual patterns, distribution comparison, Q-Q plot, studentized residuals (if outlier removal used), and performance by cost quartile}
