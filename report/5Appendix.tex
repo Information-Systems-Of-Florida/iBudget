@@ -9,86 +9,119 @@
 %============================================
 \section{Source Code for Feature Selection}
 %============================================
-\lstinputlisting[language=Python]{logs/FeatureSelection_ascii.py}
+\lstinputlisting[language=Python]{../script/FeatureSelection.py}
 
 \newpage
 %============================================
 \section{Feature Selection Log}
 %============================================
 \begin{landscape}
-\lstinputlisting[language=Python]{logs/FeatureSelectionLog_ascii.txt}
+\lstinputlisting[language=Python]{logs/FeatureSelectionLog.txt}
 \end{landscape}
 
 \newpage
 %============================================
 \section{Source Code for Model Base Class}
 %============================================
-\lstinputlisting[language=Python]{logs/base_model_ascii.py}
+\lstinputlisting[language=Python]{../script/models/base_model.py}
 
 
 \newpage
 %============================================
 \section{Source Code for Model 1}
 %============================================
-\lstinputlisting[language=Python]{logs/model_1_reeval_ascii.py}
+\lstinputlisting[language=Python]{../script/models/model_1_reeval.py}
 
-\IfFileExists{logs/model_1_log.txt}{
+\begin{landscape}
+
     \newpage
-    \begin{landscape}
     %============================================
-    \section{Computation Logs for Model 1}
+    \section{Computation Logs for Model 1 - SQRT \& Outliers}
     %============================================
-    \lstinputlisting[inputencoding=utf8]{logs/model_1_log_ascii.txt}
-    \end{landscape}
-}{}
+    \lstinputlisting[inputencoding=utf8]{logs/model_1_log_Sqrt_True_Outliers_True.txt}
+
+    \newpage
+    %============================================
+    \section{Computation Logs for Model 1 - SQRT \& No Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_1_log_Sqrt_True_Outliers_False.txt}
+
+    \newpage
+    %============================================
+    \section{Computation Logs for Model 1 - No SQRT \& Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_1_log_Sqrt_False_Outliers_True.txt}
+
+    \newpage
+    %============================================
+    \section{Computation Logs for Model 1 - No SQRT \& No Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_1_log_Sqrt_False_Outliers_False.txt}
+
+\end{landscape}
+
 
 \newpage
 %============================================
 \section{Source Code for Model 2}
 %============================================
-\lstinputlisting[language=Python]{logs/model_2_gamma_ascii.py}
+\lstinputlisting[language=Python]{../script/models/model_2_gamma.py}
 
-\IfFileExists{logs/model_2_log.txt}{
+\begin{landscape}
+    %============================================
+    \section{Computation Logs for Model 2 - Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_2_log_Sqrt_False_Outliers_True.txt}
+
     \newpage
-    \begin{landscape}
     %============================================
-    \section{Computation Logs for Model 2}
+    \section{Computation Logs for Model 2 - No Outliers}
     %============================================
-    \lstinputlisting[inputencoding=utf8]{logs/model_2_log_ascii.txt}
-    \end{landscape}
-}{}
+    \lstinputlisting[inputencoding=utf8]{logs/model_2_log_Sqrt_False_Outliers_False.txt}
+\end{landscape}
 
 % \textsl{\newpage
-% %============================================
-% \section{Source Code for Model 3}
-% %============================================
-% \lstinputlisting[language=Python]{logs/model_3_robust_ascii.py}
+%============================================
+\section{Source Code for Model 3}
+%============================================
+\lstinputlisting[language=Python]{../script/models/model_3_robust.py}
 
-% \IfFileExists{logs/model_3_log.txt}{
-%     \newpage
-%     \begin{landscape}
-%     %============================================
-%     \section{Computation Logs for Model 3}
-%     %============================================
-%     \lstinputlisting[inputencoding=utf8]{logs/model_3_log_ascii.txt}
-%     \end{landscape}
-% }{}
+\begin{landscape}
+    %============================================
+    \section{Computation Logs for Model 3 - No SQRT, No Outliers }
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_3_log_Sqrt_False_Outliers_False.txt}
 
-% \newpage
-% %============================================
-% \section{Source Code for Model 4}
-% %============================================
-% \lstinputlisting[language=Python]{logs/model_4_wls_ascii.py}
+    \newpage
+    %============================================
+    \section{Computation Logs for Model 3 - No SQRT, Outliers }
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_3_log_Sqrt_False_Outliers_True.txt}
 
-% \IfFileExists{logs/model_4_log.txt}{
-%     \newpage
-%     \begin{landscape}
-%     %============================================
-%     \section{Computation Logs for Model 4}
-%     %============================================
-%     \lstinputlisting[inputencoding=utf8]{logs/model_4_log_ascii.txt}
-%     \end{landscape}
-% }{}
+\end{landscape}
+
+
+\newpage
+%============================================
+\section{Source Code for Model 4}
+%============================================
+\lstinputlisting[language=Python]{logs/model_4_wls_ascii.py}
+
+\begin{landscape}
+    %============================================
+    \section{Computation Logs for Model 4 - SQRT, No Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_4_log_Sqrt_True_Outliers_False.txt}
+
+
+    \newpage
+    %============================================
+    \section{Computation Logs for Model 4 - No SQRT, No Outliers}
+    %============================================
+    \lstinputlisting[inputencoding=utf8]{logs/model_4_log_Sqrt_False_Outliers_False.txt}
+
+
+\end{landscape}
 
 % \newpage
 % %============================================

@@ -1,0 +1,733 @@
+2025-10-12 14:49:44 - MODEL_3 - INFO - 
+2025-10-12 14:49:44 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:44 - MODEL_3 - INFO - INITIALIZING MODEL 3: ROBUST LINEAR REGRESSION (HUBER M-ESTIMATION)
+2025-10-12 14:49:44 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:44 - MODEL_3 - INFO - Output directory: ..\..\report\models\model_3
+2025-10-12 14:49:44 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:44 - MODEL_3 - INFO - Configuration:
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Outlier removal: False
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Transformation: none
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Random seed: 42
+2025-10-12 14:49:44 - MODEL_3 - INFO - Model 3: Robust Linear Regression initialized
+2025-10-12 14:49:44 - MODEL_3 - INFO -   Epsilon (Huber constant): 1.35
+2025-10-12 14:49:44 - MODEL_3 - INFO -   Max iterations: 1000
+2025-10-12 14:49:44 - MODEL_3 - INFO -   Transformation: none
+2025-10-12 14:49:44 - MODEL_3 - INFO -   Outlier handling: Adaptive weights (no removal)
+2025-10-12 14:49:44 - MODEL_3 - INFO - 
+2025-10-12 14:49:44 - MODEL_3 - INFO - Configuration:
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Square-root transformation: Yes (Model 5b standard)
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Outlier removal: No (adaptive weights instead)
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Epsilon (Huber): 1.35 (95% efficiency)
+2025-10-12 14:49:44 - MODEL_3 - INFO -   - Features: Model 5b exact specification (21 features)
+2025-10-12 14:49:44 - MODEL_3 - INFO - 
+2025-10-12 14:49:44 - MODEL_3 - INFO - 
+2025-10-12 14:49:44 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:44 - MODEL_3 - INFO - STARTING PIPELINE: ROBUST LINEAR REGRESSION (HUBER M-ESTIMATION)
+2025-10-12 14:49:44 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:44 - MODEL_3 - INFO - 
+2025-10-12 14:49:44 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:44 - MODEL_3 - INFO - LOADING DATA: FY2024-2024
+2025-10-12 14:49:44 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:44 - MODEL_3 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-12 14:49:44 - MODEL_3 - INFO - Found 47259 records in 'data' key
+2025-10-12 14:49:46 - MODEL_3 - INFO - FY2024 Summary:
+2025-10-12 14:49:46 - MODEL_3 - INFO -   - Processed: 34,173
+2025-10-12 14:49:46 - MODEL_3 - INFO -   - Skipped (Usable=0): 0
+2025-10-12 14:49:46 - MODEL_3 - INFO -   - Skipped (no cost): 13,086
+2025-10-12 14:49:46 - MODEL_3 - INFO -   - Skipped (errors): 0
+2025-10-12 14:49:46 - MODEL_3 - INFO - Total loaded: 34,173 usable records
+2025-10-12 14:49:46 - MODEL_3 - INFO - 
+2025-10-12 14:49:46 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:46 - MODEL_3 - INFO - DATA SPLIT
+2025-10-12 14:49:46 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:46 - MODEL_3 - INFO - Training samples: 27,339
+2025-10-12 14:49:46 - MODEL_3 - INFO - Test samples: 6,834
+2025-10-12 14:49:46 - MODEL_3 - INFO - Split ratio: 20.0%
+2025-10-12 14:49:46 - MODEL_3 - INFO - 
+2025-10-12 14:49:46 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:46 - MODEL_3 - INFO - FEATURE PREPARATION
+2025-10-12 14:49:46 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:46 - MODEL_3 - INFO - Features prepared: 21 total features from 27339 records
+2025-10-12 14:49:46 - MODEL_3 - INFO - Feature breakdown:
+2025-10-12 14:49:46 - MODEL_3 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-12 14:49:46 - MODEL_3 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-12 14:49:46 - MODEL_3 - INFO -   Numeric: 1 features [bsum]
+2025-10-12 14:49:46 - MODEL_3 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-12 14:49:46 - MODEL_3 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-12 14:49:46 - MODEL_3 - INFO - Feature counts by type:
+2025-10-12 14:49:46 - MODEL_3 - INFO -   numeric: 1
+2025-10-12 14:49:46 - MODEL_3 - INFO -   categorical: 5
+2025-10-12 14:49:46 - MODEL_3 - INFO -   binary: 2
+2025-10-12 14:49:46 - MODEL_3 - INFO -   qsi: 10
+2025-10-12 14:49:46 - MODEL_3 - INFO -   interactions: 3
+2025-10-12 14:49:47 - MODEL_3 - INFO - Features prepared: 21 total features from 6834 records
+2025-10-12 14:49:47 - MODEL_3 - INFO - Feature breakdown:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Numeric: 1 features [bsum]
+2025-10-12 14:49:47 - MODEL_3 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-12 14:49:47 - MODEL_3 - INFO - Feature counts by type:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   numeric: 1
+2025-10-12 14:49:47 - MODEL_3 - INFO -   categorical: 5
+2025-10-12 14:49:47 - MODEL_3 - INFO -   binary: 2
+2025-10-12 14:49:47 - MODEL_3 - INFO -   qsi: 10
+2025-10-12 14:49:47 - MODEL_3 - INFO -   interactions: 3
+2025-10-12 14:49:47 - MODEL_3 - INFO - Features prepared: 21 features
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Training shape: (27339, 21)
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Test shape: (6834, 21)
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Target range: $31.25 - $346,560.68
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Target mean: $44,675.37
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Target median: $32,279.60
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Intercept: 39722.5632
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Scale estimate (MAD): 15024.6837
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Mean weight: 0.8510
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Min weight: 0.0724
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Full weight (>=0.99): 64.5%
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Downweighted (<0.99): 8746 observations
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   bsum: 116.7447
+2025-10-12 14:49:47 - MODEL_3 - INFO -   ILSL: 4675.3277
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH1: 13792.3868
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH2: 1716.8424
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH3: 4603.1158
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH4: 1232.0989
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age21_30: 7318.1400
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age31Plus: 8153.0160
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q16: 1951.7458
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q18: 4894.7652
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q20: 3303.3368
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q21: 4602.7507
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q23: 4399.4537
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q28: 2036.8418
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q33: 518.1747
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q34: 278.7279
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q36: 1922.8673
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q43: 781.4971
+2025-10-12 14:49:47 - MODEL_3 - INFO -   FHFSum: -13405.4802
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLFSum: -6062.3177
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLBSum: 10838.0743
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Fold 1: R^2 = 0.4417
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Intercept: 39842.7786
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Scale estimate (MAD): 14977.1144
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Iterations: 29
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Mean weight: 0.8501
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Min weight: 0.0724
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Full weight (>=0.99): 64.3%
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Downweighted (<0.99): 8785 observations
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   bsum: 328.3935
+2025-10-12 14:49:47 - MODEL_3 - INFO -   ILSL: 4764.8425
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH1: 13915.2302
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH2: 1754.2184
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH3: 4777.8447
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH4: 1317.2519
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age21_30: 7446.2592
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age31Plus: 8301.8921
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q16: 2133.9629
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q18: 5087.8501
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q20: 3185.5929
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q21: 4539.0484
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q23: 4425.4900
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q28: 2152.7594
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q33: 489.6811
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q34: 216.6410
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q36: 1873.5035
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q43: 990.6244
+2025-10-12 14:49:47 - MODEL_3 - INFO -   FHFSum: -13482.9211
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLFSum: -6432.6117
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLBSum: 10870.0861
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Fold 2: R^2 = 0.4380
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Intercept: 39795.8728
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Scale estimate (MAD): 15054.3019
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Mean weight: 0.8510
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Min weight: 0.0729
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Full weight (>=0.99): 64.3%
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Downweighted (<0.99): 8773 observations
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   bsum: 169.8790
+2025-10-12 14:49:47 - MODEL_3 - INFO -   ILSL: 4755.0871
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH1: 14037.3135
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH2: 1632.5658
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH3: 4790.0419
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH4: 1262.7118
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age21_30: 7354.8383
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age31Plus: 8233.1646
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q16: 2022.1442
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q18: 4941.9027
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q20: 3147.8906
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q21: 4576.5677
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q23: 4302.5591
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q28: 2080.8006
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q33: 510.4714
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q34: 308.0580
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q36: 1792.5643
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q43: 759.8053
+2025-10-12 14:49:47 - MODEL_3 - INFO -   FHFSum: -12992.0628
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLFSum: -6100.8286
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLBSum: 10882.0456
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Fold 3: R^2 = 0.4794
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Intercept: 39699.1961
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Scale estimate (MAD): 14984.8344
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Mean weight: 0.8504
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Min weight: 0.0723
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Downweighted (<0.99): 8758 observations
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:47 - MODEL_3 - INFO -   bsum: -34.8378
+2025-10-12 14:49:47 - MODEL_3 - INFO -   ILSL: 4750.3049
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH1: 13826.6062
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH2: 1654.1483
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH3: 4750.5649
+2025-10-12 14:49:47 - MODEL_3 - INFO -   RH4: 1268.2046
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age21_30: 7369.0702
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Age31Plus: 8087.5212
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q16: 1990.7990
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q18: 4990.0277
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q20: 3367.1796
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q21: 4459.6274
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q23: 4372.6333
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q28: 1982.2690
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q33: 379.6544
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q34: 270.0546
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q36: 1896.9975
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Q43: 802.4394
+2025-10-12 14:49:47 - MODEL_3 - INFO -   FHFSum: -13285.8060
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLFSum: -6308.8098
+2025-10-12 14:49:47 - MODEL_3 - INFO -   SLBSum: 11210.7350
+2025-10-12 14:49:47 - MODEL_3 - INFO -   Fold 4: R^2 = 0.4765
+2025-10-12 14:49:47 - MODEL_3 - INFO - 
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:47 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:47 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Intercept: 39813.4871
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Scale estimate (MAD): 14977.1095
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Mean weight: 0.8500
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Min weight: 0.0724
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Downweighted (<0.99): 8771 observations
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   bsum: 127.0590
+2025-10-12 14:49:48 - MODEL_3 - INFO -   ILSL: 4598.6483
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH1: 13661.2560
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH2: 1645.1820
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH3: 4548.5579
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH4: 1215.3816
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age21_30: 7372.4177
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age31Plus: 8289.7983
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q16: 2108.6202
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q18: 5168.7654
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q20: 3397.3017
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q21: 4354.0779
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q23: 4449.3418
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q28: 2063.7905
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q33: 463.1194
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q34: 378.3500
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q36: 1896.0858
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q43: 954.0494
+2025-10-12 14:49:48 - MODEL_3 - INFO -   FHFSum: -13457.1370
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLFSum: -6282.1010
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLBSum: 11121.1280
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Fold 5: R^2 = 0.4637
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Intercept: 39757.7275
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Scale estimate (MAD): 14988.9211
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Mean weight: 0.8500
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Min weight: 0.0724
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Full weight (>=0.99): 64.3%
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Downweighted (<0.99): 8774 observations
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   bsum: 227.8830
+2025-10-12 14:49:48 - MODEL_3 - INFO -   ILSL: 4675.6254
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH1: 14103.4335
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH2: 1588.7831
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH3: 4844.9890
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH4: 1336.7545
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age21_30: 7488.3190
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age31Plus: 8402.7850
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q16: 2165.4854
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q18: 5082.8604
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q20: 3499.4840
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q21: 4330.9966
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q23: 4371.6337
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q28: 2084.6511
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q33: 559.3899
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q34: 220.7153
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q36: 1770.8348
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q43: 778.6290
+2025-10-12 14:49:48 - MODEL_3 - INFO -   FHFSum: -13388.2457
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLFSum: -6508.9255
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLBSum: 10743.1271
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Fold 6: R^2 = 0.4724
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Intercept: 39689.9651
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Scale estimate (MAD): 15014.3475
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Iterations: 30
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Mean weight: 0.8503
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Min weight: 0.0724
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Downweighted (<0.99): 8764 observations
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   bsum: 227.9608
+2025-10-12 14:49:48 - MODEL_3 - INFO -   ILSL: 4676.4916
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH1: 13792.9753
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH2: 1720.8437
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH3: 4641.0710
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH4: 1200.6487
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age21_30: 7410.0600
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age31Plus: 8303.8279
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q16: 2132.4471
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q18: 5071.4226
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q20: 3511.2577
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q21: 4293.7802
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q23: 4422.9114
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q28: 1982.9201
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q33: 449.7792
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q34: 166.7709
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q36: 1829.8453
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q43: 809.0045
+2025-10-12 14:49:48 - MODEL_3 - INFO -   FHFSum: -13560.6100
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLFSum: -6475.1633
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLBSum: 11094.4767
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Fold 7: R^2 = 0.4694
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Intercept: 39816.2811
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Scale estimate (MAD): 14987.2499
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Iterations: 33
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Mean weight: 0.8506
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Min weight: 0.0803
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Full weight (>=0.99): 64.3%
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Downweighted (<0.99): 8775 observations
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:48 - MODEL_3 - INFO -   bsum: 154.1717
+2025-10-12 14:49:48 - MODEL_3 - INFO -   ILSL: 4721.3299
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH1: 13864.2646
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH2: 1810.7791
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH3: 4666.2804
+2025-10-12 14:49:48 - MODEL_3 - INFO -   RH4: 1277.6104
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age21_30: 7446.7863
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Age31Plus: 8277.1051
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q16: 1936.5673
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q18: 4983.7315
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q20: 3248.1871
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q21: 4569.1888
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q23: 4471.3048
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q28: 1987.6292
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q33: 413.0104
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q34: 369.5419
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q36: 1956.7207
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Q43: 831.4867
+2025-10-12 14:49:48 - MODEL_3 - INFO -   FHFSum: -13291.2710
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLFSum: -6243.2283
+2025-10-12 14:49:48 - MODEL_3 - INFO -   SLBSum: 10898.3112
+2025-10-12 14:49:48 - MODEL_3 - INFO -   Fold 8: R^2 = 0.4769
+2025-10-12 14:49:48 - MODEL_3 - INFO - 
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:48 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:48 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Intercept: 39715.1324
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Scale estimate (MAD): 14965.3955
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Mean weight: 0.8502
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Min weight: 0.0723
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Downweighted (<0.99): 8765 observations
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   bsum: 93.7887
+2025-10-12 14:49:49 - MODEL_3 - INFO -   ILSL: 4636.3083
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH1: 13617.1346
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH2: 1664.1384
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH3: 4599.4939
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH4: 1236.9840
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age21_30: 7339.1493
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age31Plus: 8198.3751
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q16: 2276.3436
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q18: 5163.7272
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q20: 3447.5986
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q21: 4517.8900
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q23: 4439.4710
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q28: 2021.2049
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q33: 433.2522
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q34: 266.5976
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q36: 1920.5336
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q43: 764.1083
+2025-10-12 14:49:49 - MODEL_3 - INFO -   FHFSum: -13908.9395
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLFSum: -6543.6869
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLBSum: 10971.8158
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Fold 9: R^2 = 0.4714
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Intercept: 39923.5866
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Scale estimate (MAD): 15049.3550
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Iterations: 33
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Mean weight: 0.8511
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Min weight: 0.0727
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Downweighted (<0.99): 8755 observations
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   bsum: 39.0489
+2025-10-12 14:49:49 - MODEL_3 - INFO -   ILSL: 4806.2631
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH1: 13962.5268
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH2: 1816.3746
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH3: 4677.0554
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH4: 1310.8156
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age21_30: 7487.6079
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age31Plus: 8266.4665
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q16: 2184.7763
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q18: 4921.4174
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q20: 3474.0801
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q21: 4320.4061
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q23: 4317.7122
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q28: 1999.7183
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q33: 499.5020
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q34: 256.6972
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q36: 1791.9044
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q43: 863.7471
+2025-10-12 14:49:49 - MODEL_3 - INFO -   FHFSum: -13243.7624
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLFSum: -6245.5789
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLBSum: 11074.7176
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Fold 10: R^2 = 0.4858
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - Cross-validation summary:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Mean R^2: 0.4675
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Std R^2: 0.0150
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Min R^2: 0.4380 (Fold 2)
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Max R^2: 0.4858 (Fold 10)
+2025-10-12 14:49:49 - MODEL_3 - INFO -   95% CI: [0.4382, 0.4968]
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - MODEL TRAINING
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - FITTING HUBER ROBUST REGRESSION
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Huber regression fitted with 21 coefficients
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Intercept: 39778.0330
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Scale estimate (MAD): 15004.9142
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Iterations: 31
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Converged: True
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Weight Statistics:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Mean weight: 0.8505
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Min weight: 0.0725
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Max weight: 1.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Downweighted (<0.99): 9727 observations
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+Coefficient summary:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   bsum: 145.8717
+2025-10-12 14:49:49 - MODEL_3 - INFO -   ILSL: 4705.6885
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH1: 13857.1256
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH2: 1700.4499
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH3: 4690.0197
+2025-10-12 14:49:49 - MODEL_3 - INFO -   RH4: 1266.0885
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age21_30: 7403.8468
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Age31Plus: 8252.4517
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q16: 2091.0911
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q18: 5032.4701
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q20: 3358.5531
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q21: 4456.1314
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q23: 4398.3515
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q28: 2039.5740
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q33: 471.2490
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q34: 273.0835
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q36: 1865.2010
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Q43: 833.5744
+2025-10-12 14:49:49 - MODEL_3 - INFO -   FHFSum: -13403.7357
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLFSum: -6321.8233
+2025-10-12 14:49:49 - MODEL_3 - INFO -   SLBSum: 10968.8580
+2025-10-12 14:49:49 - MODEL_3 - INFO - Model training complete
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - MAKING PREDICTIONS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Predictions complete
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - CALCULATING METRICS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Training R^2: 0.4682
+2025-10-12 14:49:49 - MODEL_3 - INFO - Test R^2: 0.4512
+2025-10-12 14:49:49 - MODEL_3 - INFO - RMSE (original): $33,086.28
+2025-10-12 14:49:49 - MODEL_3 - INFO - RMSE (sqrt scale): $33095.49
+2025-10-12 14:49:49 - MODEL_3 - INFO - MAE: $21,937.97
+2025-10-12 14:49:49 - MODEL_3 - INFO - MAPE: 371.97%
+2025-10-12 14:49:49 - MODEL_3 - INFO - CV R^2 (mean +- std): 0.4675 +- 0.0150
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - SUBGROUP ANALYSIS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Calculated metrics for 10 subgroups
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO -   living_FH:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 3,767
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.0672
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $30,759.54
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-6,133.30
+2025-10-12 14:49:49 - MODEL_3 - INFO -   living_ILSL:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 893
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.2752
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $34,320.52
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-4,448.15
+2025-10-12 14:49:49 - MODEL_3 - INFO -   living_RH1-4:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 2,174
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.2171
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $36,303.34
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-2,262.05
+2025-10-12 14:49:49 - MODEL_3 - INFO -   age_AgeUnderTwentyOne:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 694
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.5072
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $26,191.30
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $+1,198.99
+2025-10-12 14:49:49 - MODEL_3 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 1,797
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.4077
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $37,603.62
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-6,362.71
+2025-10-12 14:49:49 - MODEL_3 - INFO -   age_AgeThirtyOnePlus:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 4,343
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: 0.4397
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $32,060.65
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-4,925.71
+2025-10-12 14:49:49 - MODEL_3 - INFO -   cost_QOneLow:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 1,709
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: -10.0000
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $22,641.12
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $+16,772.85
+2025-10-12 14:49:49 - MODEL_3 - INFO -   cost_QTwo:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 1,708
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: -4.1399
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $17,495.83
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $+6,063.71
+2025-10-12 14:49:49 - MODEL_3 - INFO -   cost_QThree:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 1,708
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: -3.5072
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $24,778.94
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-7,597.58
+2025-10-12 14:49:49 - MODEL_3 - INFO -   cost_QFourHigh:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     N: 1,709
+2025-10-12 14:49:49 - MODEL_3 - INFO -     R^2: -1.2949
+2025-10-12 14:49:49 - MODEL_3 - INFO -     RMSE: $54,271.04
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Bias: $-33,960.79
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - VARIANCE ANALYSIS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Variance metrics calculated
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Coefficient of Variation (Predicted): 0.7779
+2025-10-12 14:49:49 - MODEL_3 - INFO -   95% Prediction Interval Width: $64,196.65
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Actual-Predicted Correlation: 0.6799
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - POPULATION SCENARIOS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - Calculated 4 population scenarios
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO -   Base budget: $1,200,000,000
+2025-10-12 14:49:49 - MODEL_3 - INFO -   currentbaseline:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Clients served: 30,353
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Avg allocation: $39,534.59
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist change: +0
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist %: +0.0%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   modelbalanced:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Clients served: 30,960
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Avg allocation: $38,743.89
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist change: +607
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist %: +2.0%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   modelefficiency:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Clients served: 31,870
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Avg allocation: $37,557.86
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist change: +1,517
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist %: +5.0%
+2025-10-12 14:49:49 - MODEL_3 - INFO -   categoryfocused:
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Clients served: 25,800
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Avg allocation: $46,650.81
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist change: -4,552
+2025-10-12 14:49:49 - MODEL_3 - INFO -     Waitlist %: -15.0%
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - GENERATING OUTPUTS
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - 
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - LATEX GENERATION
+2025-10-12 14:49:49 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:49 - MODEL_3 - INFO - LaTeX commands generated:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   - Newcommands file: ..\..\report\models\model_3\model_3_newcommands.tex
+2025-10-12 14:49:49 - MODEL_3 - INFO -     (87 placeholder commands)
+2025-10-12 14:49:49 - MODEL_3 - INFO -   - Renewcommands file: ..\..\report\models\model_3\model_3_renewcommands.tex
+2025-10-12 14:49:49 - MODEL_3 - INFO -     (87 value commands)
+2025-10-12 14:49:49 - MODEL_3 - INFO - Adding Model 3 specific LaTeX commands...
+2025-10-12 14:49:49 - MODEL_3 - INFO - Model 3 specific commands appended to both files
+2025-10-12 14:49:49 - MODEL_3 - INFO - Results saved:
+2025-10-12 14:49:49 - MODEL_3 - INFO -   - Metrics JSON: ..\..\report\models\model_3\metrics.json
+2025-10-12 14:49:49 - MODEL_3 - INFO -   - Predictions CSV: ..\..\report\models\model_3\predictions.csv
+2025-10-12 14:49:49 - MODEL_3 - INFO -     (6,834 predictions)
+2025-10-12 14:49:50 - MODEL_3 - INFO - Diagnostic plots saved to ..\..\report\models\model_3\diagnostic_plots.png
+2025-10-12 14:49:50 - MODEL_3 - INFO - 
+2025-10-12 14:49:50 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:50 - MODEL_3 - INFO - PIPELINE COMPLETE: ROBUST LINEAR REGRESSION (HUBER M-ESTIMATION)
+2025-10-12 14:49:50 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:50 - MODEL_3 - INFO - 
+2025-10-12 14:49:50 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:50 - MODEL_3 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-12 14:49:50 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:50 - MODEL_3 - INFO - Training R^2: 0.4682
+2025-10-12 14:49:50 - MODEL_3 - INFO - Test R^2: 0.4512
+2025-10-12 14:49:50 - MODEL_3 - INFO - RMSE: $33,086.28
+2025-10-12 14:49:50 - MODEL_3 - INFO - MAE: $21,937.97
+2025-10-12 14:49:50 - MODEL_3 - INFO - MAPE: 371.97%
+2025-10-12 14:49:50 - MODEL_3 - INFO - CV R^2 (mean +- std): 0.4675 +- 0.0150
+2025-10-12 14:49:50 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:50 - MODEL_3 - INFO - 
+2025-10-12 14:49:50 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:50 - MODEL_3 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-12 14:49:50 - MODEL_3 - INFO - ------------------------------------------------------------
+2025-10-12 14:49:51 - MODEL_3 - INFO - Diagnostic plots saved to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_3\diagnostic_plots.png
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:51 - MODEL_3 - INFO - MODEL 3 FINAL SUMMARY
+2025-10-12 14:49:51 - MODEL_3 - INFO - ============================================================
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - Performance Metrics:
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Training R^2: 0.4682
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Test R^2: 0.4512
+2025-10-12 14:49:51 - MODEL_3 - INFO -   RMSE: $33,086.28
+2025-10-12 14:49:51 - MODEL_3 - INFO -   MAE: $21,937.97
+2025-10-12 14:49:51 - MODEL_3 - INFO -   CV R^2 (mean +- std): 0.4675 +- 0.0150
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - Robust Regression Specific:
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Mean weight: 0.8505
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Median weight: 1.0000
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Full weight (>=0.99): 64.4%
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Downweighted: 9727 observations
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Downweighted %: 35.6%
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - Data Utilization:
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Training samples: 27339
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Test samples: 6834
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Outliers removed: 0 (100% data retention)
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - Output:
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Results saved to: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_3
+2025-10-12 14:49:51 - MODEL_3 - INFO -   Diagnostic plots: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_3\diagnostic_plots.png
+2025-10-12 14:49:51 - MODEL_3 - INFO -   LaTeX commands: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_3\model_3_renewcommands.tex
+2025-10-12 14:49:51 - MODEL_3 - INFO - 
+2025-10-12 14:49:51 - MODEL_3 - INFO - ================================================================================
+2025-10-12 14:49:51 - MODEL_3 - INFO - MODEL 3 PIPELINE COMPLETE
+2025-10-12 14:49:51 - MODEL_3 - INFO - ================================================================================

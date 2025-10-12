@@ -41,7 +41,7 @@ class Model2GLMGamma(BaseiBudgetModel):
     Key characteristics:
     - Models right-skewed costs with or without transformation
     - Log link ensures positive predictions
-    - Quadratic variance function (Var ∝ μ²)
+    - Quadratic variance function (Var ~ mu^2)
     - Optional outlier removal
     - Comprehensive feature selection based on MI analysis
     """
@@ -67,7 +67,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         """
         # ****************************************************************************
         # WARNING : The flag 'use_sqrt_transform' here is for research only. 
-        # A Gamma model already assumes E[Y]>0 and Var(Y)=μ²φ. 
+        # A Gamma model already assumes E[Y]>0 and Var(Y)=mu^(2*phi). 
         # Applying sqrt(Y) then Gamma on sqrt(Y) breaks the distributional assumption.
         # I leave the capability to tranform  only for didactical purposes
         # ****************************************************************************
@@ -198,7 +198,7 @@ class Model2GLMGamma(BaseiBudgetModel):
             k = int(len(self.glm_model.params))   # includes intercept
             self.bic = float(n * np.log(self.deviance / max(n, 1)) + k * np.log(max(n, 1)))            
             
-            # Calculate null model for pseudo-R²
+            # Calculate null model for pseudo-R^2
             null_model = sm.GLM(
                 y_adjusted,
                 np.ones((len(y_adjusted), 1)),
@@ -207,13 +207,13 @@ class Model2GLMGamma(BaseiBudgetModel):
             
             self.null_deviance = float(null_model.deviance)
             
-            # Calculate pseudo-R² measures
+            # Calculate pseudo-R^2 measures
             # Null model with intercept only
             null_X = np.ones((len(y_adjusted), 1))
             null_model = sm.GLM(y_adjusted, null_X, family=Gamma(link=Log())).fit(disp=0)
             self.null_deviance = float(null_model.deviance)
 
-            # Pseudo-R² metrics
+            # Pseudo-R^2 metrics
             eps = 1e-12
             self.deviance_r2 = float(1.0 - (self.deviance / max(self.null_deviance, eps)))
             #self.mcfadden_r2 = float(1.0 - (self.glm_model.llf / max(null_model.llf, -eps)))
@@ -245,8 +245,8 @@ class Model2GLMGamma(BaseiBudgetModel):
             self.logger.info(f"  Dispersion parameter: {self.dispersion:.4f}")
             self.logger.info(f"  Deviance: {self.deviance:.2f}")
             self.logger.info(f"  AIC: {self.aic:.2f}, BIC: {self.bic:.2f}")
-            self.logger.info(f"  Deviance R²: {self.deviance_r2:.4f}")
-            self.logger.info(f"  McFadden R²: {self.mcfadden_r2:.4f}")
+            self.logger.info(f"  Deviance R^2: {self.deviance_r2:.4f}")
+            self.logger.info(f"  McFadden R^2: {self.mcfadden_r2:.4f}")
             
             # Prepare feature list for base class logging method
             feature_list = []
@@ -378,7 +378,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         metrics = self.calculate_metrics_with_proper_mape(self.y_test, test_predictions)
         
         # Add metrics annotation
-        text = f"R² = {metrics['r2']:.4f}\nRMSE = ${metrics['rmse']:,.0f}\n"
+        text = f"R^2 = {metrics['r2']:.4f}\nRMSE = ${metrics['rmse']:,.0f}\n"
         if not np.isnan(metrics['mape']):
             text += f"MAPE = {metrics['mape']:.1f}% (n={metrics['mape_n']})\n"
         text += f"SMAPE = {metrics['smape']:.1f}%"
@@ -406,7 +406,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         sqrt_abs_std_resid = np.sqrt(np.abs(standardized_residuals))
         ax.scatter(test_predictions, sqrt_abs_std_resid, alpha=0.5, s=10)
         ax.set_xlabel('Fitted Values ($)')
-        ax.set_ylabel('√|Standardized Residuals|')
+        ax.set_ylabel('sqrt|Standardized Residuals|')
         ax.set_title('Scale-Location Plot')
         
         # 5. Histogram of Residuals
@@ -509,17 +509,20 @@ def main():
     # Initialize model with Model 1-like options
     # ****************************************************************************
     # WARNING : The flag 'use_sqrt_transform' here is for research only. 
-    # A Gamma model already assumes E[Y]>0 and Var(Y)=μ²φ. 
+    # A Gamma model already assumes E[Y]>0 and Var(Y)=mu^(2*phi) 
     # Applying sqrt(Y) then Gamma on sqrt(Y) breaks the distributional assumption.
     # I leave the capability to tranform  only for didactical purposes
     # ****************************************************************************
+    use_sqrt = False                 # Didactic purpose. Should ALWAYS be False for Gamma
+    use_outlier = True
+    suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     model = Model2GLMGamma(
-        use_sqrt_transform=False,     # Didactic purpose. Should ALWAYS be False for Gamma
-        use_outlier_removal=False,      
-        outlier_threshold=1.645,      # ~10% outliers (Model 5b default) 
-        use_selected_features=False,  # Use MI-based feature selection
-        random_seed=42,                # For reproducibility
-        log_suffix="gamma_no_outliers_v1"
+        use_sqrt_transform=False,    # Didactic purpose. Should ALWAYS be False for Gamma
+        use_outlier_removal=True,      
+        outlier_threshold=1.645,     # ~10% outliers (Model 5b default) 
+        use_selected_features=False, # Use MI-based feature selection
+        random_seed=42,              # For reproducibility
+        log_suffix=suffix
     )
     
     # Run complete pipeline
@@ -541,54 +544,54 @@ def main():
     
     # Build summary for logging
     summary_lines = []
-    summary_lines.append("\nConfiguration:")
-    summary_lines.append(f"  • Distribution: Gamma")
-    summary_lines.append(f"  • Link Function: Log")
-    summary_lines.append(f"  • Transformation: {model.transformation}")
-    summary_lines.append(f"  • Outlier Removal: {model.use_outlier_removal}")
+    summary_lines.append("Configuration:")
+    summary_lines.append(f"   Distribution: Gamma")
+    summary_lines.append(f"   Link Function: Log")
+    summary_lines.append(f"   Transformation: {model.transformation}")
+    summary_lines.append(f"   Outlier Removal: {model.use_outlier_removal}")
     
     if model.use_outlier_removal and hasattr(model, 'outlier_diagnostics'):
         if model.outlier_diagnostics:
-            summary_lines.append(f"  • Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
+            summary_lines.append(f"   Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
                                f"({model.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
     
-    summary_lines.append(f"  • Number of Features: {len(model.feature_names)}")
+    summary_lines.append(f"   Number of Features: {len(model.feature_names)}")
     
-    summary_lines.append("\nFeature Categories:")
-    summary_lines.append(f"  • Living Settings: 5")
-    summary_lines.append(f"  • Age Groups: 2")
-    summary_lines.append(f"  • Support Levels: 5")
-    summary_lines.append(f"  • Clinical Scores: 3")
-    summary_lines.append(f"  • Demographics: 2")
-    summary_lines.append(f"  • QSI Items: 15+")
-    summary_lines.append(f"  • Interactions: 3")
+    summary_lines.append("Feature Categories:")
+    summary_lines.append(f"   Living Settings: 5")
+    summary_lines.append(f"   Age Groups: 2")
+    summary_lines.append(f"   Support Levels: 5")
+    summary_lines.append(f"   Clinical Scores: 3")
+    summary_lines.append(f"   Demographics: 2")
+    summary_lines.append(f"   QSI Items: 15+")
+    summary_lines.append(f"   Interactions: 3")
     
-    summary_lines.append("\nData Summary:")
-    summary_lines.append(f"  • Total Records: {len(model.all_records)}")
-    summary_lines.append(f"  • Training Records: {len(model.train_records)}")
-    summary_lines.append(f"  • Test Records: {len(model.test_records)}")
+    summary_lines.append("Data Summary:")
+    summary_lines.append(f"   Total Records: {len(model.all_records)}")
+    summary_lines.append(f"   Training Records: {len(model.train_records)}")
+    summary_lines.append(f"   Test Records: {len(model.test_records)}")
     
-    summary_lines.append("\nModel Performance:")
+    summary_lines.append("Model Performance:")
     if model.metrics:
-        summary_lines.append(f"  • Training R²: {model.metrics.get('r2_train', 0):.4f}")
-        summary_lines.append(f"  • Test R²: {model.metrics.get('r2_test', 0):.4f}")
-        summary_lines.append(f"  • RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-        summary_lines.append(f"  • MAE: ${model.metrics.get('mae_test', 0):,.2f}")
-        summary_lines.append(f"  • CV R² (mean ± std): {model.metrics.get('cv_mean', 0):.4f} ± {model.metrics.get('cv_std', 0):.4f}")
+        summary_lines.append(f"   Training R^2: {model.metrics.get('r2_train', 0):.4f}")
+        summary_lines.append(f"   Test R^2: {model.metrics.get('r2_test', 0):.4f}")
+        summary_lines.append(f"   RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
+        summary_lines.append(f"   MAE: ${model.metrics.get('mae_test', 0):,.2f}")
+        summary_lines.append(f"   CV R^2 (mean +- std): {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
     
-    summary_lines.append("\nGLM-Specific Metrics:")
+    summary_lines.append("GLM-Specific Metrics:")
     if model.glm_model:
-        summary_lines.append(f"  • Dispersion Parameter: {model.dispersion:.3f}")
-        summary_lines.append(f"  • Deviance R²: {model.deviance_r2:.4f}")
-        summary_lines.append(f"  • McFadden R²: {model.mcfadden_r2:.4f}")
-        summary_lines.append(f"  • AIC: {model.aic:.1f}")
+        summary_lines.append(f"   Dispersion Parameter: {model.dispersion:.3f}")
+        summary_lines.append(f"   Deviance R^2: {model.deviance_r2:.4f}")
+        summary_lines.append(f"   McFadden R^2: {model.mcfadden_r2:.4f}")
+        summary_lines.append(f"   AIC: {model.aic:.1f}")
         
         n = len(model.y_train) if hasattr(model, 'y_train') and model.y_train is not None else 1
         k = model.num_parameters
         correct_bic = -2 * model.glm_model.llf + k * np.log(n)
-        summary_lines.append(f"  • BIC (corrected): {correct_bic:.1f}")
+        summary_lines.append(f"   BIC (corrected): {correct_bic:.1f}")
     
-    summary_lines.append("\nTop 5 Features (by coefficient magnitude):")
+    summary_lines.append("Top 5 Features (by coefficient magnitude):")
     if model.coefficients:
         sig_features = [
             (name, coef['value'], coef['pct_effect'])
@@ -598,7 +601,7 @@ def main():
         sig_features.sort(key=lambda x: abs(x[1]), reverse=True)
         
         for i, (name, coef, pct) in enumerate(sig_features[:5], 1):
-            summary_lines.append(f"  {i}. {name}: β={coef:.4f} ({pct:+.1f}% effect)")
+            summary_lines.append(f"  {i}. {name}: Beta={coef:.4f} ({pct:+.1f}% effect)")
     
     # Write everything to log file
     for line in summary_lines:
@@ -613,7 +616,7 @@ def main():
     # Also print a brief summary to console for immediate visibility
     print("\n" + "="*80)
     print("MODEL 2 COMPLETE - See log file for detailed summary")
-    print(f"Test R²: {model.metrics.get('r2_test', 0):.4f}")
+    print(f"Test R^2: {model.metrics.get('r2_test', 0):.4f}")
     print(f"RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
     print(f"Results saved to: {model.output_dir_relative}")
     print("="*80)

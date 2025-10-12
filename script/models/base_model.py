@@ -4,9 +4,9 @@ base_model.py
 Simplified Base Class for iBudget Models
 
 FIXED: Type conversion issues for ConsumerRecord creation
-- ConsumerID: int → str
-- BLEVEL/FLEVEL/PLEVEL: str → float  
-- QSI questions: None → 0.0
+- ConsumerID: int -> str
+- BLEVEL/FLEVEL/PLEVEL: str -> float  
+- QSI questions: None -> 0.0
 - Enhanced error logging
 """
 
@@ -119,9 +119,9 @@ class BaseiBudgetModel(ABC):
     - Diagnostic plots
     
     Child classes implement:
-    - prepare_features(records) → (X, feature_names)
-    - _fit_core(X, y) → fit model
-    - _predict_core(X) → predict in fitted scale
+    - prepare_features(records) -> (X, feature_names)
+    - _fit_core(X, y) -> fit model
+    - _predict_core(X) -> predict in fitted scale
     """
     
     def __init__(self, model_id: int, model_name: str, 
@@ -198,7 +198,7 @@ class BaseiBudgetModel(ABC):
         self.logger.info(f"Configuration:")
         self.logger.info(f"  - Outlier removal: {use_outlier_removal}")
         if use_outlier_removal:
-            self.logger.info(f"  - Outlier threshold: ±{outlier_threshold} (studentized residuals)")
+            self.logger.info(f"  - Outlier threshold: +-{outlier_threshold} (studentized residuals)")
         self.logger.info(f"  - Transformation: {transformation}")
         self.logger.info(f"  - Random seed: {random_seed}")
     
@@ -245,14 +245,14 @@ class BaseiBudgetModel(ABC):
         self.logger.info("-" * 60)
         
         if self.metrics:
-            self.logger.info(f"Training R²: {self.metrics.get('r2_train', 0):.4f}")
-            self.logger.info(f"Test R²: {self.metrics.get('r2_test', 0):.4f}")
+            self.logger.info(f"Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+            self.logger.info(f"Test R^2: {self.metrics.get('r2_test', 0):.4f}")
             self.logger.info(f"RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
             self.logger.info(f"MAE: ${self.metrics.get('mae_test', 0):,.2f}")
             self.logger.info(f"MAPE: {self.metrics.get('mape_test', 0):.2f}%")
             
             if 'cv_mean' in self.metrics:
-                self.logger.info(f"CV R² (mean ± std): {self.metrics['cv_mean']:.4f} ± "
+                self.logger.info(f"CV R^2 (mean +- std): {self.metrics['cv_mean']:.4f} +- "
                                f"{self.metrics.get('cv_std', 0):.4f}")
         
         self.logger.info("-" * 60)
@@ -341,7 +341,7 @@ class BaseiBudgetModel(ABC):
         
         # Add the primary metric
         if primary_metric == 'coefficient' and 'coefficient' in feat:
-            parts.append(f"β={feat['coefficient']:8.4f}")
+            parts.append(f"Beta={feat['coefficient']:8.4f}")
         elif primary_metric == 'importance' and 'importance' in feat:
             parts.append(f"importance={feat['importance']:8.4f}")
         elif primary_metric == 'gain' and 'gain' in feat:
@@ -425,7 +425,7 @@ class BaseiBudgetModel(ABC):
         parts = [f"  {idx:3d}. {name:30s}"]
         
         if 'coefficient' in feature:
-            parts.append(f"β={feature['coefficient']:8.4f}")
+            parts.append(f"Beta={feature['coefficient']:8.4f}")
         if 'std_error' in feature:
             parts.append(f"SE={feature['std_error']:7.4f}")
         if 'p_value' in feature:
@@ -448,11 +448,11 @@ class BaseiBudgetModel(ABC):
             if isinstance(value, dict):
                 self.logger.info(f"{key}:") # \n
                 for sub_key, sub_value in value.items():
-                    self.logger.info(f"  • {sub_key}: {sub_value}")
+                    self.logger.info(f"     {sub_key}: {sub_value}")
             elif isinstance(value, list):
                 self.logger.info(f"{key}:") # \n
                 for item in value:
-                    self.logger.info(f"  • {item}")
+                    self.logger.info(f"     {item}")
             else:
                 self.logger.info(f"{key}: {value}")
         
@@ -992,7 +992,7 @@ class BaseiBudgetModel(ABC):
         Unified hook to get predictions in ORIGINAL dollar scale for ANY model.
 
         Default behavior:
-        1) Call _predict_core(X) → fitted-scale predictions
+        1) Call _predict_core(X) -> fitted-scale predictions
         2) Inverse-transform to original dollars
         3) Enforce non-negativity
 
@@ -1045,17 +1045,17 @@ class BaseiBudgetModel(ABC):
             score = r2_score(y_fold_val_original, y_fold_pred_original)
             cv_scores.append(score)
             
-            self.logger.info(f"  Fold {fold}: R² = {score:.4f}")
+            self.logger.info(f"  Fold {fold}: R^2 = {score:.4f}")
         
         cv_mean = np.mean(cv_scores)
         cv_std = np.std(cv_scores)
         
         self.logger.info("")
         self.logger.info("Cross-validation summary:")
-        self.logger.info(f"  Mean R²: {cv_mean:.4f}")
-        self.logger.info(f"  Std R²: {cv_std:.4f}")
-        self.logger.info(f"  Min R²: {min(cv_scores):.4f} (Fold {cv_scores.index(min(cv_scores))+1})")
-        self.logger.info(f"  Max R²: {max(cv_scores):.4f} (Fold {cv_scores.index(max(cv_scores))+1})")
+        self.logger.info(f"  Mean R^2: {cv_mean:.4f}")
+        self.logger.info(f"  Std R^2: {cv_std:.4f}")
+        self.logger.info(f"  Min R^2: {min(cv_scores):.4f} (Fold {cv_scores.index(min(cv_scores))+1})")
+        self.logger.info(f"  Max R^2: {max(cv_scores):.4f} (Fold {cv_scores.index(max(cv_scores))+1})")
         self.logger.info(f"  95% CI: [{cv_mean - 1.96*cv_std:.4f}, {cv_mean + 1.96*cv_std:.4f}]")
         
         return {
@@ -1145,7 +1145,7 @@ class BaseiBudgetModel(ABC):
         rmse_train_original = np.sqrt(mean_squared_error(self.y_train, self.train_predictions))
         rmse_test_original = np.sqrt(mean_squared_error(self.y_test, self.test_predictions))
         
-        # R² scores
+        # R^2 scores
         r2_train = r2_score(self.y_train, self.train_predictions)
         r2_test = r2_score(self.y_test, self.test_predictions)
         
@@ -1188,14 +1188,14 @@ class BaseiBudgetModel(ABC):
         self.logger.info("------------------------------------------------------------")
         self.logger.info("PERFORMANCE METRICS SUMMARY")
         self.logger.info("------------------------------------------------------------")
-        self.logger.info(f"Training R²: {r2_train:.4f}")
-        self.logger.info(f"Test R²: {r2_test:.4f}")
+        self.logger.info(f"Training R^2: {r2_train:.4f}")
+        self.logger.info(f"Test R^2: {r2_test:.4f}")
         self.logger.info(f"RMSE (original): ${rmse_test_original:,.2f}")
         self.logger.info(f"RMSE (sqrt scale): ${rmse_test_sqrt:.2f}")  # ADD THIS LINE
         self.logger.info(f"MAE: ${mae_test:,.2f}")
         self.logger.info(f"MAPE: {mape_test:.2f}%")
         if 'cv_mean' in self.metrics and 'cv_std' in self.metrics:
-            self.logger.info(f"CV R² (mean ± std): {self.metrics['cv_mean']:.4f} ± {self.metrics['cv_std']:.4f}")
+            self.logger.info(f"CV R^2 (mean +- std): {self.metrics['cv_mean']:.4f} +- {self.metrics['cv_std']:.4f}")
         self.logger.info("------------------------------------------------------------")
         
         return self.metrics
@@ -1283,7 +1283,7 @@ class BaseiBudgetModel(ABC):
         for subgroup_name, metrics in subgroup_metrics.items():
             self.logger.info(f"  {subgroup_name}:")
             self.logger.info(f"    N: {metrics['n']:,}")
-            self.logger.info(f"    R²: {metrics['r2']:.4f}")
+            self.logger.info(f"    R^2: {metrics['r2']:.4f}")
             self.logger.info(f"    RMSE: ${metrics['rmse']:,.2f}")
             self.logger.info(f"    Bias: ${metrics['bias']:+,.2f}")
         
@@ -1748,7 +1748,7 @@ class BaseiBudgetModel(ABC):
         ax.plot([0, max_val], [0, max_val], 'r--', linewidth=2)
         ax.set_xlabel('Actual Cost ($1000s)')
         ax.set_ylabel('Predicted Cost ($1000s)')
-        ax.set_title(f'Actual vs Predicted\nR² = {self.metrics.get("r2_test", 0):.4f}')
+        ax.set_title(f'Actual vs Predicted\nR^2 = {self.metrics.get("r2_test", 0):.4f}')
         ax.grid(True, alpha=0.3)
         
         # Additional plots omitted for space

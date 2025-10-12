@@ -1,11 +1,11 @@
 """
-Feature Selection (NumPy Edition) — iBudget / Florida APD
+Feature Selection (NumPy Edition) - iBudget / Florida APD
 
 Pandas-free pipeline:
 - Mutual Information (with permutation baseline enabled by default)
-- Spearman ρ (continuous↔continuous)
-- Bias-corrected Cramér’s V with chi-square validity screening (categorical↔categorical)
-- Bias-adjusted correlation ratio η (epsilon-squared) for categorical→continuous
+- Spearman rho (continuous<->continuous)
+- Bias-corrected Cramer's V with chi-square validity screening (categorical<->categorical)
+- Bias-adjusted correlation ratio eta (epsilon-squared) for categorical->continuous
 - Optional VIF screen for multicollinearity (continuous features)
 - Redundancy filtering across type pairs (configurable breadth)
 - Heatmaps, pairplots, LaTeX table and commands
@@ -208,9 +208,9 @@ def spearman_corr(x: np.ndarray, y: np.ndarray) -> float:
 
 def correlation_ratio_eta(cat: np.ndarray, cont: np.ndarray) -> float:
     """
-    Returns η = sqrt(ε²), ε² uses epsilon-squared with df correction:
-        ε² = (SS_between - (k-1)*MS_within) / SS_total
-    Requires n > k and n ≥ 3.
+    Returns eta = sqrt(epsilon^2), epsilon^2 uses epsilon-squared with df correction:
+        epsilon^2 = (SS_between - (k-1)*MS_within) / SS_total
+    Requires n > k and n >= 3.
     """
     miss_cat = _is_missing(cat)
     miss_cont = ~np.isfinite(cont)
@@ -466,9 +466,9 @@ def _plot_matrix(matrix: np.ndarray, row_labels: List[str], col_labels: List[str
         fig_size = (12, 10)
     plt.figure(figsize=fig_size)
     if kind in ("cramers_v", "eta"):
-        vmin, vmax, cmap, cbar_label = 0, 1, "YlOrRd", ("Cramér's V" if kind == "cramers_v" else "Correlation ratio η")
+        vmin, vmax, cmap, cbar_label = 0, 1, "YlOrRd", ("Cramer's V" if kind == "cramers_v" else "Correlation ratio eta")
     else:
-        vmin, vmax, cmap, cbar_label = -1, 1, "coolwarm", "Spearman ρ"
+        vmin, vmax, cmap, cbar_label = -1, 1, "coolwarm", "Spearman rho"
     mat = matrix
     if n_rows == n_cols:
         mask = np.triu(np.ones_like(mat, dtype=bool))
@@ -705,16 +705,16 @@ def analyze_year(
 
     # Categorical associations
     logger.info("")
-    logger.info("3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)")
+    logger.info("3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)")
     logger.info("-" * 40)
     cat_names = [n for n in feature_names if n in CATEGORICAL]
     cramers, cat_labels = categorical_cramers_matrix(arrs_orig, cat_names)
     if cramers is not None:
         _plot_matrix(cramers, cat_labels, cat_labels, fy, " - Categorical (Cramers V)", "cramers_v", logger)
 
-    # Mixed (η)
+    # Mixed (eta)
     logger.info("")
-    logger.info("4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)")
+    logger.info("4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)")
     logger.info("-" * 40)
     cont_only = [n for n in feature_names if n not in CATEGORICAL]
     eta_mat, eta_rows, eta_cols = mixed_eta_matrix(arrs_orig, cat_names, cont_only)

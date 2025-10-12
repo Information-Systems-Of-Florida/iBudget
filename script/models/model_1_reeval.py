@@ -17,7 +17,7 @@ Features (21 total):
     1-5:   Living Settings (LiveILSL, LiveRH1, LiveRH2, LiveRH3, LiveRH4)
     6-7:   Age Groups (Age21_30, Age31Plus)
     8:     BSum (behavioral sum)
-    9-11:  Interaction Terms (FHFSum, SLFSum, SLBSum) ← CRITICAL
+    9-11:  Interaction Terms (FHFSum, SLFSum, SLBSum) <- CRITICAL
     12-21: QSI Questions (Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43)
 
 Purpose: Direct comparison of Model 5b performance with 9 years of new data
@@ -120,11 +120,11 @@ class Model1Linear(BaseiBudgetModel):
             },
             'numeric': ['bsum'],  # Only BSum, not FSum or PSum (per Model 5b)
             'interactions': [
-                # FH × FSum interaction
+                # FH x FSum interaction
                 ('FHFSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum)),
-                # Supported Living × FSum interaction  
+                # Supported Living x FSum interaction  
                 ('SLFSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.fsum)),
-                # Supported Living × BSum interaction
+                # Supported Living x BSum interaction
                 ('SLBSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.bsum))
             ],
             'qsi': model_5b_qsi  # Exactly 10 QSI items
@@ -176,11 +176,11 @@ class Model1Linear(BaseiBudgetModel):
     def predict_original(self, X: np.ndarray) -> np.ndarray:
         """
         Override base-class hook for CV and evaluation.
-        Model 1’s _predict_core() outputs predictions on the fitted √-cost scale,
+        Model 1's _predict_core() outputs predictions on the fitted sqrt-cost scale,
         so we must inverse-transform them here to return dollar-scale predictions.
         """
-        y_pred_fitted = self._predict_core(X)           # predictions on √-scale
-        y_pred_original = self.inverse_transformation(y_pred_fitted)  # square → dollars
+        y_pred_fitted = self._predict_core(X)           # predictions on sqrt-scale
+        y_pred_original = self.inverse_transformation(y_pred_fitted)  # square -> dollars
         return np.maximum(0.0, y_pred_original)
     
     def calculate_metrics(self) -> Dict[str, float]:
@@ -345,7 +345,7 @@ class Model1Linear(BaseiBudgetModel):
             t_i = self.outlier_diagnostics['studentized_residuals']
             ax.scatter(range(len(t_i)), t_i, alpha=0.5, s=10)
             ax.axhline(y=self.MODEL_5B_OUTLIER_THRESHOLD, color='red', linestyle='--', 
-                      linewidth=2, label=f'Threshold: ±{self.MODEL_5B_OUTLIER_THRESHOLD}')
+                      linewidth=2, label=f'Threshold: +-{self.MODEL_5B_OUTLIER_THRESHOLD}')
             ax.axhline(y=-self.MODEL_5B_OUTLIER_THRESHOLD, color='red', linestyle='--', linewidth=2)
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1, alpha=0.3)
             ax.set_xlabel('Observation Index', fontsize=11)

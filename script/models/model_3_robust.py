@@ -2,17 +2,13 @@
 model_3_robust.py
 =================
 Model 3: Robust Linear Regression with Huber M-estimation
-100% data retention with automatic outlier downweighting
+Following the EXACT pattern from Models 1 and 2
 
 Key features:
-- Huber robust regression (50% breakdown point)
-- Automatic outlier handling via iterative reweighted least squares (IRLS)
-- No data exclusion - all consumers included with adaptive weights
-- Square-root transformation of costs (configurable)
-- Full transparency through weight documentation
-
-This model addresses the fairness concerns of Model 1's outlier removal
-while maintaining comparable accuracy through robust estimation.
+- Uses Model 1's exact feature specification (Model 5b features)
+- Huber robust regression instead of OLS
+- 100% data retention with automatic outlier downweighting
+- Follows Models 1 & 2 architecture exactly
 """
 
 import numpy as np
@@ -25,9 +21,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from scipy import stats
-import json
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -40,12 +34,6 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 # SINGLE POINT OF CONTROL FOR RANDOM SEED
 # ============================================================================
-# Change this value to get different random splits, or keep at 42 for reproducibility
-# This seed controls:
-#   - Train/test split
-#   - Cross-validation folds
-#   - Any other random operations in the pipeline
-# ============================================================================
 RANDOM_SEED = 42
 
 
@@ -53,54 +41,60 @@ class Model3Robust(BaseiBudgetModel):
     """
     Model 3: Robust Linear Regression with Huber M-estimation
     
-    Key characteristics:
-    - Handles outliers WITHOUT removing them (100% data retention)
-    - Each observation gets weight 0-1 based on residual size
-    - 50% breakdown point (theoretical maximum robustness)
-    - Square-root transformation (default, configurable)
-    - Enhanced transparency through weight documentation
+    Follows the EXACT pattern from Models 1 and 2:
+    - Same feature preparation structure
+    - Same initialization parameters
+    - Same main() function pattern
+    - Only difference: Huber regression in _fit_core()
     """
     
     def __init__(self,
-                 feature_config: Optional[Dict[str, Any]] = None,
-                 use_sqrt_transform: bool = True,  # Default: use sqrt like Model 5b
+                 use_sqrt_transform: bool = True,
                  use_outlier_removal: bool = False,  # Model 3 NEVER removes outliers
-                 outlier_threshold: float = 1.645,  # Not used but kept for interface
-                 epsilon: float = 1.35,  # Huber's tuning constant
-                 max_iter: int = 100,  # Maximum iterations for convergence
-                 warm_start: bool = False,
-                 fit_intercept: bool = True,
+                 outlier_threshold: float = 1.645,
+                 epsilon: float = 1.35,  # Huber-specific parameter
+                 max_iter: int = 1000,    # Huber-specific parameter
                  random_seed: int = RANDOM_SEED,
                  log_suffix: Optional[str] = None,
                  **kwargs):
         """
         Initialize Model 3: Robust Linear Regression
+        Following Model 1 & 2 pattern with additional Huber parameters
         
         Args:
-            feature_config: Optional feature configuration from pipeline
-            use_sqrt_transform: Apply sqrt transformation (default True)
-            use_outlier_removal: IGNORED - Model 3 never removes outliers
-            outlier_threshold: IGNORED - Model 3 uses weights instead
+            use_sqrt_transform: Apply sqrt transformation (default True like Model 1)
+            use_outlier_removal: ALWAYS False for Model 3
+            outlier_threshold: Kept for interface compatibility
             epsilon: Huber's tuning constant (1.35 = 95% efficiency)
-            max_iter: Maximum iterations for IRLS convergence
-            warm_start: Reuse solution from previous fit
-            fit_intercept: Include intercept term
+            max_iter: Maximum iterations for convergence
             random_seed: Random seed for reproducibility
             log_suffix: Optional suffix for log files
         """
-        # Store feature configuration
-        self.feature_config = feature_config
+        # Determine transformation
+        transformation = 'sqrt' if use_sqrt_transform else 'none'
         
-        # Store robust regression parameters
+        # Call parent class __init__
+        super().__init__(
+            model_id=3,
+            model_name="Robust Linear Regression (Huber M-estimation)",
+            transformation=transformation,
+            use_outlier_removal=False,  # Model 3 NEVER removes outliers
+            outlier_threshold=outlier_threshold,
+            random_seed=random_seed,
+            log_suffix=log_suffix
+        )
+        
+        # Store Huber-specific parameters
         self.epsilon = epsilon
         self.max_iter = max_iter
-        self.warm_start = warm_start
-        self.fit_intercept = fit_intercept
         
-        # Initialize Huber regressor
+        # Initialize model placeholder
         self.model = None
+        # Feature scaler (fit inside each training fit/CV fold)
+        self.scaler_ = None
+
         
-        # Weight tracking
+        # Weight tracking (Model 3 specific)
         self.observation_weights = None
         self.weight_statistics = {}
         
@@ -111,24 +105,6 @@ class Model3Robust(BaseiBudgetModel):
             'final_score': None
         }
         
-        # Determine transformation
-        transformation = 'sqrt' if use_sqrt_transform else 'none'
-        
-        # Call parent class __init__
-        # CRITICAL: Model 3 NEVER removes outliers, so force use_outlier_removal=False
-        super().__init__(
-            model_id=3,
-            model_name="Robust Linear Regression (Huber M-estimation)",
-            transformation=transformation,
-            use_outlier_removal=False,  # Model 3 handles outliers via weights
-            outlier_threshold=outlier_threshold,  # Not used but stored
-            random_seed=random_seed,
-            log_suffix=log_suffix
-        )
-        
-        # Override to ensure we never remove outliers
-        self.use_outlier_removal = False
-        
         self.logger.info("Model 3: Robust Linear Regression initialized")
         self.logger.info(f"  Epsilon (Huber constant): {self.epsilon}")
         self.logger.info(f"  Max iterations: {self.max_iter}")
@@ -137,58 +113,46 @@ class Model3Robust(BaseiBudgetModel):
 
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
-        Prepare features using configuration or Model 5b defaults
-        
-        Args:
-            records: List of consumer records
-            
-        Returns:
-            Feature matrix and feature names
+        Prepare features following EXACT Model 1 pattern (Model 5b specification)
         """
         # If feature_config provided from pipeline, use it
         if hasattr(self, 'feature_config') and self.feature_config is not None:
             return self.prepare_features_from_spec(records, self.feature_config)
         
-        # Otherwise, use Model 5b's exact 21 features for comparison
+        # Model 3 uses EXACT Model 5b specification (same as Model 1)
+        model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
+        
         feature_config = {
-            'living_settings': [
-                ('ILSL', lambda r: 1 if r.living_setting == 'ILSL' else 0),
-                ('RH1', lambda r: 1 if r.living_setting == 'RH1' else 0),
-                ('RH2', lambda r: 1 if r.living_setting == 'RH2' else 0),
-                ('RH3', lambda r: 1 if r.living_setting == 'RH3' else 0),
-                ('RH4', lambda r: 1 if r.living_setting == 'RH4' else 0)
-            ],
-            'age_groups': [
-                ('Age21_30', lambda r: 1 if r.age_group == 'Age21_30' else 0),
-                ('Age31Plus', lambda r: 1 if r.age_group == 'Age31Plus' else 0)
-            ],
-            'clinical': [
-                ('BSum', lambda r: float(r.bsum or 0))
-            ],
-            'qsi_items': [
-                ('Q16', lambda r: float(r.q16 or 0)),
-                ('Q18', lambda r: float(r.q18 or 0)),
-                ('Q20', lambda r: float(r.q20 or 0)),
-                ('Q21', lambda r: float(r.q21 or 0)),
-                ('Q23', lambda r: float(r.q23 or 0)),
-                ('Q28', lambda r: float(r.q28 or 0)),
-                ('Q33', lambda r: float(r.q33 or 0)),
-                ('Q34', lambda r: float(r.q34 or 0)),
-                ('Q36', lambda r: float(r.q36 or 0)),
-                ('Q43', lambda r: float(r.q43 or 0))
-            ],
+            'categorical': {
+                'living_setting': {
+                    'categories': ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'],
+                    'reference': 'FH'  # FH is reference, not included
+                }
+            },
+            'binary': {
+                'Age21_30': lambda r: 21 <= r.age <= 30,
+                'Age31Plus': lambda r: r.age > 30
+                # Age3_20 is reference, not included
+            },
+            'numeric': ['bsum'],  # Only BSum per Model 5b
             'interactions': [
-                ('FH_x_FSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum or 0)),
-                ('ILSL_x_FSum', lambda r: (1 if r.living_setting == 'ILSL' else 0) * float(r.fsum or 0)),
-                ('ILSL_x_BSum', lambda r: (1 if r.living_setting == 'ILSL' else 0) * float(r.bsum or 0))
-            ]
+                # FH  vs.  FSum interaction
+                ('FHFSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum)),
+                # Supported Living  vs.  FSum interaction  
+                ('SLFSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.fsum)),
+                # Supported Living  vs.  BSum interaction
+                ('SLBSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.bsum))
+            ],
+            'qsi': model_5b_qsi  # Exactly 10 QSI items from Model 5b
         }
         
+        # Use the base class method exactly like Model 1
         return self.prepare_features_from_spec(records, feature_config)
     
     def _fit_core(self, X: np.ndarray, y: np.ndarray) -> None:
         """
-        Fit Huber robust regression model (called by base class after transformations)
+        Fit Huber robust regression model
+        This is the ONLY major difference from Model 1
         
         Args:
             X: Feature matrix (NO outliers removed - Model 3 uses all data)
@@ -196,24 +160,30 @@ class Model3Robust(BaseiBudgetModel):
         """
         self.log_section("FITTING HUBER ROBUST REGRESSION")
         
-        # Initialize Huber regressor with specified parameters
+        # Standardize X for numerical stability (per fit / per CV fold)
+        self.scaler_ = StandardScaler().fit(X)
+        X_scaled = self.scaler_.transform(X)
+
+        # Initialize Huber with small L2 (default), looser tol, more iters
+        # NOTE: do NOT pass alpha=0.0 - keep default small L2 for stability
         self.model = HuberRegressor(
             epsilon=self.epsilon,
-            max_iter=self.max_iter,
-            fit_intercept=self.fit_intercept,
-            warm_start=self.warm_start,
-            alpha=0.0  # No regularization (pure robust regression)
+            max_iter=max(1000, int(self.max_iter)),  # ensure enough iterations
+            tol=1e-4,
+            fit_intercept=True, 
+            warm_start=False,
         )
-        
-        # Fit the model
-        self.model.fit(X, y)
+
+        # Fit the model on scaled features
+        self.model.fit(X_scaled, y)
+
         
         # Store coefficients for reporting
         self.coefficients = self.model.coef_
         self.intercept = self.model.intercept_
         self.scale_ = self.model.scale_  # Robust scale estimate
         
-        # Calculate and store observation weights
+        # Calculate observation weights for transparency
         self._calculate_weights(X, y)
         
         # Log fitting summary
@@ -226,7 +196,8 @@ class Model3Robust(BaseiBudgetModel):
         # Update convergence info
         self.convergence_info['converged'] = self.model.n_iter_ < self.max_iter
         self.convergence_info['n_iterations'] = self.model.n_iter_
-        self.convergence_info['final_score'] = self.model.score(X, y)
+        self.convergence_info['final_score'] = self.model.score(X_scaled, y)
+
         
         # Log weight statistics
         if self.observation_weights is not None:
@@ -236,20 +207,18 @@ class Model3Robust(BaseiBudgetModel):
             self.logger.info(f"  Median weight: {self.weight_statistics['median']:.4f}")
             self.logger.info(f"  Min weight: {self.weight_statistics['min']:.4f}")
             self.logger.info(f"  Max weight: {self.weight_statistics['max']:.4f}")
-            self.logger.info(f"  Full weight (≥0.99): {self.weight_statistics['full_weight_pct']:.1f}%")
+            self.logger.info(f"  Full weight (>=0.99): {self.weight_statistics['full_weight_pct']:.1f}%")
             self.logger.info(f"  Downweighted (<0.99): {self.weight_statistics['downweighted_count']} observations")
         
-        # Log coefficient summary
-        self.logger.info("\nTop 5 Coefficients by Magnitude:")
-        if hasattr(self, 'feature_names') and self.feature_names:
-            coef_info = [(name, coef) for name, coef in zip(self.feature_names, self.coefficients)]
-            coef_info.sort(key=lambda x: abs(x[1]), reverse=True)
-            for i, (name, coef) in enumerate(coef_info[:5], 1):
-                self.logger.info(f"  {i}. {name}: {coef:.4f}")
+        # Log coefficient summary (following Model 1 pattern)
+        self.logger.info("\nCoefficient summary:")
+        for name, coef in zip(self.feature_names, self.coefficients):
+            self.logger.info(f"  {name}: {coef:.4f}")
     
     def _predict_core(self, X: np.ndarray) -> np.ndarray:
         """
         Make predictions using robust regression model
+        Following Model 1 pattern
         
         Args:
             X: Feature matrix
@@ -260,22 +229,31 @@ class Model3Robust(BaseiBudgetModel):
         if self.model is None:
             raise ValueError("Model must be fitted before prediction")
         
-        # Huber predictions are in the same scale as training y
-        predictions = self.model.predict(X)
-        
-        return predictions
+        if self.scaler_ is None:
+            raise ValueError("Scaler not fitted; fit the model before predicting.")
+        X_scaled = self.scaler_.transform(X)
+        return self.model.predict(X_scaled)
+    
+    def predict_original(self, X: np.ndarray) -> np.ndarray:
+        """
+        Override base-class hook for CV and evaluation.
+        Following Model 1 pattern exactly
+        """
+        y_pred_fitted = self._predict_core(X)  # predictions in fitted scale
+        y_pred_original = self.inverse_transformation(y_pred_fitted)  # convert to dollars
+        return np.maximum(0.0, y_pred_original)
     
     def _calculate_weights(self, X: np.ndarray, y: np.ndarray) -> None:
         """
         Calculate observation weights based on Huber loss function
-        
-        These weights show which observations were downweighted as outliers
+        Model 3 specific functionality
         """
         if self.model is None:
             return
         
         # Get predictions
-        y_pred = self.model.predict(X)
+        X_scaled = self.scaler_.transform(X) if self.scaler_ is not None else X
+        y_pred = self.model.predict(X_scaled)
         
         # Calculate residuals
         residuals = y - y_pred
@@ -289,7 +267,7 @@ class Model3Robust(BaseiBudgetModel):
         weights[outlier_mask] = self.epsilon / np.abs(standardized_residuals[outlier_mask])
         
         self.observation_weights = weights
-        
+    
     def _calculate_weight_statistics(self) -> None:
         """Calculate comprehensive weight statistics"""
         if self.observation_weights is None:
@@ -313,8 +291,8 @@ class Model3Robust(BaseiBudgetModel):
     
     def generate_diagnostic_plots(self) -> None:
         """
-        Generate comprehensive diagnostic plots for Model 3
-        Includes unique weight distribution visualization
+        Generate diagnostic plots following Model 1 & 2 pattern
+        Includes Model 3 specific weight distribution
         """
         if self.model is None or self.X_test is None:
             self.logger.warning("Model not fitted or no test data for plots")
@@ -330,9 +308,10 @@ class Model3Robust(BaseiBudgetModel):
         if self.observation_weights is None and self.X_train is not None:
             self._calculate_weights(self.X_train, self.apply_transformation(self.y_train))
         
-        # Create figure with 6 subplots
+        # Create figure with 6 subplots (following Models 1 & 2 pattern)
         fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-        fig.suptitle('Model 3: Robust Linear Regression Diagnostic Plots', fontsize=14, fontweight='bold')
+        fig.suptitle('Model 3: Robust Linear Regression Diagnostic Plots', 
+                     fontsize=14, fontweight='bold')
         
         # 1. Predicted vs Actual
         ax1 = axes[0, 0]
@@ -356,13 +335,13 @@ class Model3Robust(BaseiBudgetModel):
         ax2.set_title('(B) Residuals vs Predicted')
         ax2.grid(True, alpha=0.3)
         
-        # 3. Weight Distribution (UNIQUE TO MODEL 3)
+        # 3. Weight Distribution (Model 3 SPECIFIC)
         ax3 = axes[0, 2]
         if self.observation_weights is not None:
             weights = self.observation_weights
             ax3.hist(weights, bins=50, edgecolor='black', alpha=0.7)
             ax3.axvline(x=0.99, color='r', linestyle='--', linewidth=2, 
-                       label=f'Full weight threshold ({self.weight_statistics["full_weight_pct"]:.1f}%)')
+                       label=f'Full weight ({self.weight_statistics["full_weight_pct"]:.1f}%)')
             ax3.set_xlabel('Observation Weight')
             ax3.set_ylabel('Frequency')
             ax3.set_title('(C) Weight Distribution')
@@ -413,15 +392,15 @@ class Model3Robust(BaseiBudgetModel):
                 q_r2.append(0)
         
         ax6.bar(q_labels, q_r2, edgecolor='black', alpha=0.7)
-        ax6.set_ylabel('R² Score')
+        ax6.set_ylabel('R^2 Score')
         ax6.set_title('(F) Performance by Cost Quartile')
         ax6.set_ylim([0, 1])
         ax6.grid(True, alpha=0.3, axis='y')
         
-        # Add overall R² line
+        # Add overall R^2 line
         overall_r2 = r2_score(test_actual, test_predictions)
         ax6.axhline(y=overall_r2, color='r', linestyle='--', linewidth=2, 
-                   label=f'Overall R² = {overall_r2:.3f}')
+                   label=f'Overall R^2 = {overall_r2:.3f}')
         ax6.legend()
         
         plt.tight_layout()
@@ -433,39 +412,24 @@ class Model3Robust(BaseiBudgetModel):
         
         self.logger.info(f"Diagnostic plots saved to {plot_path}")
     
-    def predict_original(self, X: np.ndarray) -> np.ndarray:
-        """
-        Override base-class hook for CV and evaluation.
-        Model 3's _predict_core() outputs predictions on the fitted scale (possibly sqrt),
-        so we must inverse-transform them here to return dollar-scale predictions.
-        
-        This matches the pattern from Model 1.
-        """
-        y_pred_fitted = self._predict_core(X)  # predictions in fitted scale
-        y_pred_original = self.inverse_transformation(y_pred_fitted)  # convert to dollars
-        return np.maximum(0.0, y_pred_original)
-    
     def generate_latex_commands(self) -> None:
         """
-        Generate LaTeX commands for Model 3 report
+        Generate LaTeX commands following Models 1 & 2 pattern
         CRITICAL: Must call super() FIRST, then append model-specific commands
-        Following the exact pattern from Models 1, 2, 4, 6, 7, 8, 9
         """
-        # STEP 1: Call parent FIRST to generate standard commands (creates files with 'w' mode)
+        # STEP 1: Call parent FIRST to generate standard commands
         super().generate_latex_commands()
         
-        # STEP 2: Append Model 3 specific commands using 'a' mode
+        # STEP 2: Append Model 3 specific commands
         self.logger.info(f"Adding Model {self.model_id} specific LaTeX commands...")
         
-        model_word = self._number_to_word(self.model_id)  # "Three"
+        model_word = self._number_to_word(self.model_id)
         newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         
-        # Append to newcommands file (placeholders/definitions)
+        # Append to newcommands file
         with open(newcommands_file, 'a') as f:
-            f.write("\n% ============================================================================\n")
-            f.write(f"% Model {self.model_id} Robust Regression Specific Commands\n")
-            f.write("% ============================================================================\n")
+            f.write("\n% Model 3 Robust Regression Specific Commands\n")
             f.write(f"\\newcommand{{\\Model{model_word}Epsilon}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}ScaleEstimate}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}NumIterations}}{{\\WarningRunPipeline}}\n")
@@ -477,20 +441,6 @@ class Model3Robust(BaseiBudgetModel):
             f.write(f"\\newcommand{{\\Model{model_word}OutliersDetected}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}OutlierPercentage}}{{\\WarningRunPipeline}}\n")
             f.write(f"\\newcommand{{\\Model{model_word}Parameters}}{{\\WarningRunPipeline}}\n")
-            # Prediction accuracy bands
-            f.write(f"\\newcommand{{\\Model{model_word}WithinOneK}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}WithinTwoK}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}WithinFiveK}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}WithinTenK}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}WithinTwentyK}}{{\\WarningRunPipeline}}\n")
-            # Additional metrics
-            f.write(f"\\newcommand{{\\Model{model_word}QuarterlyVariance}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}AnnualAdjustmentRate}}{{\\WarningRunPipeline}}\n")
-            # Population maximized scenario
-            f.write(f"\\newcommand{{\\Model{model_word}PoppopulationmaximizedClients}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}PoppopulationmaximizedAvgAlloc}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}PoppopulationmaximizedWaitlistChange}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}PoppopulationmaximizedWaitlistPct}}{{\\WarningRunPipeline}}\n")
         
         # Append actual values to renewcommands file
         with open(renewcommands_file, 'a') as f:
@@ -501,8 +451,8 @@ class Model3Robust(BaseiBudgetModel):
                 f.write(f"\\renewcommand{{\\Model{model_word}Epsilon}}{{{self.epsilon:.2f}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}ScaleEstimate}}{{{self.scale_:.4f}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}NumIterations}}{{{self.model.n_iter_}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Converged}}{{{'Yes' if self.convergence_info['converged'] else 'No'}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{len(self.coefficients) + 1}}}\n")  # features + intercept
+                f.write(f"\\renewcommand{{\\Model{model_word}Converged}}{{{('Yes' if self.convergence_info['converged'] else 'No')}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}Parameters}}{{{len(self.coefficients) + 1}}}\n")
             
             # Weight statistics
             if self.weight_statistics:
@@ -513,7 +463,7 @@ class Model3Robust(BaseiBudgetModel):
                 f.write(f"\\renewcommand{{\\Model{model_word}OutliersDetected}}{{{self.weight_statistics['downweighted_count']}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}OutlierPercentage}}{{{self.weight_statistics['downweighted_pct']:.1f}}}\n")
             
-            # Prediction accuracy bands (calculate from test set)
+            # Prediction accuracy bands
             if self.X_test is not None and self.y_test is not None:
                 test_pred = self.predict(self.X_test)
                 errors = np.abs(self.y_test - test_pred)
@@ -523,16 +473,6 @@ class Model3Robust(BaseiBudgetModel):
                 f.write(f"\\renewcommand{{\\Model{model_word}WithinFiveK}}{{{100 * np.mean(errors <= 5000):.1f}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}WithinTenK}}{{{100 * np.mean(errors <= 10000):.1f}}}\n")
                 f.write(f"\\renewcommand{{\\Model{model_word}WithinTwentyK}}{{{100 * np.mean(errors <= 20000):.1f}}}\n")
-            
-            # Quarterly variance (placeholder - would need actual quarterly data)
-            f.write(f"\\renewcommand{{\\Model{model_word}QuarterlyVariance}}{{7.5}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}AnnualAdjustmentRate}}{{10.2}}\n")
-            
-            # Population maximized scenario (example values)
-            f.write(f"\\renewcommand{{\\Model{model_word}PoppopulationmaximizedClients}}{{38500}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}PoppopulationmaximizedAvgAlloc}}{{31169}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}PoppopulationmaximizedWaitlistChange}}{{-450}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}PoppopulationmaximizedWaitlistPct}}{{-3.2}}\n")
         
         self.logger.info("Model 3 specific commands appended to both files")
 
@@ -541,108 +481,84 @@ def main():
     """
     Run Model 3 Robust Linear Regression implementation
     """
-    logger.info("=" * 80)
+    logger.info("="*80)
     logger.info("MODEL 3: ROBUST LINEAR REGRESSION (HUBER M-ESTIMATION)")
-    logger.info("=" * 80)
+    logger.info("="*80)
     
-    # Initialize model with default configuration
+    # Initialize model with explicit parameters (following Model 1 & 2 pattern)
+    use_sqrt = True                 
+    use_outlier = False
+    suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     model = Model3Robust(
-        use_sqrt_transform=True,  # Use sqrt like Model 5b
-        epsilon=1.35,  # 95% efficiency
-        max_iter=100,
-        random_seed=RANDOM_SEED,
-        log_suffix="main_run"
+        use_sqrt_transform=use_sqrt,        # Use sqrt like Model 1/5b
+        use_outlier_removal=use_outlier,    # Model 3 NEVER removes outliers
+        outlier_threshold=1.645,            # Kept for compatibility
+        epsilon=1.35,                       # Huber constant (95% efficiency)
+        max_iter=1000,                      # Maximum iterations
+        random_seed=42,                     # For reproducibility
+        log_suffix=suffix                   # Clear log suffix
     )
     
-    # Load data
-    logger.info("Loading data...")
-    all_records = model.load_data(
-        data_file="./data/fy2024_cleaned.csv",  # Adjust path as needed
-        fiscal_years=[2024]
+    # Log configuration
+    model.logger.info("")
+    model.logger.info("Configuration:")
+    model.logger.info("  - Square-root transformation: Yes (Model 5b standard)")
+    model.logger.info("  - Outlier removal: No (adaptive weights instead)")
+    model.logger.info("  - Epsilon (Huber): 1.35 (95% efficiency)")
+    model.logger.info("  - Features: Model 5b exact specification (21 features)")
+    model.logger.info("")
+    
+    # Run complete pipeline (following Model 1 & 2 pattern)
+    results = model.run_complete_pipeline(
+        fiscal_year_start=2024,
+        fiscal_year_end=2024,
+        test_size=0.2,
+        perform_cv=True,
+        n_cv_folds=10
     )
     
-    # Split data
-    model.split_data(test_size=0.2, random_state=RANDOM_SEED)
-    
-    # Prepare features
-    logger.info("Preparing features...")
-    X_train, feature_names = model.prepare_features(model.train_records)
-    X_test, _ = model.prepare_features(model.test_records)
-    
-    # Store feature names
-    model.feature_names = feature_names
-    
-    # Extract target values
-    y_train = np.array([r.total_cost for r in model.train_records])
-    y_test = np.array([r.total_cost for r in model.test_records])
-    
-    # Store data in model
-    model.X_train = X_train
-    model.y_train = y_train
-    model.X_test = X_test
-    model.y_test = y_test
-    
-    # Train model
-    logger.info("Training model...")
-    model.fit(X_train, y_train)
-    
-    # Evaluate
-    logger.info("Evaluating model...")
-    model.evaluate(X_test, y_test)
-    
-    # Cross-validation
-    cv_results = model.perform_cross_validation(n_splits=10)
-    
-    # Generate plots
+    # Generate diagnostic plots
     model.generate_diagnostic_plots()
     
-    # Generate LaTeX commands
-    model.generate_latex_commands()
+    # Log final summary (following Model 2 pattern)
+    model.log_section("MODEL 3 FINAL SUMMARY", "=")
     
-    # Print summary
-    logger.info("")
-    logger.info("=" * 80)
-    logger.info("MODEL 3 SUMMARY")
-    logger.info("=" * 80)
+    model.logger.info("")
+    model.logger.info("Performance Metrics:")
+    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
+    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
+    model.logger.info(f"  RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
+    model.logger.info(f"  MAE: ${model.metrics.get('mae_test', 0):,.2f}")
+    if 'cv_mean' in model.metrics:
+        model.logger.info(f"  CV R^2 (mean +- std): {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
     
-    logger.info("\nKey Features:")
-    logger.info("  • Method: Huber M-estimation with IRLS")
-    logger.info("  • Data Inclusion: 100% (no outlier removal)")
-    logger.info("  • Epsilon: 1.35 (95% efficiency)")
-    logger.info(f"  • Transformation: Square-root")
-    
+    model.logger.info("")
+    model.logger.info("Robust Regression Specific:")
     if model.weight_statistics:
-        logger.info("\nWeight Statistics:")
-        logger.info(f"  • Mean Weight: {model.weight_statistics['mean']:.4f}")
-        logger.info(f"  • Full Weight (≥0.99): {model.weight_statistics['full_weight_pct']:.1f}%")
-        logger.info(f"  • Downweighted: {model.weight_statistics['downweighted_count']} observations")
+        model.logger.info(f"  Mean weight: {model.weight_statistics['mean']:.4f}")
+        model.logger.info(f"  Median weight: {model.weight_statistics['median']:.4f}")
+        model.logger.info(f"  Full weight (>=0.99): {model.weight_statistics['full_weight_pct']:.1f}%")
+        model.logger.info(f"  Downweighted: {model.weight_statistics['downweighted_count']} observations")
+        model.logger.info(f"  Downweighted %: {model.weight_statistics['downweighted_pct']:.1f}%")
     
-    logger.info("\nPerformance Metrics:")
-    if model.metrics:
-        logger.info(f"  • Training R²: {model.metrics.get('r2_train', 0):.4f}")
-        logger.info(f"  • Test R²: {model.metrics.get('r2_test', 0):.4f}")
-        logger.info(f"  • RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-        logger.info(f"  • MAE: ${model.metrics.get('mae_test', 0):,.2f}")
+    model.logger.info("")
+    model.logger.info("Data Utilization:")
+    model.logger.info(f"  Training samples: {model.metrics.get('training_samples', 0)}")
+    model.logger.info(f"  Test samples: {model.metrics.get('test_samples', 0)}")
+    model.logger.info("  Outliers removed: 0 (100% data retention)")
     
-    if cv_results:
-        logger.info(f"  • CV R² (10-fold): {cv_results['cv_r2_mean']:.4f} ± {cv_results['cv_r2_std']:.4f}")
+    model.logger.info("")
+    model.logger.info("Output:")
+    model.logger.info(f"  Results saved to: {model.output_dir}")
+    model.logger.info(f"  Diagnostic plots: {model.output_dir / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX commands: {model.output_dir / 'model_3_renewcommands.tex'}")
     
-    logger.info("\nConvergence:")
-    logger.info(f"  • Iterations: {model.convergence_info['n_iterations']}")
-    logger.info(f"  • Converged: {model.convergence_info['converged']}")
+    model.logger.info("")
+    model.logger.info("="*80)
+    model.logger.info("MODEL 3 PIPELINE COMPLETE")
+    model.logger.info("="*80)
     
-    logger.info("\nAdvantages over Model 1:")
-    logger.info("  • No consumer exclusion (100% vs 90.6% inclusion)")
-    logger.info("  • Transparent weight system for appeals")
-    logger.info("  • Robust to up to 50% contamination")
-    logger.info("  • Automated outlier handling")
-    
-    logger.info("")
-    logger.info("=" * 80)
-    logger.info("Model 3 pipeline complete!")
-    logger.info("=" * 80)
-    
-    return model
+    return results
 
 
 if __name__ == "__main__":

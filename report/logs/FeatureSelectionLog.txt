@@ -49,11 +49,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:10:35 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:10:39 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2025_continuous_spearman.png
 2025-10-09 20:10:39 - MODEL_99 - INFO - 
-2025-10-09 20:10:39 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:10:39 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:10:39 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:10:54 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2025_categorical_cramers_v.png
 2025-10-09 20:10:54 - MODEL_99 - INFO - 
-2025-10-09 20:10:54 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:10:54 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:10:54 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:10:59 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2025_mixed_correlation_ratio.png
 2025-10-09 20:10:59 - MODEL_99 - INFO - 
@@ -97,11 +97,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:13:34 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:13:37 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2024_continuous_spearman.png
 2025-10-09 20:13:37 - MODEL_99 - INFO - 
-2025-10-09 20:13:37 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:13:37 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:13:37 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:13:54 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2024_categorical_cramers_v.png
 2025-10-09 20:13:54 - MODEL_99 - INFO - 
-2025-10-09 20:13:54 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:13:54 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:13:54 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:13:59 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2024_mixed_correlation_ratio.png
 2025-10-09 20:13:59 - MODEL_99 - INFO - 
@@ -145,11 +145,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:16:30 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:16:34 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2023_continuous_spearman.png
 2025-10-09 20:16:34 - MODEL_99 - INFO - 
-2025-10-09 20:16:34 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:16:34 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:16:34 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:16:50 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2023_categorical_cramers_v.png
 2025-10-09 20:16:50 - MODEL_99 - INFO - 
-2025-10-09 20:16:50 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:16:50 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:16:50 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:16:55 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2023_mixed_correlation_ratio.png
 2025-10-09 20:16:55 - MODEL_99 - INFO - 
@@ -193,11 +193,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:19:25 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:19:29 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2022_continuous_spearman.png
 2025-10-09 20:19:29 - MODEL_99 - INFO - 
-2025-10-09 20:19:29 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:19:29 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:19:29 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:19:46 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2022_categorical_cramers_v.png
 2025-10-09 20:19:46 - MODEL_99 - INFO - 
-2025-10-09 20:19:46 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:19:46 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:19:46 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:19:51 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2022_mixed_correlation_ratio.png
 2025-10-09 20:19:51 - MODEL_99 - INFO - 
@@ -241,11 +241,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:22:05 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:22:09 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2021_continuous_spearman.png
 2025-10-09 20:22:09 - MODEL_99 - INFO - 
-2025-10-09 20:22:09 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:22:09 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:22:09 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:22:23 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2021_categorical_cramers_v.png
 2025-10-09 20:22:23 - MODEL_99 - INFO - 
-2025-10-09 20:22:23 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:22:23 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:22:23 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:22:28 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2021_mixed_correlation_ratio.png
 2025-10-09 20:22:28 - MODEL_99 - INFO - 
@@ -289,11 +289,11 @@ $R^2$2025-10-09 20:08:41 - MODEL_99 - INFO -
 2025-10-09 20:24:45 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:24:50 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2020_continuous_spearman.png
 2025-10-09 20:24:50 - MODEL_99 - INFO - 
-2025-10-09 20:24:50 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMÉR'S V)
+2025-10-09 20:24:50 - MODEL_99 - INFO - 3. CATEGORICAL ASSOCIATIONS (BIAS-CORRECTED CRAMER'S V)
 2025-10-09 20:24:50 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:25:03 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2020_categorical_cramers_v.png
 2025-10-09 20:25:03 - MODEL_99 - INFO - 
-2025-10-09 20:25:03 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO η)
+2025-10-09 20:25:03 - MODEL_99 - INFO - 4. MIXED-TYPE ASSOCIATIONS (CORRELATION RATIO eta)
 2025-10-09 20:25:03 - MODEL_99 - INFO - ----------------------------------------
 2025-10-09 20:25:08 - MODEL_99 - INFO - Saved plot: ..\report\figures\fy2020_mixed_correlation_ratio.png
 2025-10-09 20:25:08 - MODEL_99 - INFO - 
