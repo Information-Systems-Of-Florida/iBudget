@@ -8,25 +8,64 @@
 
 Model Validation is being completed by Juan,Daniel and Allison. This document serves to track this process as much as possible given the time constraints.
 
+\textbf{Feature Selection} 
+* 2.2: Analysis encompasses 6 fiscal years of data. Depending on when the end of the FY is, need to verify whether it truly is a full 6 years.
+*2.3.1: Exlusions seem reasonable, including those with zero variance since they would have no impact on the outcome--and is better than excluding just low variance. 
+    - MidYear QSI = 957 (0.5%)
+    - Late Entry = 43,102 (20.2%)
+    - Early Exit = 14,873 (7.0%)
+    - No Costs = 109 (0.1%)
+    - Negative Costs = 0 (0.0%)
+    - Insufficient Service = 81,901 (38.5%)
+    - No QSI = 128,791 (60.5%)
+- Need to double check that the min, max and mean number of records is correct
+
+
+Q: Do we need to include the cost requirement greater than 0 since no cases meet that definition?
+A: That weas filtered from data preparation for the cache. Look at sql transformation 14 0r 13
+
+* Cardinality is number of levels of each variable being considered. Need to check whether number is correct?
+
+
 \textbf{Model 1:} 
 TBD
+
+
 \textbf{Model 2:}
 TBD
+
+
 \textbf{Model 3:}
 TBD
+
+
 \textbf {Model 4:} 
 TBD
+
+
 \textbf{Model 5:} 
 TBD
+
+
 \textbf{Model 6:} 
 TBD
+
+
 \textbf{Model 7:}
 TBD
+
+
 \textbf{Model 8:} 
 TBD
+
+
 \textbf{Model 9:} 
 TBD
+
+
 \textbf{Model 10:} 
 TBD
+
+    `'
 
 \end{document}
