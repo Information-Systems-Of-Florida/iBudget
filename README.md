@@ -140,6 +140,25 @@ git push --force
 
 * Python 3.x
 * PyQt5 for GUI applications: `pip install PyQt5`
+* MatPlotLib 'pip install matplotlib==3.10.0'
+* MikTex, found at (https://miktex.org/download)
+*Install all required packages from terminal by navigating to the folder where the file is locatted and use"
+pip freeze > requirements.txt"
+
+* Set up virtual environment (VENV) 'python -m venv [name of your environment]' Using iBudget for this example
+* Download/Save 'ActivateEnv.txt' to folder for your project (ideally a local folder)
+* Convert the file to .bat
+* Run 'python -m venv iBudget'
+* ActivateEnv iBudget "cloned repository name"
+* Add requirements to PATH in the system enviornment variables. 
+
+
+## To Activate Enviornment for each session:
+* To activate VENV, call: '[Environment folder name]\Scripts\activate' -- each time you are working with the code
+* If numpy not recognized
+'python -m venv myenv
+[name of environment]\Scripts\activate
+pip install numpy'
 
 
 ### License
