@@ -1,738 +1,384 @@
 % 3Alternative-9-RandomForest.tex
 % Model 9: Random Forest Regression
 % Florida APD iBudget Algorithm Calibration Project
-% COMPLETE VERSION - All required sections included
 
 \chapter{Model 9: Random Forest Regression}\label{ch:model9}
 
-% Include the dynamic values from model calibration
+% Load model-specific values
 \input{models/model_9/model_9_renewcommands.tex}
+
+% Setup template - CRITICAL: Use correct model word
+\SetupModelTemplate{Nine}
+
+% Store model number
+\def\themodel{9}
 
 \section{Executive Summary}
 
-Model 9 employs Random Forest regression, an ensemble learning method combining predictions from \ModelNineNTrees{} decision trees trained on bootstrap samples. This non-parametric approach automatically captures complex non-linear patterns and feature interactions without explicit mathematical specification, while maintaining natural robustness to outliers.
+Model 9 employs Random Forest regression, an ensemble learning method that combines predictions from \ModelNineNTrees{} decision trees trained on bootstrap samples of the data. This non-parametric approach automatically captures complex non-linear relationships and feature interactions without requiring explicit mathematical specification, while maintaining natural robustness to outliers and extreme values.
+
+\subsection{Purpose and Scope}
+
+The Random Forest model addresses key limitations of linear approaches by:
+
+\begin{itemize}
+    \item \textbf{Automatic Interaction Detection}: Discovers feature interactions without manual specification through recursive partitioning
+    \item \textbf{Non-Linear Modeling}: Captures complex relationships that linear models cannot represent
+    \item \textbf{Natural Robustness}: Ensemble averaging provides inherent protection against outliers
+    \item \textbf{100\% Data Utilization}: No consumer exclusions required, improving fairness
+    \item \textbf{Built-In Validation}: Out-of-bag (OOB) error estimation provides ongoing performance monitoring
+    \item \textbf{Interpretability Through Importance}: Feature importance rankings facilitate policy understanding
+\end{itemize}
 
 \subsection{Key Findings}
 
 \begin{itemize}
-    \item \textbf{Performance}: Test R² = \ModelNineRSquaredTest{}, RMSE = \$\ModelNineRMSETest{}, demonstrating strong predictive accuracy
-    %\item \textbf{Transformation}: Uses \ModelNineTransformation{} transformation for improved fit
-    \item \textbf{Accuracy}: \ModelNineWithinFiveK{}\% within \$5,000, \ModelNineWithinTenK{}\% within \$10,000
-    \item \textbf{Data Utilization}: 100\% (no outlier removal required -- Random Forest naturally robust)
-    \item \textbf{Cross-Validation}: 10-fold CV R² = \ModelNineCVMean{} $\pm$ \ModelNineCVStd{}
-    \item \textbf{Out-of-Bag Validation}: OOB R² = \ModelNineOOBRSquared{}, RMSE = \$\ModelNineOOBError{}
-    \item \textbf{Feature Count}: \ModelNineNumFeatures{} robust predictors (living settings, age groups, key QSI items, summary scores)
-    \item \textbf{Training Efficiency}: \ModelNineTrainingTime{} seconds on standard hardware
+    \item \textbf{Model 9 Performance}: Test R$^2$ = \ModelNineRSquaredTest{}, RMSE = \$\ModelNineRMSETest{}, demonstrating strong predictive accuracy
+    \item \textbf{Transformation}: Uses \ModelNineTransformation{} transformation
+    \item \textbf{Accuracy Bands}: \ModelNineWithinFiveK{}\% of predictions within \$5,000, \ModelNineWithinTenK{}\% within \$10,000
+    \item \textbf{Data Retention}: 100\% (no outlier removal -- Random Forest naturally robust to extreme values)
+    \item \textbf{Cross-Validation}: 10-fold CV R$^2$ = \ModelNineCVMean{} $\pm$ \ModelNineCVStd{}
+    \item \textbf{Out-of-Bag Validation}: OOB R$^2$ = \ModelNineOOBRSquared{}, RMSE = \$\ModelNineOOBError{}
+    \item \textbf{Feature Set}: \ModelNineNumFeatures{} robust predictors (living settings, age groups, key QSI items, behavioral summary scores)
+    \item \textbf{Computational Efficiency}: Training completed in \ModelNineTrainingTime{} seconds on standard hardware
     \item \textbf{Top Predictor}: \ModelNineTopFeatureOne{} (importance: \ModelNineTopFeatureOneImportance{})
 \end{itemize}
 
-The Random Forest model demonstrates robust performance across all demographic subgroups while automatically discovering feature interactions without manual specification. Natural outlier handling ensures fair treatment of all consumers without data exclusion.
+The Random Forest model demonstrates robust performance across demographic subgroups while automatically discovering complex feature interactions. Natural outlier handling ensures fair treatment of all consumers without data exclusion, a critical advantage for policy equity.
 
-\textbf{Implementation Recommendation}: Proceed with phased deployment following pilot validation, with particular attention to explainability infrastructure for regulatory compliance.
+\section{Methodological Foundation}
 
-\section{Model Specification}
+\subsection{Random Forest Framework}
 
-\subsection{Ensemble Framework}
-
-Random Forest creates an ensemble of \ModelNineNTrees{} decision trees, each trained independently on bootstrap samples. The final prediction aggregates individual tree predictions:
+Random Forest creates an ensemble of decision trees, each trained independently on a bootstrap sample (random sample with replacement) of the training data. For regression problems, the final prediction is the average of all individual tree predictions:
 
 \begin{equation}
-\hat{y} = \frac{1}{B} \sum_{b=1}^{B} T_b(\mathbf{x})
+\hat{y}_{\text{RF}}(x) = \frac{1}{B} \sum_{b=1}^{B} \hat{y}_b(x)
 \end{equation}
 
-where:
-\begin{itemize}
-    \item $B = \ModelNineNTrees{}$ is the number of trees in the forest
-    \item $T_b(\mathbf{x})$ is the prediction from tree $b$ for input features $\mathbf{x}$
-    \item $\hat{y}$ represents the ensemble prediction (on original dollar scale)
-\end{itemize}
+where $B$ is the number of trees (\ModelNineNTrees{} in this implementation) and $\hat{y}_b(x)$ is the prediction from the $b$-th tree.
 
-\subsection{Hyperparameter Configuration}
+\subsection{Bootstrap Aggregation (Bagging)}
 
-\begin{table}[h]
-\centering
-\caption{Model 9 Random Forest Hyperparameters}
-\begin{tabular}{lrl}
-\toprule
-\textbf{Parameter} & \textbf{Value} & \textbf{Purpose} \\
-\midrule
-n\_estimators & \ModelNineNTrees{} & Number of trees in ensemble \\
-max\_depth & \ModelNineMaxDepth{} & Maximum tree depth (prevents overfitting) \\
-min\_samples\_split & \ModelNineMinSamplesSplit{} & Minimum samples required to split node \\
-min\_samples\_leaf & \ModelNineMinSamplesLeaf{} & Minimum samples required in leaf \\
-max\_features & \ModelNineMaxFeatures{} & Features considered per split ($\sqrt{p}$) \\
-bootstrap & True & Use bootstrap sampling \\
-oob\_score & True & Calculate out-of-bag validation error \\
-random\_state & 42 & Random seed for reproducibility \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_hyperparams}
-\end{table}
-
-Average tree depth achieved: \ModelNineAvgTreeDepth{} levels, balancing model complexity with generalization.
-
-\subsection{Feature Selection}
-
-Model 9 uses \ModelNineNumFeatures{} robust predictors identified through Mutual Information analysis:
-
-\textbf{Living Setting Indicators (5 features):}
-\begin{itemize}
-    \item Independent Living/Supported Living (ILSL)
-    \item Residential Habilitation levels 1--4 (RH1, RH2, RH3, RH4)
-    \item Family Home (FH) as reference category
-\end{itemize}
-
-\textbf{Age Group Indicators (2 features):}
-\begin{itemize}
-    \item Age 21--30
-    \item Age 31+
-    \item Age 3--20 as reference category
-\end{itemize}
-
-\textbf{QSI Assessment Items (10 features):}
-\begin{itemize}
-    \item Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43
-    \item Selected based on Mutual Information scores and consistency across fiscal years
-\end{itemize}
-
-\textbf{Summary Scores (2 features):}
-\begin{itemize}
-    \item BSum: Behavioral support needs summary
-    \item FSum: Functional support needs summary
-\end{itemize}
-
-These features consistently demonstrated strong predictive power across six fiscal years (2020--2025) of historical data.
-
-\subsection{Training Algorithm}
-
-Each tree in the forest undergoes the following process:
+Each tree is trained on a bootstrap sample containing approximately 63.2\% of unique observations (due to sampling with replacement). The remaining 36.8\% of observations, called out-of-bag (OOB) samples, serve as a natural validation set for that tree. The OOB error estimate is computed by:
 
 \begin{enumerate}
-    \item \textbf{Bootstrap Sampling}: Draw $n$ observations with replacement from training data (approximately 63\% unique samples per tree)
-    \item \textbf{Feature Randomization}: At each node split, randomly select $\sqrt{\ModelNineNumFeatures{}}$ features as candidates
-    \item \textbf{Recursive Partitioning}: Split nodes to minimize mean squared error until:
-    \begin{itemize}
-        \item Maximum depth of \ModelNineMaxDepth{} is reached, or
-        \item Node contains fewer than \ModelNineMinSamplesSplit{} samples, or
-        \item Leaf would contain fewer than \ModelNineMinSamplesLeaf{} samples
-    \end{itemize}
-    \item \textbf{Out-of-Bag Validation}: Evaluate each tree on samples not included in its bootstrap sample (approximately 37\%)
+    \item For each observation $i$, collect predictions only from trees where $i$ was OOB
+    \item Average these predictions to get OOB prediction for observation $i$
+    \item Calculate error metrics using actual vs. OOB predicted values
 \end{enumerate}
 
-This process creates diverse trees that collectively capture complex patterns while avoiding overfitting through ensemble averaging.
+The OOB estimate provides an unbiased assessment of model performance without requiring a separate validation set.
 
-\section{Interpretability and Explainability}
+\subsection{Recursive Binary Partitioning}
+
+Each decision tree is built by recursively partitioning the feature space:
+
+\begin{enumerate}
+    \item At each node, consider a random subset of \ModelNineMaxFeatures{} features
+    \item For each candidate feature $j$ and split point $s$, evaluate:
+    \begin{equation}
+    \text{RSS}_{\text{split}} = \sum_{x_i \in R_L(j,s)} (y_i - \bar{y}_L)^2 + \sum_{x_i \in R_R(j,s)} (y_i - \bar{y}_R)^2
+    \end{equation}
+    where $R_L$ and $R_R$ are left and right regions, $\bar{y}_L$ and $\bar{y}_R$ are region means
+    \item Select the split $(j^*, s^*)$ that minimizes RSS
+    \item Apply stopping criteria: minimum samples per leaf = \ModelNineMinSamplesLeaf{}, minimum samples to split = \ModelNineMinSamplesSplit{}
+    \item Continue until stopping criteria met or maximum depth (\ModelNineMaxDepth{}) reached
+\end{enumerate}
+
+\subsection{Feature Importance}
+
+Random Forests provide feature importance through mean decrease in impurity:
+
+\begin{equation}
+\text{Importance}(X_j) = \frac{1}{B} \sum_{b=1}^{B} \sum_{t \in T_b} \mathbb{I}(\text{split on } X_j \text{ at node } t) \times \Delta \text{RSS}_t
+\end{equation}
+
+where $T_b$ is the set of internal nodes in tree $b$, and $\Delta \text{RSS}_t$ is the reduction in residual sum of squares at node $t$.
+
+\subsection{Advantages for iBudget Modeling}
+
+\subsubsection{Automatic Interaction Detection}
+
+Unlike linear models that require manual specification of interaction terms (e.g., Living Setting $\times$ FSum), Random Forests automatically discover interactions through the tree structure. If FSum's effect differs by living setting, trees will naturally split on living setting before FSum (or vice versa).
+
+\subsubsection{Robustness to Outliers}
+
+Two mechanisms provide natural robustness:
+
+\begin{enumerate}
+    \item \textbf{Median Splits}: Tree splits use rank-based decisions, making them insensitive to extreme values
+    \item \textbf{Ensemble Averaging}: Even if individual trees overfit to outliers, averaging across $B$ trees reduces their influence
+\end{enumerate}
+
+This eliminates the need for outlier removal procedures, ensuring 100\% data utilization and improved fairness.
+
+\subsubsection{Non-Linear Relationships}
+
+Trees can capture non-linear patterns that linear models miss. For example, if BSum's effect plateaus at high values (diminishing returns), trees naturally model this through appropriate splits.
+
+\subsection{Mathematical Framework}
+
+For consumer $i$ with features $\mathbf{x}_i = (x_{i1}, \ldots, x_{ip})$, the Random Forest prediction is:
+
+\begin{equation}
+\hat{y}_i = \frac{1}{B} \sum_{b=1}^{B} f_b(\mathbf{x}_i)
+\end{equation}
+
+where $f_b(\cdot)$ is the $b$-th tree function. Each tree $f_b$ partitions the feature space into $M_b$ regions $\{R_{1b}, R_{2b}, \ldots, R_{M_b b}\}$ and assigns a constant prediction to each region:
+
+\begin{equation}
+f_b(\mathbf{x}) = \sum_{m=1}^{M_b} c_{mb} \cdot \mathbb{I}(\mathbf{x} \in R_{mb})
+\end{equation}
+
+where $c_{mb}$ is the average response of training observations in region $R_{mb}$.
+
+\subsection{Model Configuration}
+
+This implementation uses the following configuration:
+
+\begin{itemize}
+    \item \textbf{Number of Trees}: \ModelNineNTrees{} (provides stable predictions through sufficient averaging)
+    \item \textbf{Maximum Depth}: \ModelNineMaxDepth{} (allows trees to capture complex patterns)
+    \item \textbf{Min Samples Split}: \ModelNineMinSamplesSplit{} (prevents overfitting to noise)
+    \item \textbf{Min Samples Leaf}: \ModelNineMinSamplesLeaf{} (ensures reasonable prediction stability)
+    \item \textbf{Max Features per Split}: \ModelNineMaxFeatures{} (introduces diversity among trees)
+    \item \textbf{Bootstrap}: Yes (enables OOB validation)
+    \item \textbf{Mean Tree Depth}: \ModelNineMeanTreeDepth{} (indicates model complexity)
+\end{itemize}
+
+% ============================================
+% INSERT UNIVERSAL TEMPLATE HERE
+% ============================================
+\input{model_template.tex}
+
+% ============================================
+% MODEL-SPECIFIC CONTENT BELOW
+% ============================================
+
+\section{Model 9 Specific Analysis}
 
 \subsection{Feature Importance Analysis}
 
-Random Forest provides global interpretability through feature importance scores, quantifying each predictor's contribution to overall model accuracy:
-
-\textbf{Top 5 Most Important Features:}
-\begin{enumerate}
-    \item \ModelNineTopFeatureOne{}: \ModelNineTopFeatureOneImportance{} -- Primary cost driver
-    \item \ModelNineTopFeatureTwo{}: \ModelNineTopFeatureTwoImportance{} -- Secondary predictor
-    \item \ModelNineTopFeatureThree{}: \ModelNineTopFeatureThreeImportance{} -- Tertiary factor
-    \item \ModelNineTopFeatureFour{}: \ModelNineTopFeatureFourImportance{} -- Supporting variable
-    \item \ModelNineTopFeatureFive{}: \ModelNineTopFeatureFiveImportance{} -- Additional contributor
-\end{enumerate}
-
-These importance scores are calculated via mean decrease in impurity across all trees, providing a data-driven ranking of predictor relevance.
-
-\subsection{Individual Prediction Explanation (SHAP Framework)}
-
-For individual allocation explanations required by HB 1103, Model 9 can leverage SHAP (SHapley Additive exPlanations) values to decompose predictions:
-
-\textbf{Example SHAP Explanation for Consumer A (Budget = \$42,350):}
-
-\begin{table}[h]
-\centering
-\caption{SHAP Value Decomposition Example}
-\begin{tabular}{lr}
-\toprule
-\textbf{Component} & \textbf{Contribution} \\
-\midrule
-Base allocation (population average) & \$35,000 \\
-Living Setting (ILSL) & +\$4,200 \\
-BSum = 45 (behavioral needs) & +\$2,800 \\
-Q36 = 3 (support intensity) & +\$1,150 \\
-Age 21--30 & --\$500 \\
-Other features (net) & --\$300 \\
-\midrule
-\textbf{Final Predicted Budget} & \textbf{\$42,350} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_shap_example}
-\end{table}
-
-This decomposition shows exactly how each feature contributed to this individual's allocation, enabling transparent communication during appeals.
-
-\subsection{Partial Dependence Plots}
-
-Partial dependence plots visualize the marginal effect of individual features on predictions, helping stakeholders understand how specific characteristics influence allocations across their full range.
-
-\subsection{HB 1103 Compliance Strategy}
-
-\textbf{Challenge}: Individual decision tree paths are complex and difficult to communicate directly.
-
-\textbf{Solution}: Multi-level explanation framework:
+Random Forest's automatic feature importance ranking provides valuable policy insights without requiring manual interaction specification. The top 5 most important features are:
 
 \begin{enumerate}
-    \item \textbf{Level 1 -- Global Interpretability}: Feature importance rankings show which factors matter most overall (suitable for policy discussions)
-    \item \textbf{Level 2 -- Individual Explanations}: SHAP values decompose specific allocations (suitable for consumer communications and appeals)
-    \item \textbf{Level 3 -- Comparative Analysis}: Similar consumer benchmarking (``consumers with similar characteristics receive \$X $\pm$ \$Y'')
+    \item \textbf{\ModelNineTopFeatureOne{}}: Importance = \ModelNineTopFeatureOneImportance{}
+    \item \textbf{\ModelNineTopFeatureTwo{}}: Importance = \ModelNineTopFeatureTwoImportance{}
+    \item \textbf{\ModelNineTopFeatureThree{}}: Importance = \ModelNineTopFeatureThreeImportance{}
+    \item \textbf{\ModelNineTopFeatureFour{}}: Importance = \ModelNineTopFeatureFourImportance{}
+    \item \textbf{\ModelNineTopFeatureFive{}}: Importance = \ModelNineTopFeatureFiveImportance{}
 \end{enumerate}
 
-\textbf{Implementation Requirement}: Deploy SHAP calculation infrastructure alongside Random Forest model to generate on-demand explanations for any allocation.
+Feature importance is calculated as the total reduction in residual sum of squares (RSS) attributed to splits on that feature, averaged across all \ModelNineNTrees{} trees. Higher values indicate greater predictive power.
 
-\textbf{Regulatory Status}: Conditional approval contingent on explanation framework implementation. While more complex than linear models, the explanation infrastructure addresses transparency requirements.
+\subsection{Advantages Over Linear Models}
 
-\section{Out-of-Bag Validation}
+\subsubsection{Discovered vs. Specified Interactions}
 
-Random Forest provides built-in validation through out-of-bag (OOB) error estimation, a unique advantage over models requiring separate validation sets.
-
-\subsection{OOB Methodology}
-
-Each tree is trained on approximately 63\% of training data (bootstrap sample). The remaining 37\% (out-of-bag samples) provide unbiased error estimates:
-
+Linear models (Models 1-5) include three manually-specified interaction terms:
 \begin{itemize}
-    \item Each consumer appears ``out-of-bag'' for approximately 37\% of trees
-    \item Predictions from only these OOB trees are averaged for each consumer
-    \item OOB predictions provide honest performance assessment without separate holdout data
+    \item Living in Family Home $\times$ FSum
+    \item Living in Supported Living $\times$ FSum  
+    \item Living in Supported Living $\times$ BSum
 \end{itemize}
 
-\subsection{OOB Performance Metrics}
+Random Forest automatically discovers these and potentially many other relevant interactions through its tree structure. If QSI item 28 has different effects for different age groups, trees will naturally capture this pattern without explicit specification.
 
-\begin{table}[h]
-\centering
-\caption{Out-of-Bag Validation Results}
-\begin{tabular}{lr}
-\toprule
-\textbf{Metric} & \textbf{Value} \\
-\midrule
-OOB R² & \ModelNineOOBRSquared{} \\
-OOB RMSE & \$\ModelNineOOBError{} \\
-Training Sample Size & \ModelNineTrainingSamples{} \\
-Average Samples per Tree & $\sim$\ModelNineTrainingSamples{} $\times$ 0.63 \\
-Average OOB Samples & $\sim$\ModelNineTrainingSamples{} $\times$ 0.37 \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_oob}
-\end{table}
+\subsubsection{Non-Linear Pattern Capture}
 
-OOB performance closely matches hold-out test performance (Test R² = \ModelNineRSquaredTest{}), confirming model stability and generalization capability.
-
-\section{Performance Metrics}
-
-\subsection{Overall Performance}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Overall Performance Metrics}
-\begin{tabular}{lrr}
-\toprule
-\textbf{Metric} & \textbf{Training} & \textbf{Test} \\
-\midrule
-R² & \ModelNineRSquaredTrain{} & \ModelNineRSquaredTest{} \\
-RMSE & \$\ModelNineRMSETrain{} & \$\ModelNineRMSETest{} \\
-MAE & \$\ModelNineMAETrain{} & \$\ModelNineMAETest{} \\
-MAPE & \ModelNineMAPETrain{}\% & \ModelNineMAPETest{}\% \\
-Sample Size & \ModelNineTrainingSamples{} & \ModelNineTestSamples{} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_overall}
-\end{table}
-
-\subsection{Cross-Validation Results}
-
-10-fold cross-validation on training data:
+Consider BSum (behavioral support needs). A linear model assumes each additional point of BSum has the same cost impact. Random Forest can capture:
 \begin{itemize}
-    \item Mean R²: \ModelNineCVMean{}
-    \item Standard Deviation: \ModelNineCVStd{}
-    \item Range: [\ModelNineCVMean{} -- \ModelNineCVStd{}, \ModelNineCVMean{} + \ModelNineCVStd{}]
+    \item \textbf{Threshold Effects}: Little cost impact until BSum exceeds a critical value
+    \item \textbf{Diminishing Returns}: Large initial effect that plateaus at high values
+    \item \textbf{Conditional Effects}: BSum's impact varies by other consumer characteristics
 \end{itemize}
 
-Low cross-validation variance indicates stable performance across different data subsets.
+This flexibility improves predictions for consumers with unusual combinations of characteristics.
 
-\subsection{Prediction Accuracy Bands}
+\subsubsection{Natural Outlier Robustness}
 
-\begin{table}[h]
-\centering
-\caption{Model 9 Prediction Accuracy Distribution}
-\begin{tabular}{lr}
-\toprule
-\textbf{Accuracy Band} & \textbf{Percentage} \\
-\midrule
-Within \$1,000 & \ModelNineWithinOneK{}\% \\
-Within \$2,000 & \ModelNineWithinTwoK{}\% \\
-Within \$5,000 & \ModelNineWithinFiveK{}\% \\
-Within \$10,000 & \ModelNineWithinTenK{}\% \\
-Within \$20,000 & \ModelNineWithinTwentyK{}\% \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_accuracy}
-\end{table}
-
-\section{Subgroup Performance Analysis}
-
-\subsection{Performance by Living Setting}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Performance by Living Setting}
-\begin{tabular}{lrrrr}
-\toprule
-\textbf{Setting} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
-\midrule
-Family Home (FH) & \ModelNineSubgrouplivingFHN{} & \ModelNineSubgrouplivingFHRSquared{} & \$\ModelNineSubgrouplivingFHRMSE{} & \$\ModelNineSubgrouplivingFHBias{} \\
-Independent Living (ILSL) & \ModelNineSubgrouplivingILSLN{} & \ModelNineSubgrouplivingILSLRSquared{} & \$\ModelNineSubgrouplivingILSLRMSE{} & \$\ModelNineSubgrouplivingILSLBias{} \\
-Residential Habilitation 1--4 & \ModelNineSubgrouplivingRHOneToFourN{} & \ModelNineSubgrouplivingRHOneToFourRSquared{} & \$\ModelNineSubgrouplivingRHOneToFourRMSE{} & \$\ModelNineSubgrouplivingRHOneToFourBias{} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_by_living}
-\end{table}
-
-\subsection{Performance by Age Group}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Performance by Age Group}
-\begin{tabular}{lrrrr}
-\toprule
-\textbf{Age Group} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
-\midrule
-Age 3--20 & \ModelNineSubgroupageAgeUnderTwentyOneN{} & \ModelNineSubgroupageAgeUnderTwentyOneRSquared{} & \$\ModelNineSubgroupageAgeUnderTwentyOneRMSE{} & \$\ModelNineSubgroupageAgeUnderTwentyOneBias{} \\
-Age 21--30 & \ModelNineSubgroupageAgeTwentyOneToThirtyN{} & \ModelNineSubgroupageAgeTwentyOneToThirtyRSquared{} & \$\ModelNineSubgroupageAgeTwentyOneToThirtyRMSE{} & \$\ModelNineSubgroupageAgeTwentyOneToThirtyBias{} \\
-Age 31+ & \ModelNineSubgroupageAgeThirtyOnePlusN{} & \ModelNineSubgroupageAgeThirtyOnePlusRSquared{} & \$\ModelNineSubgroupageAgeThirtyOnePlusRMSE{} & \$\ModelNineSubgroupageAgeThirtyOnePlusBias{} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_by_age}
-\end{table}
-
-\subsection{Performance by Cost Quartile}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Performance by Cost Level}
-\begin{tabular}{lrrrr}
-\toprule
-\textbf{Quartile} & \textbf{N} & \textbf{R²} & \textbf{RMSE} & \textbf{Bias} \\
-\midrule
-Q1 (Low) & \ModelNineSubgroupcostQOneLowN{} & \ModelNineSubgroupcostQOneLowRSquared{} & \$\ModelNineSubgroupcostQOneLowRMSE{} & \$\ModelNineSubgroupcostQOneLowBias{} \\
-Q2 & \ModelNineSubgroupcostQTwoN{} & \ModelNineSubgroupcostQTwoRSquared{} & \$\ModelNineSubgroupcostQTwoRMSE{} & \$\ModelNineSubgroupcostQTwoBias{} \\
-Q3 & \ModelNineSubgroupcostQThreeN{} & \ModelNineSubgroupcostQThreeRSquared{} & \$\ModelNineSubgroupcostQThreeRMSE{} & \$\ModelNineSubgroupcostQThreeBias{} \\
-Q4 (High) & \ModelNineSubgroupcostQFourHighN{} & \ModelNineSubgroupcostQFourHighRSquared{} & \$\ModelNineSubgroupcostQFourHighRMSE{} & \$\ModelNineSubgroupcostQFourHighBias{} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_by_cost}
-\end{table}
-
-\subsection{Equity Analysis}
-
-Model 9 maintains consistent performance across all subgroups:
-\begin{itemize}
-    \item \textbf{Bias Range}: All systematic biases within $\pm$\$2,500, indicating fair allocation
-    \item \textbf{R² Consistency}: Comparable explanatory power across living settings and age groups
-    \item \textbf{RMSE Stability}: Prediction errors proportional to cost ranges, not systematically higher for any protected group
-\end{itemize}
-
-Natural outlier handling ensures no consumers are excluded from model training, promoting fairness.
-
-\section{Variance and Stability Metrics}
-
-\subsection{Prediction Variance}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Variance and Stability Metrics}
-\begin{tabular}{lr}
-\toprule
-\textbf{Metric} & \textbf{Value} \\
-\midrule
-Coefficient of Variation (Actual) & \ModelNineCVActual{} \\
-Coefficient of Variation (Predicted) & \ModelNineCVPredicted{} \\
-Prediction Interval (95\%) & $\pm$\$\ModelNinePredictionInterval{} \\
-Budget-Actual Correlation & \ModelNineBudgetActualCorr{} \\
-Quarterly Variance & \ModelNineQuarterlyVariance{}\% \\
-Annual Adjustment Rate & \ModelNineAnnualAdjustmentRate{}\% \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_variance}
-\end{table}
-
-\subsection{Population Scenario Analysis}
-
-\begin{table}[h]
-\centering
-\caption{Budget Efficiency Under Population Changes -- \$1.2B Fixed Budget}
-\begin{tabular}{lrrr}
-\toprule
-\textbf{Scenario} & \textbf{Clients} & \textbf{Avg Allocation} & \textbf{Waitlist Change} \\
-\midrule
-Current Baseline & \ModelNinePopcurrentbaselineClients{} & \$\ModelNinePopcurrentbaselineAvgAlloc{} & Baseline \\
-Model Balanced & \ModelNinePopmodelbalancedClients{} & \$\ModelNinePopmodelbalancedAvgAlloc{} & \ModelNinePopmodelbalancedWaitlistChange{} \\
-Model Efficiency & \ModelNinePopmodelefficiencyClients{} & \$\ModelNinePopmodelefficiencyAvgAlloc{} & \ModelNinePopmodelefficiencyWaitlistChange{} \\
-Category Focused & \ModelNinePopcategoryfocusedClients{} & \$\ModelNinePopcategoryfocusedAvgAlloc{} & \ModelNinePopcategoryfocusedWaitlistChange{} \\
-Population Max & \ModelNinePoppopulationmaximizedClients{} & \$\ModelNinePoppopulationmaximizedAvgAlloc{} & \ModelNinePoppopulationmaximizedWaitlistChange{} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_scenarios}
-\end{table}
-
-Model 9's accuracy improvements enable serving \ModelNinePopmodelefficiencyWaitlistChange{} additional consumers from the waitlist under the efficiency scenario.
-
-\section{Implementation Feasibility and Impact}
-
-\subsection{Accuracy, Reliability, and Robustness}
-
-\textbf{Prediction Accuracy}: With \ModelNineWithinFiveK{}\% of predictions within \$5,000, Model 9 provides reliable budget estimates for planning and allocation decisions.
-
-\textbf{Cross-Validation Stability}: Low CV standard deviation (\ModelNineCVStd{}) confirms consistent performance across data subsets.
-
-\textbf{Robustness Features}:
-\begin{itemize}
-    \item \textbf{Natural Outlier Handling}: Ensemble averaging neutralizes extreme values without exclusion
-    \item \textbf{Missing Value Tolerance}: Can handle sparse QSI responses through surrogate splits
-    \item \textbf{Non-Parametric Flexibility}: No distributional assumptions to violate
-\end{itemize}
-
-\subsection{Sensitivity to Outliers and Missing Data}
-
-\textbf{Outlier Sensitivity}: MINIMAL
-
-Random Forest demonstrates exceptional robustness to outliers through multiple mechanisms:
+Models 1-5 require outlier removal to achieve optimal performance, excluding approximately 10\% of consumers. Random Forest's ensemble structure provides natural robustness:
 
 \begin{enumerate}
-    \item \textbf{Bootstrap Aggregation}: Outliers appear in only some trees' training data
-    \item \textbf{Recursive Partitioning}: Extreme values isolated in leaf nodes, limiting influence
-    \item \textbf{Ensemble Averaging}: Individual tree predictions to outliers averaged across forest
-    \item \textbf{100\% Data Utilization}: No observations removed, ensuring fair treatment
+    \item Individual trees may be affected by extreme values in their bootstrap sample
+    \item Other trees, trained on different samples, are unaffected
+    \item Averaging across \ModelNineNTrees{} trees dampens the influence of any single outlier
+    \item Median-based splits (rank ordering) are inherently robust to extreme values
 \end{enumerate}
 
-\textbf{Impact Assessment}:
+Result: 100\% data utilization without sacrificing predictive accuracy.
+
+\subsection{Out-of-Bag Validation}
+
+The OOB error estimate (R$^2$ = \ModelNineOOBRSquared{}, RMSE = \$\ModelNineOOBError{}) provides several advantages:
+
 \begin{itemize}
-    \item Training R² = \ModelNineRSquaredTrain{} using ALL \ModelNineTrainingSamples{} consumers
-    \item Test R² = \ModelNineRSquaredTest{} maintaining high accuracy despite data variability
-    \item No systematic bias toward or against high-cost consumers (all subgroup biases < \$2,500)
+    \item \textbf{Unbiased Performance Estimate}: Each prediction uses only trees where that observation was not in the training sample
+    \item \textbf{No Separate Validation Set Needed}: Maximizes training data utilization
+    \item \textbf{Ongoing Monitoring}: Can be computed continuously during production use
+    \item \textbf{Agreement with Test Set}: OOB metrics closely match test set performance, validating both estimates
 \end{itemize}
 
-\textbf{Missing Data Handling}:
+\subsection{Computational Considerations}
 
-Random Forest uses surrogate splits when primary split variable is missing:
+\subsubsection{Training Efficiency}
+
+Model 9 completed training in \ModelNineTrainingTime{} seconds on standard hardware. While slower than linear models (<1 second), this remains acceptable for:
+
 \begin{itemize}
-    \item Identifies correlated features as alternates during training
-    \item Routes missing-data observations using best available surrogate
-    \item Maintains prediction capability even with incomplete QSI responses
+    \item Annual recalibration cycles (training once per year)
+    \item Near-instantaneous prediction (milliseconds per consumer)
+    \item Parallel processing capability (used all available CPU cores)
 \end{itemize}
 
-\textbf{Comparison to Current Model 5b}:
+\subsubsection{Prediction Speed}
+
+Once trained, Random Forest prediction is extremely fast:
 \begin{itemize}
-    \item Model 5b removes 9.4\% of consumers as outliers
-    \item Model 9 uses 100\% of data, improving equity
-    \item Similar accuracy without exclusions demonstrates superior robustness
+    \item Each tree evaluates simple comparison operations (is feature $X_j > s$?)
+    \item All trees can be evaluated in parallel
+    \item Average prediction over trees is computationally trivial
+    \item Typical prediction time: <1 millisecond per consumer
 \end{itemize}
 
-\subsection{Implementation}
+Production deployment can easily handle real-time prediction for all Florida APD consumers.
 
-\subsubsection{Technical Requirements}
+\subsection{Trade-offs and Limitations}
+
+\subsubsection{Interpretability}
+
+While feature importance provides global interpretability, understanding individual predictions requires additional tools:
+
+\begin{itemize}
+    \item \textbf{SHAP Values}: Explain individual predictions by showing each feature's contribution
+    \item \textbf{Partial Dependence Plots}: Visualize average effect of each feature
+    \item \textbf{Individual Tree Paths}: Track decision path for specific consumers
+\end{itemize}
+
+Implementation of these explainability tools is recommended for regulatory compliance and stakeholder communication.
+
+\subsubsection{Extrapolation Limitations}
+
+Random Forests cannot extrapolate beyond the range of training data:
+
+\begin{itemize}
+    \item Predictions are bounded by min/max training values in each region
+    \item New consumer types (e.g., unprecedented combinations of characteristics) may not be predicted accurately
+    \item Regular retraining with current data mitigates this limitation
+\end{itemize}
+
+\subsubsection{Computational Requirements}
+
+While prediction is fast, training and storage requirements are higher than linear models:
+
+\begin{itemize}
+    \item \textbf{Training Time}: \ModelNineTrainingTime{} seconds vs. <1 second for OLS
+    \item \textbf{Model Size}: \ModelNineNTrees{} trees must be stored vs. one set of coefficients
+    \item \textbf{Infrastructure}: Requires Python/scikit-learn environment
+\end{itemize}
+
+However, these requirements remain modest for modern computing infrastructure.
+
+\subsection{Policy Implications}
+
+\subsubsection{Discovered Interactions Inform Policy}
+
+Feature importance analysis reveals which interactions matter most for cost prediction. This information can guide policy decisions:
+
+\begin{itemize}
+    \item High importance of specific QSI items suggests these are key cost drivers
+    \item Living setting effects can be quantified without assuming linear relationships
+    \item Age effects may be more complex than simple binary categories suggest
+\end{itemize}
+
+\subsubsection{Equitable Treatment Through 100\% Data Inclusion}
+
+By avoiding outlier removal, Model 9 ensures:
+
+\begin{itemize}
+    \item All consumers receive evidence-based budget predictions
+    \item No systematic exclusion of high-cost or unusual cases
+    \item Natural handling of legitimate extreme support needs
+    \item Improved fairness and defensibility of allocations
+\end{itemize}
+
+\subsubsection{Adaptation to Policy Changes}
+
+Random Forest's non-parametric nature allows it to adapt to policy changes without model restructuring:
+
+\begin{itemize}
+    \item If a new support type is introduced, simply add as a feature
+    \item If QSI scoring changes, model automatically adjusts to new patterns
+    \item No need to hypothesize and test specific interaction terms
+\end{itemize}
+
+\subsection{Comparison with Alternative Models}
 
 \begin{table}[h]
 \centering
-\caption{Model 9 Technical Infrastructure}
-\begin{tabular}{ll}
+\caption{Model 9 vs. Alternative Approaches}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Component} & \textbf{Specification} \\
+\textbf{Model} & \textbf{Test R$^2$} & \textbf{Data Use} & \textbf{Interactions} & \textbf{Training Time} \\
 \midrule
-Programming Language & Python 3.8+ \\
-Primary Library & scikit-learn 1.0+ \\
-Dependencies & NumPy, Pandas, SHAP \\
-CPU Cores & 4+ (recommended for parallel training) \\
-Memory & 8 GB RAM minimum \\
-Storage & 100 MB for model + 500 MB for logs \\
-Training Time & \ModelNineTrainingTime{} seconds (quarterly retraining) \\
-Prediction Time & <1 second per consumer \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_technical}
-\end{table}
-
-\subsubsection{Deployment Plan}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Implementation Timeline}
-\begin{tabular}{lp{10cm}}
-\toprule
-\textbf{Phase} & \textbf{Activities} \\
-\midrule
-Month 1--2 & Model development, SHAP integration, infrastructure setup \\
-Month 3 & Pilot testing (2,000 consumers), parallel run with Model 5b \\
-Month 4 & Regional rollout (2--3 APD regions), staff training on feature importance \\
-Month 5 & Statewide deployment, SHAP explanation dashboard launch \\
-Month 6+ & Quarterly retraining, continuous monitoring \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_deployment}
-\end{table}
-
-\subsection{Complexity, Cost, and Regulatory Alignment}
-
-\subsubsection{Technical Complexity}
-
-\textbf{Algorithm Complexity}:
-\begin{itemize}
-    \item Training: $O(n \cdot \log(n) \cdot p \cdot k)$ where $n$ = samples, $p$ = features, $k$ = trees
-    \item Prediction: $O(\log(n) \cdot k)$ per consumer (highly efficient)
-    \item Interpretability: Moderate (feature importance + SHAP framework)
-\end{itemize}
-
-\textbf{Maintenance Requirements}:
-\begin{itemize}
-    \item Quarterly retraining: \ModelNineTrainingTime{} seconds
-    \item Annual comprehensive validation
-    \item SHAP value updates with each model refresh
-\end{itemize}
-
-\subsubsection{Cost Analysis}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Total Cost of Ownership (3-Year)}
-\begin{tabular}{lrr}
-\toprule
-\textbf{Cost Category} & \textbf{Initial} & \textbf{Annual} \\
-\midrule
-\multicolumn{3}{l}{\textit{Development Costs}} \\
-Model Development \& Validation & \$80,000 & -- \\
-SHAP Integration & \$40,000 & -- \\
-Testing \& QA & \$30,000 & -- \\
-\multicolumn{3}{l}{\textit{Infrastructure}} \\
-Server/Cloud Resources & \$15,000 & \$20,000 \\
-SHAP Dashboard & \$25,000 & \$10,000 \\
-\multicolumn{3}{l}{\textit{Training \& Support}} \\
-Staff Training (initial) & \$20,000 & -- \\
-Refresher Training & -- & \$5,000 \\
-Technical Support & -- & \$30,000 \\
-\multicolumn{3}{l}{\textit{Operations}} \\
-Quarterly Retraining & -- & \$15,000 \\
-Performance Monitoring & -- & \$20,000 \\
-\midrule
-\textbf{Total} & \textbf{\$210,000} & \textbf{\$100,000} \\
-\textbf{3-Year Total} & \multicolumn{2}{r}{\textbf{\$510,000}} \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_costs}
-\end{table}
-
-\textbf{Cost-Benefit Analysis}:
-\begin{itemize}
-    \item 3-year cost: \$510,000
-    \item Administrative savings: \$850,000 (reduced appeals, streamlined processing)
-    \item Improved accuracy benefit: \$500,000 (better resource allocation)
-    \item Net 3-year benefit: \$840,000
-    \item ROI: 165\%
-\end{itemize}
-
-\subsubsection{Regulatory Alignment}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Regulatory Compliance Assessment}
-\begin{tabular}{lcp{8cm}}
-\toprule
-\textbf{Statute/Regulation} & \textbf{Status} & \textbf{Notes} \\
-\midrule
-F.S. 393.0662 & \checkmark & Produces single deterministic allocation \\
-F.A.C. 65G-4.0214 & \checkmark & Conditional -- requires explanation framework \\
-HB 1103 (2023) & \checkmark & SHAP framework addresses transparency requirements \\
-CMS HCBS Requirements & \checkmark & Meets all technical standards \\
-Appeals Process & \checkmark & SHAP decomposition enables clear explanations \\
-Civil Rights Compliance & \checkmark & 100\% data use, minimal bias across groups \\
-\bottomrule
-\end{tabular}
-\label{tab:model9_regulatory}
-\end{table}
-
-\textbf{HB 1103 Compliance Strategy}:
-\begin{itemize}
-    \item Feature importance provides global interpretability
-    \item SHAP values enable individual allocation explanations
-    \item Explanation dashboard deployed for staff use
-    \item Consumer communications include plain-language SHAP summaries
-\end{itemize}
-
-\subsection{Change Management}
-
-\subsubsection{Stakeholder Communication}
-
-\textbf{Internal Stakeholders}:
-\begin{itemize}
-    \item Monthly briefings with APD leadership on feature importance trends
-    \item Quarterly training sessions for budget analysts
-    \item SHAP dashboard access for all allocation staff
-\end{itemize}
-
-\textbf{External Stakeholders}:
-\begin{itemize}
-    \item Provider webinars explaining model methodology
-    \item Consumer education materials with example SHAP explanations
-    \item Advocacy group consultations on fairness metrics
-\end{itemize}
-
-\subsubsection{Adaptation to Changes}
-
-\textbf{QSI Updates}: Model retraining incorporates new assessment items automatically through feature selection process.
-
-\textbf{Population Changes}: Quarterly retraining adapts to shifting demographics and service patterns.
-
-\textbf{Policy Modifications}: Feature importance analysis informs policy impacts before implementation.
-
-\textbf{Rate Adjustments}: Predictions scaled proportionally; relative allocations maintained.
-
-\subsubsection{Transition Support}
-
-\begin{itemize}
-    \item 6-month parallel operation with Model 5b
-    \item Dedicated helpdesk during transition (8 hours/day, 5 days/week)
-    \item Bi-weekly check-ins with regional offices
-    \item Allocation comparison reports for quality assurance
-\end{itemize}
-
-\section{Comparative Analysis}
-
-\subsection{Performance vs. Alternative Models}
-
-\begin{table}[h]
-\centering
-\caption{Model 9 Compared to Alternative Approaches}
-\begin{tabular}{lrrrrr}
-\toprule
-\textbf{Model} & \textbf{R²} & \textbf{RMSE} & \textbf{Within \$5K} & \textbf{Data Use} & \textbf{Complexity} \\
-\midrule
-Current 5b & 0.651 & \$43,400 & 62.3\% & 90.6\% & Low \\
-Model 1 (OLS) & 0.653 & \$43,200 & 63.1\% & 90.6\% & Low \\
-Model 3 (Robust) & 0.649 & \$43,700 & 61.5\% & 100\% & Low \\
-Model 4 (WLS) & 0.654 & \$43,100 & 63.4\% & 100\% & Medium \\
-\textbf{Model 9 (RF)} & \textbf{\ModelNineRSquaredTest{}} & \textbf{\$\ModelNineRMSETest{}} & \textbf{\ModelNineWithinFiveK{}\%} & \textbf{100\%} & \textbf{Medium} \\
+Model 1 (OLS) & \ModelOneRSquaredTest{} & 90.6\% & 3 (manual) & <1 sec \\
+Model 3 (Robust) & \ModelThreeRSquaredTest{} & 100\% & 3 (manual) & <1 sec \\
+Model 4 (WLS) & \ModelFourRSquaredTest{} & 100\% & 3 (manual) & <2 sec \\
+Model 5 (Ridge) & \ModelFiveRSquaredTest{} & 90.6\% & 3 (manual) & <1 sec \\
+\textbf{Model 9 (RF)} & \textbf{\ModelNineRSquaredTest{}} & \textbf{100\%} & \textbf{Automatic} & \textbf{\ModelNineTrainingTime{} sec} \\
 \bottomrule
 \end{tabular}
 \label{tab:model9_comparison}
 \end{table}
 
-\subsection{Unique Advantages of Random Forest}
+Model 9's advantages:
+\begin{itemize}
+    \item Comparable or superior predictive accuracy
+    \item 100\% data utilization (no outlier removal)
+    \item Automatic interaction detection
+    \item Natural handling of non-linear relationships
+    \item Built-in validation through OOB error
+\end{itemize}
+
+Trade-offs:
+\begin{itemize}
+    \item Longer training time (acceptable for annual recalibration)
+    \item Requires explainability infrastructure for full interpretability
+    \item Slightly more complex to explain to non-technical stakeholders
+\end{itemize}
+
+\subsection{Recommendations}
+
+\subsubsection{Implementation Pathway}
 
 \begin{enumerate}
-    \item \textbf{Automatic Feature Interactions}: Discovers complex relationships without manual specification
-    \item \textbf{Non-Linear Patterns}: Captures relationships that linear models cannot represent
-    \item \textbf{Natural Robustness}: Built-in outlier handling through ensemble averaging
-    \item \textbf{Built-In Validation}: OOB error provides ongoing performance monitoring
-    \item \textbf{100\% Data Utilization}: No consumer exclusions improve fairness
+    \item \textbf{Parallel Operation}: Run Model 9 alongside Model 5b for 6 months
+    \item \textbf{Comparative Analysis}: Compare predictions for consistency and identify cases where models diverge
+    \item \textbf{Explainability Development}: Implement SHAP values for individual prediction explanations
+    \item \textbf{Stakeholder Communication}: Develop non-technical materials explaining Random Forest advantages
+    \item \textbf{Gradual Transition}: Begin using Model 9 for new cases while maintaining Model 5b for existing consumers
+    \item \textbf{Full Deployment}: After successful pilot, transition all predictions to Model 9
 \end{enumerate}
 
-\subsection{Trade-offs}
+\subsubsection{Ongoing Monitoring}
 
 \begin{itemize}
-    \item \textbf{Complexity}: Requires SHAP framework for full explainability (vs. direct coefficient interpretation in linear models)
-    \item \textbf{Computational Cost}: Higher training time (\ModelNineTrainingTime{} seconds vs. <1 second for linear models)
-    \item \textbf{Infrastructure}: Requires Python/scikit-learn environment
-    \item \textbf{Staff Training}: More extensive than linear models (8 hours vs. 4 hours)
+    \item Track OOB error continuously to detect performance degradation
+    \item Monitor feature importance changes to identify shifting cost drivers
+    \item Review cases where predictions differ substantially from actual costs
+    \item Retrain annually with updated data to maintain accuracy
 \end{itemize}
 
-\section{Diagnostic Plots}
+\subsubsection{Future Enhancements}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.95\textwidth]{models/model_9/diagnostic_plots.png}
-\caption{Model 9 Comprehensive Diagnostic Analysis. \textbf{Top row}: Actual vs. Predicted scatter, Residual plot, Feature importance bar chart. \textbf{Bottom row}: Residual distribution histogram, Q-Q plot for normality assessment, Absolute error vs. actual cost scatter. Diagnostics confirm model validity with minimal systematic patterns in residuals and strong correlation between actual and predicted values.}
-\label{fig:model9_diagnostics}
-\end{figure}
-
-Key diagnostic observations:
 \begin{itemize}
-    \item \textbf{Actual vs. Predicted}: Strong linear relationship, minimal systematic deviations
-    \item \textbf{Residuals}: Centered at zero, no clear patterns (homoscedastic)
-    \item \textbf{Feature Importance}: \ModelNineTopFeatureOne{} dominates, followed by \ModelNineTopFeatureTwo{} and \ModelNineTopFeatureThree{}
-    \item \textbf{Q-Q Plot}: Residuals approximately normal, slight heavy tails (typical for cost data)
-    \item \textbf{Error Distribution}: Minimal absolute errors increase slightly at higher cost levels (proportional variance)
+    \item \textbf{Hyperparameter Optimization}: Use cross-validation to tune number of trees, max depth, etc.
+    \item \textbf{Uncertainty Quantification}: Use quantile regression forests to provide prediction intervals
+    \item \textbf{Cost-Sensitive Learning}: Weight errors differently based on policy objectives
+    \item \textbf{Online Learning}: Update model incrementally as new data becomes available
 \end{itemize}
 
-\section{Conclusion and Recommendations}
+\section{Conclusion}
 
-\subsection{Summary of Findings}
-
-Model 9's Random Forest approach delivers strong predictive performance (Test R² = \ModelNineRSquaredTest{}, RMSE = \$\ModelNineRMSETest{}) while maintaining 100\% data utilization and natural robustness to outliers. The ensemble method automatically discovers complex feature interactions without explicit mathematical specification, achieving \ModelNineWithinFiveK{}\% accuracy within \$5,000.
-
-Top predictive features identified:
-\begin{enumerate}
-    \item \ModelNineTopFeatureOne{} (importance: \ModelNineTopFeatureOneImportance{})
-    \item \ModelNineTopFeatureTwo{} (importance: \ModelNineTopFeatureTwoImportance{})
-    \item \ModelNineTopFeatureThree{} (importance: \ModelNineTopFeatureThreeImportance{})
-\end{enumerate}
-
-Cross-validation (R² = \ModelNineCVMean{} $\pm$ \ModelNineCVStd{}) and out-of-bag validation (R² = \ModelNineOOBRSquared{}) confirm model stability and generalization capability.
-
-\subsection{Strengths and Limitations}
-
-\textbf{Strengths}:
-\begin{itemize}
-    \item Exceptional robustness with 100\% data utilization (no outlier removal)
-    \item Automatic discovery of non-linear patterns and feature interactions
-    \item Built-in validation through OOB error estimation
-    \item Fast prediction time (<1 second per consumer)
-    \item Minimal systematic bias across demographic subgroups
-    \item Natural handling of missing QSI data
-\end{itemize}
-
-\textbf{Limitations}:
-\begin{itemize}
-    \item Requires SHAP framework for individual prediction explanations (more complex than linear models)
-    \item Higher training time (\ModelNineTrainingTime{} seconds vs. instantaneous for linear models)
-    \item Python/scikit-learn infrastructure required
-    \item Feature importance less intuitive than regression coefficients for policy communication
-    \item Model file size larger than linear models (though still manageable at ~50--100 MB)
-\end{itemize}
-
-\subsection{Implementation Recommendation}
-
-\textbf{RECOMMENDED FOR PHASED DEPLOYMENT} with following conditions:
-
-\begin{enumerate}
-    \item \textbf{SHAP Framework Deployment}: Implement explanation infrastructure before production use to satisfy HB 1103 transparency requirements
-    \item \textbf{Pilot Program}: 3-month pilot with 2,000 consumers, parallel operation with Model 5b for validation
-    \item \textbf{Staff Training}: Comprehensive 8-hour training on feature importance interpretation and SHAP value communication
-    \item \textbf{Monitoring Dashboard}: Real-time performance tracking with automated alerts for anomalies
-    \item \textbf{Quarterly Retraining}: Scheduled model updates to adapt to population changes
-\end{enumerate}
-
-\textbf{Timeline}: 5-month implementation (2 months development + 3 months phased rollout)
-
-\textbf{Total Cost}: \$510,000 over 3 years
-
-\textbf{Expected Benefits}:
-\begin{itemize}
-    \item Improved accuracy enabling \ModelNinePopmodelefficiencyWaitlistChange{} additional consumers served
-    \item \$850,000 administrative savings (reduced appeals, streamlined processing)
-    \item Enhanced fairness through 100\% data utilization
-    \item Automated feature interaction discovery for policy insights
-\end{itemize}
-
-\subsection{Next Steps}
-
-\begin{enumerate}
-    \item \textbf{Month 1}: Integrate SHAP library, develop explanation dashboard prototype
-    \item \textbf{Month 2}: Complete infrastructure setup, conduct technical validation
-    \item \textbf{Month 3}: Launch pilot program in 1--2 regions, train pilot staff
-    \item \textbf{Month 4}: Analyze pilot results, refine SHAP explanations based on feedback
-    \item \textbf{Month 5}: Statewide deployment with comprehensive monitoring
-    \item \textbf{Ongoing}: Quarterly retraining, annual comprehensive audits
-\end{enumerate}
-
-\textbf{Success Metrics}:
-\begin{itemize}
-    \item Maintain Test R² $\geq$ \ModelNineRSquaredTest{}
-    \item Keep all subgroup biases $<$ \$3,000
-    \item Achieve $<$5\% appeal rate
-    \item Complete quarterly retraining in $<$2 hours
-    \item Maintain SHAP explanation generation $<$2 seconds per consumer
-\end{itemize}
-
-\textbf{Final Assessment}: Model 9 represents a significant advancement in predictive capability while maintaining regulatory compliance through modern explainability frameworks. The natural robustness and fairness advantages, combined with automatic feature interaction discovery, justify the additional implementation complexity for this critical allocation system.
+Model 9 demonstrates that Random Forest regression offers a compelling alternative to traditional linear models for iBudget prediction. Its automatic interaction detection, natural robustness to outliers, and strong predictive performance make it well-suited for the complex, heterogeneous nature of disability support costs. The 100\% data utilization ensures equitable treatment of all consumers, while feature importance rankings provide valuable policy insights. With appropriate explainability infrastructure, Model 9 represents a viable path forward for next-generation iBudget allocation.
