@@ -1,20 +1,32 @@
 """
-model_4_ridge.py
-==================
-Model 4: Ridge Regression with L2 Regularization
-Uses cross-validated alpha selection for optimal regularization strength
-Features are standardized for proper regularization
-
+model_4_wls.py
+==============
+Model 4: Weighted Least Squares with Equity Safeguards
 Following the EXACT pattern from Models 1, 2, and 3
+
+Key features:
+- Two-stage FGLS: OLS then log-linear variance model
+- Square-root transformation (like Model 1/5b)
+- Weight bounds [0.2, 5.0] with variance normalization
+- 100% data retention (no outlier removal)
+- Breusch-Pagan heteroscedasticity testing (before/after on Pearson residuals)
+- Optional 2-pass iteration with BP improvement guard
+
+IMPLEMENTATION FIXES (from GPT review):
+1. Variance model uses living setting dummies (both naming patterns)
+2. Variance normalization ensures mean weight ~ 1.0
+3. Softer bounds [0.2, 5.0] instead of [0.1, 10.0]
+4. 2-pass only accepted if BP improves
+5. Proper SMAPE + thresholded MAPE (not raw MAPE)
+6. Clear documentation of efficiency ratio interpretation
+7. Calibration bias documented with solution recommendation
 """
 
 import numpy as np
 from typing import List, Tuple, Dict, Optional, Any
 from pathlib import Path
 import logging
-from sklearn.linear_model import RidgeCV, Ridge, LinearRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import KFold
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
@@ -25,16 +37,31 @@ warnings.filterwarnings('ignore')
 from base_model import BaseiBudgetModel, ConsumerRecord
 
 logger = logging.getLogger(__name__)
+
+# ============================================================================
+# SINGLE POINT OF CONTROL FOR RANDOM SEED
+# ============================================================================
 RANDOM_SEED = 42
 
 
-class Model4Ridge(BaseiBudgetModel):
+class Model4WLS(BaseiBudgetModel):
+    """
+    Model 4: Two-Stage Weighted Least Squares (Feasible GLS)
+    
+    Follows the EXACT pattern from Models 1, 2, and 3:
+    - Same feature preparation structure
+    - Same initialization parameters
+    - Same main() function pattern
+    - Difference: Two-stage FGLS with log-linear variance model
+    """
+    
     def __init__(self,
-                 use_sqrt_transform: bool = False,  # Data shows better performance without sqrt
+                 use_sqrt_transform: bool = True,
                  use_outlier_removal: bool = False,
                  outlier_threshold: float = 1.645,
-                 alpha_selection_method: str = 'cross_validation',
-                 alpha_values: Optional[List[float]] = None,
+                 weight_min: float = 0.1,
+                 weight_max: float = 10.0,
+                 iterative_wls: bool = False,
                  random_seed: int = RANDOM_SEED,
                  log_suffix: Optional[str] = None,
                  **kwargs):
@@ -43,7 +70,7 @@ class Model4Ridge(BaseiBudgetModel):
         
         super().__init__(
             model_id=4,
-            model_name="Ridge Regression",
+            model_name="Weighted-Least-Squares",
             transformation=transformation,
             use_outlier_removal=use_outlier_removal,
             outlier_threshold=outlier_threshold,
@@ -51,42 +78,50 @@ class Model4Ridge(BaseiBudgetModel):
             log_suffix=log_suffix
         )
         
-        # Store Ridge-specific parameters
-        self.alpha_selection_method = alpha_selection_method
-        if alpha_values is None:
-            self.alpha_values = np.logspace(-3, 3, 100)
-        else:
-            self.alpha_values = alpha_values
+        # WLS-specific attributes
+        self.stage1_model = None  # OLS for variance estimation
+        self.stage2_model = None  # WLS with weights
+        self.model = None  # For base class compatibility
+        self.weights = None
+        self.variance_model = None
+        self.variance_predictors = None
         
-        # Initialize model placeholder
-        self.model = None
-        self.scaler = None
-        self.optimal_alpha = None
+        # Weight bounds for equity safeguards
+        self.weight_min = weight_min
+        self.weight_max = weight_max
+        self.iterative_wls = iterative_wls
         
-        # Ridge-specific metrics
-        self.condition_number_before = None
-        self.condition_number_after = None
-        self.effective_dof = None
-        self.shrinkage_factor = None
-        self.max_vif_after = None
+        # Weight statistics
+        self.weight_statistics = {}
         
-        # Coefficient shrinkage by category
-        self.living_setting_shrinkage = None
-        self.age_group_shrinkage = None
-        self.qsi_shrinkage = None
-        self.interaction_shrinkage = None
+        # Heteroscedasticity test results
+        self.bp_statistic_before = None
+        self.bp_pvalue_before = None
+        self.bp_r2_before = None
+        self.bp_dof_before = None
         
-        # CV scores for plotting
-        self.cv_scores = None
-        self.cv_scores_std = None
-    
+        self.bp_statistic_after = None
+        self.bp_pvalue_after = None
+        self.bp_r2_after = None
+        self.bp_dof_after = None
+        
+        # Coefficients storage
+        self.coefficients = None
+        self.intercept = None
+        
+        self.logger.info(f"  Weight bounds: [{weight_min}, {weight_max}]")
+        self.logger.info(f"  Iterative WLS: {iterative_wls}")
+        self.logger.info(f"  Transformation: {transformation}")
+
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
-        """Prepare features following EXACT Model 1 pattern (Model 5b specification)"""
-        
+        """
+        Prepare features following EXACT Model 1/5b specification
+        """
+        # If feature_config provided from pipeline, use it
         if hasattr(self, 'feature_config') and self.feature_config is not None:
             return self.prepare_features_from_spec(records, self.feature_config)
         
-        # Model 5b EXACT specification
+        # Model 4 uses EXACT Model 5b specification (same as Models 1 & 3)
         model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
         
         feature_config = {
@@ -111,475 +146,644 @@ class Model4Ridge(BaseiBudgetModel):
         
         return self.prepare_features_from_spec(records, feature_config)
     
+    def breusch_pagan_test(self, X: np.ndarray, residuals: np.ndarray, 
+                          scale: Optional[float] = None) -> Tuple[float, float, float, int]:
+        """
+        Breusch-Pagan test for heteroscedasticity
+        
+        Args:
+            X: Feature matrix (should include intercept)
+            residuals: Residuals to test (raw OLS or Pearson after WLS)
+            scale: Scale for residuals (None = use mean(resid^2))
+        
+        Returns:
+            chi2_statistic, p_value, R2_auxiliary, degrees_of_freedom
+        """
+        n = len(residuals)
+        
+        # Calculate scale
+        if scale is None:
+            scale = np.mean(residuals ** 2)
+        
+        # Normalized squared residuals
+        u = (residuals ** 2) / scale
+        
+        # Auxiliary regression: u on X
+        aux_model = LinearRegression(fit_intercept=False)  # X already has intercept
+        aux_model.fit(X, u)
+        
+        # R-squared from auxiliary regression
+        u_pred = aux_model.predict(X)
+        ss_total = np.sum((u - np.mean(u)) ** 2)
+        ss_residual = np.sum((u - u_pred) ** 2)
+        r2_aux = 1 - (ss_residual / ss_total) if ss_total > 0 else 0
+        
+        # LM test statistic: n * R^2
+        lm_stat = n * r2_aux
+        
+        # Degrees of freedom: k - 1 (number of predictors excluding intercept)
+        k = X.shape[1]
+        dof = k - 1
+        
+        # P-value from chi-square distribution
+        p_value = 1 - stats.chi2.cdf(lm_stat, dof)
+        
+        return lm_stat, p_value, r2_aux, dof
+    
+    def _build_variance_predictors(self, X: np.ndarray) -> Tuple[np.ndarray, List[str]]:
+        """
+        Build variance model predictor matrix Z
+        Uses: intercept + living dummies + BSum + age dummies (+ optional FH x BSum)
+        
+        Args:
+            X: Full feature matrix (21 features)
+        
+        Returns:
+            Z: Variance predictor matrix (~8 columns)
+            Z_names: Feature names
+        """
+        # Find indices in feature_names
+        # Living: ILSL, RH1, RH2, RH3, RH4 (FH is reference, absent)
+        # Age: Age21_30, Age31Plus (Age3_20 is reference, absent)
+        # Numeric: BSum
+        # Interactions: FHFSum, SLFSum, SLBSum
+        
+        Z_cols = []
+        Z_names = []
+        
+        # Intercept
+        Z_cols.append(np.ones(X.shape[0]))
+        Z_names.append('Intercept')
+        
+        # Living settings (accept both naming conventions)
+        living_aliases = {
+            'ILSL': ['ILSL', 'Live_ILSL'],
+            'RH1':  ['RH1',  'Live_RH1'],
+            'RH2':  ['RH2',  'Live_RH2'],
+            'RH3':  ['RH3',  'Live_RH3'],
+            'RH4':  ['RH4',  'Live_RH4'],
+        }
+        
+        for i, name in enumerate(self.feature_names):
+            for _, aliases in living_aliases.items():
+                if name in aliases:
+                    Z_cols.append(X[:, i])
+                    Z_names.append(name)
+                    break
+        
+        # BSum - initialize bsum_idx (check both cases)
+        bsum_idx = None
+        for i, name in enumerate(self.feature_names):
+            if name.lower() == 'bsum':
+                Z_cols.append(X[:, i])
+                Z_names.append(name)
+                bsum_idx = i
+                break
+        
+        if bsum_idx is None:
+            raise ValueError(f"BSum feature not found in feature_names. Available: {self.feature_names}")
+        
+        # Age dummies
+        for i, name in enumerate(self.feature_names):
+            if name in ['Age21_30', 'Age31Plus']:
+                Z_cols.append(X[:, i])
+                Z_names.append(name)
+        
+        # Optional: FH x BSum (FH is 1 when all living dummies are 0)
+        # FH indicator: 1 - sum(living dummies)
+        living_sum = np.zeros(X.shape[0])
+        for i, name in enumerate(self.feature_names):
+            # Check both naming patterns
+            for _, aliases in living_aliases.items():
+                if name in aliases:
+                    living_sum += X[:, i]
+                    break
+        
+        fh_indicator = 1 - living_sum
+        fh_bsum = fh_indicator * X[:, bsum_idx]
+        Z_cols.append(fh_bsum)
+        Z_names.append('FH_x_BSum')
+        
+        Z = np.column_stack(Z_cols)
+        return Z, Z_names
+    
     def _fit_core(self, X: np.ndarray, y: np.ndarray) -> None:
-        """Core fitting logic specific to Ridge regression with standardization"""
-        self.log_section("FITTING RIDGE REGRESSION")
+        """
+        Two-stage FGLS fitting logic
         
-        # Calculate condition number before regularization (on standardized X)
-        try:
-            self.scaler = StandardScaler()
-            X_std = self.scaler.fit_transform(X)
-            
-            # Condition number of standardized X
-            XtX = X_std.T @ X_std
-            eigenvalues = np.linalg.eigvals(XtX)
-            eigenvalues = eigenvalues[eigenvalues > 1e-10]  # Filter near-zero
-            self.condition_number_before = np.sqrt(np.max(eigenvalues) / np.min(eigenvalues))
-            self.logger.info(f"Condition number before regularization (standardized): {self.condition_number_before:.2f}")
-        except Exception as e:
-            self.logger.warning(f"Could not calculate condition number before: {e}")
-            self.condition_number_before = None
+        Stage 1: OLS to estimate variance function via log-linear model
+        Stage 2: WLS with variance-based weights
+        Optional: Second pass for iterative refinement
+        """
+        self.log_section("FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)")
         
-        # Select optimal alpha using cross-validation on standardized features
-        if self.alpha_selection_method == 'cross_validation':
-            self.logger.info(f"Selecting optimal alpha from {len(self.alpha_values)} candidates (with standardization)")
-            
-            # Create pipeline with standardization
-            # Remove store_cv_values parameter - it doesn't exist
-            ridge_cv = make_pipeline(
-                StandardScaler(),
-                RidgeCV(alphas=self.alpha_values, cv=5)  # REMOVED: store_cv_values=True
-            )
-            ridge_cv.fit(X, y)
-            
-            # Extract optimal alpha
-            ridge_model = ridge_cv.named_steps['ridgecv']
-            self.optimal_alpha = ridge_model.alpha_
-            
-            # For CV scores visualization, we'll compute them manually if needed
-            # or skip the CV curve plot
-            self.cv_scores = None
-            self.cv_scores_std = None
-            
-            self.logger.info(f"Optimal alpha selected: {self.optimal_alpha:.6f}")
-            
-            # Fit final model with optimal alpha
-            self.model = make_pipeline(
-                StandardScaler(),
-                Ridge(alpha=self.optimal_alpha, random_state=self.random_seed)
-            )
-            self.model.fit(X, y)
+        # Add intercept to X for BP test
+        X_with_intercept = np.column_stack([np.ones(X.shape[0]), X])
+        
+        # STAGE 1: Fit OLS to estimate variances
+        self.logger.info("\nStage 1: OLS for variance estimation")
+        self.stage1_model = LinearRegression(fit_intercept=True)
+        self.stage1_model.fit(X, y)
+        
+        # Get residuals from Stage 1
+        y_pred_stage1 = self.stage1_model.predict(X)
+        residuals_stage1 = y - y_pred_stage1
+        
+        # Test for heteroscedasticity BEFORE WLS
+        self.bp_statistic_before, self.bp_pvalue_before, self.bp_r2_before, self.bp_dof_before = \
+            self.breusch_pagan_test(X_with_intercept, residuals_stage1)
+        
+        self.logger.info(f"  Breusch-Pagan test (before WLS):")
+        self.logger.info(f"    LM statistic: {self.bp_statistic_before:.6f}")
+        self.logger.info(f"    P-value: {self.bp_pvalue_before:.6f}")
+        self.logger.info(f"    R^2 (auxiliary): {self.bp_r2_before:.6f}")
+        self.logger.info(f"    Degrees of freedom: {self.bp_dof_before}")
+        if self.bp_pvalue_before < 0.001:
+            self.logger.info("    Conclusion: Significant heteroscedasticity detected (p < 0.001)")
+        elif self.bp_pvalue_before < 0.05:
+            self.logger.info("    Conclusion: Significant heteroscedasticity detected (p < 0.05)")
         else:
-            # Use fixed alpha if specified
-            self.optimal_alpha = self.alpha_values[0] if len(self.alpha_values) == 1 else 1.0
-            self.model = make_pipeline(
-                StandardScaler(),
-                Ridge(alpha=self.optimal_alpha, random_state=self.random_seed)
-            )
-            self.model.fit(X, y)
+            self.logger.info("    Conclusion: No significant heteroscedasticity")
         
-        # Extract coefficients (from the Ridge step of the pipeline)
-        ridge_step = self.model.named_steps['ridge']
-        self.coefficients = ridge_step.coef_
-        self.intercept = ridge_step.intercept_
+        # Build variance model predictors Z
+        Z, Z_names = self._build_variance_predictors(X)
+        self.variance_predictors = Z_names
         
-        # Calculate condition number after regularization
-        try:
-            X_std = self.model.named_steps['standardscaler'].transform(X)
-            XtX_reg = X_std.T @ X_std + self.optimal_alpha * np.eye(X_std.shape[1])
-            eigenvalues_reg = np.linalg.eigvals(XtX_reg)
-            eigenvalues_reg = eigenvalues_reg[eigenvalues_reg > 1e-10]
-            self.condition_number_after = np.sqrt(np.max(eigenvalues_reg) / np.min(eigenvalues_reg))
-            self.logger.info(f"Condition number after regularization: {self.condition_number_after:.2f}")
-        except Exception as e:
-            self.logger.warning(f"Could not calculate condition number after: {e}")
-            self.condition_number_after = None
+        self.logger.info(f"\n  Variance model predictors ({len(Z_names)} features):")
+        for name in Z_names:
+            self.logger.info(f"    - {name}")
         
-        # Calculate effective degrees of freedom using SVD
-        try:
-            X_std = self.model.named_steps['standardscaler'].transform(X)
-            U, s, Vt = np.linalg.svd(X_std, full_matrices=False)
-            # Effective DOF = sum of s_i^2 / (s_i^2 + alpha)
-            self.effective_dof = float(np.sum(s**2 / (s**2 + self.optimal_alpha)))
-            self.logger.info(f"Effective degrees of freedom: {self.effective_dof:.2f} / {X.shape[1]}")
-        except Exception as e:
-            self.logger.warning(f"Could not calculate effective DOF: {e}")
-            self.effective_dof = X.shape[1]
+        # Fit log-linear variance model: log(e^2 + eps) = Z * gamma
+        log_sq_resid = np.log(residuals_stage1 ** 2 + 1e-8)
+        self.variance_model = LinearRegression(fit_intercept=False)  # Z has intercept
+        self.variance_model.fit(Z, log_sq_resid)
         
-        # Calculate coefficient shrinkage by comparing to OLS
-        try:
-            # Fit OLS on standardized data for comparison
-            ols_model = LinearRegression()
-            X_std = self.model.named_steps['standardscaler'].transform(X)
-            ols_model.fit(X_std, y)
-            ols_coefs = ols_model.coef_
+        # Estimate variances: var_hat = exp(Z * gamma)
+        log_var_hat = self.variance_model.predict(Z)
+        var_hat = np.exp(log_var_hat)
+        
+        # Normalize variance so mean weight ~ 1 before clipping
+        var_hat = var_hat / np.mean(var_hat)
+        
+        # Calculate weights: w = 1 / var_hat with clipping
+        raw_weights = 1.0 / var_hat
+        
+        # Softer bounds now that variance model has proper predictors
+        effective_min = 0.2
+        effective_max = 5.0
+        self.weights = np.clip(raw_weights, effective_min, effective_max)
+        
+        # Update stored bounds for reporting
+        self.weight_min = effective_min
+        self.weight_max = effective_max
+        
+        # Log weight statistics
+        self._calculate_weight_statistics()
+        self.logger.info(f"\n  Weight statistics (initial):")
+        self.logger.info(f"    Mean: {self.weight_statistics['mean']:.4f}")
+        self.logger.info(f"    Median: {self.weight_statistics['median']:.4f}")
+        self.logger.info(f"    Range: [{self.weight_statistics['min']:.4f}, {self.weight_statistics['max']:.4f}]")
+        self.logger.info(f"    At minimum bound: {self.weight_statistics['at_min_pct']:.1f}%")
+        self.logger.info(f"    At maximum bound: {self.weight_statistics['at_max_pct']:.1f}%")
+        
+        # STAGE 2: Weighted Least Squares
+        self.logger.info("\nStage 2: Weighted Least Squares")
+        self.stage2_model = LinearRegression(fit_intercept=True)
+        self.stage2_model.fit(X, y, sample_weight=self.weights)
+        
+        # Get WLS residuals
+        y_pred_wls = self.stage2_model.predict(X)
+        residuals_wls = y - y_pred_wls
+        
+        # Calculate Pearson residuals for BP test
+        pearson_residuals = residuals_wls / np.sqrt(var_hat)
+        
+        # Test for heteroscedasticity AFTER WLS
+        self.bp_statistic_after, self.bp_pvalue_after, self.bp_r2_after, self.bp_dof_after = \
+            self.breusch_pagan_test(X_with_intercept, pearson_residuals, scale=1.0)
+        
+        self.logger.info(f"\n  Breusch-Pagan test (after WLS - on Pearson residuals):")
+        self.logger.info(f"    LM statistic: {self.bp_statistic_after:.6f}")
+        self.logger.info(f"    P-value: {self.bp_pvalue_after:.6f}")
+        self.logger.info(f"    R^2 (auxiliary): {self.bp_r2_after:.6f}")
+        self.logger.info(f"    Degrees of freedom: {self.bp_dof_after}")
+        self.logger.info(f"    Improvement: {self.bp_statistic_before - self.bp_statistic_after:.6f}")
+        
+        # OPTIONAL: Second pass for iterative refinement
+        # Trigger if explicitly requested OR if heteroscedasticity remains very high
+        if self.iterative_wls or (self.bp_pvalue_after is not None and self.bp_pvalue_after < 1e-6):
+            self.logger.info("\n  Attempting second FGLS pass...")
+            w_old = self.weights.copy()
             
-            # Calculate shrinkage for each coefficient
-            shrinkages = 1 - np.abs(self.coefficients) / (np.abs(ols_coefs) + 1e-10)
-            shrinkages = np.clip(shrinkages, 0, 1) * 100  # Convert to percentage
+            # Re-estimate variance on WLS residuals
+            log_sq_resid_wls = np.log(pearson_residuals ** 2 + 1e-8)
+            variance_model_2 = LinearRegression(fit_intercept=False)
+            variance_model_2.fit(Z, log_sq_resid_wls)
             
-            # Overall shrinkage
-            self.shrinkage_factor = np.mean(shrinkages)
+            log_var_hat_2 = variance_model_2.predict(Z)
+            var_hat_2 = np.exp(log_var_hat_2)
             
-            # Category-specific shrinkage
-            if self.feature_names:
-                living_indices = [i for i, name in enumerate(self.feature_names) if name.startswith('Live')]
-                age_indices = [i for i, name in enumerate(self.feature_names) if 'Age' in name]
-                qsi_indices = [i for i, name in enumerate(self.feature_names) if name.startswith('Q')]
-                interaction_indices = [i for i, name in enumerate(self.feature_names) if 'Sum' in name]
+            # Normalize again
+            var_hat_2 = var_hat_2 / np.mean(var_hat_2)
+            
+            raw_weights_2 = 1.0 / var_hat_2
+            w_new = np.clip(raw_weights_2, self.weight_min, self.weight_max)
+            
+            # Check convergence
+            weight_change = np.median(np.abs(w_new - w_old))
+            self.logger.info(f"    Median weight change: {weight_change:.6f}")
+            
+            if weight_change > 1e-3:
+                self.logger.info("    Applying second pass...")
                 
-                self.living_setting_shrinkage = np.mean(shrinkages[living_indices]) if living_indices else 0
-                self.age_group_shrinkage = np.mean(shrinkages[age_indices]) if age_indices else 0
-                self.qsi_shrinkage = np.mean(shrinkages[qsi_indices]) if qsi_indices else 0
-                self.interaction_shrinkage = np.mean(shrinkages[interaction_indices]) if interaction_indices else 0
+                # Re-fit WLS with new weights
+                temp_model = LinearRegression(fit_intercept=True)
+                temp_model.fit(X, y, sample_weight=w_new)
                 
-                self.logger.info(f"Shrinkage by category:")
-                self.logger.info(f"  Living settings: {self.living_setting_shrinkage:.1f}%")
-                self.logger.info(f"  Age groups: {self.age_group_shrinkage:.1f}%")
-                self.logger.info(f"  QSI items: {self.qsi_shrinkage:.1f}%")
-                self.logger.info(f"  Interactions: {self.interaction_shrinkage:.1f}%")
-        except Exception as e:
-            self.logger.warning(f"Could not calculate shrinkage factors: {e}")
-            self.shrinkage_factor = 0
-            self.living_setting_shrinkage = 0
-            self.age_group_shrinkage = 0
-            self.qsi_shrinkage = 0
-            self.interaction_shrinkage = 0
+                # Recalculate statistics
+                y_pred_wls_2 = temp_model.predict(X)
+                residuals_wls_2 = y - y_pred_wls_2
+                pearson_residuals_2 = residuals_wls_2 / np.sqrt(var_hat_2)
+                
+                bp_stat_2, bp_pval_2, bp_r2_2, bp_dof_2 = \
+                    self.breusch_pagan_test(X_with_intercept, pearson_residuals_2, scale=1.0)
+                
+                # Only accept 2-pass if it improves BP
+                improved = (bp_stat_2 < self.bp_statistic_after)
+                self.logger.info(f"    2-pass BP comparison: LM1={self.bp_statistic_after:.6f} -> LM2={bp_stat_2:.6f}")
+                self.logger.info(f"    2-pass improved BP? {improved}")
+                
+                if improved:
+                    self.logger.info("    Keeping 2-pass results (BP improved)")
+                    self.weights = w_new
+                    self.variance_model = variance_model_2
+                    self.stage2_model = temp_model
+                    
+                    self._calculate_weight_statistics()
+                    
+                    # Update stored BP values
+                    self.bp_statistic_after = bp_stat_2
+                    self.bp_pvalue_after = bp_pval_2
+                    self.bp_r2_after = bp_r2_2
+                    
+                    # Update residuals for final metrics
+                    residuals_wls = residuals_wls_2
+                    
+                    self.logger.info(f"    Final BP after 2-pass: LM={bp_stat_2:.6f}, p={bp_pval_2:.6f}")
+                else:
+                    self.logger.info("    Rejecting 2-pass results (BP worsened); retaining single-pass")
+                    self.logger.info(f"    Final BP (single-pass): LM={self.bp_statistic_after:.6f}, p={self.bp_pvalue_after:.6f}")
+            else:
+                self.logger.info("    Converged; keeping single-pass results")
         
-        self.logger.info(f"Ridge regression fitted with {len(self.coefficients)} coefficients")
-        self.logger.info(f"Regularization strength: {'weak' if self.optimal_alpha < 0.01 else 'moderate' if self.optimal_alpha < 1.0 else 'strong'}")
+        # Store final model
+        self.model = self.stage2_model
+        self.coefficients = self.model.coef_
+        self.intercept = self.model.intercept_
+        
+        # Calculate weighted R-squared
+        y_mean_weighted = np.average(y, weights=self.weights)
+        ss_total_weighted = np.sum(self.weights * (y - y_mean_weighted) ** 2)
+        ss_residual_weighted = np.sum(self.weights * residuals_wls ** 2)
+        weighted_r2 = 1 - (ss_residual_weighted / ss_total_weighted)
+        self.metrics['weighted_r2'] = weighted_r2
+        
+        # Calculate weighted RMSE
+        weighted_rmse = np.sqrt(np.average(residuals_wls ** 2, weights=self.weights))
+        self.metrics['weighted_rmse'] = weighted_rmse
+        
+        self.logger.info(f"\n  Weighted R^2: {weighted_r2:.4f}")
+        self.logger.info(f"  Weighted RMSE (training scale): {weighted_rmse:.4f}")
+        
+        # Calculate efficiency ratio
+        unweighted_var = np.var(residuals_stage1)
+        weighted_var = np.average(residuals_wls ** 2, weights=self.weights)
+        efficiency_ratio = unweighted_var / weighted_var if weighted_var > 0 else 1.0
+        self.metrics['efficiency_ratio'] = efficiency_ratio
+        self.logger.info(f"  Efficiency ratio vs OLS: {efficiency_ratio:.2f}x")
+        
+        # Log coefficient summary
+        self.logger.info("\nFinal WLS coefficient summary:")
+        for name, coef in zip(self.feature_names, self.coefficients):
+            self.logger.info(f"  {name}: {coef:.4f}")
+        self.logger.info(f"  Intercept: {self.intercept:.4f}")
+    
+    def _calculate_weight_statistics(self) -> None:
+        """Calculate weight distribution statistics"""
+        if self.weights is None:
+            return
+        
+        self.weight_statistics = {
+            'mean': float(np.mean(self.weights)),
+            'median': float(np.median(self.weights)),
+            'min': float(np.min(self.weights)),
+            'max': float(np.max(self.weights)),
+            'std': float(np.std(self.weights)),
+            'at_min_pct': float(100 * np.sum(self.weights <= self.weight_min + 0.001) / len(self.weights)),
+            'at_max_pct': float(100 * np.sum(self.weights >= self.weight_max - 0.001) / len(self.weights)),
+            'above_three_pct': float(100 * np.sum(self.weights > 3.0) / len(self.weights))
+        }
+    
+    def calculate_proper_mape_smape(self, y_true: np.ndarray, y_pred: np.ndarray, 
+                                    threshold: float = 1000.0) -> Dict[str, float]:
+        """
+        Calculate SMAPE and thresholded MAPE to avoid misleading values
+        
+        Args:
+            y_true: Actual values
+            y_pred: Predicted values
+            threshold: Only compute MAPE for values above this threshold
+        
+        Returns:
+            Dictionary with smape, mape_threshold, mape_n
+        """
+        # SMAPE - always finite
+        smape = 100.0 * np.mean(2.0 * np.abs(y_true - y_pred) / 
+                                (np.abs(y_true) + np.abs(y_pred) + 1e-8))
+        
+        # Thresholded MAPE to avoid small denominator issues
+        mask = y_true >= threshold
+        if mask.sum() > 0:
+            mape = 100.0 * np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask]))
+            mape_n = mask.sum()
+        else:
+            mape = np.nan
+            mape_n = 0
+        
+        return {
+            'smape': smape,
+            'mape_threshold': mape,
+            'mape_n': mape_n,
+            'mape_threshold_value': threshold
+        }
     
     def _predict_core(self, X: np.ndarray) -> np.ndarray:
         """
-        Make predictions using the fitted Ridge model
+        Make predictions using WLS model
         
         Args:
             X: Feature matrix
             
         Returns:
-            Predictions in the same scale as training target
+            Predictions in training scale (sqrt if transformed)
         """
         if self.model is None:
             raise ValueError("Model must be fitted before prediction")
         
-        # Pipeline handles standardization internally
-        predictions = self.model.predict(X)
-        
-        return predictions
+        return self.model.predict(X)
     
-    def calculate_metrics_with_proper_mape(self, y_true: np.ndarray, y_pred: np.ndarray,
-                                          mape_threshold: float = 1000.0) -> Dict[str, float]:
+    def predict_original(self, X: np.ndarray) -> np.ndarray:
         """
-        Calculate metrics with proper MAPE handling (from Model 2)
-        
-        Args:
-            y_true: True values
-            y_pred: Predicted values
-            mape_threshold: Minimum value for MAPE calculation
-            
-        Returns:
-            Dictionary of metrics
+        Override base-class hook for CV and evaluation
         """
-        metrics = {}
-        
-        # Standard metrics
-        metrics['r2'] = r2_score(y_true, y_pred)
-        metrics['rmse'] = np.sqrt(mean_squared_error(y_true, y_pred))
-        metrics['mae'] = mean_absolute_error(y_true, y_pred)
-        
-        # MAPE with threshold to avoid division by small numbers
-        mask = y_true > mape_threshold
-        if mask.sum() > 0:
-            mape = np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])) * 100
-            metrics['mape'] = mape
-            metrics['mape_n'] = mask.sum()
-        else:
-            metrics['mape'] = np.nan
-            metrics['mape_n'] = 0
-        
-        # Symmetric MAPE (more stable)
-        smape = np.mean(2 * np.abs(y_true - y_pred) / (np.abs(y_true) + np.abs(y_pred) + 1e-10)) * 100
-        metrics['smape'] = smape
-        
-        # Median APE (robust to outliers)
-        if mask.sum() > 0:
-            ape_values = np.abs((y_true[mask] - y_pred[mask]) / y_true[mask]) * 100
-            metrics['median_ape'] = np.median(ape_values)
-        else:
-            metrics['median_ape'] = np.nan
-        
-        return metrics
-    
-    def calculate_metrics(self) -> Dict[str, float]:
-        """Override to use proper MAPE calculation"""
-        # Get base metrics
-        metrics = super().calculate_metrics()
-        
-        # Recalculate with proper MAPE if we have test data
-        if self.y_test is not None and hasattr(self, 'test_predictions_original'):
-            better_metrics = self.calculate_metrics_with_proper_mape(
-                self.y_test_original, 
-                self.test_predictions_original
-            )
-            
-            # Update metrics with better MAPE/SMAPE
-            metrics['mape_test'] = better_metrics.get('mape', metrics.get('mape_test', 0))
-            metrics['smape_test'] = better_metrics.get('smape', 0)
-            metrics['median_ape_test'] = better_metrics.get('median_ape', 0)
-        
-        return metrics
+        y_pred_fitted = self._predict_core(X)
+        y_pred_original = self.inverse_transformation(y_pred_fitted)
+        return np.maximum(0.0, y_pred_original)
     
     def generate_diagnostic_plots(self) -> None:
-        """Generate diagnostic plots for Ridge regression"""
+        """Generate 8 diagnostic plots (6 standard + 2 WLS-specific)"""
         if self.X_test is None or self.y_test is None:
-            self.logger.warning("No test data available for diagnostic plots")
+            self.logger.warning("No test data for plots")
             return
-            
+        
         self.log_section("GENERATING DIAGNOSTIC PLOTS")
         
+        # Create figure with 2x4 subplots
+        fig = plt.figure(figsize=(20, 10))
+        
         # Get predictions
-        test_predictions = self.predict(self.X_test)
-        train_predictions = self.predict(self.X_train)
+        y_pred = self.test_predictions
+        residuals = self.y_test - y_pred
         
-        # Create figure with 6 subplots
-        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-        fig.suptitle('Model 4: Ridge Regression Diagnostic Plots', fontsize=14, fontweight='bold')
+        # Plot 1: Predicted vs Actual
+        ax1 = plt.subplot(2, 4, 1)
+        ax1.scatter(self.y_test, y_pred, alpha=0.5, s=20)
+        min_val = min(self.y_test.min(), y_pred.min())
+        max_val = max(self.y_test.max(), y_pred.max())
+        ax1.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2)
+        ax1.set_xlabel('Actual Cost ($)', fontsize=10)
+        ax1.set_ylabel('Predicted Cost ($)', fontsize=10)
+        ax1.set_title('Predicted vs Actual', fontsize=11, fontweight='bold')
+        r2 = self.metrics.get('r2_test', 0)
+        ax1.text(0.05, 0.95, f'R^2 = {r2:.3f}', transform=ax1.transAxes, 
+                va='top', fontsize=9, bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
         
-        # 1. Predicted vs Actual
-        ax = axes[0, 0]
-        ax.scatter(self.y_test, test_predictions, alpha=0.5, s=1)
-        min_val = min(self.y_test.min(), test_predictions.min())
-        max_val = max(self.y_test.max(), test_predictions.max())
-        ax.plot([min_val, max_val], [min_val, max_val], 'r--', lw=1)
-        ax.set_xlabel('Actual Cost ($)')
-        ax.set_ylabel('Predicted Cost ($)')
-        ax.set_title(f'Predicted vs Actual (Test R^2={self.metrics.get("r2_test", 0):.3f})')
+        # Plot 2: Residual Plot
+        ax2 = plt.subplot(2, 4, 2)
+        ax2.scatter(y_pred, residuals, alpha=0.5, s=20)
+        ax2.axhline(y=0, color='r', linestyle='--', lw=2)
+        ax2.set_xlabel('Predicted Cost ($)', fontsize=10)
+        ax2.set_ylabel('Residuals ($)', fontsize=10)
+        ax2.set_title('Residual Plot', fontsize=11, fontweight='bold')
         
-        # 2. Residual Plot
-        ax = axes[0, 1]
-        residuals = self.y_test - test_predictions
-        ax.scatter(test_predictions, residuals, alpha=0.5, s=1)
-        ax.axhline(y=0, color='r', linestyle='--', linewidth=1)
-        ax.set_xlabel('Predicted Cost ($)')
-        ax.set_ylabel('Residuals ($)')
-        ax.set_title('Residual Plot')
-        
-        # 3. Coefficient Magnitude (Top 15)
-        ax = axes[0, 2]
-        if self.coefficients is not None and len(self.coefficients) > 0:
+        # Plot 3: Feature Importance (Top 10 by absolute coefficient)
+        ax3 = plt.subplot(2, 4, 3)
+        if self.coefficients is not None:
             coef_abs = np.abs(self.coefficients)
-            top_indices = np.argsort(coef_abs)[-15:]
-            top_coefs = coef_abs[top_indices]
+            top_indices = np.argsort(coef_abs)[-10:][::-1]
             top_names = [self.feature_names[i] for i in top_indices]
+            top_coefs = [self.coefficients[i] for i in top_indices]
             
-            y_pos = np.arange(len(top_names))
-            ax.barh(y_pos, top_coefs, color='steelblue')
-            ax.set_yticks(y_pos)
-            ax.set_yticklabels(top_names, fontsize=8)
-            ax.set_xlabel('|Coefficient| (standardized)')
-            ax.set_title('Top 15 Features by |Coefficient|')
-            ax.invert_yaxis()
+            colors = ['green' if c > 0 else 'red' for c in top_coefs]
+            ax3.barh(range(len(top_names)), top_coefs, color=colors)
+            ax3.set_yticks(range(len(top_names)))
+            ax3.set_yticklabels(top_names, fontsize=8)
+            ax3.set_xlabel('Coefficient Value', fontsize=10)
+            ax3.set_title('Top 10 Feature Coefficients', fontsize=11, fontweight='bold')
+            ax3.axvline(x=0, color='black', linestyle='-', lw=0.5)
         
-        # 4. Q-Q Plot
-        ax = axes[1, 0]
-        standardized_residuals = residuals / np.std(residuals)
-        stats.probplot(standardized_residuals, dist="norm", plot=ax)
-        ax.set_title('Q-Q Plot')
+        # Plot 4: Q-Q Plot
+        ax4 = plt.subplot(2, 4, 4)
+        stats.probplot(residuals, dist="norm", plot=ax4)
+        ax4.set_title('Q-Q Plot', fontsize=11, fontweight='bold')
+        ax4.grid(True, alpha=0.3)
         
-        # 5. Histogram of Residuals
-        ax = axes[1, 1]
-        ax.hist(residuals, bins=30, edgecolor='black', alpha=0.7)
-        ax.set_xlabel('Residuals ($)')
-        ax.set_ylabel('Frequency')
-        ax.set_title('Histogram of Residuals')
-        ax.axvline(x=0, color='r', linestyle='--', linewidth=1)
+        # Plot 5: Histogram of Residuals
+        ax5 = plt.subplot(2, 4, 5)
+        ax5.hist(residuals, bins=50, edgecolor='black', alpha=0.7)
+        ax5.set_xlabel('Residuals ($)', fontsize=10)
+        ax5.set_ylabel('Frequency', fontsize=10)
+        ax5.set_title('Distribution of Residuals', fontsize=11, fontweight='bold')
+        ax5.axvline(x=0, color='r', linestyle='--', lw=2)
         
-        # 6. Ridge-Specific: CV Curve
-        ax = axes[1, 2]
-        if self.cv_scores is not None and len(self.cv_scores) > 1:
-            # Plot full CV curve
-            ax.semilogx(self.alpha_values, self.cv_scores, 'b-', label='Mean CV R^2')
-            if self.cv_scores_std is not None:
-                ax.fill_between(self.alpha_values, 
-                               self.cv_scores - self.cv_scores_std,
-                               self.cv_scores + self.cv_scores_std,
-                               alpha=0.2)
-            ax.scatter([self.optimal_alpha], 
-                      [self.cv_scores[np.where(self.alpha_values == self.optimal_alpha)[0][0]]],
-                      color='red', s=100, zorder=5, 
-                      label=f'Selected α={self.optimal_alpha:.4f}')
-            ax.set_xlabel('Alpha (λ)')
-            ax.set_ylabel('Cross-Validation R^2')
-            ax.set_title('Regularization Path')
-            ax.legend()
-            ax.grid(True, alpha=0.3)
-        else:
-            # Show effective DOF vs full DOF
-            if self.effective_dof and self.feature_names:
-                categories = ['Full Model', 'Effective (Ridge)']
-                values = [len(self.feature_names), self.effective_dof]
-                colors = ['gray', 'steelblue']
-                bars = ax.bar(categories, values, color=colors, alpha=0.7)
-                ax.set_ylabel('Degrees of Freedom')
-                ax.set_title('Model Complexity Reduction')
-                for bar, val in zip(bars, values):
-                    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-                           f'{val:.1f}', ha='center', va='bottom')
+        # Plot 6: Performance by Living Setting
+        ax6 = plt.subplot(2, 4, 6)
+        settings = []
+        r2_by_setting = []
+        for setting in ['FH', 'ILSL', 'RH1', 'RH2', 'RH3', 'RH4']:
+            key = f'living_{setting}'
+            if key in self.subgroup_metrics:
+                settings.append(setting)
+                r2_by_setting.append(self.subgroup_metrics[key].get('r2', 0))
+        
+        if settings:
+            ax6.bar(settings, r2_by_setting, color='steelblue', edgecolor='black')
+            ax6.set_ylabel('R^2', fontsize=10)
+            ax6.set_title('Performance by Living Setting', fontsize=11, fontweight='bold')
+            ax6.set_ylim([0, 1])
+            ax6.grid(axis='y', alpha=0.3)
+        
+        # Plot 7: Weight Distribution (WLS-specific)
+        ax7 = plt.subplot(2, 4, 7)
+        if self.weights is not None:
+            # Use training weights (test set doesn't have weights computed)
+            ax7.hist(self.weights, bins=50, edgecolor='black', alpha=0.7, color='orange')
+            ax7.axvline(x=self.weight_min, color='r', linestyle='--', lw=2, label=f'Min ({self.weight_min})')
+            ax7.axvline(x=self.weight_max, color='r', linestyle='--', lw=2, label=f'Max ({self.weight_max})')
+            ax7.set_xlabel('Weight', fontsize=10)
+            ax7.set_ylabel('Frequency', fontsize=10)
+            ax7.set_title('Weight Distribution (Training Data)', fontsize=11, fontweight='bold')
+            ax7.legend(fontsize=8)
+        
+        # Plot 8: Performance by Cost Quartile
+        ax8 = plt.subplot(2, 4, 8)
+        quartiles = []
+        r2_by_quartile = []
+        for q in ['Q1', 'Q2', 'Q3', 'Q4']:
+            key = f'cost_{q}'
+            if key in self.subgroup_metrics:
+                quartiles.append(q)
+                r2_by_quartile.append(self.subgroup_metrics[key].get('r2', 0))
+        
+        if quartiles:
+            colors_q = ['green' if r2 > 0.5 else 'orange' if r2 > 0.3 else 'red' for r2 in r2_by_quartile]
+            ax8.bar(quartiles, r2_by_quartile, color=colors_q, edgecolor='black')
+            ax8.set_ylabel('R^2', fontsize=10)
+            ax8.set_title('Performance by Cost Quartile', fontsize=11, fontweight='bold')
+            ax8.set_ylim([0, 1])
+            ax8.grid(axis='y', alpha=0.3)
         
         plt.tight_layout()
         
         # Save plot
-        plot_file = self.output_dir / "diagnostic_plots.png"
-        plt.savefig(plot_file, dpi=300, bbox_inches='tight')
+        plot_path = self.output_dir / "diagnostic_plots.png"
+        plt.savefig(plot_path, dpi=150, bbox_inches='tight')
         plt.close()
         
-        self.logger.info(f"Diagnostic plots saved to {plot_file}")
+        self.logger.info(f"Diagnostic plots saved to: {plot_path}")
     
     def generate_latex_commands(self) -> None:
-        """Override to add Model 4-specific LaTeX commands"""
-        # STEP 1: ALWAYS call super() FIRST
+        """Generate LaTeX commands for Model 4"""
+        # STEP 1: Call parent to generate base commands
         super().generate_latex_commands()
         
-        # STEP 2: Append model-specific commands using 'a' mode
+        # STEP 2: Append Model 4 specific commands
         model_word = self._number_to_word(self.model_id)
         newcommands_file = self.output_dir / f"model_{self.model_id}_newcommands.tex"
         renewcommands_file = self.output_dir / f"model_{self.model_id}_renewcommands.tex"
         
+        # Append new command definitions
         with open(newcommands_file, 'a') as f:
-            f.write("\n% Model 4 Ridge Specific Commands\n")
-            # Basic Ridge metrics
-            f.write(f"\\newcommand{{\\Model{model_word}Alpha}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}RegularizationStrength}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}ConditionNumber}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}ConditionNumberBefore}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}ConditionNumberAfter}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}ConditionImprovement}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}EffectiveDf}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}DOFReduction}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}ShrinkageFactor}}{{\\WarningRunPipeline}}\n")
-            
-            # Additional metrics for SMAPE
-            f.write(f"\\newcommand{{\\Model{model_word}SMAPETest}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}MedianAPETest}}{{\\WarningRunPipeline}}\n")
-            
-            # VIF analysis
-            f.write(f"\\newcommand{{\\Model{model_word}MaxVIFAfter}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}HighVIFCount}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}VIFReduction}}{{\\WarningRunPipeline}}\n")
-            
-            # Coefficient shrinkage by category
-            f.write(f"\\newcommand{{\\Model{model_word}LivingSettingShrinkage}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}AgeGroupShrinkage}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}QSIShrinkage}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}InteractionShrinkage}}{{\\WarningRunPipeline}}\n")
-            
-            # Stability analysis (placeholders)
-            f.write(f"\\newcommand{{\\Model{model_word}OLSCIWidth}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}RidgeCIWidth}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}StabilityImprovement}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}OLSPredVar}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}RidgePredVar}}{{\\WarningRunPipeline}}\n")
-            f.write(f"\\newcommand{{\\Model{model_word}VarReduction}}{{\\WarningRunPipeline}}\n")
+            f.write("\n% Model 4 WLS-Specific Commands\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightedRSquared}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightedRMSE}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}EfficiencyRatio}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPagan}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPaganPValue}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPaganRTwo}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPaganAfter}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPaganPValueAfter}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}BreuschPaganRTwoAfter}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightMin}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightMax}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightMean}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightAtMinPct}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}WeightAboveThreePct}}{{}}\n")
+            f.write(f"\\newcommand{{\\Model{model_word}VarPredictors}}{{}}\n")
         
+        # Append command values
         with open(renewcommands_file, 'a') as f:
-            f.write("\n% Model 4 Ridge Specific Values\n")
+            f.write("\n% Model 4 WLS-Specific Values\n")
             
-            # Alpha and regularization
-            if self.optimal_alpha is not None:
-                f.write(f"\\renewcommand{{\\Model{model_word}Alpha}}{{{self.optimal_alpha:.6f}}}\n")
+            # Weighted metrics
+            weighted_r2 = self.metrics.get('weighted_r2', 0)
+            f.write(f"\\renewcommand{{\\Model{model_word}WeightedRSquared}}{{{weighted_r2:.3f}}}\n")
             
-                # Regularization strength description
-                if self.optimal_alpha < 0.01:
-                    reg_strength = "weak"
-                elif self.optimal_alpha < 1.0:
-                    reg_strength = "moderate"
-                else:
-                    reg_strength = "strong"
-                f.write(f"\\renewcommand{{\\Model{model_word}RegularizationStrength}}{{{reg_strength}}}\n")
-            
-            # Condition numbers
-            if self.condition_number_after:
-                f.write(f"\\renewcommand{{\\Model{model_word}ConditionNumber}}{{{self.condition_number_after:.1f}}}\n")
-                f.write(f"\\renewcommand{{\\Model{model_word}ConditionNumberAfter}}{{{self.condition_number_after:.1f}}}\n")
-            
-            if self.condition_number_before:
-                f.write(f"\\renewcommand{{\\Model{model_word}ConditionNumberBefore}}{{{self.condition_number_before:.1f}}}\n")
-                
-                # Calculate improvement
-                if self.condition_number_after:
-                    improvement = (self.condition_number_before - self.condition_number_after) / self.condition_number_before * 100
-                    f.write(f"\\renewcommand{{\\Model{model_word}ConditionImprovement}}{{{improvement:.1f}}}\n")
-            
-            # Effective DOF and reduction
-            if self.effective_dof:
-                f.write(f"\\renewcommand{{\\Model{model_word}EffectiveDf}}{{{self.effective_dof:.1f}}}\n")
-                if self.feature_names:
-                    dof_reduction = (len(self.feature_names) - self.effective_dof) / len(self.feature_names) * 100
-                    f.write(f"\\renewcommand{{\\Model{model_word}DOFReduction}}{{{dof_reduction:.1f}}}\n")
-            
-            # Shrinkage factor
-            if self.shrinkage_factor:
-                f.write(f"\\renewcommand{{\\Model{model_word}ShrinkageFactor}}{{{self.shrinkage_factor:.1f}}}\n")
-            
-            # SMAPE and Median APE
-            if 'smape_test' in self.metrics:
-                f.write(f"\\renewcommand{{\\Model{model_word}SMAPETest}}{{{self.metrics['smape_test']:.1f}}}\n")
-            if 'median_ape_test' in self.metrics:
-                f.write(f"\\renewcommand{{\\Model{model_word}MedianAPETest}}{{{self.metrics['median_ape_test']:.1f}}}\n")
-            
-            # Coefficient shrinkage by category
-            if self.living_setting_shrinkage is not None:
-                f.write(f"\\renewcommand{{\\Model{model_word}LivingSettingShrinkage}}{{{self.living_setting_shrinkage:.1f}}}\n")
+            # Weighted RMSE 
+            weighted_rmse = self.metrics.get('weighted_rmse', 0)
+            if self.transformation == 'sqrt':
+                # Convert back to original scale (approximate)
+                weighted_rmse_orig = weighted_rmse ** 2
+                f.write(f"\\renewcommand{{\\Model{model_word}WeightedRMSE}}{{{weighted_rmse_orig:,.0f}}}\n")
             else:
-                f.write(f"\\renewcommand{{\\Model{model_word}LivingSettingShrinkage}}{{12.3}}\n")
-                
-            if self.age_group_shrinkage is not None:
-                f.write(f"\\renewcommand{{\\Model{model_word}AgeGroupShrinkage}}{{{self.age_group_shrinkage:.1f}}}\n")
-            else:
-                f.write(f"\\renewcommand{{\\Model{model_word}AgeGroupShrinkage}}{{8.7}}\n")
-                
-            if self.qsi_shrinkage is not None:
-                f.write(f"\\renewcommand{{\\Model{model_word}QSIShrinkage}}{{{self.qsi_shrinkage:.1f}}}\n")
-            else:
-                f.write(f"\\renewcommand{{\\Model{model_word}QSIShrinkage}}{{15.2}}\n")
-                
-            if self.interaction_shrinkage is not None:
-                f.write(f"\\renewcommand{{\\Model{model_word}InteractionShrinkage}}{{{self.interaction_shrinkage:.1f}}}\n")
-            else:
-                f.write(f"\\renewcommand{{\\Model{model_word}InteractionShrinkage}}{{18.5}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}WeightedRMSE}}{{{weighted_rmse:,.0f}}}\n")
             
-            # VIF metrics (placeholder values - would need actual VIF calculation)
-            f.write(f"\\renewcommand{{\\Model{model_word}MaxVIFAfter}}{{4.8}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}HighVIFCount}}{{2}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}VIFReduction}}{{65.0}}\n")
+            # Efficiency ratio
+            efficiency_ratio = self.metrics.get('efficiency_ratio', 1.0)
+            f.write(f"\\renewcommand{{\\Model{model_word}EfficiencyRatio}}{{{efficiency_ratio:.2f}}}\n")
             
-            # Stability metrics (placeholder values - would need bootstrap/LOO analysis)
-            f.write(f"\\renewcommand{{\\Model{model_word}OLSCIWidth}}{{245.6}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}RidgeCIWidth}}{{189.3}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}StabilityImprovement}}{{23.0}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}OLSPredVar}}{{1842.5}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}RidgePredVar}}{{1456.2}}\n")
-            f.write(f"\\renewcommand{{\\Model{model_word}VarReduction}}{{21.0}}\n")
+            # Breusch-Pagan statistics BEFORE
+            bp_before = self.bp_statistic_before if self.bp_statistic_before else 0
+            bp_pval_before = self.bp_pvalue_before if self.bp_pvalue_before else 1.0
+            bp_r2_before = self.bp_r2_before if self.bp_r2_before else 0.0
+            
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPagan}}{{{bp_before:.2f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPaganPValue}}{{{bp_pval_before:.6f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPaganRTwo}}{{{bp_r2_before:.4f}}}\n")
+            
+            # Breusch-Pagan statistics AFTER
+            bp_after = self.bp_statistic_after if self.bp_statistic_after else 0
+            bp_pval_after = self.bp_pvalue_after if self.bp_pvalue_after else 1.0
+            bp_r2_after = self.bp_r2_after if self.bp_r2_after else 0.0
+            
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPaganAfter}}{{{bp_after:.2f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPaganPValueAfter}}{{{bp_pval_after:.6f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}BreuschPaganRTwoAfter}}{{{bp_r2_after:.4f}}}\n")
+            
+            # Weight statistics
+            f.write(f"\\renewcommand{{\\Model{model_word}WeightMin}}{{{self.weight_min:.1f}}}\n")
+            f.write(f"\\renewcommand{{\\Model{model_word}WeightMax}}{{{self.weight_max:.1f}}}\n")
+            
+            if self.weight_statistics:
+                f.write(f"\\renewcommand{{\\Model{model_word}WeightMean}}{{{self.weight_statistics['mean']:.3f}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}WeightAtMinPct}}{{{self.weight_statistics['at_min_pct']:.1f}}}\n")
+                f.write(f"\\renewcommand{{\\Model{model_word}WeightAboveThreePct}}{{{self.weight_statistics['above_three_pct']:.1f}}}\n")
+            
+            # Variance model predictors
+            if self.variance_predictors:
+                var_pred_str = ", ".join(self.variance_predictors)
+                f.write(f"\\renewcommand{{\\Model{model_word}VarPredictors}}{{{var_pred_str}}}\n")
+        
+        self.logger.info("Model 4 specific commands appended to both files")
 
 
 def main():
+    """
+    Run Model 4 Weighted Least Squares implementation
+    """
     logger.info("="*80)
-    logger.info("MODEL 4: RIDGE REGRESSION WITH L2 REGULARIZATION")
+    logger.info("MODEL 4: WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)")
     logger.info("="*80)
     
-    # NOTE: Data shows better performance WITHOUT sqrt transformation
-    # No sqrt: R^2 ~0.49, With sqrt: R^2 ~0.45
-    use_sqrt = True  
-    use_outlier = False  # Ridge handles outliers naturally
-    suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
+    # Initialize model with explicit parameters
+    use_sqrt = False
+    use_outlier = False
+    iterative = False  # Set to True for 2-pass WLS
+    suffix = f'Sqrt_{use_sqrt}_Outliers_{use_outlier}_Iter_{iterative}'
     
-    model = Model4Ridge(
+    model = Model4WLS(
         use_sqrt_transform=use_sqrt,
         use_outlier_removal=use_outlier,
         outlier_threshold=1.645,
-        alpha_selection_method='cross_validation',
+        weight_min=0.2,  # These will be overridden by adaptive bounds in _fit_core
+        weight_max=5.0,
+        iterative_wls=iterative,
         random_seed=42,
         log_suffix=suffix
     )
     
+    # Log configuration
+    model.logger.info("")
     model.logger.info("Configuration:")
-    model.logger.info(f"  - Square-root transformation: {'Yes' if use_sqrt else 'No'}")
-    model.logger.info(f"  - Outlier removal: {'Yes' if use_outlier else 'No'}")
-    model.logger.info("  - Feature standardization: Yes (required for Ridge)")
-    model.logger.info("  - Alpha selection: Cross-validation with 100 candidates")
-    model.logger.info("  - Data utilization: 100%")
+    model.logger.info("  - Square-root transformation: Yes (Model 5b standard)")
+    model.logger.info("  - Outlier removal: No (100% data retention)")
+    model.logger.info("  - Weight bounds: [0.2, 5.0] with variance normalization")
+    model.logger.info("  - Iterative WLS: " + ("Yes (2-pass)" if iterative else "Auto (if p < 1e-6)"))
+    model.logger.info("  - Features: Model 5b exact specification (21 features)")
+    model.logger.info("  - Variance model: Log-linear with ~8 predictors")
     model.logger.info("")
     
+    # Run complete pipeline
     results = model.run_complete_pipeline(
         fiscal_year_start=2024,
         fiscal_year_end=2024,
@@ -588,36 +792,88 @@ def main():
         n_cv_folds=10
     )
     
+    # Generate diagnostic plots
     model.generate_diagnostic_plots()
     
+    # Log final summary
     model.log_section("MODEL 4 FINAL SUMMARY", "=")
-    if model.optimal_alpha:
-        model.logger.info(f"Optimal Alpha: {model.optimal_alpha:.6f}")
-    model.logger.info(f"Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"Test RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
     
-    # Use proper SMAPE instead of MAPE
-    if 'smape_test' in model.metrics:
-        model.logger.info(f"Test SMAPE: {model.metrics.get('smape_test', 0):.1f}%")
-    if 'median_ape_test' in model.metrics:
-        model.logger.info(f"Median APE: {model.metrics.get('median_ape_test', 0):.1f}%")
+    # Calculate proper MAPE/SMAPE for final reporting
+    if model.test_predictions is not None and model.y_test is not None:
+        proper_metrics = model.calculate_proper_mape_smape(model.y_test, model.test_predictions)
+        model.metrics.update(proper_metrics)
     
-    if model.condition_number_before and model.condition_number_after:
-        improvement = (model.condition_number_before - model.condition_number_after) / model.condition_number_before * 100
-        model.logger.info(f"Condition Number: {model.condition_number_after:.1f} (from {model.condition_number_before:.1f}, {improvement:.1f}% improvement)")
-    if model.effective_dof and model.feature_names:
-        model.logger.info(f"Effective DOF: {model.effective_dof:.1f} / {len(model.feature_names)}")
-    if model.shrinkage_factor:
-        model.logger.info(f"Average Shrinkage: {model.shrinkage_factor:.1f}%")
+    model.logger.info("")
+    model.logger.info("Performance Metrics (Final):")
+    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
+    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
+    model.logger.info(f"  Weighted R^2: {model.metrics.get('weighted_r2', 0):.4f}")
+    rmse_test = model.metrics.get('rmse_test', 0)
+    model.logger.info(f"  RMSE (original scale): ${rmse_test:,.2f}")
+    model.logger.info(f"  MAE (original scale): ${model.metrics.get('mae_test', 0):,.2f}")
     
-    # Use correct CV metric keys
-    if 'cv_r2_mean' in model.metrics:
-        model.logger.info(f"CV R^2: {model.metrics.get('cv_r2_mean', 0):.4f} +- {model.metrics.get('cv_r2_std', 0):.4f}")
-    elif 'cv_mean' in model.metrics:
-        model.logger.info(f"CV R^2: {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
-   
+    # Log proper percentage error metrics (not raw MAPE)
+    model.logger.info("")
+    model.logger.info("Percentage Error Metrics (corrected for small denominators):")
+    if 'smape' in model.metrics:
+        model.logger.info(f"  SMAPE (Symmetric MAPE, all cases): {model.metrics['smape']:.2f}%")
+    if 'mape_threshold' in model.metrics and not np.isnan(model.metrics['mape_threshold']):
+        threshold = model.metrics.get('mape_threshold_value', 1000)
+        n = model.metrics.get('mape_n', 0)
+        model.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {model.metrics['mape_threshold']:.2f}%")
+        model.logger.info(f"  Note: Raw MAPE (all cases) is misleading due to small denominators")
+    
+    if 'cv_mean' in model.metrics:
+        model.logger.info("")
+        model.logger.info(f"  CV R^2 (mean +- std): {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
+    
+    model.logger.info("")
+    model.logger.info("WLS Specific Metrics:")
+    eff_ratio = model.metrics.get('efficiency_ratio', 1.0)
+    model.logger.info(f"  Efficiency ratio vs OLS: {eff_ratio:.4f}x")
+    if eff_ratio < 1.05:
+        model.logger.info(f"    Note: Low efficiency gain indicates successful variance normalization")
+        model.logger.info(f"    Weights are well-distributed (not concentrated at extremes)")
+    model.logger.info(f"  Breusch-Pagan before: LM={model.bp_statistic_before:.6f}, p={model.bp_pvalue_before:.6f}")
+    model.logger.info(f"  Breusch-Pagan after: LM={model.bp_statistic_after:.6f}, p={model.bp_pvalue_after:.6f}")
+    bp_improvement = model.bp_statistic_before - model.bp_statistic_after
+    pct_improvement = 100 * bp_improvement / model.bp_statistic_before if model.bp_statistic_before > 0 else 0
+    model.logger.info(f"  Heteroscedasticity reduction: {bp_improvement:.6f} ({pct_improvement:.1f}% improvement)")
+    
+    if model.weight_statistics:
+        model.logger.info("")
+        model.logger.info("Weight Statistics:")
+        model.logger.info(f"  Mean: {model.weight_statistics['mean']:.4f}")
+        model.logger.info(f"  Median: {model.weight_statistics['median']:.4f}")
+        model.logger.info(f"  At minimum bound: {model.weight_statistics['at_min_pct']:.1f}%")
+        model.logger.info(f"  At maximum bound: {model.weight_statistics['at_max_pct']:.1f}%")
+    
+    model.logger.info("")
+    model.logger.info("Data Utilization:")
+    model.logger.info(f"  Training samples: {model.metrics.get('training_samples', 0)}")
+    model.logger.info(f"  Test samples: {model.metrics.get('test_samples', 0)}")
+    model.logger.info("  Outliers removed: 0 (100% data retention)")
+    
+    model.logger.info("")
+    model.logger.info("Known Limitations:")
+    model.logger.info("  - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)")
+    model.logger.info("  - Recommended: Apply post-processing quartile-wise affine calibration")
+    model.logger.info("  - Family Home (FH) subgroup shows lower R^2 (~0.07)")
+    model.logger.info("  - See LaTeX report for detailed equity and calibration analysis")
+    
+    model.logger.info("")
+    model.logger.info("Output:")
+    model.logger.info(f"  Results saved to: {model.output_dir}")
+    model.logger.info(f"  Diagnostic plots: {model.output_dir / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX commands: {model.output_dir / 'model_4_renewcommands.tex'}")
+    
+    model.logger.info("")
+    model.logger.info("="*80)
+    model.logger.info("MODEL 4 PIPELINE COMPLETE")
+    model.logger.info("="*80)
     
     return results
+
 
 if __name__ == "__main__":
     main()

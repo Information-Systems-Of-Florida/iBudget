@@ -1,0 +1,1146 @@
+2025-10-12 18:23:39 - MODEL_4 - INFO - 
+2025-10-12 18:23:39 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:39 - MODEL_4 - INFO - INITIALIZING MODEL 4: WEIGHTED-LEAST-SQUARES
+2025-10-12 18:23:39 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:39 - MODEL_4 - INFO - Output directory: ..\..\report\models\model_4
+2025-10-12 18:23:39 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:39 - MODEL_4 - INFO - Configuration:
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Outlier removal: False
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Transformation: sqrt
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Random seed: 42
+2025-10-12 18:23:39 - MODEL_4 - INFO -   Weight bounds: [0.2, 5.0]
+2025-10-12 18:23:39 - MODEL_4 - INFO -   Iterative WLS: False
+2025-10-12 18:23:39 - MODEL_4 - INFO -   Transformation: sqrt
+2025-10-12 18:23:39 - MODEL_4 - INFO - 
+2025-10-12 18:23:39 - MODEL_4 - INFO - Configuration:
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Square-root transformation: Yes (Model 5b standard)
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Outlier removal: No (100% data retention)
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Weight bounds: [0.2, 5.0] with variance normalization
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Iterative WLS: Auto (if p < 1e-6)
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Features: Model 5b exact specification (21 features)
+2025-10-12 18:23:39 - MODEL_4 - INFO -   - Variance model: Log-linear with ~8 predictors
+2025-10-12 18:23:39 - MODEL_4 - INFO - 
+2025-10-12 18:23:39 - MODEL_4 - INFO - 
+2025-10-12 18:23:39 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:39 - MODEL_4 - INFO - STARTING PIPELINE: WEIGHTED-LEAST-SQUARES
+2025-10-12 18:23:39 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:39 - MODEL_4 - INFO - 
+2025-10-12 18:23:39 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:39 - MODEL_4 - INFO - LOADING DATA: FY2024-2024
+2025-10-12 18:23:39 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:39 - MODEL_4 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-12 18:23:39 - MODEL_4 - INFO - Found 47259 records in 'data' key
+2025-10-12 18:23:41 - MODEL_4 - INFO - FY2024 Summary:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   - Processed: 34,173
+2025-10-12 18:23:41 - MODEL_4 - INFO -   - Skipped (Usable=0): 0
+2025-10-12 18:23:41 - MODEL_4 - INFO -   - Skipped (no cost): 13,086
+2025-10-12 18:23:41 - MODEL_4 - INFO -   - Skipped (errors): 0
+2025-10-12 18:23:41 - MODEL_4 - INFO - Total loaded: 34,173 usable records
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - DATA SPLIT
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - Training samples: 27,339
+2025-10-12 18:23:41 - MODEL_4 - INFO - Test samples: 6,834
+2025-10-12 18:23:41 - MODEL_4 - INFO - Split ratio: 20.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FEATURE PREPARATION
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - Features prepared: 21 total features from 27339 records
+2025-10-12 18:23:41 - MODEL_4 - INFO - Feature breakdown:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Numeric: 1 features [bsum]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-12 18:23:41 - MODEL_4 - INFO - Feature counts by type:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   numeric: 1
+2025-10-12 18:23:41 - MODEL_4 - INFO -   categorical: 5
+2025-10-12 18:23:41 - MODEL_4 - INFO -   binary: 2
+2025-10-12 18:23:41 - MODEL_4 - INFO -   qsi: 10
+2025-10-12 18:23:41 - MODEL_4 - INFO -   interactions: 3
+2025-10-12 18:23:41 - MODEL_4 - INFO - Features prepared: 21 total features from 6834 records
+2025-10-12 18:23:41 - MODEL_4 - INFO - Feature breakdown:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Binary: 2 features [Age21_30, Age31Plus]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Numeric: 1 features [bsum]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   QSI: 10 features [Q16, Q18, Q20, Q21, Q23, Q28, Q33, Q34, Q36, Q43]
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Interactions: 3 features [FHFSum, SLFSum, SLBSum]
+2025-10-12 18:23:41 - MODEL_4 - INFO - Feature counts by type:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   numeric: 1
+2025-10-12 18:23:41 - MODEL_4 - INFO -   categorical: 5
+2025-10-12 18:23:41 - MODEL_4 - INFO -   binary: 2
+2025-10-12 18:23:41 - MODEL_4 - INFO -   qsi: 10
+2025-10-12 18:23:41 - MODEL_4 - INFO -   interactions: 3
+2025-10-12 18:23:41 - MODEL_4 - INFO - Features prepared: 21 features
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Training shape: (27339, 21)
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Test shape: (6834, 21)
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Target range: $31.25 - $346,560.68
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Target mean: $44,675.37
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Target median: $32,279.60
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 2460.998826
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.100020
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Mean: 1.3991
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median: 1.0865
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Range: [0.2921, 5.0000]
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At maximum bound: 0.1%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 1569.509804
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.063788
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Improvement: 891.489021
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median weight change: 0.259548
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1569.509804 -> LM2=2325.082243
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Final BP (single-pass): LM=1569.509804, p=0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5435
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.2068
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.17x
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   bsum: 0.0699
+2025-10-12 18:23:41 - MODEL_4 - INFO -   ILSL: 58.2130
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH1: 107.3119
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH2: 86.3354
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH3: 92.4498
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH4: 64.0849
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age21_30: 72.3744
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age31Plus: 71.6611
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q16: 3.0121
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q18: 9.6911
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q20: 5.6049
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q21: 7.4240
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q23: 15.1703
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q28: 4.5512
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q33: 2.5427
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q34: 1.9996
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q36: 4.3830
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q43: 3.0126
+2025-10-12 18:23:41 - MODEL_4 - INFO -   FHFSum: -1.7938
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLFSum: -1.5274
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLBSum: 3.0072
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Intercept: -3.4046
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Fold 1: R^2 = 0.4370
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 2539.653292
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.103217
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Mean: 1.4128
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median: 1.0644
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Range: [0.2938, 5.0000]
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 1547.546143
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062896
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Improvement: 992.107149
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median weight change: 0.282873
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1547.546143 -> LM2=2394.007591
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Final BP (single-pass): LM=1547.546143, p=0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5450
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Weighted RMSE (training scale): 71.8792
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   bsum: 0.1292
+2025-10-12 18:23:41 - MODEL_4 - INFO -   ILSL: 59.8417
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH1: 108.6130
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH2: 88.3914
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH3: 94.5036
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH4: 67.9068
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age21_30: 72.2220
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age31Plus: 71.3266
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q16: 3.2879
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q18: 9.7581
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q20: 5.1068
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q21: 7.2455
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q23: 15.0675
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q28: 4.7637
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q33: 2.2156
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q34: 1.3711
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q36: 4.4483
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q43: 3.1417
+2025-10-12 18:23:41 - MODEL_4 - INFO -   FHFSum: -1.7195
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLFSum: -1.5676
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLBSum: 3.0458
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Intercept: -3.6134
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Fold 2: R^2 = 0.4305
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 2515.187125
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.102223
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Mean: 1.4095
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median: 1.0906
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Range: [0.3006, 5.0000]
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 1548.370500
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062929
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Improvement: 966.816625
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median weight change: 0.266527
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1548.370500 -> LM2=2376.516983
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Final BP (single-pass): LM=1548.370500, p=0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5401
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.1665
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   bsum: 0.0731
+2025-10-12 18:23:41 - MODEL_4 - INFO -   ILSL: 59.1671
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH1: 108.6440
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH2: 87.8005
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH3: 95.0699
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH4: 66.5541
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age21_30: 71.6716
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age31Plus: 71.5413
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q16: 3.3526
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q18: 9.8932
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q20: 5.3692
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q21: 7.0878
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q23: 14.8603
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q28: 4.2608
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q33: 2.3143
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q34: 2.1253
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q36: 4.1305
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q43: 2.9845
+2025-10-12 18:23:41 - MODEL_4 - INFO -   FHFSum: -1.6899
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLFSum: -1.5695
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLBSum: 3.1024
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Intercept: -2.6706
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Fold 3: R^2 = 0.4728
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 2541.296268
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.103284
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Mean: 1.4174
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median: 1.0785
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Range: [0.2968, 5.0000]
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At maximum bound: 0.1%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 1530.404427
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062199
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Improvement: 1010.891842
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median weight change: 0.263210
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1530.404427 -> LM2=2401.489628
+2025-10-12 18:23:41 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Final BP (single-pass): LM=1530.404427, p=0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5403
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.0346
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:41 - MODEL_4 - INFO -   bsum: -0.0628
+2025-10-12 18:23:41 - MODEL_4 - INFO -   ILSL: 60.1233
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH1: 108.5571
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH2: 89.8521
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH3: 94.0751
+2025-10-12 18:23:41 - MODEL_4 - INFO -   RH4: 66.8766
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age21_30: 71.8850
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Age31Plus: 70.5605
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q16: 3.2516
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q18: 9.5334
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q20: 5.4002
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q21: 7.3722
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q23: 15.4193
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q28: 4.3192
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q33: 2.2643
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q34: 1.7893
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q36: 4.1873
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Q43: 2.8694
+2025-10-12 18:23:41 - MODEL_4 - INFO -   FHFSum: -1.7126
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLFSum: -1.5896
+2025-10-12 18:23:41 - MODEL_4 - INFO -   SLBSum: 3.1749
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Intercept: -3.1243
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Fold 4: R^2 = 0.4759
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:41 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:41 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     LM statistic: 2520.711714
+2025-10-12 18:23:41 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:41 - MODEL_4 - INFO -     R^2 (auxiliary): 0.102447
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:41 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Mean: 1.4130
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Median: 1.0905
+2025-10-12 18:23:41 - MODEL_4 - INFO -     Range: [0.3008, 5.0000]
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:41 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:41 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1532.513326
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062285
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 988.198388
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.278702
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1532.513326 -> LM2=2397.788528
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1532.513326, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5441
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 71.9615
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0047
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 58.6063
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 106.9283
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 85.9926
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 91.9199
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 64.6140
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 71.0032
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 70.0499
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.3613
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 10.1366
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.7495
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.7969
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.4484
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.4999
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 2.3322
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 2.4124
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 4.2530
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 3.0104
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7568
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.5405
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.1686
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -2.6182
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 5: R^2 = 0.4622
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2456.327935
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.099830
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.4059
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0775
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.3096, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.1%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1557.765398
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.063311
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 898.562537
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.267379
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1557.765398 -> LM2=2309.631419
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1557.765398, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5399
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.1636
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.17x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0796
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 59.5422
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 108.7793
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 88.7351
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 95.2842
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 66.5811
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 72.3295
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 71.7100
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.2876
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 9.7350
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.6890
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.6963
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.7376
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.6005
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 2.6522
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 1.8918
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 3.9268
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 3.0331
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7159
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.5180
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 2.9678
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -5.0778
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 6: R^2 = 0.4646
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2479.884897
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.100788
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.4124
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0860
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.2994, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1574.543849
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.063993
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 905.341048
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.271143
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1574.543849 -> LM2=2340.060579
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1574.543849, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5409
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.3625
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.17x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0959
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 58.6787
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 107.8711
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 88.5627
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 93.0787
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 64.5979
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 72.2356
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 71.5950
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.5481
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 9.8886
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.9444
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.5612
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.1168
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.1153
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 2.1206
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 2.1202
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 4.1880
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 2.9942
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7675
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.5819
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.1181
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -3.4240
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 7: R^2 = 0.4646
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2518.825952
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.102370
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.4113
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0750
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.3041, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.1%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1547.848189
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062908
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 970.977763
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.272622
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1547.848189 -> LM2=2371.874086
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1547.848189, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5408
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 71.9493
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0640
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 59.3543
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 108.0019
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 92.2649
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 93.0621
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 64.7761
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 71.6114
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 70.7902
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 2.8529
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 9.6928
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.4103
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 7.0360
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.7034
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.1322
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 1.8855
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 2.1506
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 4.3587
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 3.3162
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7079
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.5096
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.0438
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -3.7274
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 8: R^2 = 0.4715
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2483.893235
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.100951
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.3980
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0654
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.3155, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1549.035241
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.062956
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 934.857994
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.275652
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1549.035241 -> LM2=2349.244201
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1549.035241, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5408
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.2560
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.17x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0618
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 57.9167
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 106.3738
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 89.1159
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 90.9053
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 63.9253
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 71.5377
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 70.7670
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.6961
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 10.2103
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.7196
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.8652
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.6233
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.0324
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 1.9448
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 1.6182
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 4.0329
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 2.7689
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.8702
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.6060
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.1803
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -2.5758
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 9: R^2 = 0.4677
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2517.641430
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.102318
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.4176
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0727
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.3031, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1569.306790
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.063777
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 948.334640
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.279561
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1569.306790 -> LM2=2378.092124
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1569.306790, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5405
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.2896
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.18x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: -0.0263
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 59.4534
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 108.5880
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 92.2314
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 92.8051
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 66.4972
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 72.6717
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 71.3264
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.7176
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 9.6474
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.9930
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.8457
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 14.8732
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.1507
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 2.9759
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 2.2278
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 3.8078
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 2.8998
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7533
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.6146
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.2056
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -2.6786
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Fold 10: R^2 = 0.4805
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - Cross-validation summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Mean R^2: 0.4627
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Std R^2: 0.0155
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Min R^2: 0.4305 (Fold 2)
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Max R^2: 0.4805 (Fold 10)
+2025-10-12 18:23:42 - MODEL_4 - INFO -   95% CI: [0.4324, 0.4931]
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - MODEL TRAINING
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 1: OLS for variance estimation
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 2779.365162
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.101663
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Variance model predictors (10 features):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Intercept
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - ILSL
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH1
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH2
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH3
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - RH4
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - bsum
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age21_30
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - Age31Plus
+2025-10-12 18:23:42 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weight statistics (initial):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Mean: 1.4097
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median: 1.0729
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Range: [0.3025, 5.0000]
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -     At maximum bound: 0.2%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Stage 2: Weighted Least Squares
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Breusch-Pagan test (after WLS - on Pearson residuals):
+2025-10-12 18:23:42 - MODEL_4 - INFO -     LM statistic: 1722.423004
+2025-10-12 18:23:42 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2 (auxiliary): 0.063002
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Degrees of freedom: 21
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Improvement: 1056.942158
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Attempting second FGLS pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Median weight change: 0.273880
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Applying second pass...
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1722.423004 -> LM2=2626.053761
+2025-10-12 18:23:42 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Final BP (single-pass): LM=1722.423004, p=0.000000
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+  Weighted R^2: 0.5416
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Weighted RMSE (training scale): 72.1381
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.17x
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+Final WLS coefficient summary:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   bsum: 0.0497
+2025-10-12 18:23:42 - MODEL_4 - INFO -   ILSL: 59.2078
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH1: 108.0447
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH2: 88.9522
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH3: 93.3761
+2025-10-12 18:23:42 - MODEL_4 - INFO -   RH4: 65.7044
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age21_30: 71.9355
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Age31Plus: 71.1069
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q16: 3.3317
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q18: 9.8052
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q20: 5.5810
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q21: 6.9759
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q23: 15.3072
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q28: 4.3344
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q33: 2.3199
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q34: 1.9785
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q36: 4.1662
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Q43: 3.0020
+2025-10-12 18:23:42 - MODEL_4 - INFO -   FHFSum: -1.7416
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLFSum: -1.5599
+2025-10-12 18:23:42 - MODEL_4 - INFO -   SLBSum: 3.1028
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Intercept: -3.3066
+2025-10-12 18:23:42 - MODEL_4 - INFO - Model training complete
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - MAKING PREDICTIONS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - Predictions complete
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - CALCULATING METRICS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - Training R^2: 0.4637
+2025-10-12 18:23:42 - MODEL_4 - INFO - Test R^2: 0.4476
+2025-10-12 18:23:42 - MODEL_4 - INFO - RMSE (original): $33,193.60
+2025-10-12 18:23:42 - MODEL_4 - INFO - RMSE (sqrt scale): $79.05
+2025-10-12 18:23:42 - MODEL_4 - INFO - MAE: $21,905.79
+2025-10-12 18:23:42 - MODEL_4 - INFO - MAPE: 346.65%
+2025-10-12 18:23:42 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4627 +- 0.0155
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - SUBGROUP ANALYSIS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - Calculated metrics for 10 subgroups
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO -   living_FH:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 3,767
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.0675
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $30,753.97
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-7,000.76
+2025-10-12 18:23:42 - MODEL_4 - INFO -   living_ILSL:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 893
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.2340
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $35,281.29
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-8,384.73
+2025-10-12 18:23:42 - MODEL_4 - INFO -   living_RH1-4:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 2,174
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.2198
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $36,241.10
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-3,932.93
+2025-10-12 18:23:42 - MODEL_4 - INFO -   age_AgeUnderTwentyOne:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 694
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.5041
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $26,273.58
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-3,954.82
+2025-10-12 18:23:42 - MODEL_4 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 1,797
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.4166
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $37,318.18
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-6,727.96
+2025-10-12 18:23:42 - MODEL_4 - INFO -   age_AgeThirtyOnePlus:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 4,343
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: 0.4291
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $32,361.04
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-6,349.26
+2025-10-12 18:23:42 - MODEL_4 - INFO -   cost_QOneLow:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 1,709
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: -10.0000
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $21,064.52
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $+15,769.66
+2025-10-12 18:23:42 - MODEL_4 - INFO -   cost_QTwo:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 1,708
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: -3.3837
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $16,157.69
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $+4,329.68
+2025-10-12 18:23:42 - MODEL_4 - INFO -   cost_QThree:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 1,708
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: -3.7143
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $25,342.02
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-10,123.13
+2025-10-12 18:23:42 - MODEL_4 - INFO -   cost_QFourHigh:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     N: 1,709
+2025-10-12 18:23:42 - MODEL_4 - INFO -     R^2: -1.3838
+2025-10-12 18:23:42 - MODEL_4 - INFO -     RMSE: $55,312.71
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Bias: $-34,795.05
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - VARIANCE ANALYSIS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - Variance metrics calculated
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Coefficient of Variation (Predicted): 0.8151
+2025-10-12 18:23:42 - MODEL_4 - INFO -   95% Prediction Interval Width: $63,912.37
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Actual-Predicted Correlation: 0.6834
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - POPULATION SCENARIOS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - Calculated 4 population scenarios
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO -   Base budget: $1,200,000,000
+2025-10-12 18:23:42 - MODEL_4 - INFO -   currentbaseline:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Clients served: 31,570
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Avg allocation: $38,010.50
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist change: +0
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist %: +0.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -   modelbalanced:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Clients served: 32,201
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Avg allocation: $37,250.29
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist change: +631
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist %: +2.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -   modelefficiency:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Clients served: 33,148
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Avg allocation: $36,109.98
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist change: +1,578
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist %: +5.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO -   categoryfocused:
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Clients served: 26,834
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Avg allocation: $44,852.39
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist change: -4,735
+2025-10-12 18:23:42 - MODEL_4 - INFO -     Waitlist %: -15.0%
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - GENERATING OUTPUTS
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - 
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - LATEX GENERATION
+2025-10-12 18:23:42 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:42 - MODEL_4 - INFO - LaTeX commands generated:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   - Newcommands file: ..\..\report\models\model_4\model_4_newcommands.tex
+2025-10-12 18:23:42 - MODEL_4 - INFO -     (87 placeholder commands)
+2025-10-12 18:23:42 - MODEL_4 - INFO -   - Renewcommands file: ..\..\report\models\model_4\model_4_renewcommands.tex
+2025-10-12 18:23:42 - MODEL_4 - INFO -     (87 value commands)
+2025-10-12 18:23:42 - MODEL_4 - INFO - Model 4 specific commands appended to both files
+2025-10-12 18:23:42 - MODEL_4 - INFO - Results saved:
+2025-10-12 18:23:42 - MODEL_4 - INFO -   - Metrics JSON: ..\..\report\models\model_4\metrics.json
+2025-10-12 18:23:42 - MODEL_4 - INFO -   - Predictions CSV: ..\..\report\models\model_4\predictions.csv
+2025-10-12 18:23:42 - MODEL_4 - INFO -     (6,834 predictions)
+2025-10-12 18:23:43 - MODEL_4 - INFO - Diagnostic plots saved to ..\..\report\models\model_4\diagnostic_plots.png
+2025-10-12 18:23:43 - MODEL_4 - INFO - 
+2025-10-12 18:23:43 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:43 - MODEL_4 - INFO - PIPELINE COMPLETE: WEIGHTED-LEAST-SQUARES
+2025-10-12 18:23:43 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:43 - MODEL_4 - INFO - 
+2025-10-12 18:23:43 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:43 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-12 18:23:43 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:43 - MODEL_4 - INFO - Training R^2: 0.4637
+2025-10-12 18:23:43 - MODEL_4 - INFO - Test R^2: 0.4476
+2025-10-12 18:23:43 - MODEL_4 - INFO - RMSE: $33,193.60
+2025-10-12 18:23:43 - MODEL_4 - INFO - MAE: $21,905.79
+2025-10-12 18:23:43 - MODEL_4 - INFO - MAPE: 346.65%
+2025-10-12 18:23:43 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4627 +- 0.0155
+2025-10-12 18:23:43 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:43 - MODEL_4 - INFO - 
+2025-10-12 18:23:43 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:43 - MODEL_4 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-12 18:23:43 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-12 18:23:44 - MODEL_4 - INFO - Diagnostic plots saved to: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\diagnostic_plots.png
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:44 - MODEL_4 - INFO - MODEL 4 FINAL SUMMARY
+2025-10-12 18:23:44 - MODEL_4 - INFO - ============================================================
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Performance Metrics (Final):
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Training R^2: 0.4637
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Test R^2: 0.4476
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Weighted R^2: 0.5416
+2025-10-12 18:23:44 - MODEL_4 - INFO -   RMSE (original scale): $33,193.60
+2025-10-12 18:23:44 - MODEL_4 - INFO -   MAE (original scale): $21,905.79
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Percentage Error Metrics (corrected for small denominators):
+2025-10-12 18:23:44 - MODEL_4 - INFO -   SMAPE (Symmetric MAPE, all cases): 75.97%
+2025-10-12 18:23:44 - MODEL_4 - INFO -   MAPE (costs >= $1,000, n=6,403): 218.91%
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Note: Raw MAPE (all cases) is misleading due to small denominators
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO -   CV R^2 (mean +- std): 0.4627 +- 0.0155
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - WLS Specific Metrics:
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.1744x
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Breusch-Pagan before: LM=2779.365162, p=0.000000
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Breusch-Pagan after: LM=1722.423004, p=0.000000
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Heteroscedasticity reduction: 1056.942158 (38.0% improvement)
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Weight Statistics:
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Mean: 1.4097
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Median: 1.0729
+2025-10-12 18:23:44 - MODEL_4 - INFO -   At minimum bound: 0.0%
+2025-10-12 18:23:44 - MODEL_4 - INFO -   At maximum bound: 0.2%
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Data Utilization:
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Training samples: 27339
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Test samples: 6834
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Outliers removed: 0 (100% data retention)
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Known Limitations:
+2025-10-12 18:23:44 - MODEL_4 - INFO -   - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)
+2025-10-12 18:23:44 - MODEL_4 - INFO -   - Recommended: Apply post-processing quartile-wise affine calibration
+2025-10-12 18:23:44 - MODEL_4 - INFO -   - Family Home (FH) subgroup shows lower R^2 (~0.07)
+2025-10-12 18:23:44 - MODEL_4 - INFO -   - See LaTeX report for detailed equity and calibration analysis
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - Output:
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Results saved to: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4
+2025-10-12 18:23:44 - MODEL_4 - INFO -   Diagnostic plots: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\diagnostic_plots.png
+2025-10-12 18:23:44 - MODEL_4 - INFO -   LaTeX commands: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\model_4_renewcommands.tex
+2025-10-12 18:23:44 - MODEL_4 - INFO - 
+2025-10-12 18:23:44 - MODEL_4 - INFO - ================================================================================
+2025-10-12 18:23:44 - MODEL_4 - INFO - MODEL 4 PIPELINE COMPLETE
+2025-10-12 18:23:44 - MODEL_4 - INFO - ================================================================================

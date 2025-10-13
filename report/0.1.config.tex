@@ -7,24 +7,51 @@
 \usepackage{longtable}
 \usepackage{morefloats}
 \usepackage{enumitem}
-\usepackage{xcolor}
 %\usepackage{tcolorbox}
 \usepackage{totpages}
 \usepackage{pdflscape}
 \usepackage{minted}
+\usepackage{xcolor}
+% Accessible colors
+    \definecolor{keywordblue}{HTML}{1A4D8F}     % navy blue
+    \definecolor{stringpurple}{HTML}{6A1B9A}    % deep violet
+    \definecolor{commentgray}{HTML}{5F6368}     % neutral gray
+    \definecolor{numberorange}{HTML}{E65100}    % dark orange
+    \definecolor{background}{HTML}{F9F9F9}      % light background
+% ======= High-contrast accessible colors =======
+    \definecolor{background}{HTML}{F8F8F8}       % soft gray background
+    \definecolor{textgray}{HTML}{202124}         % near-black text
+    %\definecolor{keywordblue}{HTML}{0033A0}      % strong deep blue (keywords)
+    \definecolor{keywordblue}{HTML}{005F9E}  % lighter blue, WCAG AA+ contrast on white    
+    \definecolor{stringorange}{HTML}{D35400}     % vivid dark orange (strings)
+    \definecolor{commentteal}{HTML}{00695C}      % deep teal (comments)
+    \definecolor{commentgreen}{HTML}{3B7A57}      % medium green (safe & accessible)    
+    \definecolor{numberpurple}{HTML}{5E35B1}     % strong purple (line numbers)
+    \definecolor{functionmagenta}{HTML}{C2185B}  % magenta (function names, optional)
+    \definecolor{framegray}{HTML}{BDBDBD}        % neutral frame lines
+
 \usepackage{listings}
-% Code listing settings
+\newcommand{\ListingFontSize}{\scriptsize}
+\lstset{basicstyle=\ttfamily\ListingFontSize} % or \scriptsize
+% Global style for code listings
+% ======= Listings style =======
 \lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    commentstyle=\color{green},
-    stringstyle=\color{red},
-    showstringspaces=false,
-    breaklines=true,
-    frame=single,
-    numbers=left,
-    numberstyle=\tiny\color{gray}
+  backgroundcolor=\color{background},
+  basicstyle=\ttfamily\ListingFontSize\color{textgray},
+  keywordstyle=\bfseries\color{keywordblue},
+  commentstyle=\itshape\color{commentgreen},
+  stringstyle=\color{stringorange},
+  numberstyle=\tiny\color{numberpurple},
+  identifierstyle=\color{textgray},
+  emphstyle=\color{functionmagenta},
+  frame=single,
+  rulecolor=\color{framegray},
+  numbers=left,
+  numbersep=6pt,
+  showstringspaces=false,
+  breaklines=true,
+  tabsize=4,
+  keepspaces=true
 }
 \usepackage{listingsutf8}
 
