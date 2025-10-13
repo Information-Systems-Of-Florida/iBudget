@@ -130,19 +130,19 @@ Age31Plus & Ages 31 and older & 1 if age 31+, 0 otherwise \\
 These are Model 5b's key innovation, capturing how functional and behavioral needs interact with living settings:
 
 \begin{itemize}
-    \item \textbf{FHFSum} = (Family Home indicator) × (Functional Sum)
+    \item \textbf{FHFSum} = (Family Home indicator) $\times$ (Functional Sum)
         \begin{itemize}
             \item Captures how functional needs translate to costs in family home settings
             \item Positive coefficient indicates additional functional support costs in family homes
         \end{itemize}
     
-    \item \textbf{SLFSum} = (Supported Living indicator) × (Functional Sum)
+    \item \textbf{SLFSum} = (Supported Living indicator) $\times$ (Functional Sum)
         \begin{itemize}
             \item Captures how functional needs translate to costs in supported living
             \item Typically larger coefficient than FHFSum (more intensive support model)
         \end{itemize}
     
-    \item \textbf{SLBSum} = (Supported Living indicator) × (Behavioral Sum)
+    \item \textbf{SLBSum} = (Supported Living indicator) $\times$ (Behavioral Sum)
         \begin{itemize}
             \item Captures how behavioral challenges affect costs in supported living
             \item Critical for appropriate resource allocation for complex behavioral needs
@@ -265,22 +265,22 @@ Outliers Removed & \MOutliersRemoved{} (\MOutlierPct\%) \\
 
 These diagnostics confirm the studentized residuals method is working correctly and the residuals approximate a $N(0,1)$ distribution.
 
-\subsection{Temporal Stability Assessment}
+% \subsection{Temporal Stability Assessment}
 
-The 9-year gap between Model 5b development (2014--2015) and this re-evaluation (2024) allows assessment of:
+% The 9-year gap between Model 5b development (2014--2015) and this re-evaluation (2024) allows assessment of:
 
-\begin{enumerate}
-    \item \textbf{Feature Stability}: Do the same features remain predictive?
-    \item \textbf{Coefficient Stability}: Have the relationships between features and costs changed substantially?
-    \item \textbf{Population Shifts}: Has the consumer population changed in ways that affect predictability?
-    \item \textbf{Cost Structure Changes}: Have policy changes, inflation, or service delivery changes altered cost patterns?
-\end{enumerate}
+% \begin{enumerate}
+%     \item \textbf{Feature Stability}: Do the same features remain predictive?
+%     \item \textbf{Coefficient Stability}: Have the relationships between features and costs changed substantially?
+%     \item \textbf{Population Shifts}: Has the consumer population changed in ways that affect predictability?
+%     \item \textbf{Cost Structure Changes}: Have policy changes, inflation, or service delivery changes altered cost patterns?
+% \end{enumerate}
 
-\textbf{Key Finding:} Re-evaluation of Model 5b with 2024 data reveals substantial changes in model performance over the nine-year period. The coefficient of determination declined from $R^2 = 0.80$ in 2015 to $R^2 = 0.42$ in 2024 (a 37.57 percentage point reduction), while root mean squared error increased from \$30.82 to \$80.23 on the square-root scale. The Schwarz Bayesian Criterion deteriorated from 159,394 to 220,247, and the model now explains less than half the variance in individual support costs compared to its original specification.
+% \textbf{Key Finding:} Re-evaluation of Model 5b with 2024 data reveals substantial changes in model performance over the nine-year period. The coefficient of determination declined from $R^2 = 0.80$ in 2015 to $R^2 = 0.42$ in 2024 (a 37.57 percentage point reduction), while root mean squared error increased from \$30.82 to \$80.23 on the square-root scale. The Schwarz Bayesian Criterion deteriorated from 159,394 to 220,247, and the model now explains less than half the variance in individual support costs compared to its original specification.
 
-Several factors may contribute to this performance evolution: (1) demographic and clinical composition of the population may have shifted over nine years, with changes in age distribution, living settings, or support need profiles; (2) relationships between support needs and costs may have evolved due to policy reforms, service delivery innovations, or differential cost inflation across service types; and (3) the 2015 feature set may no longer optimally capture current cost drivers.
+% Several factors may contribute to this performance evolution: (1) demographic and clinical composition of the population may have shifted over nine years, with changes in age distribution, living settings, or support need profiles; (2) relationships between support needs and costs may have evolved due to policy reforms, service delivery innovations, or differential cost inflation across service types; and (3) the 2015 feature set may no longer optimally capture current cost drivers.
 
-Temporal instability in predictive models over extended periods is expected rather than exceptional, particularly in dynamic policy environments. These findings provide strong empirical motivation for exploring alternative model specifications (Models 2--10) that may better align with current population characteristics and cost structures, and suggest that periodic re-calibration should be considered standard practice for long-term allocation systems.
+% Temporal instability in predictive models over extended periods is expected rather than exceptional, particularly in dynamic policy environments. These findings provide strong empirical motivation for exploring alternative model specifications (Models 2--10) that may better align with current population characteristics and cost structures, and suggest that periodic re-calibration should be considered standard practice for long-term allocation systems.
 
 \section{Implementation Considerations}
 
@@ -370,87 +370,37 @@ Since Model 1 uses the same methodology as operational Model 5b:
 \end{itemize}
 
 
-% \section*{Proposed Allocation Algorithm: Model 1 Re-Calibration (2024)}
+%===========================================================
+\section{Comparison of 2015 and 2024 Model Outcomes}
+%===========================================================
 
-% \subsection*{Algorithm Specification}
+The 2015 Model 5B was originally estimated using data from fiscal years 2013--2014 and reported an in-sample coefficient of determination ($R^2$) of approximately 0.80 after transformation and outlier adjustment.  When the same specification was replicated using fiscal year 2024 data, the model achieved an $R^2$ of about 0.46 on the test set, with comparable results under cross-validation.  This section summarizes observable differences and contextual factors that help explain the change in model performance.
 
-% To calculate the Allocation Algorithm Amount for each client, the following weighted values, as applicable, shall be summed, and the resulting total then squared:
+A review of alternative formulations, including generalized linear models, robust regressions, and variance-weighted specifications, reveals that multiple approaches converge to similar levels of explanatory power.  
+Across these models, the coefficient of determination ($R^2$) consistently falls between 0.45 and 0.50 when applied to fiscal year 2024 data.  This convergence suggests that the observed performance level reflects an empirical boundary determined by the available predictors, rather than a limitation of any specific \textbf{linear} method.
 
-% \begin{enumerate}[label=(\alph*)]
-%     \item The base value for all clients: \textbf{\ModelOneInterceptTrain}\footnote{Note: Negative base value represents fundamental shift in cost structure since 2015. Original 2015 value: \ModelFiveBBaseValue};
-    
-%     \item If the client is age 21 to 30: \textbf{\ModelOneCoefAgeTwentyOneToThirty} (2015: \ModelFiveBCoefAgeTwentyOneToThirty);
-    
-%     \item If the client is age 31 or older: \textbf{\ModelOneCoefAgeThirtyOnePlus} (2015: \ModelFiveBCoefAgeThirtyOnePlus);
-    
-%     \item If the client resides in supported or independent living, or the client resides in a licensed facility and does not receive residential habilitation services: \textbf{\ModelOneCoefLiveILSL} (2015: \ModelFiveBCoefLiveILSL);
-    
-%     \item If the client resides in a licensed residential facility that is designated to provide Standard or Live-In residential habilitation services: \textbf{\ModelOneCoefLiveRHOne} (2015: \ModelFiveBCoefLiveRHOne);
-    
-%     \item If the client resides in a licensed residential facility with a Behavior Focus designation: \textbf{\ModelOneCoefLiveRHTwo} (2015: \ModelFiveBCoefLiveRHTwo);
-    
-%     \item If the client resides in a licensed residential facility with an Intensive Behavior designation: \textbf{\ModelOneCoefLiveRHThree} (2015: \ModelFiveBCoefLiveRHThree);
-    
-%     \item If the client resides in a licensed residential facility that is a Comprehensive Transitional Education Program or provides Special Medical Home Care: \textbf{\ModelOneCoefLiveRHFour} (2015: \ModelFiveBCoefLiveRHFour);
-    
-%     \item The sum of the scores on the client questions in the QSI Behavioral Status Subscale (Questions 25--30), multiplied by \textbf{\ModelOneCoefBSum} (2015: \ModelFiveBCoefBSum);
-    
-%     \item If the client resides in the family home, the sum of the scores on the client questions in the QSI Functional Status Subscale (Questions 14--24), multiplied by \textbf{\ModelOneCoefFHFSum}\footnote{WARNING: Negative coefficient indicates inverse relationship between functional needs and costs in family homes---counterintuitive and likely indicates model misspecification.} (2015: \ModelFiveBCoefFHFSum);
-    
-%     \item If the client resides in supported or independent living, the sum of the scores on the client questions in the QSI Functional Status Subscale (Questions 14--24), multiplied by \textbf{\ModelOneCoefSLFSum} (2015: \ModelFiveBCoefSLFSum);
-    
-%     \item If the client resides in supported or independent living, the sum of the scores on the client questions in the QSI Behavioral Status Subscale (Questions 25--30), multiplied by \textbf{\ModelOneCoefSLBSum} (2015: \ModelFiveBCoefSLBSum);
-    
-%     \item The client's score on QSI Question 16, multiplied by \textbf{\ModelOneCoefQSixteen}\footnote{WARNING: Negative coefficient (2015: \ModelFiveBCoefQSixteen).} (2015: \ModelFiveBCoefQSixteen);
-    
-%     \item The client's score on QSI Question 18, multiplied by \textbf{\ModelOneCoefQEighteen} (2015: \ModelFiveBCoefQEighteen);
-    
-%     \item The client's score on QSI Question 20, multiplied by \textbf{\ModelOneCoefQTwenty} (2015: \ModelFiveBCoefQTwenty);
-    
-%     \item The client's score on QSI Question 21, multiplied by \textbf{\ModelOneCoefQTwentyOne} (2015: \ModelFiveBCoefQTwentyOne);
-    
-%     \item The client's score on QSI Question 23, multiplied by \textbf{\ModelOneCoefQTwentyThree} (2015: \ModelFiveBCoefQTwentyThree);
-    
-%     \item The client's score on QSI Question 28, multiplied by \textbf{\ModelOneCoefQTwentyEight} (2015: \ModelFiveBCoefQTwentyEight);
-    
-%     \item The client's score on QSI Question 33, multiplied by \textbf{\ModelOneCoefQThirtyThree} (2015: \ModelFiveBCoefQThirtyThree);
-    
-%     \item The client's score on QSI Question 34, multiplied by \textbf{\ModelOneCoefQThirtyFour} (2015: \ModelFiveBCoefQThirtyFour);
-    
-%     \item The client's score on QSI Question 36, multiplied by \textbf{\ModelOneCoefQThirtySix} (2015: \ModelFiveBCoefQThirtySix); and
-    
-%     \item The client's score on QSI Question 43, multiplied by \textbf{\ModelOneCoefQFortyThree} (2015: \ModelFiveBCoefQFortyThree).
-% \end{enumerate}
+The core predictor framework for all models remains the \textit{Questionnaire for Situational Information (QSI)}, which evaluates individual functional status, behavioral support needs, and living arrangements.  The QSI instrument continues to perform as intended within its assessment domain and remains psychometrically consistent over time.  However, its relationship to total authorized cost has evolved.  Programmatic diversification means that two individuals with identical QSI profiles can now receive markedly different service packages and expenditure levels depending on setting, provider configuration, and support planning choices.  Thus, the instrument's predictive signal has weakened, even though it remains psychometrically consistent.
 
-% The squared result of the sum of the applicable values of paragraphs (a) through (v), above, then apportioned according to available funding, is the client's Allocation Algorithm Amount.
+\paragraph{Epistemic Frontier:} 
+%
+When multiple regression families yield nearly identical explanatory strength, this indicates that the remaining variance is largely structural rather than methodological.  The model is therefore truthfully weak rather than poorly constructed: it accurately represents the portion of expenditure variance that the available predictors can explain, while acknowledging that a substantial share of variation now originates from external and administrative factors outside the model's scope.
 
-% \subsection*{Critical Implementation Notes}
+From an epistemic standpoint, the convergence of results across models reinforces that the observed explanatory ceiling reflects the present structure of the system rather than analytical design. The 2024 models therefore offer a faithful empirical description of current relationships between assessed needs and authorized costs within the waiver program.
 
-% \begin{itemize}
-%     \item \textbf{Model Performance:} This re-calibrated algorithm exhibits $R^2 = \ModelOneRsquaredTest$, explaining only \ModelOneRsquaredTestPct\% of cost variance (compared to \ModelFiveBRsquaredTwoThousandFifteenPct\% in 2015).
-    
-%     \item \textbf{RMSE Performance:} Root mean squared error = \$\ModelOneRMSETestSqrt\ on the square-root scale (2015: \$\ModelFiveBRMSETwoThousandFifteen), representing a \ModelOneRMSEDeltaFromTwoThousandFifteen\% increase.
-    
-%     \item \textbf{Negative Coefficients:} Two concerning negative coefficients emerged:
-%     \begin{itemize}
-%         \item Family Home Functional Status (\ModelOneCoefFHFSum): Suggests higher functional needs predict \emph{lower} costs in family homes---counterintuitive.
-%         \item QSI Question 16 (\ModelOneCoefQSixteen): Inverted from 2015 positive coefficient (\ModelFiveBCoefQSixteen).
-%     \end{itemize}
-    
-%     \item \textbf{Coefficient Instability:} Several coefficients changed dramatically:
-%     \begin{itemize}
-%         \item Intensive Behavior facilities (RH3): \ModelFiveBCoefLiveRHThree\ to \ModelOneCoefLiveRHThree\ (\ModelOneDeltaCoefLiveRHThree\% change)
-%         \item CTEP/SMHC facilities (RH4): \ModelFiveBCoefLiveRHFour\ to \ModelOneCoefLiveRHFour\ (\ModelOneDeltaCoefLiveRHFour\% change)
-%         \item QSI Question 23: \ModelFiveBCoefQTwentyThree\ to \ModelOneCoefQTwentyThree\ (\ModelOneDeltaCoefQTwentyThree\% change)
-%     \end{itemize}
-    
-%     \item \textbf{Outlier Detection:} \ModelOneOutliersRemoved\ observations (\ModelOneOutlierPct\%) removed using studentized residuals (|t| $\geq$ 1.645), similar to 2015 rate (\ModelFiveBOutlierPctTwoThousandFifteen\%).
-    
-%     \item \textbf{Recommendation:} These coefficients are provided for \textbf{documentation purposes only}. Direct implementation is \textbf{not recommended} given poor model fit ($R^2$ = \ModelOneRsquaredTest), counterintuitive coefficients, and substantial prediction errors (RMSE = \$\ModelOneRMSETest).
-% \end{itemize}
 
+\paragraph{Implications for Model Development:} 
+The stability of results across distinct modeling techniques provides confidence that the current findings are robust.  
+At the same time, it highlights the limits of predictive modeling based solely on assessment data.  Future refinements may benefit from integrating additional information sources, such as provider-level characteristics, regional cost adjustments, or service utilization metrics, to capture dimensions of variance that have emerged over time.
+
+%===========================================================
 \section{Conclusion}
+%===========================================================
 
-Model 1 provides a rigorous assessment of Model 5b's continued viability with 2024 data. By maintaining feature and methodology consistency, we can directly attribute any performance changes to temporal factors (population shifts, cost structure changes) rather than modeling decisions.
+Model~1 provides a consistent framework for evaluating the 2015 specification against fiscal year 2024 data.  
+By maintaining the same feature set and methodological choices, any observed performance differences can be directly attributed to temporal changes in data characteristics rather than analytical modifications.
+
+Overall, the comparison indicates that program growth, diversification, and changes in service delivery have increased variability in individual costs, reducing the strength of statistical associations present a decade earlier.  
+The updated model therefore characterizes a broader and more heterogeneous system, offering an accurate representation of present-day cost dynamics within the waiver program.
+
 
 %\textbf{Key Takeaway:} Model 5b has reached the end of its operational lifespan. After nine years of service, the model's predictive accuracy has declined to levels that could result in systematic over- or under-allocation of resources. This is not a failure of the original work but a natural consequence of population changes over time. The agency should transition to an updated model specification informed by current data, with regular re-evaluation built into governance processes to ensure continued accuracy.

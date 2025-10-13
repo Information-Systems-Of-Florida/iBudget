@@ -293,7 +293,7 @@ By fitting separate models at different quantiles, the method naturally accommod
 \subsubsection{Limitations}
 
 \textbf{Regulatory Non-Compliance (Fatal):}
-The fundamental advantage of quantile regression—producing distributions rather than point estimates—is precisely what makes it unsuitable for operational use. F.S. 393.0662 requires "individual budget amounts" (singular), not probability distributions.
+The fundamental advantage of quantile regression, producing distributions rather than point estimates, is precisely what makes it unsuitable for operational use. F.S. 393.0662 requires "individual budget amounts" (singular), not probability distributions.
 
 \textbf{Computational Complexity:}
 Fitting five separate quantile models requires approximately 5× the computation time of a single regression. For the full dataset, this translates to 15-20 minutes per run compared to under a minute for OLS.
@@ -457,7 +457,7 @@ F.S. 393.065 -- Equity and Fairness & \textcolor{red}{\ding{55}} \\
 \end{tabular}
 \end{table}
 
-\textbf{Fatal Flaw:} The model's core feature—producing distributions rather than point estimates—directly violates F.S. 393.0662, which requires singular "individual budget amounts." There is no way to make quantile regression compliant with current statutory requirements.
+\textbf{Fatal Flaw:} The model's core feature, producing distributions rather than point estimates, directly violates F.S. 393.0662, which requires singular "individual budget amounts." There is no way to make quantile regression compliant with current statutory requirements.
 
 \textbf{Possible Use Cases:}
 \begin{itemize}
@@ -589,7 +589,7 @@ Figure \ref{fig:model7_coefficients} reveals how feature importance varies acros
 
 Model 7 demonstrates strong statistical properties with complete outlier robustness and natural uncertainty quantification through multiple quantiles. The median regression achieves Test R\textsuperscript{2} = \ModelSevenRSquaredTest{} with consistent performance across the training set (R\textsuperscript{2} = \ModelSevenRSquaredTrain).
 
-However, the model's fundamental design—producing distributions rather than single allocations—makes it unsuitable for operational use under current Florida statutes.
+However, the model's fundamental design, producing distributions rather than single allocations, makes it unsuitable for operational use under current Florida statutes.
 
 \subsection{Strengths and Limitations}
 
