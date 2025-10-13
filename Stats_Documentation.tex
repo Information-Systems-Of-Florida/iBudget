@@ -90,7 +90,7 @@ Confirmed that outlier removal configuration is set to false.\\
 Confirmed random seed set to 42.\\
 Confirmed Feature Selection Analysis used Numpy.\\
 
-Variables checking shows the following are missing:\\
+Variables checking shows the following are missing (i.e., not explicitly called into the programming--they may exist in one of the functions I have yet to check, and/or be recoded.):\\
 \begin{itemize}\\
 \noindent \textbf{Possibly already included, or may need to be considered.}
 	\item RH1
@@ -126,7 +126,7 @@ Variables checking shows the following are missing:\\
 	\item AlgorithmAmtModel5b
 	\item ClientLivingSetting\\
 	
-\noindent \textbf{Other Items Not included}\\
+\noindent \textbf{Other Items Not included (i.e., not called explicitly)}\\
 	\item CaseNo
 	\item FSNumFiscalYears
 	\item BeginDate
@@ -253,7 +253,7 @@ Represents the Overall Level of need computed from the other QSI domains. It is 
 
 \subsection{Section 2.3.2} Items Checked or Confirmed:\\
 \begin{itemize}
-	\item Feature Mask is accounted for 
+	\item Feature Mask is accounted for  starting at line 599 with the Build mask code chunk. Appears to assign a missing value for anything that is not a finite positive number, then applies to every column. \bf{Note: Once I can get the script running again I can run this chunk and verify that the `return arrs' yields the expected results}
 
 \end{itemize}
 
