@@ -17,7 +17,7 @@
 
 \section{Introduction}
 
-The selection of appropriate predictive features constitutes a critical component in developing robust cost prediction models for the Florida Agency for Persons with Disabilities (APD) iBudget algorithm. This chapter presents a comprehensive methodology for identifying and evaluating candidate variables through a multi-faceted approach combining information-theoretic measures, correlation analysis, visual inspection techniques, and domain expertise. 
+The selection of appropriate predictive features constitutes a critical component in developing robust cost prediction models. This chapter presents a comprehensive methodology for identifying and evaluating candidate variables through a multi-faceted approach combining information-theoretic measures, correlation analysis, visual inspection techniques, and domain expertise. 
 
 The systematic feature selection process aims to maximize predictive accuracy while maintaining model interpretability and computational efficiency. This is particularly crucial in the context of developmental disability services, where budget allocations must be both statistically justified and clinically meaningful. The methodology documented here builds upon the 2015 APD algorithm refinements while incorporating advances in statistical learning and maintaining compliance with Florida Statute §393.0662 requirements.
 
@@ -135,7 +135,8 @@ For categorical pairs $(A, B)$ with contingency table $\mathbf{N} = (n_{ab})$, w
     \item At least 80\% of cells satisfy $e_{ab} \geq 5$
 \end{itemize}
 
-When validity criteria are met, we apply the Bergsma-Wicher bias correction:
+When validity criteria are met, we apply the Bergsma bias correction\footnote{Wicher Bergsma, A bias-correction for Cramér’s V and Tschuprow’s T, Journal of the Korean Statistical Society,
+Volume 42, Issue 3, 2013, Pages 323-328, https://doi.org/10.1016/j.jkss.2012.10.002.}:
 
 \begin{align}
 \phi^2_{\text{corr}} &= \max\left\{0, \frac{\chi^2}{n} - \frac{(r-1)(k-1)}{n-1}\right\} \\

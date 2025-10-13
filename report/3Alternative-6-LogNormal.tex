@@ -27,7 +27,7 @@ The primary objective of Model 6 is to answer: \textit{Can log-transformation wi
 \subsection{Key Findings}
 
 \begin{itemize}
-    \item \textbf{Superior Fit Quality}: Test $R^2$ = \MRSquaredTest{}, demonstrating strong predictive accuracy on the original dollar scale, with log-scale $R^2$ = \ModelSixRSquaredLogScale{} showing excellent fit to the transformed data
+    \item \textbf{Low Fit Quality}: Test $R^2$ = \MRSquaredTest{}, demonstrating poor predictive accuracy on the original dollar scale, with log-scale $R^2$ = \ModelSixRSquaredLogScale{} showing comaprable fit to the transformed data
     
     \item \textbf{Complete Data Utilization}: Uses 100\% of available data (\MTrainingSamples{} training + \MTestSamples{} test samples) with no outlier removal, maximizing regulatory compliance and equity
     
@@ -37,26 +37,26 @@ The primary objective of Model 6 is to answer: \textit{Can log-transformation wi
     
     \item \textbf{Skewness Reduction}: Achieves \ModelSixSkewnessReduction{}\% reduction in residual skewness on log scale, indicating superior conformity to distributional assumptions and more reliable inference
     
-    \item \textbf{Cross-Validation}: Mean $R^2$ = \MCVMean{} $\pm$ \MCVStd{}, demonstrating robust generalization
+    \item \textbf{Cross-Validation}: Mean $R^2$ = \MCVMean{} $\pm$ \MCVStd{}, demonstrating poor generalization
 \end{itemize}
 
 \section{Methodological Foundation}
 
 \subsection{Log-Normal Distribution Theory}
 
-The log-normal distribution is particularly well-suited for healthcare cost modeling due to:
+% The log-normal distribution is particularly well-suited for healthcare cost modeling due to:
 
-\begin{enumerate}
-    \item \textbf{Natural Transformation}: Costs that are log-normally distributed become normally distributed after log-transformation, satisfying OLS assumptions
+% \begin{enumerate}
+%     \item \textbf{Natural Transformation}: Costs that are log-normally distributed become normally distributed after log-transformation, satisfying OLS assumptions
     
-    \item \textbf{Multiplicative Effects}: Predictors have multiplicative (percentage-based) effects on costs, which is often more interpretable than additive effects for stakeholders
+%     \item \textbf{Multiplicative Effects}: Predictors have multiplicative (percentage-based) effects on costs, which is often more interpretable than additive effects for stakeholders
     
-    \item \textbf{Right-Skewness Accommodation}: Naturally handles the heavy right tail common in healthcare expenditure distributions
+%     \item \textbf{Right-Skewness Accommodation}: Naturally handles the heavy right tail common in healthcare expenditure distributions
     
-    \item \textbf{Heteroscedasticity Correction}: Log transformation stabilizes variance across the cost distribution, addressing a key violation of OLS assumptions
+%     \item \textbf{Heteroscedasticity Correction}: Log transformation stabilizes variance across the cost distribution, addressing a key violation of OLS assumptions
     
-    \item \textbf{Outlier Compression}: Extreme values are compressed on the log scale, reducing their leverage without requiring exclusion
-\end{enumerate}
+%     \item \textbf{Outlier Compression}: Extreme values are compressed on the log scale, reducing their leverage without requiring exclusion
+% \end{enumerate}
 
 \subsection{Mathematical Framework}
 
@@ -316,59 +316,59 @@ Regulatory Risk & Low (established) & Very low (100\% data use) \\
     \item Performance gain over Model 5b may be modest in some subgroups
 \end{itemize}
 
-\section{Implementation Considerations}
+% \section{Implementation Considerations}
 
-\subsection{Computational Requirements}
+% \subsection{Computational Requirements}
 
-\begin{itemize}
-    \item \textbf{Training Time}: $<$ 5 seconds on standard hardware (simple OLS on log scale)
-    \item \textbf{Prediction Time}: $<$ 1 second per batch of 10,000 consumers
-    \item \textbf{Memory Requirements}: Minimal (stores $p+1$ coefficients and smearing factor)
-    \item \textbf{Software Dependencies}: Standard statistical packages (R, Python statsmodels)
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Training Time}: $<$ 5 seconds on standard hardware (simple OLS on log scale)
+%     \item \textbf{Prediction Time}: $<$ 1 second per batch of 10,000 consumers
+%     \item \textbf{Memory Requirements}: Minimal (stores $p+1$ coefficients and smearing factor)
+%     \item \textbf{Software Dependencies}: Standard statistical packages (R, Python statsmodels)
+% \end{itemize}
 
-\subsection{Deployment Pathway}
+% \subsection{Deployment Pathway}
 
-\textbf{Phase 1 (Months 1--3): Validation}
-\begin{itemize}
-    \item Parallel run alongside current Model 5b
-    \item Comparison of predictions on historical data
-    \item Identification of systematic differences
-    \item Stakeholder training on multiplicative interpretation
-\end{itemize}
+% \textbf{Phase 1 (Months 1--3): Validation}
+% \begin{itemize}
+%     \item Parallel run alongside current Model 5b
+%     \item Comparison of predictions on historical data
+%     \item Identification of systematic differences
+%     \item Stakeholder training on multiplicative interpretation
+% \end{itemize}
 
-\textbf{Phase 2 (Months 4--6): Pilot}
-\begin{itemize}
-    \item Deploy to subset of planning units
-    \item Monitor allocation patterns
-    \item Collect feedback from case managers
-    \item Refine documentation and training materials
-\end{itemize}
+% \textbf{Phase 2 (Months 4--6): Pilot}
+% \begin{itemize}
+%     \item Deploy to subset of planning units
+%     \item Monitor allocation patterns
+%     \item Collect feedback from case managers
+%     \item Refine documentation and training materials
+% \end{itemize}
 
-\textbf{Phase 3 (Months 7--12): Full Deployment}
-\begin{itemize}
-    \item Statewide rollout
-    \item Continuous monitoring
-    \item Annual recalibration plan
-    \item Ongoing stakeholder communication
-\end{itemize}
+% \textbf{Phase 3 (Months 7--12): Full Deployment}
+% \begin{itemize}
+%     \item Statewide rollout
+%     \item Continuous monitoring
+%     \item Annual recalibration plan
+%     \item Ongoing stakeholder communication
+% \end{itemize}
 
-\section{Conclusion}
+% \section{Conclusion}
 
-Model 6 offers a statistically rigorous approach to iBudget allocation with several key strengths:
+% Model 6 offers a statistically rigorous approach to iBudget allocation with several key strengths:
 
-\begin{enumerate}
-    \item \textbf{Strong Predictive Performance}: Test $R^2$ = \MRSquaredTest{} demonstrates robust accuracy
+% \begin{enumerate}
+%     \item \textbf{Strong Predictive Performance}: Test $R^2$ = \MRSquaredTest{} demonstrates robust accuracy
     
-    \item \textbf{Complete Data Inclusion}: 100\% data utilization eliminates regulatory concerns about arbitrary exclusions
+%     \item \textbf{Complete Data Inclusion}: 100\% data utilization eliminates regulatory concerns about arbitrary exclusions
     
-    \item \textbf{Proper Bias Correction}: Duan's smearing estimator ensures unbiased predictions despite non-linear transformation
+%     \item \textbf{Proper Bias Correction}: Duan's smearing estimator ensures unbiased predictions despite non-linear transformation
     
-    \item \textbf{Natural Heteroscedasticity Handling}: Log transformation stabilizes variance without requiring weighted estimation
+%     \item \textbf{Natural Heteroscedasticity Handling}: Log transformation stabilizes variance without requiring weighted estimation
     
-    \item \textbf{Interpretable Coefficients}: Multiplicative effects are intuitive for policy stakeholders
+%     \item \textbf{Interpretable Coefficients}: Multiplicative effects are intuitive for policy stakeholders
     
-    \item \textbf{Robust to Outliers}: Log compression reduces leverage of extreme values without exclusion
-\end{enumerate}
+%     \item \textbf{Robust to Outliers}: Log compression reduces leverage of extreme values without exclusion
+% \end{enumerate}
 
 %\textbf{Recommendation}: Model 6 is recommended for consideration as either a primary model or validation model, particularly appealing to stakeholders who prioritize complete data utilization and percentage-based budget interpretations. The combination of strong performance, full data inclusion, and proper bias correction makes it a compelling alternative to current approaches.

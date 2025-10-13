@@ -423,29 +423,6 @@ The selected final model (Model 5b) has dedicated production scripts:
     \item \textbf{Model5bDBVerification.py}: Validation of predictions against database
 \end{itemize}
 
-\subsubsection{Prediction Storage}
-
-Production predictions are stored in \texttt{tbl\_Model5b\_Predictions}:
-
-\begin{verbatim}
-CREATE TABLE [dbo].[tbl_Model5b_Predictions](
-    [PredictionID] [bigint] IDENTITY(1,1) NOT NULL,
-    [CaseNo] [bigint] NOT NULL,
-    [AssessID] [bigint] NOT NULL,
-    [ReviewDate] [datetime] NULL,
-    [LivingSetting] [varchar](10) NULL,
-    [Age] [int] NULL,
-    [AgeGroup] [varchar](20) NULL,
-    [BSum] [int] NULL,
-    [FSum] [int] NULL,
-    [SqrtPrediction] [decimal](19, 4) NULL,
-    [PredictedBudget] [decimal](19, 2) NULL,
-    [CalculationDate] [datetime] NULL,
-    [CreatedDate] [datetime] NULL,
-    [RunID] [bigint] NOT NULL
-)
-\end{verbatim}
-
 \subsection{Computational Requirements}
 
 \begin{itemize}
@@ -455,9 +432,9 @@ CREATE TABLE [dbo].[tbl_Model5b_Predictions](
     \item \textbf{Dependencies}: Python 3.9+, scikit-learn 1.0+, statsmodels 0.13+, pandas 1.3+
 \end{itemize}
 
-\subsection{Summary}
+\subsection{Conclusion}
 
-This technical architecture provides a robust, maintainable framework for the iBudget model calibration project. The object-oriented design with the \texttt{BaseiBudgetModel} abstract class ensures code reusability across all ten alternative models. The modular structure with independent model execution facilitates parallel development and testing. The comprehensive LaTeX integration system ensures reproducible reporting with dynamically updated metrics. The pickle-based caching system provides fast data access while maintaining data integrity. This systematic approach enables rigorous comparison of alternative algorithms and evidence-based selection of the optimal model for Florida's disability services budget allocation.
+This technical architecture provides a robust, maintainable framework for the iBudget model calibration project. The object-oriented design with the \texttt{BaseiBudgetModel} abstract class ensures code reusability across all seven alternative models. The modular structure with independent model execution facilitates parallel development and testing. The comprehensive LaTeX integration system ensures reproducible reporting with dynamically updated metrics. The pickle-based caching system provides fast data access while maintaining data integrity. This systematic approach enables rigorous comparison of alternative algorithms and evidence-based selection of the optimal model for Florida's disability services budget allocation.
 
 
 % % Include dynamically generated statistics
@@ -679,13 +656,13 @@ This technical architecture provides a robust, maintainable framework for the iB
 % \end{itemize}
 
 
-\section{References}
+% \section{References}
 
-\begin{itemize}
-    \item Huber, P. J. (1964). Robust estimation of a location parameter. \textit{The Annals of Mathematical Statistics}, 35(1), 73--101.
-    \item Rousseeuw, P. J., \& Leroy, A. M. (2003). \textit{Robust regression and outlier detection}. John Wiley \& Sons.
-    \item ... a dozen more...
-    \item Maronna, R., Martin, D., \& Yohai, V. (2006). \textit{Robust statistics: Theory and methods}. John Wiley \& Sons.
-    \item Florida House Bill 1103 (2024). Transparency in developmental disability services.
-    \item Tao, Y., \& Niu, X. (2015). Florida iBudget Algorithm Final Report. University of South Florida.
-\end{itemize}
+% \begin{itemize}
+%     \item Huber, P. J. (1964). Robust estimation of a location parameter. \textit{The Annals of Mathematical Statistics}, 35(1), 73--101.
+%     \item Rousseeuw, P. J., \& Leroy, A. M. (2003). \textit{Robust regression and outlier detection}. John Wiley \& Sons.
+%     % \item ... a dozen more...
+%     \item Maronna, R., Martin, D., \& Yohai, V. (2006). \textit{Robust statistics: Theory and methods}. John Wiley \& Sons.
+%     \item Florida House Bill 1103 (2024). Transparency in developmental disability services.
+%     \item Tao, Y., \& Niu, X. (2015). Florida iBudget Algorithm Final Report. Florida State University.
+% \end{itemize}

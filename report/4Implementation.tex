@@ -152,105 +152,105 @@ Model 9 & \ModelNineRMSETest{} & \ModelNineMAETest{} & \ModelNineMAPETest{}\% & 
 % VISUAL PERFORMANCE COMPARISON
 % ============================================================================
 
-\section{Visual Performance Analysis}
+% \section{Visual Performance Analysis}
 
-This section presents comprehensive visual comparisons of model performance across multiple dimensions. These visualizations enable stakeholders to quickly identify performance patterns, trade-offs, and optimal model selection criteria for different operational scenarios.
+% This section presents comprehensive visual comparisons of model performance across multiple dimensions. These visualizations enable stakeholders to quickly identify performance patterns, trade-offs, and optimal model selection criteria for different operational scenarios.
 
-\subsection{Overall Performance Comparison}
+% \subsection{Overall Performance Comparison}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_a_r2_comparison.png}
-\caption{R² Performance Comparison Across Models}
-\label{fig:r2_comparison}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_a_r2_comparison.png}
+% \caption{R² Performance Comparison Across Models}
+% \label{fig:r2_comparison}
+% \end{figure}
 
-Figure \ref{fig:r2_comparison} presents the fundamental performance metric (R²) for all viable models, comparing both training and test set performance. \textbf{How to interpret}: Higher bars indicate better explanatory power. The gap between training and test bars reveals generalization quality—smaller gaps suggest better generalization, while large gaps may indicate overfitting. Model 9 (Random Forest) demonstrates the highest test set R², while maintaining reasonable train-test consistency.
+% Figure \ref{fig:r2_comparison} presents the fundamental performance metric (R²) for all viable models, comparing both training and test set performance. \textbf{How to interpret}: Higher bars indicate better explanatory power. The gap between training and test bars reveals generalization quality—smaller gaps suggest better generalization, while large gaps may indicate overfitting. Model 9 (Random Forest) demonstrates the highest test set R², while maintaining reasonable train-test consistency.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_b_multi_metric.png}
-\caption{Multi-Metric Performance Comparison}
-\label{fig:multi_metric}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_b_multi_metric.png}
+% \caption{Multi-Metric Performance Comparison}
+% \label{fig:multi_metric}
+% \end{figure}
 
-Figure \ref{fig:multi_metric} provides a holistic view by normalizing three key metrics (R², RMSE, MAE) to a common 0-1 scale where higher is better. \textbf{How to interpret}: Models with consistently tall bars across all three metrics demonstrate robust performance. This visualization reveals whether a model excels in one dimension while underperforming in others. Stakeholders can identify models that balance explained variance (R²) with practical prediction accuracy (RMSE/MAE).
+% Figure \ref{fig:multi_metric} provides a holistic view by normalizing three key metrics (R², RMSE, MAE) to a common 0-1 scale where higher is better. \textbf{How to interpret}: Models with consistently tall bars across all three metrics demonstrate robust performance. This visualization reveals whether a model excels in one dimension while underperforming in others. Stakeholders can identify models that balance explained variance (R²) with practical prediction accuracy (RMSE/MAE).
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_c_error_metrics.png}
-\caption{Prediction Error Comparison: RMSE and MAE}
-\label{fig:error_metrics}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_c_error_metrics.png}
+% \caption{Prediction Error Comparison: RMSE and MAE}
+% \label{fig:error_metrics}
+% \end{figure}
 
-Figure \ref{fig:error_metrics} ranks models by prediction error magnitude in dollar terms. \textbf{How to interpret}: Shorter bars indicate better (lower error) performance. The left panel shows RMSE, which penalizes large errors more heavily, while the right panel shows MAE, representing typical error magnitude. Models appearing near the top of both panels demonstrate superior prediction accuracy. This visualization directly addresses the operational question: "What is the typical dollar error for each model?"
+% Figure \ref{fig:error_metrics} ranks models by prediction error magnitude in dollar terms. \textbf{How to interpret}: Shorter bars indicate better (lower error) performance. The left panel shows RMSE, which penalizes large errors more heavily, while the right panel shows MAE, representing typical error magnitude. Models appearing near the top of both panels demonstrate superior prediction accuracy. This visualization directly addresses the operational question: "What is the typical dollar error for each model?"
 
-\subsection{Prediction Accuracy Analysis}
+% \subsection{Prediction Accuracy Analysis}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_d_cumulative_accuracy.png}
-\caption{Cumulative Accuracy: Predictions Within Error Thresholds}
-\label{fig:cumulative_accuracy}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_d_cumulative_accuracy.png}
+% \caption{Cumulative Accuracy: Predictions Within Error Thresholds}
+% \label{fig:cumulative_accuracy}
+% \end{figure}
 
-Figure \ref{fig:cumulative_accuracy} shows the percentage of predictions falling within specified error tolerances. \textbf{How to interpret}: Lines higher on the graph indicate more predictions within acceptable error bounds. The shape of each line reveals model behavior: steep initial slopes suggest many highly accurate predictions, while flatter portions indicate diminishing returns at larger tolerances. Stakeholders can use this to determine which model meets operational accuracy requirements—for example, if 35\% accuracy within \$10K is required, this plot immediately identifies qualifying models.
+% Figure \ref{fig:cumulative_accuracy} shows the percentage of predictions falling within specified error tolerances. \textbf{How to interpret}: Lines higher on the graph indicate more predictions within acceptable error bounds. The shape of each line reveals model behavior: steep initial slopes suggest many highly accurate predictions, while flatter portions indicate diminishing returns at larger tolerances. Stakeholders can use this to determine which model meets operational accuracy requirements—for example, if 35\% accuracy within \$10K is required, this plot immediately identifies qualifying models.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.85\textwidth]{figures/plot_e_tolerance_heatmap.png}
-\caption{Prediction Accuracy Heatmap by Error Tolerance}
-\label{fig:tolerance_heatmap}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.85\textwidth]{figures/plot_e_tolerance_heatmap.png}
+% \caption{Prediction Accuracy Heatmap by Error Tolerance}
+% \label{fig:tolerance_heatmap}
+% \end{figure}
 
-Figure \ref{fig:tolerance_heatmap} presents accuracy information in a compact heatmap format. \textbf{How to interpret}: Darker blue cells indicate higher percentages of predictions within tolerance. This format enables quick pattern recognition: horizontal patterns reveal models performing consistently across tolerances, while vertical patterns show tolerance thresholds where all models improve similarly. The numerical annotations provide exact percentages for detailed comparison.
+% Figure \ref{fig:tolerance_heatmap} presents accuracy information in a compact heatmap format. \textbf{How to interpret}: Darker blue cells indicate higher percentages of predictions within tolerance. This format enables quick pattern recognition: horizontal patterns reveal models performing consistently across tolerances, while vertical patterns show tolerance thresholds where all models improve similarly. The numerical annotations provide exact percentages for detailed comparison.
 
-\subsection{Model Stability and Generalization}
+% \subsection{Model Stability and Generalization}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_f_cv_boxplot.png}
-\caption{Cross-Validation Stability Analysis}
-\label{fig:cv_stability}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_f_cv_boxplot.png}
+% \caption{Cross-Validation Stability Analysis}
+% \label{fig:cv_stability}
+% \end{figure}
 
-Figure \ref{fig:cv_stability} displays the distribution of R² scores across 10-fold cross-validation. \textbf{How to interpret}: Taller boxes indicate greater variability in performance across data subsets, suggesting potential instability. The red line shows the median performance, while whiskers extend to show the range. Models with narrow boxes and high medians demonstrate both strong and consistent performance. This visualization is critical for assessing whether a model's performance is reliable or dependent on specific data characteristics.
+% Figure \ref{fig:cv_stability} displays the distribution of R² scores across 10-fold cross-validation. \textbf{How to interpret}: Taller boxes indicate greater variability in performance across data subsets, suggesting potential instability. The red line shows the median performance, while whiskers extend to show the range. Models with narrow boxes and high medians demonstrate both strong and consistent performance. This visualization is critical for assessing whether a model's performance is reliable or dependent on specific data characteristics.
 
-\subsection{Subgroup Performance Analysis}
+% \subsection{Subgroup Performance Analysis}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/plot_h_living_setting.png}
-\caption{Model Performance by Living Setting}
-\label{fig:living_setting_performance}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.95\textwidth]{figures/plot_h_living_setting.png}
+% \caption{Model Performance by Living Setting}
+% \label{fig:living_setting_performance}
+% \end{figure}
 
-Figure \ref{fig:living_setting_performance} compares model performance across the three primary living settings. \textbf{How to interpret}: Taller bars indicate better R² performance for that subgroup. Consistent bar heights across settings suggest a model performs equally well for all living arrangements, while varying heights reveal differential performance. Stakeholders supporting specific populations can identify which models best serve their target groups. Note that negative R² values indicate performance worse than a simple mean prediction.
+% Figure \ref{fig:living_setting_performance} compares model performance across the three primary living settings. \textbf{How to interpret}: Taller bars indicate better R² performance for that subgroup. Consistent bar heights across settings suggest a model performs equally well for all living arrangements, while varying heights reveal differential performance. Stakeholders supporting specific populations can identify which models best serve their target groups. Note that negative R² values indicate performance worse than a simple mean prediction.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.85\textwidth]{figures/plot_i_bias_heatmap.png}
-\caption{Prediction Bias by Subgroup}
-\label{fig:bias_heatmap}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.85\textwidth]{figures/plot_i_bias_heatmap.png}
+% \caption{Prediction Bias by Subgroup}
+% \label{fig:bias_heatmap}
+% \end{figure}
 
-Figure \ref{fig:bias_heatmap} reveals systematic over- or under-prediction patterns across subgroups. \textbf{How to interpret}: Red cells indicate over-prediction (model predicts higher costs than actual), blue cells indicate under-prediction. Color intensity shows bias magnitude. White (near-zero bias) is ideal, indicating unbiased predictions. This visualization is essential for equity analysis: systematic under-prediction for certain groups could result in inadequate service funding, while over-prediction may indicate inefficient resource allocation. Cost quartile patterns are particularly informative—models often struggle with extreme cases (Q1 and Q4).
+% Figure \ref{fig:bias_heatmap} reveals systematic over- or under-prediction patterns across subgroups. \textbf{How to interpret}: Red cells indicate over-prediction (model predicts higher costs than actual), blue cells indicate under-prediction. Color intensity shows bias magnitude. White (near-zero bias) is ideal, indicating unbiased predictions. This visualization is essential for equity analysis: systematic under-prediction for certain groups could result in inadequate service funding, while over-prediction may indicate inefficient resource allocation. Cost quartile patterns are particularly informative—models often struggle with extreme cases (Q1 and Q4).
 
-\subsection{Interpretation Guidelines for Stakeholders}
+% \subsection{Interpretation Guidelines for Stakeholders}
 
-\textbf{For Model Selection:}
-\begin{itemize}
-    \item \textbf{If maximizing explained variance is paramount}: Choose the model with highest R² in Figure \ref{fig:r2_comparison}
-    \item \textbf{If minimizing dollar prediction error}: Use Figure \ref{fig:error_metrics} to identify models with lowest RMSE/MAE
-    \item \textbf{If operational accuracy targets exist}: Use Figure \ref{fig:cumulative_accuracy} to find models meeting specific tolerance requirements
-    \item \textbf{If serving specific populations}: Examine Figures \ref{fig:living_setting_performance} and \ref{fig:bias_heatmap} for subgroup performance
-    \item \textbf{If consistency is critical}: Prioritize models with narrow boxes in Figure \ref{fig:cv_stability}
-\end{itemize}
+% \textbf{For Model Selection:}
+% \begin{itemize}
+%     \item \textbf{If maximizing explained variance is paramount}: Choose the model with highest R² in Figure \ref{fig:r2_comparison}
+%     \item \textbf{If minimizing dollar prediction error}: Use Figure \ref{fig:error_metrics} to identify models with lowest RMSE/MAE
+%     \item \textbf{If operational accuracy targets exist}: Use Figure \ref{fig:cumulative_accuracy} to find models meeting specific tolerance requirements
+%     \item \textbf{If serving specific populations}: Examine Figures \ref{fig:living_setting_performance} and \ref{fig:bias_heatmap} for subgroup performance
+%     \item \textbf{If consistency is critical}: Prioritize models with narrow boxes in Figure \ref{fig:cv_stability}
+% \end{itemize}
 
-\textbf{For Understanding Trade-offs:}
-\begin{itemize}
-    \item High R² with high RMSE may indicate a model captures variance but makes large errors on difficult cases
-    \item Strong overall performance with poor subgroup performance reveals potential equity concerns
-    \item Similar training and test performance (Figure \ref{fig:r2_comparison}) indicates good generalization
-    \item Divergent RMSE and MAE rankings suggest different error distributions (RMSE more sensitive to outliers)
-\end{itemize}
+% \textbf{For Understanding Trade-offs:}
+% \begin{itemize}
+%     \item High R² with high RMSE may indicate a model captures variance but makes large errors on difficult cases
+%     \item Strong overall performance with poor subgroup performance reveals potential equity concerns
+%     \item Similar training and test performance (Figure \ref{fig:r2_comparison}) indicates good generalization
+%     \item Divergent RMSE and MAE rankings suggest different error distributions (RMSE more sensitive to outliers)
+% \end{itemize}

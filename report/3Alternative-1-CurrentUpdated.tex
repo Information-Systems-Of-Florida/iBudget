@@ -15,12 +15,12 @@ Model 1 represents an exact \textbf{direct re-evaluation of Model 5b} (Tao \& Ni
 
 \subsection{Purpose and Scope}
 
-The primary objective of Model 1 is to answer a critical question: \textit{Does Model 5b, which performed exceptionally well with FY2013--2014 data ($R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen), maintain its predictive power with 2024 data?} By preserving the same 21 features, transformation, and outlier detection methodology, we can isolate temporal changes in model performance from methodological changes.
+The primary objective of Model 1 is to answer a critical question: \textit{Does Model 5b, which performed exceptionally well with FY2013--2014 data ($R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen, 2015 by Tao \& Niu), maintain its predictive power with 2024 data?} By preserving the same 21 features, transformation, and outlier detection methodology, we can isolate temporal changes in model performance from methodological changes.
 
 \subsection{Key Findings}
 
 \begin{itemize}
-    \item \textbf{Original Model 5b (2015)}: Test $R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen, RMSE = \$\ModelOneFiveBRMSETwoThousandFifteen{} (sqrt scale), Outliers = \ModelOneFiveBOutlierPctTwoThousandFifteen\%
+    \item \textbf{Original Model 5b (2015 by Tao \& Niu)}: Test $R^2$ = \ModelOneFiveBRSquaredTwoThousandFifteen, RMSE = \$\ModelOneFiveBRMSETwoThousandFifteen{} (sqrt scale), Outliers = \ModelOneFiveBOutlierPctTwoThousandFifteen\%
     \item \textbf{Model 1 Re-evaluation (2024)}: Test $R^2$ = \MRSquaredTest, RMSE = \$\MRMSETest, Outliers = \MOutlierPct\%
     \item \textbf{Performance Change}: $\Delta$$R^2$ = \ModelOneRSquaredDeltaFromTwoThousandFifteen
     \item \textbf{Feature Specification}: Identical 21 features as Model 5b
@@ -370,27 +370,27 @@ Since Model 1 uses the same methodology as operational Model 5b:
 \end{itemize}
 
 
-%===========================================================
-\section{Comparison of 2015 and 2024 Model Outcomes}
-%===========================================================
+% %===========================================================
+% \section{Comparison of 2015 and 2024 Model Outcomes}
+% %===========================================================
 
-The 2015 Model 5B was originally estimated using data from fiscal years 2013--2014 and reported an in-sample coefficient of determination ($R^2$) of approximately 0.80 after transformation and outlier adjustment.  When the same specification was replicated using fiscal year 2024 data, the model achieved an $R^2$ of about 0.46 on the test set, with comparable results under cross-validation.  This section summarizes observable differences and contextual factors that help explain the change in model performance.
+% The 2015 Model 5B was originally estimated using data from fiscal years 2013--2014 and reported an in-sample coefficient of determination ($R^2$) of approximately 0.80 after transformation and outlier adjustment.  When the same specification was replicated using fiscal year 2024 data, the model achieved an $R^2$ of about 0.46 on the test set, with comparable results under cross-validation.  
 
-A review of alternative formulations, including generalized linear models, robust regressions, and variance-weighted specifications, reveals that multiple approaches converge to similar levels of explanatory power.  
-Across these models, the coefficient of determination ($R^2$) consistently falls between 0.45 and 0.50 when applied to fiscal year 2024 data.  This convergence suggests that the observed performance level reflects an empirical boundary determined by the available predictors, rather than a limitation of any specific \textbf{linear} method.
+% A review of alternative formulations, including generalized linear models, robust regressions, and variance-weighted specifications, reveals that multiple approaches converge to similar levels of explanatory power.  
+% Across these models, the coefficient of determination ($R^2$) consistently falls between 0.45 and 0.50 when applied to fiscal year 2024 data.  This convergence suggests that the observed performance level reflects an empirical boundary determined by the available predictors, rather than a limitation of any specific \textbf{linear} method.
 
-The core predictor framework for all models remains the \textit{Questionnaire for Situational Information (QSI)}, which evaluates individual functional status, behavioral support needs, and living arrangements.  The QSI instrument continues to perform as intended within its assessment domain and remains psychometrically consistent over time.  However, its relationship to total authorized cost has evolved.  Programmatic diversification means that two individuals with identical QSI profiles can now receive markedly different service packages and expenditure levels depending on setting, provider configuration, and support planning choices.  Thus, the instrument's predictive signal has weakened, even though it remains psychometrically consistent.
+% The core predictor framework for all models remains the \textit{Questionnaire for Situational Information (QSI)}, which evaluates individual functional status, behavioral support needs, and living arrangements.  The QSI instrument continues to perform as intended within its assessment domain and remains psychometrically consistent over time.  However, its relationship to total authorized cost has evolved.  Programmatic diversification means that two individuals with identical QSI profiles can now receive markedly different service packages and expenditure levels depending on setting, provider configuration, and support planning choices.  Thus, the instrument's predictive signal has weakened, even though it remains psychometrically consistent.
 
-\paragraph{Epistemic Frontier:} 
-%
-When multiple regression families yield nearly identical explanatory strength, this indicates that the remaining variance is largely structural rather than methodological.  The model is therefore truthfully weak rather than poorly constructed: it accurately represents the portion of expenditure variance that the available predictors can explain, while acknowledging that a substantial share of variation now originates from external and administrative factors outside the model's scope.
+% \paragraph{Epistemic Frontier:} 
+% %
+% When multiple regression families yield nearly identical explanatory strength, this indicates that the remaining variance is largely structural rather than methodological.  The model is therefore truthfully weak rather than poorly constructed: it accurately represents the portion of expenditure variance that the available linear predictors can explain, while acknowledging that a substantial share of variation now originates from external and administrative factors outside the model's scope.
 
-From an epistemic standpoint, the convergence of results across models reinforces that the observed explanatory ceiling reflects the present structure of the system rather than analytical design. The 2024 models therefore offer a faithful empirical description of current relationships between assessed needs and authorized costs within the waiver program.
+% From an epistemic standpoint, the convergence of results across models reinforces that the observed explanatory ceiling reflects the present structure of the system rather than analytical design. The 2024 models therefore offer a faithful empirical description of current relationships between assessed needs and authorized costs within the waiver program.
 
 
-\paragraph{Implications for Model Development:} 
-The stability of results across distinct modeling techniques provides confidence that the current findings are robust.  
-At the same time, it highlights the limits of predictive modeling based solely on assessment data.  Future refinements may benefit from integrating additional information sources, such as provider-level characteristics, regional cost adjustments, or service utilization metrics, to capture dimensions of variance that have emerged over time.
+% \paragraph{Implications for Model Development:} 
+% The stability of results across distinct modeling techniques provides confidence that the current findings are robust.  
+% At the same time, it highlights the limits of predictive modeling based solely on assessment data.  Future refinements may benefit from integrating additional information sources, such as provider-level characteristics, regional cost adjustments, or service utilization metrics, to capture dimensions of variance that have emerged over time.
 
 %===========================================================
 \section{Conclusion}
