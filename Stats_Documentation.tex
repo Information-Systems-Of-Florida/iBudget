@@ -1,71 +1,154 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage{graphicx}
-\title{APD Statistical Validation and Documentation}
-\author{Allison Kunerth}
-\date{(TODAY)}
+\usepackage{hyperref}
+\author{Allison K. Kunerth, Ph.D}
 \begin{document}
-\maketitle
 
+\thispagestyle{empty}
+\begin{center}
+	{\large \textbf{{APD Statistical Validation and Documentation}}} 
+
+	\begin{figure}[th]
+		\centering
+		\includegraphics[width=10cm]{../assets/APD-logo-BG.png}
+	\end{figure}
+
+	\vspace{\fill}
+	\begin{figure}[th]
+		\centering
+		\includegraphics[width=3cm]{../assets/ISF-logo-medium.png}
+	\end{figure}
+
+	\vspace{\fill}
+
+
+
+	{\normalsize \today}
+
+
+	
+
+\end{center}
+
+\newpage
+
+\thispagestyle{empty}
+
+\begin{flushleft}
+
+\phantom{ghost text}
+
+\vspace{\fill}
+
+\noindent \textbf{Agency for Persons with Disabilities (APD)} \\
+iBudget Algorithm Study\\
+Procurement Office: Tamara Harrington \\
+4030 Esplanade Way \\
+Tallahassee, Florida 32399
+
+\vspace{1cm}
+\noindent \textbf{ISF, Inc.} \\
+\url{https://www.isf.com}\\
+Report prepared by \href{mailto:akunerth@isf.com} {Allison K.Kunerth, Ph.D.}\\
+ORCID Researcher Number \href{https://orcid.org/0000-0002-9035-507X}{0000-0002-9035-507X}\\
+Senior Management Consultant and Data Scientist, ISF, Inc.\\
+\today\\
+
+\vspace{\fill}
+\noindent \textbf{Full Study prepared by ISF, Inc.} \\
+ Annika Baeten, Management Consultant \\
+Abbie David, PMP, PhD, Project Manager\\
+ Jason Dillaberry, Client Partner \\
+ Matthew Fisher, JD, LLM, MBA, Principal Consultant \\
+ Juan B. Gutiérrez, PhD, Mathematician \\
+ Jessica Kemper, MPA, Senior Management Consultant \\
+ Chris Klass, MPP Finance, Senior Management Consultant \\
+Allison Kunerth, PhD, Senior Management Consultant \\
+ Daniel Margolis, Associate Management Consultant \\
+\end{flushleft}
+
+
+
+
+%********** End Frontmatter **********
+%%The following loads the picture on top of every page, the numbers in \put() define the position on the page:
+%\AddToShipoutPicture{\setlength\unitlength{0.1mm}\put(604,2522){\includegraphics[width=1.7cm]{Logo-Approved2.0-DPIL-ILSA-All-CAPS-150x150}}}
+
+\pagestyle{cb} % now we want to have headers and footers
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Feature Selection} 
 Model Validation is being completed by Juan,Daniel and Allison. This document serves to track this process as much as possible given the time constraints.
+\subsection{Section 2.2} 
+Analysis encompasses 6 fiscal years of data. End of FY is August 31st, 2025. Accordingly, 6- years is correct. 
+\subsection{Section 2.3.1} 
+Exlusions seem reasonable, including those with zero variance since they would have no impact on the outcome-and is better than excluding just low variance. 
+\begin{itemize}
+    \item MidYear QSI = 957, 0.5\%
+    \item Late Entry = 43,102, 20.2\%
+    \item Early Exit = 14,873, 7.0\%
+    \item No Costs = 109, 0.1\%
+    \item Negative Costs = 0, 0.0\%
+    \item Insufficient Service = 81,901, 38.5\%
+    \item No QSI = 128,791, 60.5\%
+    \item Need to double check that the min, max and mean number of records is correct
+\end{itemize}
 
-\textbf{Feature Selection} 
-* 2.2: Analysis encompasses 6 fiscal years of data. Depending on when the end of the FY is, need to verify whether it truly is a full 6 years.
-*2.3.1: Exlusions seem reasonable, including those with zero variance since they would have no impact on the outcome--and is better than excluding just low variance. 
-    - MidYear QSI = 957 (0.5%)
-    - Late Entry = 43,102 (20.2%)
-    - Early Exit = 14,873 (7.0%)
-    - No Costs = 109 (0.1%)
-    - Negative Costs = 0 (0.0%)
-    - Insufficient Service = 81,901 (38.5%)
-    - No QSI = 128,791 (60.5%)
-- Need to double check that the min, max and mean number of records is correct
+\paragraph{Question 1} Do we need to include the cost requirement greater than 0 since no cases meet that definition?
+\paragraph{Answer 1} That weas filtered from data preparation for the cache. Look at sql transformation 14 0r 13
 
+\paragraph{Question 2} Cardinality is number of levels of each variable being considered. Need to check whether the number 50 is correct.
+\paragraph{Answer 2} Categorical variables with more than 50 unique levels are excluded to avoid unreliable chi-square estimates and extreme sparsity.The value 50 comes from the approximate number of `valid' QSI categorical indicators about52 total items − 2 summary variables = 50.
+\paragraph{Question 3} Where is'OLevel' defined/derived? I know it is the ordinal mapping of the variables, but didn't immediately see it.
+\paragraph{Answer 3}OLEVEL originates from the QSI Assessments tables 
 
-Q: Do we need to include the cost requirement greater than 0 since no cases meet that definition?
-A: That weas filtered from data preparation for the cache. Look at sql transformation 14 0r 13
+tbl_QSIAssessments / tbl_QSIAssessmentsLegacy
 
-* Cardinality is number of levels of each variable being considered. Need to check whether number is correct?
-
-
-\textbf{Model 1:} 
+Represents the Overall Level of need computed from the other QSI domains. It is imported into analysis as a numeric/ordinal feature after label-encoding.
+\section{Model 1:} 
 TBD
 
 
-\textbf{Model 2:}
+\section{Model 2:}
 TBD
 
 
-\textbf{Model 3:}
+\section{Model 3:}
 TBD
 
 
-\textbf {Model 4:} 
+\section{Model 4:} 
 TBD
 
 
-\textbf{Model 5:} 
+\section{Model 5:} 
 TBD
 
 
-\textbf{Model 6:} 
+\section{Model 6:} 
 TBD
 
 
-\textbf{Model 7:}
+\section{Model 7:}
 TBD
 
 
-\textbf{Model 8:} 
+\section{Model 8:} 
 TBD
 
 
-\textbf{Model 9:} 
+\section{Model 9:} 
 TBD
 
 
-\textbf{Model 10:} 
+\section{Model 10:} 
 TBD
 
-    `'
+    `
 
 \end{document}
