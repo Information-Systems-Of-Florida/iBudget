@@ -1,12 +1,13 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\author{Allison K. Kunerth, Ph.D}
+
 \begin{document}
 
 \thispagestyle{empty}
 \begin{center}
 	{\large \textbf{{APD Statistical Validation and Documentation}}} 
+
 
 	\begin{figure}[th]
 		\centering
@@ -83,33 +84,266 @@ Allison Kunerth, PhD, Senior Management Consultant \\
 \newpage
 
 \section{Feature Selection} 
-Model Validation is being completed by Juan,Daniel and Allison. This document serves to track this process as much as possible given the time constraints.
+Model Validation is being completed by Juan,Daniel and Allison. This document serves to track this process as much as possible given the time constraints.\\
+
+Confirmed that outlier removal configuration is set to false.\\
+Confirmed random seed set to 42.\\
+Confirmed Feature Selection Analysis used Numpy.\\
+
+Variables checking shows the following are missing:\\
+\begin{itemize}\\
+\noindent \textbf{Possibly already included, or may need to be considered.}
+	\item RH1
+	\item RH2
+	\item RH3
+	\item RH4
+	\item Sex - May be Gender, need to see if recoded
+	\item CNTY RESID NAME -May be captured in recoded County variable
+	\item CurrentAge - Need to check how age is accounted for
+	\item AGE50P
+	\item AGE60P
+	\item AGE70P
+	\item FuncationalStatus
+	\item BehavioralStatus
+	\item PhysicalStatus
+	\item EstLevel - Maybe this is OLEVEL?
+	\item FunctSum - likely recoded to FSUM
+	\item BehavSum - likely recoded to BSUM
+	\item PhysSum - likely revoded to PSUM
+	\item Days Since QSI
+	\item Live2ILSL
+	\item Live2RH1
+	\item Live2RH2
+	\item Live2RH3
+	\item Live2RH4
+	\item Age21 to 30
+	\item Age 30 plus
+	\item BSum
+	\item FHFSum
+	\item SLFSum
+	\item SLBSum
+	\item iConnect Category
+	\item AlgorithmAmtModel5b
+	\item ClientLivingSetting\\
+	
+\noindent \textbf{Other Items Not included}\\
+	\item CaseNo
+	\item FSNumFiscalYears
+	\item BeginDate
+	\item ENDDATE
+	\item IndexSubObjectCode
+	\item ConsumerCounty
+	\item GeographicDifferential
+	\item ProviderRateType
+	\item PROC
+	\item Service
+	\item UnitType
+	\item UnitsPer
+	\item UnitsOfMeasure
+	\item TotalUnits
+	\item VendorId
+	\item ProviderName
+	\item ProviderMedcId
+	\item Rate
+	\item TotalAmount
+	\item PlannedServiceId
+	\item PlanId
+	\item PIN
+	\item SSN
+	\item SBPG C1
+	\item Region2
+	\item MedicaidId
+	\item LNAME
+	\item FNAME
+	\item MI
+	\item SFX
+	\item ConsumerID
+	\item District
+	\item Region
+	\item Usable
+	\item FY_StartDate
+	\item FY_EndDate
+	\item QSI_ApprovalDate
+	\item FirstServiceDate
+	\item LastServiceDate
+	\item DOB
+	\item MEDC_ID
+	\item CNTY_RECMD
+	\item CNTY_RESID
+	\item REGION_NAME
+	\item PrimDisabilityDescription
+	\item SecondaryDisabilityDescription
+	\item OtherDisabilityDescription
+	\item Status PrimDisabilityDescription
+	\item Category
+	\item GroupedProgCompDescript
+	\item ProgCompDesc
+	\item Worker Dist
+	\item Worker SD
+	\item Worker Unit
+	\item Worker Code
+	\item Worker First Name
+	\item Worker Last Name
+	\item Worker SSN
+	\item WSC filtered
+	\item WL Priority
+	\item DUPLICATE
+	\item CLIENTID
+	\item CompletedDate
+	\item Q51A
+	\item Q13a
+	\item Q13b
+	\item Q13c
+	\item RATERID
+	\item ResHabFlag
+	\item FamilyHome
+	\item IndLiving_SuppLvg
+	\item ResHabSrvcPlan_notResHabLivSetting Flag
+	\item Intercept
+	\item Q_16
+	\item Q_18
+	\item Q_20
+	\item Q_21
+	\item Q_23
+	\item Q_28
+	\item Q_33
+	\item Q_34
+	\item Q_36
+	\item Q_43
+	\item CoefficientsSum
+	\item CALCULATE
+	\item InvalidAlgorithmLivingSetting
+\end{itemize}\\
+	
+
 \subsection{Section 2.2} 
-Analysis encompasses 6 fiscal years of data. End of FY is August 31st, 2025. Accordingly, 6- years is correct. 
+Analysis encompasses 6 fiscal years of data. Verified that data begins September 1st, 2019 and ends August 31st, 2025. Accordingly, 6- years is correct. 
 \subsection{Section 2.3.1} 
-Exlusions seem reasonable, including those with zero variance since they would have no impact on the outcome-and is better than excluding just low variance. 
+Exlusions seem reasonable, including those with zero variance since they would have no impact on the outcome-and is better than excluding just low variance. However, charts exlude samples with a Total Cost < 0 due to original outlier removal.
+
+The report has the following values, and those with differences are noted. 
 \begin{itemize}
-    \item MidYear QSI = 957, 0.5\%
-    \item Late Entry = 43,102, 20.2\%
-    \item Early Exit = 14,873, 7.0\%
-    \item No Costs = 109, 0.1\%
-    \item Negative Costs = 0, 0.0\%
-    \item Insufficient Service = 81,901, 38.5\%
-    \item No QSI = 128,791, 60.5\%
-    \item Need to double check that the min, max and mean number of records is correct
+     \item Initial records min = 42,677 - Confirmed in Logs
+     \item Initial records max = 47,797- Confirmed in Logs
+     \item Initial records mean ~ 45,527
+     \item Post-Filtering min = 41,570 - Confirmed in Logs
+     \item Post-Filterin max = 47,337 - Confirmed in Logs
+     \item Analysis-eligible min = 29,566 - Confirmed in Logs
+     \item Analysis-eligible max = 35,329 - Confirmed in Logs
+	 \item MidYear QSI = 957, 0.5\%
+	 \item Late Entry = 43,102, 20.2\%
+	 \item Early Exit = 14,873, 7.0\%
+	 \item No Costs = 109, 0.1\%
+	 \item Negative Costs = 0, 0.0\%
+	 \item Insufficient Service = 81,901, 38.5\%
+	 \item No QSI = 128,791, 60.5\%
 \end{itemize}
 
 \paragraph{Question 1} Do we need to include the cost requirement greater than 0 since no cases meet that definition?
 \paragraph{Answer 1} That weas filtered from data preparation for the cache. Look at sql transformation 14 0r 13
 
 \paragraph{Question 2} Cardinality is number of levels of each variable being considered. Need to check whether the number 50 is correct.
-\paragraph{Answer 2} Categorical variables with more than 50 unique levels are excluded to avoid unreliable chi-square estimates and extreme sparsity.The value 50 comes from the approximate number of `valid' QSI categorical indicators about52 total items − 2 summary variables = 50.
+\paragraph{Answer 2} Categorical variables with more than 50 unique levels are excluded to avoid unreliable chi-square estimates and extreme sparsity.The value 50 comes from the approximate number of `valid' QSI categorical indicators which is about 52 total items − 2 summary variables = 50.
 \paragraph{Question 3} Where is'OLevel' defined/derived? I know it is the ordinal mapping of the variables, but didn't immediately see it.
 \paragraph{Answer 3}OLEVEL originates from the QSI Assessments tables 
 
 tbl_QSIAssessments / tbl_QSIAssessmentsLegacy
 
 Represents the Overall Level of need computed from the other QSI domains. It is imported into analysis as a numeric/ordinal feature after label-encoding.
+
+\subsection{Section 2.3.2} Items Checked or Confirmed:\\
+\begin{itemize}
+	\item Feature Mask is accounted for 
+
+\end{itemize}
+
+Questions or To-Do's\\
+\begin{itemize}
+	\item Validate for MISSING value applied correctly
+	\item Validate label encoding for OLEVEL
+	\item Validate appropriateness of <25 for rare level consolidation
+	\item Validate type conversion to float64
+	\item Validate VIF/Z-Score normalization - \textbf{I saw in one of the docs something about recommending that this occur instead of stating that it was done. So should check for consistency at some point}
+\end{itemize}
+\paragraph{Question 4} Is median imputation applied by variable or by case? I am assuming it is by variable (e.g., the median value for that variable.)
+\paragraph{Answer 4} TBD
+
+\subsection{Section 2.12}
+
+
+7. Analyst Checklist\\
+Log shows the following counts for each year. \bf{Note that the report asks to verify that pre-filter, filrered, and final counts are non-decreasing. However, we should expect them to decrease within each year as more cases are filtered out, and is exhibited below.}
+\begin{itemize}
+	\item 2025 Total Records = 48,797
+	\item 2025 Records After Quality Filters = 47,337
+	\item 2025 Final with Total Cost greater than 0 = 35,329
+	\item 2024 Total Records = 47,259
+	\item 2024 Records After Quality Filters = 46,269
+	\item 2024 Final with Total Cost greater than 0 = 	34,034
+	\item 2023 Total Records = 46,193
+	\item 2023 Records After Quality Filters = 45,359 
+	\item 2023 Final with Total Cost greater than 0 = 33,001
+	\item 2022 Total Records = 45,270
+	\item 2022 Records After Quality Filters = 44,090
+	\item 2022 Final with Total Cost greater than 0 = 32,107
+	\item 2021 Total Records = 43,968
+	\item 2021 Records After Quality Filters = 42,779
+	\item 2021 Final with Total Cost greater than 0 = 30,738
+	\item 2020 Total Records = 42,677
+	\item 2020 Records After Quality Filters = 41,570
+	\item 2020 Final with Total Cost greater than 0 = 29,566
+\end{itemize}
+
+Confirmation of four figures per FY without missing/empty axes or irregularities showed:
+\begin{itemize}
+	\item Four plots were produced for each of the 6-years.
+	\item 2021-2025 pairplot present, showed top features as LOSRI, Total Cost and Age. \bf{2020 only showed Total Cost and Age.}
+	\item All years for the mixed correlation ratio are \bf{missing data for Q44 and Gender.}
+	\item All years for the continuous spearman have an extra column for LOSRI by Age.
+	\item All years for thecategorical cramers have an extra column for OLEVEL by Gender.
+\end{itemize}
+
+
+
+Log shows that 6 features were dropped. \bf{MI configurations were not explicit in the log and there were no small-sample notices of n less than 30.}
+\begin{itemize}
+	\item BSum
+	\item FSum
+	\item PSum
+	\item Q14
+	\item Q25
+	\item Q32	
+\end{itemize}
+
+Log shows that 3 features had high cardinality. 
+\begin{itemize}
+	\item County
+	\item SecondaryDiagnosis
+	\item OtherDiagnosis	
+\end{itemize}
+Log shows the following redundancy features dropped.
+\begin{itemize}
+	\item 2025 pair plot top features = OLEVEL
+	\item 2024 pair plot top features = LOSRI
+	\item 2023 pair plot top features = LOSRI	
+	\item 2022 pair plot top features = OLEVEL
+	\item 2021 pair plot top features = OLEVEL
+	\item 2020 pair plot top features = OLEVEL
+\end{itemize}
+
+Cross-check of TopFeaturesTable.tex post pruning showed the following.\\ Note that the ranking in the table is different than in the logs due to apparent sorting by Mean MI
+\begin{itemize}
+	\item 6 Years in Top 10 and 20 = Residence, Leving Setting, Age, AgeGroup, County, BLEVEL, Q26, and Q36
+	\item 5 years in Top 10 and 6 years in Top 20 = Q27
+	\item 3 years in Top 10 and 20 = LOSRI and OLEVEL
+	\item \end{itemize}
+\bf{items not showing in log, but showing in TopFeaturesTable}
+\begin{itemize}
+	\item 1 year in Top 10 and 6 years in Top 20 = Q20
+	\item 0 years in Top 10 and 6 years in Top 20 = FLEVEL, PLEVEL, Q44,Q30,Q23, Q28, Q29
+	\item 0 years in Top 10 and 4 years in Top 20 = Q21, and Q47
+	\item 0 years in Top 10 and 2 years in Top 20 = Q19 and Q16
+\end{itemize}
 \section{Model 1:} 
 TBD
 
