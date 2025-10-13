@@ -503,15 +503,9 @@ def main():
     )
     
     # Log configuration
-    model.logger.info("")
-    model.logger.info("Configuration:")
-    model.logger.info(f"  - Transformation: {'sqrt' if use_sqrt else 'none'}")
-    model.logger.info(f"  - Outlier removal: {use_outlier} (RF is naturally robust)")
-    model.logger.info(f"  - Data retention: 100%")
     model.logger.info(f"  - n_estimators: {model.n_estimators}")
     model.logger.info(f"  - max_depth: {model.max_depth}")
     model.logger.info(f"  - Random seed: {model.random_seed}")
-    model.logger.info("")
     
     # Run complete pipeline (base class handles metrics)
     results = model.run_complete_pipeline(

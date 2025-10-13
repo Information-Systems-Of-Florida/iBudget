@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 RANDOM_SEED = 42
 
 
-class Model4Ridge(BaseiBudgetModel):
+class Model5Ridge(BaseiBudgetModel):
     def __init__(self,
                  use_sqrt_transform: bool = False,  # Data shows better performance without sqrt
                  use_outlier_removal: bool = False,
@@ -561,7 +561,7 @@ def main():
     use_outlier = False  # Ridge handles outliers naturally
     suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     
-    model = Model4Ridge(
+    model = Model5Ridge(
         use_sqrt_transform=use_sqrt,
         use_outlier_removal=use_outlier,
         outlier_threshold=1.645,

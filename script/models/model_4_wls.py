@@ -772,17 +772,6 @@ def main():
         log_suffix=suffix
     )
     
-    # Log configuration
-    model.logger.info("")
-    model.logger.info("Configuration:")
-    model.logger.info("  - Square-root transformation: Yes (Model 5b standard)")
-    model.logger.info("  - Outlier removal: No (100% data retention)")
-    model.logger.info("  - Weight bounds: [0.2, 5.0] with variance normalization")
-    model.logger.info("  - Iterative WLS: " + ("Yes (2-pass)" if iterative else "Auto (if p < 1e-6)"))
-    model.logger.info("  - Features: Model 5b exact specification (21 features)")
-    model.logger.info("  - Variance model: Log-linear with ~8 predictors")
-    model.logger.info("")
-    
     # Run complete pipeline
     results = model.run_complete_pipeline(
         fiscal_year_start=2024,

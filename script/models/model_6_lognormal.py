@@ -116,10 +116,7 @@ class Model6LogNormal(BaseiBudgetModel):
         self.aic = 0.0
         self.bic = 0.0
         self.num_parameters = 0
-        
-        self.logger.info(f"Initialized Model {self.model_id}: {self.model_name}")
-        self.logger.info(f"  Transformation: {self.transformation}")
-        self.logger.info(f"  Outlier removal: {self.use_outlier_removal}")
+    
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -592,14 +589,7 @@ def main():
         log_suffix=suffix                   # Clear log suffix
     )
     
-    # Log configuration clearly
-    model.logger.info("")
-    model.logger.info("Configuration:")
-    model.logger.info(f"  - Transformation: {model.transformation} (base class handles it)")
-    model.logger.info(f"  - Outlier removal: {model.use_outlier_removal}")
-    model.logger.info(f"  - Random seed: {RANDOM_SEED}")
-    model.logger.info("")
-    
+   
     # Run complete pipeline
     print("Running complete pipeline...")
     results = model.run_complete_pipeline(

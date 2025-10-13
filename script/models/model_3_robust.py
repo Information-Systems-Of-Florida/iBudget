@@ -499,15 +499,7 @@ def main():
         log_suffix=suffix                   # Clear log suffix
     )
     
-    # Log configuration
-    model.logger.info("")
-    model.logger.info("Configuration:")
-    model.logger.info("  - Square-root transformation: Yes (Model 5b standard)")
-    model.logger.info("  - Outlier removal: No (adaptive weights instead)")
-    model.logger.info("  - Epsilon (Huber): 1.35 (95% efficiency)")
-    model.logger.info("  - Features: Model 5b exact specification (21 features)")
-    model.logger.info("")
-    
+   
     # Run complete pipeline (following Model 1 & 2 pattern)
     results = model.run_complete_pipeline(
         fiscal_year_start=2024,
