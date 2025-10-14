@@ -752,9 +752,6 @@ def main():
         print("\nRECOMMENDATION: Use Model 2 (Gamma GLM) instead")
     print(f"{'='*80}")
     
-    print(f"\nOutput directory: {model.output_dir_relative}")
-    print("="*80 + "\n")
-    
     return results
 
 

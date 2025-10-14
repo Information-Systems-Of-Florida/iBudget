@@ -9,15 +9,34 @@
 
 The seven alternative methods presented here span several options, from immediate deployment candidates to advanced research methods requiring fundamental framework changes. Each model documentation follows the comprehensive template structure, addressing algorithm specification, accuracy metrics, robustness analysis, implementation feasibility, and regulatory alignment.
 
+\subsection{Modeling Assumptions and Current Limitations}
+ 
+ 
+\paragraph{Data Representativeness:} Historical expenditure and assessment data are assumed to capture current operational conditions with reasonable fidelity.  However, shifts in service delivery models, regional pricing, and provider availability mean that past cost structures no longer fully represent the range of current outcomes.  The predictive signal of the data remains consistent, but its explanatory power has narrowed.
+ 
+\paragraph{Data Quality and Completeness:} Source files from iConnect and claims repositories are assumed accurate and internally consistent after standard data-quality checks.  Missing or anomalous records are filtered before estimation.  Remaining measurement error contributes to unexplained variance but does not systematically bias coefficients. 
+ 
+\paragraph{Stability of Relationships:} The statistical form linking assessed need (via QSI and related variables) to expenditure is assumed approximately stable over short horizons.  In practice, that relationship has weakened as individualized planning and provider heterogeneity introduce new, non-assessment sources of variation.  The convergence of R² values across multiple model families ($\approx$0.45-0.50) indicates that this instability reflects genuine structural change rather than model misspecification.
+ 
+\paragraph{Relevance of Predictors:} The selected predictors, particularly QSI domain scores and living-setting indicators, remain conceptually relevant to support needs but explain a smaller share of total cost than in earlier calibrations.  Their psychometric consistency persists, yet their economic salience has diminished as authorization decisions incorporate broader contextual factors.
+ 
+\paragraph{Independence of Observations:} Each record is treated as an independent budgeting unit.  Some latent clustering by provider or region may persist, but cross-validation and random sampling minimize systematic dependency effects on parameter estimates.
+ 
+\paragraph{Unobserved Confounders:} The models assume that major determinants of cost are observed within the dataset.  Nonetheless, emerging administrative and environmental influences, such as provider market dynamics or regional wage differentials, introduce residual confounding beyond the reach of assessment data alone.
+ 
+\paragraph{Policy and Regulatory Alignment:} All models operate within current Florida APD and AHCA waiver rules.  Estimates are valid only under the existing service definitions and allocation framework; regulatory or programmatic changes would require re-estimation.
+
 \section{Model Summary}
 
 \subsection{Algorithm Selection Rationale}
 
 The following section provides a concise justification for each of the seven algorithms evaluated in this study. Each model was selected to address specific challenges in the iBudget allocation system or to establish performance benchmarks.
 
-HB 1103  requires to ``develop alternative algorithms using multiple linear regression" (lines 689-690). The algorithms must be tested for "accuracy and reliability" (lines 690-691). The focus is specifically on "multiple linear regression models" (line 681). The requirement for multiple linear regression inherently means the algorithm must be interpretable and explainable, as linear regression models provide clear coefficients that show how each input affects the output.
+HB 1103  requires to ``develop alternative algorithms using multiple linear regression'' (lines 689-690). The algorithms must be tested for ``accuracy and reliability'' (lines 690-691). The focus is specifically on ``multiple linear regression models'' (line 681). The requirement for multiple linear regression inherently means the algorithm must be interpretable and explainable, as linear regression models provide clear coefficients that show how each input affects the output.
 
-\subsubsection{Model 1: Re-estimated Linear Regression}
+Models are numbered 1 through 11 with gaps due to removal of models 7, 8 and 9 after initial inspection by APD. These models were removed due to their black-box nature (neural netowrks) or limited ability to produce point estimates (quantile regression and Bayesian linear regression). Model numbering remains unchanged to preserve the integrity of reference across deliveries to APD. 
+
+\subsection{Model 1: Re-estimated Linear Regression}
 \textbf{Why chosen}: Maintains exact Model 5b structure while updating coefficients with current data. Represents the safest implementation path with zero regulatory risk.
 \begin{itemize}
     \item Complete regulatory compliance with minimal stakeholder disruption
@@ -25,7 +44,7 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
     \item Retains problematic 9.4\% outlier exclusion requirement
 \end{itemize}
 
-\subsubsection{Model 2: Generalized Linear Model with Gamma Distribution}
+\subsection{Model 2: Generalized Linear Model with Gamma Distribution}
 \textbf{Why chosen}: Replaces square-root transformation with log-link function, naturally accommodating right-skewed expenditure data without back-transformation bias.
 \begin{itemize}
     \item Gamma distribution handles outliers naturally without exclusions
@@ -33,7 +52,7 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
     \item Implementation requires 6-12 months including regulatory rule updates
 \end{itemize}
 
-\subsubsection{Model 3: Robust Linear Regression using Huber M-Estimators}
+\subsection{Model 3: Robust Linear Regression using Huber M-Estimators}
 \textbf{Why chosen}: Represents optimal balance between innovation and compliance. Includes ALL consumers through automatic outlier downweighting rather than exclusion.
 \begin{itemize}
     \item Each consumer receives weight between 0 and 1 indicating data quality
@@ -41,7 +60,7 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
     \item Implementation requires 6 months with moderate training requirements
 \end{itemize}
 
-\subsubsection{Model 4: Weighted Least Squares}
+\subsection{Model 4: Weighted Least Squares}
 \textbf{Why chosen}: Addresses heteroscedasticity through variance-based weighting. Offers superior efficiency for stable cases but raises equity concerns.
 \begin{itemize}
     \item Weights could create systematic bias across demographic groups
@@ -49,15 +68,15 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
     \item May disadvantage high-need consumers with variable costs
 \end{itemize}
 
-\subsubsection{Model 5: Ridge Regression}
+\subsection{Model 5: Ridge Regression}
 \textbf{Why chosen}: Applies L2 regularization to handle multicollinearity among QSI variables. Offers highest stability despite communication challenges.
 \begin{itemize}
-    \item Reduces condition numbers from 45.6 to 8.2
+    \item Reduces condition numbers
     \item Requirement to retain all 22 predictors aligns with current regulations
     \item Shrinkage concept proves difficult to explain to non-technical audiences
 \end{itemize}
 
-\subsubsection{Model 6: Log-Normal Regression}
+\subsection{Model 6: Log-Normal Regression}
 \textbf{Why chosen}: Uses natural log transformation supported by Box-Cox analysis. Provides intuitive percentage-change interpretations.
 \begin{itemize}
     \item Superior statistical foundation compared to square-root transformation
@@ -65,7 +84,7 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
     \item Retransformation bias managed using smearing estimators
 \end{itemize}
 
-% \subsubsection{Model 7: Quantile Regression}
+% \subsection{Model 7: Quantile Regression}
 % \textbf{Why chosen}: Models multiple percentiles of expenditure distribution for research insights. Cannot produce required point estimates for production use.
 % \begin{itemize}
 %     \item Provides valuable understanding of allocation uncertainty
@@ -73,7 +92,7 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
 %     \item Fatally violates F.S. 393.0662's requirement for single deterministic allocation
 % \end{itemize}
 
-% \subsubsection{Model 8: Bayesian Linear Regression}
+% \subsection{Model 8: Bayesian Linear Regression}
 % \textbf{Why chosen}: Treats parameters as probability distributions, providing complete uncertainty quantification through posterior distributions and credible intervals.
 % \begin{itemize}
 %     \item Natural handling of missing data and parameter uncertainty
@@ -81,15 +100,15 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
 %     \item Legally uncertain despite strong statistical foundations
 % \end{itemize}
 
-\subsubsection{Model 9: Random Forest}
+\subsection{Model 9: Random Forest}
 \textbf{Why chosen}: Ensemble of decision trees captures non-linear relationships without parametric assumptions. Creates interpretability challenges for regulatory compliance.
 \begin{itemize}
     \item Aggregates predictions from multiple trees built on bootstrap samples
     \item Variable importance scores indicate contribution but lack direct coefficients
-    \item Violates F.A.C. 65G-4.0214's requirement for interpretable coefficients
+    \item Violates current F.A.C. 65G-4.0214's requirement for interpretable coefficients
 \end{itemize}
 
-% \subsubsection{Model 10: Deep Learning Neural Network}
+% \subsection{Model 10: Deep Learning Neural Network}
 % \textbf{Why chosen}: Establishes performance ceiling through multiple hidden layers. Fundamentally incompatible with HB 1103's requirement for multiple linear regression models.
 % \begin{itemize}
 %     \item 4,049 parameters interacting non-linearly prevent meaningful explanation
@@ -99,16 +118,16 @@ HB 1103  requires to ``develop alternative algorithms using multiple linear regr
 
 % \subsection{Tiered Implementation Recommendations}
 
-% \subsubsection{Tier 1: Primary Replacement Candidates}
+% \subsection{Tier 1: Primary Replacement Candidates}
 % Models 1-3 offer viable paths forward with varying trade-offs between innovation and regulatory compliance. Model 3 (Robust Regression) represents the optimal balance, including all consumers while maintaining transparency.
 
-% \subsubsection{Tier 2: Conditional Replacement Candidates}
+% \subsection{Tier 2: Conditional Replacement Candidates}
 % Models 4-6 provide statistical improvements but require careful consideration of equity concerns (Model 4), communication challenges (Model 5), or regulatory hurdles (Model 6).
 
-% % \subsubsection{Tier 3: Research and Validation Methods}
+% % \subsection{Tier 3: Research and Validation Methods}
 % % Models 7-8 offer valuable insights for understanding uncertainty and risk but cannot produce the deterministic allocations required by statute.
 
-% \subsubsection{Tier 4: Advanced Methods Requiring Framework Changes}
+% \subsection{Tier 4: Advanced Methods Requiring Framework Changes}
 % Models 9 demonstrates superior predictive performance. Its implementation requires rule revision and guardrails to minimize black-box effects.
 
 % %============================================

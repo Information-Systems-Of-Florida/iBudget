@@ -852,9 +852,9 @@ def main():
     
     model.logger.info("")
     model.logger.info("Output:")
-    model.logger.info(f"  Results saved to: {model.output_dir}")
-    model.logger.info(f"  Diagnostic plots: {model.output_dir / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX commands: {model.output_dir / 'model_4_renewcommands.tex'}")
+    model.logger.info(f"  Results saved to: {model.output_dir_relative}")
+    model.logger.info(f"  Diagnostic plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX commands: {model.output_dir_relative / 'model_4_renewcommands.tex'}")
     
     model.logger.info("")
     model.logger.info("="*80)

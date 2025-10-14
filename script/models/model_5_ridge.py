@@ -613,7 +613,17 @@ def main():
         model.logger.info(f"CV R^2: {model.metrics.get('cv_r2_mean', 0):.4f} +- {model.metrics.get('cv_r2_std', 0):.4f}")
     elif 'cv_mean' in model.metrics:
         model.logger.info(f"CV R^2: {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
-   
+ 
+    model.logger.info("")
+    model.logger.info("Output:")
+    model.logger.info(f"  Results: {model.output_dir_relative}")
+    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
+    
+    model.logger.info("")
+    model.logger.info("="*80)
+    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
+    model.logger.info("="*80)
     
     return results
 

@@ -541,13 +541,13 @@ def main():
     
     model.logger.info("")
     model.logger.info("Output:")
-    model.logger.info(f"  Results saved to: {model.output_dir}")
-    model.logger.info(f"  Diagnostic plots: {model.output_dir / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX commands: {model.output_dir / 'model_3_renewcommands.tex'}")
+    model.logger.info(f"  Results: {model.output_dir_relative}")
+    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
     
     model.logger.info("")
     model.logger.info("="*80)
-    model.logger.info("MODEL 3 PIPELINE COMPLETE")
+    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
     model.logger.info("="*80)
     
     return results

@@ -608,10 +608,15 @@ def main():
         model.logger.info(line)
     
     model.logger.info("")
-    model.logger.info("=" * 80)
-    model.logger.info("Model 2 pipeline complete!")
-    model.logger.info(f"Results saved to: {model.output_dir_relative}")
-    model.logger.info("=" * 80)
+    model.logger.info("Output:")
+    model.logger.info(f"  Results: {model.output_dir_relative}")
+    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
+    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
+    
+    model.logger.info("")
+    model.logger.info("="*80)
+    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
+    model.logger.info("="*80)
     
     # Also print a brief summary to console for immediate visibility
     print("\n" + "="*80)
