@@ -119,31 +119,31 @@ class Model3Robust(BaseiBudgetModel):
         if hasattr(self, 'feature_config') and self.feature_config is not None:
             return self.prepare_features_from_spec(records, self.feature_config)
         
-        # Model 3 uses EXACT Model 5b specification (same as Model 1)
-        model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
+       
+        # Define high MI QSI items
+        high_mi_qsi = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28, 33, 34, 43, 44]
         
         feature_config = {
             'categorical': {
                 'living_setting': {
                     'categories': ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'],
-                    'reference': 'FH'  # FH is reference, not included
+                    'reference': 'FH'  # Not included in features
                 }
             },
             'binary': {
                 'Age21_30': lambda r: 21 <= r.age <= 30,
-                'Age31Plus': lambda r: r.age > 30
-                # Age3_20 is reference, not included
+                'Age31Plus': lambda r: r.age > 30,
+                'Male': lambda r: r.gender == 'M'
             },
-            'numeric': ['bsum'],  # Only BSum per Model 5b
+            'numeric': ['losri', 'olevel', 'blevel', 'flevel', 'plevel', 
+                    'bsum', 'fsum', 'psum', 'age'],
+            #'qsi': high_mi_qsi[:15] if self.use_selected_features else list(range(14, 51)),
+            'qsi': list(range(14, 51)),
             'interactions': [
-                # FH  vs.  FSum interaction
-                ('FHFSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum)),
-                # Supported Living  vs.  FSum interaction  
-                ('SLFSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.fsum)),
-                # Supported Living  vs.  BSum interaction
-                ('SLBSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.bsum))
-            ],
-            'qsi': model_5b_qsi  # Exactly 10 QSI items from Model 5b
+                ('SupportedLiving_x_LOSRI', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.losri)),
+                ('Age_x_BSum', lambda r: float(r.age) * float(r.bsum) / 100.0),
+                ('FH_x_FSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum))
+            ]
         }
         
         # Use the base class method exactly like Model 1
@@ -486,7 +486,7 @@ def main():
     logger.info("="*80)
     
     # Initialize model with explicit parameters (following Model 1 & 2 pattern)
-    use_sqrt = True                 
+    use_sqrt = False                 
     use_outlier = False
     suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     model = Model3Robust(

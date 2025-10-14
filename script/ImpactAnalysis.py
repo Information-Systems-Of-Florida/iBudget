@@ -145,8 +145,8 @@ def analyze_subgroups(predictions_df, conservative):
         subgroup_results['age'] = age_analysis
     
     # Living setting analysis
-    if 'living setting' in df.columns:
-        living_analysis = df.groupby('living setting').agg({
+    if 'living_setting' in df.columns:
+        living_analysis = df.groupby('living_setting').agg({
             'actual': ['count', 'sum', 'mean'],
             'conservative': ['sum', 'mean'],
             'impact': ['sum', 'mean'],
@@ -343,21 +343,24 @@ def generate_latex_output(all_results):
                 f.write("\\small\n")
                 f.write(f"\\caption{{Model {model_num}: Economic Impact by Age Group}}\n")
                 f.write(f"\\label{{tab:model{model_num}_impact_age}}\n")
-                f.write("\\begin{tabular}{lrrrrr}\n")
+                f.write("\\begin{tabular}{lrrrrrr}\n")
                 f.write("\\toprule\n")
-                f.write("\\textbf{Age Group} & \\textbf{N} & \\textbf{Mean Actual} & ")
+                f.write("\\textbf{Age Group} & \\textbf{N} & \\textbf{\\%} & \\textbf{Mean Actual} & ")
                 f.write("\\textbf{Mean Conservative} & \\textbf{Impact} & \\textbf{Impact \\%} \\\\\n")
                 f.write("\\midrule\n")
                 
                 age_df = subgroup_results['age']
+                total_n = age_df[('actual', 'count')].sum()
+                
                 for idx in age_df.index:
                     n = int(age_df.loc[idx, ('actual', 'count')])
+                    pct = 100 * n / total_n
                     mean_actual = age_df.loc[idx, ('actual', 'mean')]
                     mean_cons = age_df.loc[idx, ('conservative', 'mean')]
                     impact = age_df.loc[idx, ('impact', 'sum')]
                     impact_pct = age_df.loc[idx, ('impact_pct', 'mean')]
                     
-                    f.write(f"{idx} & {n:,} & ")
+                    f.write(f"{idx} & {n:,} & {format_number(pct, 1)}\\% & ")
                     f.write(f"\\${format_number(mean_actual)} & ")
                     f.write(f"\\${format_number(mean_cons)} & ")
                     impact_sign = "+" if impact >= 0 else ""
@@ -375,21 +378,25 @@ def generate_latex_output(all_results):
                 f.write("\\small\n")
                 f.write(f"\\caption{{Model {model_num}: Economic Impact by Living Setting}}\n")
                 f.write(f"\\label{{tab:model{model_num}_impact_living}}\n")
-                f.write("\\begin{tabular}{lrrrrr}\n")
+                f.write("\\begin{tabular}{lrrrrrr}\n")
                 f.write("\\toprule\n")
-                f.write("\\textbf{Living Setting} & \\textbf{N} & \\textbf{Mean Actual} & ")
+                f.write("\\textbf{\\shortstack{Living \\\\ Setting}} & \\textbf{N} & \\textbf{\\%} & \\textbf{Mean Actual} & ")
                 f.write("\\textbf{Mean Conservative} & \\textbf{Impact} & \\textbf{Impact \\%} \\\\\n")
+    
                 f.write("\\midrule\n")
                 
                 living_df = subgroup_results['living']
+                total_n = living_df[('actual', 'count')].sum()
+                
                 for idx in living_df.index:
                     n = int(living_df.loc[idx, ('actual', 'count')])
+                    pct = 100 * n / total_n
                     mean_actual = living_df.loc[idx, ('actual', 'mean')]
                     mean_cons = living_df.loc[idx, ('conservative', 'mean')]
                     impact = living_df.loc[idx, ('impact', 'sum')]
                     impact_pct = living_df.loc[idx, ('impact_pct', 'mean')]
                     
-                    f.write(f"{idx} & {n:,} & ")
+                    f.write(f"{idx} & {n:,} & {format_number(pct, 1)}\\% & ")
                     f.write(f"\\${format_number(mean_actual)} & ")
                     f.write(f"\\${format_number(mean_cons)} & ")
                     impact_sign = "+" if impact >= 0 else ""
@@ -505,7 +512,7 @@ def generate_latex_output(all_results):
             # Add insights from subgroup analysis
             if 'impact_level' in subgroup_results:
                 impact_df = subgroup_results['impact_level']
-                large_increase_idx = 'Large Increase (>25%)'
+                large_increase_idx = 'Large Increase (>25\%)'
                 if large_increase_idx in impact_df.index:
                     n_large = int(impact_df.loc[large_increase_idx, ('actual', 'count')])
                     pct_large = 100 * n_large / metrics['n_samples']

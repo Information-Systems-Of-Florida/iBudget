@@ -127,27 +127,30 @@ class Model6LogNormal(BaseiBudgetModel):
         if hasattr(self, 'feature_config') and self.feature_config is not None:
             return self.prepare_features_from_spec(records, self.feature_config)
         
-        # Model 5b QSI items
-        model_5b_qsi = [16, 18, 20, 21, 23, 28, 33, 34, 36, 43]
+        # Define high MI QSI items
+        high_mi_qsi = [26, 36, 27, 20, 21, 23, 30, 25, 16, 18, 28, 33, 34, 43, 44]
         
         feature_config = {
             'categorical': {
                 'living_setting': {
                     'categories': ['ILSL', 'RH1', 'RH2', 'RH3', 'RH4'],
-                    'reference': 'FH'
+                    'reference': 'FH'  # Not included in features
                 }
             },
             'binary': {
                 'Age21_30': lambda r: 21 <= r.age <= 30,
-                'Age31Plus': lambda r: r.age > 30
+                'Age31Plus': lambda r: r.age > 30,
+                'Male': lambda r: r.gender == 'M'
             },
-            'numeric': ['bsum'],
+            'numeric': ['losri', 'olevel', 'blevel', 'flevel', 'plevel', 
+                    'bsum', 'fsum', 'psum', 'age'],
+            #'qsi': high_mi_qsi[:15] if self.use_selected_features else list(range(14, 51)),
+            'qsi': list(range(14, 51)),
             'interactions': [
-                ('FHFSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum)),
-                ('SLFSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.fsum)),
-                ('SLBSum', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.bsum))
-            ],
-            'qsi': model_5b_qsi
+                ('SupportedLiving_x_LOSRI', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.losri)),
+                ('Age_x_BSum', lambda r: float(r.age) * float(r.bsum) / 100.0),
+                ('FH_x_FSum', lambda r: (1 if r.living_setting == 'FH' else 0) * float(r.fsum))
+            ]
         }
         
         return self.prepare_features_from_spec(records, feature_config)

@@ -460,7 +460,6 @@ class BaseiBudgetModel(ABC):
         self.logger.info("=" * 80)
         self.logger.info(f"Model {self.model_id} pipeline complete!")
         self.logger.info(f"Results saved to: {self.output_dir_relative}")
-        #self.logger.info(f"Results saved to: {self.output_dir}")
         self.logger.info("=" * 80)
             
     # ========================================================================
@@ -1719,22 +1718,45 @@ class BaseiBudgetModel(ABC):
         with open(self.output_dir / "metrics.json", 'w') as f:
             json.dump(self.metrics, f, indent=2, default=str)
         
-        if self.test_predictions is not None:
-            pred_df = pd.DataFrame({
+        if self.train_predictions is not None and self.test_predictions is not None:
+            # Create training predictions dataframe
+            # Use only the records that correspond to actual predictions (after filtering)
+            train_ages = [r.age for r in self.train_records][:len(self.y_train)]
+            train_living = [r.living_setting for r in self.train_records][:len(self.y_train)]
+            
+            train_df = pd.DataFrame({
+                'dataset': 'train',
+                'actual': self.y_train,
+                'predicted': self.train_predictions,
+                'age': train_ages,
+                'living_setting': train_living,
+                'error': self.train_predictions - self.y_train
+            })
+        
+            # Create test predictions dataframe (this one is fine)
+            test_df = pd.DataFrame({
+                'dataset': 'test',
                 'actual': self.y_test,
                 'predicted': self.test_predictions,
-                'error': self.test_predictions - self.y_test,
                 'age': [r.age for r in self.test_records],
-                'living setting': [r.living_setting for r in self.test_records]
+                'living_setting': [r.living_setting for r in self.test_records],
+                'error': self.test_predictions - self.y_test
             })
+            
+            # Combine both datasets
+            pred_df = pd.concat([train_df, test_df], ignore_index=True)
             pred_df.to_csv(self.output_dir / "predictions.csv", index=False)
-        
+            
+            # Combine both datasets
+            pred_df = pd.concat([train_df, test_df], ignore_index=True)
+            pred_df.to_csv(self.output_dir / "predictions.csv", index=False)
+            
         # Log what was saved
         self.logger.info("Results saved:")
         self.logger.info(f"  - Metrics JSON: {self.output_dir_relative / 'metrics.json'}")
-        if self.test_predictions is not None:
+        if self.train_predictions is not None and self.test_predictions is not None:
             self.logger.info(f"  - Predictions CSV: {self.output_dir_relative / 'predictions.csv'}")
-            self.logger.info(f"    ({len(self.test_predictions):,} predictions)")
+            self.logger.info(f"    ({len(self.train_predictions):,} train + {len(self.test_predictions):,} test predictions)")
     
     def plot_diagnostics(self) -> None:
         """Generate diagnostic plots (2x3 grid)"""

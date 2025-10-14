@@ -139,7 +139,8 @@ class Model2GLMGamma(BaseiBudgetModel):
             },
             'numeric': ['losri', 'olevel', 'blevel', 'flevel', 'plevel', 
                     'bsum', 'fsum', 'psum', 'age'],
-            'qsi': high_mi_qsi[:15] if self.use_selected_features else list(range(14, 51)),
+            #'qsi': high_mi_qsi[:15] if self.use_selected_features else list(range(14, 51)),
+            'qsi': list(range(14, 51)),
             'interactions': [
                 ('SupportedLiving_x_LOSRI', lambda r: (1 if r.living_setting in ['RH1','RH2','RH3','RH4'] else 0) * float(r.losri)),
                 ('Age_x_BSum', lambda r: float(r.age) * float(r.bsum) / 100.0),
@@ -451,7 +452,7 @@ class Model2GLMGamma(BaseiBudgetModel):
         plt.savefig(plot_file, dpi=300, bbox_inches='tight')
         plt.close()
         
-        self.logger.info(f"Diagnostic plots saved to {plot_file}")
+        self.logger.info(f"Diagnostic plots saved to {self.output_dir_relative / plot_file}")
     
     def generate_latex_commands(self) -> None:
         """
@@ -518,9 +519,9 @@ def main():
     suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
     model = Model2GLMGamma(
         use_sqrt_transform=False,    # Didactic purpose. Should ALWAYS be False for Gamma
-        use_outlier_removal=True,      
+        use_outlier_removal=False,      
         outlier_threshold=1.645,     # ~10% outliers (Model 5b default) 
-        use_selected_features=False, # Use MI-based feature selection
+        use_selected_features=True, # Use MI-based feature selection
         random_seed=42,              # For reproducibility
         log_suffix=suffix
     )
