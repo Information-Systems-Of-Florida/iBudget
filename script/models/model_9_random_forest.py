@@ -511,7 +511,7 @@ def main():
     
     # Run complete pipeline (base class handles metrics)
     results = model.run_complete_pipeline(
-        fiscal_year_start=2022,
+        fiscal_year_start=2024,
         fiscal_year_end=2024,
         test_size=0.2,
         perform_cv=True,
