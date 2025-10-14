@@ -1723,7 +1723,9 @@ class BaseiBudgetModel(ABC):
             pred_df = pd.DataFrame({
                 'actual': self.y_test,
                 'predicted': self.test_predictions,
-                'error': self.test_predictions - self.y_test
+                'error': self.test_predictions - self.y_test,
+                'age': [r.age for r in self.test_records],
+                'living setting': [r.living_setting for r in self.test_records]
             })
             pred_df.to_csv(self.output_dir / "predictions.csv", index=False)
         
