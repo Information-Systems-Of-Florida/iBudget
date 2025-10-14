@@ -15,7 +15,7 @@
   "mae_train": 17306.161257647203,
   "mae_test": 18300.73287441557,
   "mape_train": 281.7884504628024,
-  "mape_test": 309.439609525691,
+  "mape_test": 309.4396095256911,
   "training_samples": 79572,
   "test_samples": 19893
 }

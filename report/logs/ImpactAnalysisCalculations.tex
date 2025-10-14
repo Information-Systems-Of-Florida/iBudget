@@ -1,5 +1,5 @@
 % Economic Impact Analysis Report
-% Generated: 2025-10-14 15:08:45
+% Generated: 2025-10-14 15:13:31
 % Conservative Budget Estimation Analysis
 
 \section{Economic Impact Analysis}
@@ -36,6 +36,77 @@ RMSE (Test) & \$33,718.68 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 1: Economic Impact by Age Group}
+\label{tab:model1_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$50,357.41 & \$+14,022,588.57 & +441.70\% \\
+31+ & 4,343 & \$48,377.38 & \$56,034.88 & \$+33,256,547.28 & +185.41\% \\
+Under 21 & 694 & \$22,479.49 & \$27,499.06 & \$+3,483,580.54 & +463.05\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 1: Economic Impact by Living Setting}
+\label{tab:model1_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$27,089.50 & \$+16,855,140.75 & +278.50\% \\
+ILSL & 893 & \$45,826.71 & \$55,320.72 & \$+8,478,151.82 & +290.31\% \\
+RH1 & 1,831 & \$83,525.89 & \$95,336.64 & \$+21,625,469.64 & +245.92\% \\
+RH2 & 36 & \$60,713.32 & \$71,710.54 & \$+395,899.79 & +178.86\% \\
+RH3 & 238 & \$71,998.39 & \$83,901.13 & \$+2,832,853.10 & +614.15\% \\
+RH4 & 69 & \$55,100.06 & \$63,436.31 & \$+575,201.29 & +131.76\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 1: Economic Impact by Budget Quartile}
+\label{tab:model1_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$14,945.00 & \$+22,512,703.62 & +1,046.91\% \\
+Q2 & 1,708 & \$16,053.05 & \$22,862.91 & \$+11,631,231.72 & +60.19\% \\
+Q3 & 1,708 & \$52,959.21 & \$59,431.17 & \$+11,054,106.41 & +12.63\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$109,325.23 & \$+5,564,674.63 & +3.97\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 1: Distribution by Impact Level}
+\label{tab:model1_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 3,287 & 48.1\% & \$67,139.58 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 357 & 5.2\% & \$61,243.94 & \$+2,857.40 & +4.75\% \\
+Moderate Increase (10-25\%) & 430 & 6.3\% & \$53,603.28 & \$+9,175.82 & +17.31\% \\
+Large Increase (>25\%) & 2,760 & 40.4\% & \$13,250.75 & \$+16,593.12 & +692.46\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model1_impact_age} through \ref{tab:model1_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model1_impact_histograms} presents the distribution analysis for Model 1, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -45,7 +116,7 @@ Figure~\ref{fig:model1_impact_histograms} presents the distribution analysis for
 \label{fig:model1_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 1 would require an additional \$50,762,716.39 (16.80\%) compared to actual costs, averaging \$7,427.97 per client. The model under-predicted costs in 51.9\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 1 would require an additional \$50,762,716.39 (16.80\%) compared to actual costs, averaging \$7,427.97 per client. The model under-predicted costs in 51.9\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -78,6 +149,77 @@ RMSE (Test) & \$33,859.02 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 2: Economic Impact by Age Group}
+\label{tab:model2_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$53,660.90 & \$+19,958,952.51 & +561.43\% \\
+31+ & 4,343 & \$48,377.38 & \$58,371.78 & \$+43,405,715.04 & +230.81\% \\
+Under 21 & 694 & \$22,479.49 & \$27,225.97 & \$+3,294,057.83 & +633.87\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 2: Economic Impact by Living Setting}
+\label{tab:model2_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$29,838.16 & \$+27,209,313.73 & +441.15\% \\
+ILSL & 893 & \$45,826.71 & \$55,439.16 & \$+8,583,918.51 & +285.44\% \\
+RH1 & 1,831 & \$83,525.89 & \$98,125.01 & \$+26,730,977.68 & +214.19\% \\
+RH2 & 36 & \$60,713.32 & \$73,118.07 & \$+446,570.98 & +163.85\% \\
+RH3 & 238 & \$71,998.39 & \$84,544.09 & \$+2,985,878.29 & +529.37\% \\
+RH4 & 69 & \$55,100.06 & \$65,274.94 & \$+702,066.18 & +151.35\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 2: Economic Impact by Budget Quartile}
+\label{tab:model2_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$18,983.20 & \$+29,413,998.77 & +1,333.85\% \\
+Q2 & 1,708 & \$16,053.05 & \$24,411.65 & \$+14,276,479.22 & +79.70\% \\
+Q3 & 1,708 & \$52,959.21 & \$60,148.28 & \$+12,278,921.51 & +13.52\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$112,323.86 & \$+10,689,325.87 & +7.28\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 2: Distribution by Impact Level}
+\label{tab:model2_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 2,925 & 42.8\% & \$71,402.99 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 346 & 5.1\% & \$60,318.87 & \$+2,913.96 & +4.86\% \\
+Moderate Increase (10-25\%) & 449 & 6.6\% & \$52,460.74 & \$+9,028.24 & +17.37\% \\
+Large Increase (>25\%) & 3,114 & 45.6\% & \$15,701.49 & \$+19,780.61 & +784.11\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model2_impact_age} through \ref{tab:model2_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model2_impact_histograms} presents the distribution analysis for Model 2, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -87,7 +229,7 @@ Figure~\ref{fig:model2_impact_histograms} presents the distribution analysis for
 \label{fig:model2_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 2 would require an additional \$66,658,725.38 (22.06\%) compared to actual costs, averaging \$9,753.98 per client. The model under-predicted costs in 57.2\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 2 would require an additional \$66,658,725.38 (22.06\%) compared to actual costs, averaging \$9,753.98 per client. The model under-predicted costs in 57.2\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -120,6 +262,77 @@ RMSE (Test) & \$33,666.51 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 3: Economic Impact by Age Group}
+\label{tab:model3_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$50,310.30 & \$+13,937,927.72 & +443.23\% \\
+31+ & 4,343 & \$48,377.38 & \$55,925.15 & \$+32,779,991.53 & +187.82\% \\
+Under 21 & 694 & \$22,479.49 & \$27,340.02 & \$+3,373,209.59 & +464.39\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 3: Economic Impact by Living Setting}
+\label{tab:model3_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$27,235.06 & \$+17,403,456.39 & +286.73\% \\
+ILSL & 893 & \$45,826.71 & \$55,106.00 & \$+8,286,406.40 & +285.96\% \\
+RH1 & 1,831 & \$83,525.89 & \$94,883.50 & \$+20,795,782.19 & +240.61\% \\
+RH2 & 36 & \$60,713.32 & \$71,232.51 & \$+378,690.68 & +173.32\% \\
+RH3 & 238 & \$71,998.39 & \$83,220.76 & \$+2,670,924.71 & +601.60\% \\
+RH4 & 69 & \$55,100.06 & \$63,156.13 & \$+555,868.47 & +130.87\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 3: Economic Impact by Budget Quartile}
+\label{tab:model3_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$15,134.80 & \$+22,837,074.78 & +1,056.01\% \\
+Q2 & 1,708 & \$16,053.05 & \$22,803.51 & \$+11,529,786.98 & +60.18\% \\
+Q3 & 1,708 & \$52,959.21 & \$59,140.21 & \$+10,557,153.19 & +12.08\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$109,092.60 & \$+5,167,113.90 & +3.70\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 3: Distribution by Impact Level}
+\label{tab:model3_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 3,326 & 48.7\% & \$67,212.81 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 342 & 5.0\% & \$60,280.17 & \$+2,865.83 & +4.90\% \\
+Moderate Increase (10-25\%) & 419 & 6.1\% & \$53,625.55 & \$+9,006.99 & +17.13\% \\
+Large Increase (>25\%) & 2,747 & 40.2\% & \$12,937.26 & \$+16,504.22 & +700.99\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model3_impact_age} through \ref{tab:model3_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model3_impact_histograms} presents the distribution analysis for Model 3, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -129,7 +342,7 @@ Figure~\ref{fig:model3_impact_histograms} presents the distribution analysis for
 \label{fig:model3_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 3 would require an additional \$50,091,128.84 (16.58\%) compared to actual costs, averaging \$7,329.69 per client. The model under-predicted costs in 51.3\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 3 would require an additional \$50,091,128.84 (16.58\%) compared to actual costs, averaging \$7,329.69 per client. The model under-predicted costs in 51.3\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -162,6 +375,77 @@ RMSE (Test) & \$32,462.66 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 4: Economic Impact by Age Group}
+\label{tab:model4_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$56,224.17 & \$+24,565,145.33 & +714.34\% \\
+31+ & 4,343 & \$48,377.38 & \$59,022.83 & \$+46,233,197.67 & +295.27\% \\
+Under 21 & 694 & \$22,479.49 & \$31,098.95 & \$+5,981,907.50 & +792.79\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 4: Economic Impact by Living Setting}
+\label{tab:model4_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$33,076.36 & \$+39,407,635.63 & +572.94\% \\
+ILSL & 893 & \$45,826.71 & \$57,571.41 & \$+10,488,021.09 & +328.89\% \\
+RH1 & 1,831 & \$83,525.89 & \$95,945.08 & \$+22,739,534.78 & +270.50\% \\
+RH2 & 36 & \$60,713.32 & \$71,986.28 & \$+405,826.40 & +169.45\% \\
+RH3 & 238 & \$71,998.39 & \$84,958.29 & \$+3,084,457.20 & +642.70\% \\
+RH4 & 69 & \$55,100.06 & \$64,589.56 & \$+654,775.39 & +143.13\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 4: Economic Impact by Budget Quartile}
+\label{tab:model4_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$24,280.10 & \$+38,466,393.88 & +1,691.98\% \\
+Q2 & 1,708 & \$16,053.05 & \$28,171.99 & \$+20,699,136.04 & +113.47\% \\
+Q3 & 1,708 & \$52,959.21 & \$60,213.54 & \$+12,390,387.78 & +14.25\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$109,126.08 & \$+5,224,332.80 & +3.78\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 4: Distribution by Impact Level}
+\label{tab:model4_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 2,792 & 40.9\% & \$74,303.63 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 392 & 5.7\% & \$62,188.60 & \$+2,994.06 & +4.89\% \\
+Moderate Increase (10-25\%) & 492 & 7.2\% & \$51,948.10 & \$+8,832.94 & +17.22\% \\
+Large Increase (>25\%) & 3,158 & 46.2\% & \$14,180.26 & \$+22,565.16 & +983.47\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model4_impact_age} through \ref{tab:model4_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model4_impact_histograms} presents the distribution analysis for Model 4, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -171,7 +455,7 @@ Figure~\ref{fig:model4_impact_histograms} presents the distribution analysis for
 \label{fig:model4_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 4 would require an additional \$76,780,250.49 (25.41\%) compared to actual costs, averaging \$11,235.04 per client. The model under-predicted costs in 59.1\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 4 would require an additional \$76,780,250.49 (25.41\%) compared to actual costs, averaging \$11,235.04 per client. The model under-predicted costs in 59.1\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -204,6 +488,77 @@ RMSE (Test) & \$33,198.10 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 5: Economic Impact by Age Group}
+\label{tab:model5_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$51,584.40 & \$+16,227,476.92 & +508.32\% \\
+31+ & 4,343 & \$48,377.38 & \$56,271.48 & \$+34,284,107.83 & +214.98\% \\
+Under 21 & 694 & \$22,479.49 & \$27,395.71 & \$+3,411,858.50 & +512.23\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 5: Economic Impact by Living Setting}
+\label{tab:model5_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$28,731.78 & \$+23,041,576.43 & +365.15\% \\
+ILSL & 893 & \$45,826.71 & \$54,403.95 & \$+7,659,474.53 & +271.92\% \\
+RH1 & 1,831 & \$83,525.89 & \$94,415.46 & \$+19,938,795.93 & +234.75\% \\
+RH2 & 36 & \$60,713.32 & \$69,756.74 & \$+325,563.23 & +153.51\% \\
+RH3 & 238 & \$71,998.39 & \$82,342.67 & \$+2,461,938.61 & +589.44\% \\
+RH4 & 69 & \$55,100.06 & \$62,289.84 & \$+496,094.52 & +125.13\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 5: Economic Impact by Budget Quartile}
+\label{tab:model5_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$17,406.98 & \$+26,720,243.85 & +1,204.97\% \\
+Q2 & 1,708 & \$16,053.05 & \$23,422.95 & \$+12,587,783.12 & +69.34\% \\
+Q3 & 1,708 & \$52,959.21 & \$58,610.67 & \$+9,652,686.97 & +11.03\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$108,973.01 & \$+4,962,729.31 & +3.55\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 5: Distribution by Impact Level}
+\label{tab:model5_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 3,258 & 47.7\% & \$69,236.99 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 344 & 5.0\% & \$58,093.94 & \$+2,828.28 & +5.01\% \\
+Moderate Increase (10-25\%) & 408 & 6.0\% & \$52,517.02 & \$+8,726.65 & +17.04\% \\
+Large Increase (>25\%) & 2,824 & 41.3\% & \$12,460.35 & \$+17,489.39 & +776.89\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model5_impact_age} through \ref{tab:model5_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model5_impact_histograms} presents the distribution analysis for Model 5, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -213,7 +568,7 @@ Figure~\ref{fig:model5_impact_histograms} presents the distribution analysis for
 \label{fig:model5_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 5 would require an additional \$53,923,443.25 (17.85\%) compared to actual costs, averaging \$7,890.47 per client. The model under-predicted costs in 52.3\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 5 would require an additional \$53,923,443.25 (17.85\%) compared to actual costs, averaging \$7,890.47 per client. The model under-predicted costs in 52.3\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -246,6 +601,77 @@ RMSE (Test) & \$50,935.97 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 6: Economic Impact by Age Group}
+\label{tab:model6_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 1,797 & \$42,554.08 & \$63,581.92 & \$+37,787,034.28 & +671.47\% \\
+31+ & 4,343 & \$48,377.38 & \$79,309.13 & \$+134,336,609.80 & +314.51\% \\
+Under 21 & 694 & \$22,479.49 & \$26,795.56 & \$+2,995,351.59 & +509.66\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 6: Economic Impact by Living Setting}
+\label{tab:model6_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 3,767 & \$22,615.08 & \$29,769.03 & \$+26,948,920.21 & +413.92\% \\
+ILSL & 893 & \$45,826.71 & \$63,702.54 & \$+15,963,117.17 & +412.69\% \\
+RH1 & 1,831 & \$83,525.89 & \$147,041.69 & \$+116,297,420.82 & +394.51\% \\
+RH2 & 36 & \$60,713.32 & \$99,441.65 & \$+1,394,219.92 & +302.28\% \\
+RH3 & 238 & \$71,998.39 & \$122,724.34 & \$+12,072,777.28 & +1,038.93\% \\
+RH4 & 69 & \$55,100.06 & \$90,499.20 & \$+2,442,540.28 & +261.09\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 6: Economic Impact by Budget Quartile}
+\label{tab:model6_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 1,709 & \$1,771.97 & \$20,814.25 & \$+32,543,263.29 & +1,503.09\% \\
+Q2 & 1,708 & \$16,053.05 & \$29,293.66 & \$+22,614,948.74 & +112.26\% \\
+Q3 & 1,708 & \$52,959.21 & \$81,142.91 & \$+48,137,762.25 & +51.58\% \\
+Q4 (High) & 1,709 & \$106,069.13 & \$148,095.47 & \$+71,823,021.40 & +45.44\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 6: Distribution by Impact Level}
+\label{tab:model6_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 2,016 & 29.5\% & \$64,432.66 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 210 & 3.1\% & \$59,081.25 & \$+2,944.77 & +5.17\% \\
+Moderate Increase (10-25\%) & 302 & 4.4\% & \$62,379.16 & \$+11,256.01 & +17.87\% \\
+Large Increase (>25\%) & 4,306 & 63.0\% & \$32,752.34 & \$+39,735.55 & +678.07\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model6_impact_age} through \ref{tab:model6_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model6_impact_histograms} presents the distribution analysis for Model 6, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -255,7 +681,7 @@ Figure~\ref{fig:model6_impact_histograms} presents the distribution analysis for
 \label{fig:model6_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 6 would require an additional \$175,118,995.68 (57.95\%) compared to actual costs, averaging \$25,624.67 per client. The model under-predicted costs in 70.5\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 6 would require an additional \$175,118,995.68 (57.95\%) compared to actual costs, averaging \$25,624.67 per client. The model under-predicted costs in 70.5\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -288,6 +714,77 @@ RMSE (Test) & \$27,777.18 & --- \\
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 9: Economic Impact by Age Group}
+\label{tab:model9_impact_age}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Age Group} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+21-30 & 5,679 & \$38,992.01 & \$45,848.61 & \$+38,938,642.91 & +323.68\% \\
+31+ & 12,297 & \$42,849.01 & \$49,255.41 & \$+78,779,482.95 & +248.12\% \\
+Under 21 & 1,917 & \$20,485.92 & \$25,895.70 & \$+10,370,548.48 & +469.01\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 9: Economic Impact by Living Setting}
+\label{tab:model9_impact_living}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Living Setting} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+FH & 10,934 & \$19,551.76 & \$24,579.22 & \$+54,970,262.64 & +324.51\% \\
+ILSL & 2,644 & \$40,050.06 & \$46,984.54 & \$+18,334,766.66 & +236.70\% \\
+RH1 & 5,196 & \$76,590.56 & \$85,429.96 & \$+45,929,559.10 & +185.65\% \\
+RH2 & 85 & \$56,926.77 & \$67,240.02 & \$+876,625.85 & +201.91\% \\
+RH3 & 826 & \$67,055.48 & \$74,818.26 & \$+6,412,058.85 & +498.80\% \\
+RH4 & 208 & \$46,918.24 & \$54,444.21 & \$+1,565,401.26 & +1,060.15\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 9: Economic Impact by Budget Quartile}
+\label{tab:model9_impact_quartile}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Budget Quartile} & \textbf{N} & \textbf{Mean Actual} & \textbf{Mean Conservative} & \textbf{Impact} & \textbf{Impact \%} \\
+\midrule
+Q1 (Low) & 4,974 & \$1,672.98 & \$14,342.86 & \$+63,019,982.36 & +1,077.01\% \\
+Q2 & 4,973 & \$13,405.24 & \$19,923.52 & \$+32,415,430.48 & +73.02\% \\
+Q3 & 4,973 & \$45,817.01 & \$50,720.91 & \$+24,387,048.25 & +11.50\% \\
+Q4 (High) & 4,973 & \$97,483.97 & \$99,146.19 & \$+8,266,213.25 & +2.20\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Model 9: Distribution by Impact Level}
+\label{tab:model9_impact_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Impact Level} & \textbf{N} & \textbf{\%} & \textbf{Mean Actual} & \textbf{Mean Impact} & \textbf{Impact \%} \\
+\midrule
+No Change & 9,729 & 48.9\% & \$62,836.15 & \$+0.00 & +0.00\% \\
+Small Increase (0-10\%) & 1,046 & 5.3\% & \$51,781.10 & \$+2,415.80 & +4.78\% \\
+Moderate Increase (10-25\%) & 1,054 & 5.3\% & \$43,212.44 & \$+7,345.10 & +17.26\% \\
+Large Increase (>25\%) & 8,064 & 40.5\% & \$9,496.48 & \$+14,610.62 & +714.93\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tables~\ref{tab:model9_impact_age} through \ref{tab:model9_impact_distribution} present detailed subgroup analyses, revealing how economic impact varies across age groups, living settings, budget levels, and impact categories. These breakdowns help identify which populations are most affected by prediction errors and where conservative budgeting has the greatest effect.
+
 Figure~\ref{fig:model9_impact_histograms} presents the distribution analysis for Model 9, showing the distributions of actual costs, predicted costs, prediction errors, and conservative budget estimates.
 
 \begin{figure}[htbp]
@@ -297,7 +794,7 @@ Figure~\ref{fig:model9_impact_histograms} presents the distribution analysis for
 \label{fig:model9_impact_histograms}
 \end{figure}
 
-The conservative budgeting approach for Model 9 would require an additional \$128,088,674.35 (16.26\%) compared to actual costs, averaging \$6,438.88 per client. The model under-predicted costs in 51.1\% of cases, necessitating the conservative approach to avoid budget shortfalls.
+The conservative budgeting approach for Model 9 would require an additional \$128,088,674.35 (16.26\%) compared to actual costs, averaging \$6,438.88 per client. The model under-predicted costs in 51.1\% of cases, necessitating the conservative approach to avoid budget shortfalls. 
 
 \clearpage
 
@@ -333,5 +830,7 @@ Model 9 & 19,893 & 0.5472 & \$+128,088,674.35 & +16.26\% & 51.1\% \\
 \item Model 6 requires the largest conservative budget adjustment at 57.95\%.
 \item The conservative budgeting approach ensures adequate funding to cover cases where the model under-predicts actual costs.
 \item Economic impact percentages reflect both model accuracy and the degree of systematic under- or over-prediction.
+\item Subgroup analyses reveal differential impacts across age groups, living settings, and budget levels, providing insights for targeted policy interventions.
+\item Impact level distributions identify high-risk cases requiring substantial budget adjustments beyond model predictions.
 \end{itemize}
 
