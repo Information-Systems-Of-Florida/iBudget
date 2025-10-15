@@ -57,13 +57,13 @@ class Model9RandomForest(BaseiBudgetModel):
     """
     
     def __init__(self,
-                 use_sqrt_transform: bool = True,
+                 use_sqrt_transform: bool = False,
                  use_outlier_removal: bool = False,  # RF NEVER removes outliers
                  outlier_threshold: float = 1.645,
-                 n_estimators: int = 100,
-                 max_depth: Optional[int] = None,
-                 min_samples_split: int = 2,
-                 min_samples_leaf: int = 1,
+                 n_estimators: int = 150,
+                 max_depth: int = 15,
+                 min_samples_split: int = 8,
+                 min_samples_leaf: int = 3,
                  max_features: str = 'sqrt',
                  bootstrap: bool = True,
                  oob_score: bool = True,
@@ -131,7 +131,7 @@ class Model9RandomForest(BaseiBudgetModel):
         
         # Run complete pipeline (base class handles metrics)
         results = self.run_complete_pipeline(
-            fiscal_year_start=2024,
+            fiscal_year_start=2022,
             fiscal_year_end=2024,
             test_size=0.2,
             perform_cv=True,

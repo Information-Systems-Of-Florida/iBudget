@@ -1,5 +1,6 @@
 """
 Utility to count lines of code and capture folder structure
+Use:  python cloc.py "[a folder]"
 """
 
 import os

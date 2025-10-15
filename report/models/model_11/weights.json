@@ -1,0 +1,13 @@
+{
+  "method": "LASSO",
+  "max_weight": 0.6,
+  "weights": {
+    "Model_2": 0.2,
+    "Model_3": 0.2,
+    "Model_4": 0.2,
+    "Model_5": 0.2,
+    "Model_9": 0.2
+  },
+  "bias": 0.0,
+  "diversity_score": 1.0000000000000002
+}

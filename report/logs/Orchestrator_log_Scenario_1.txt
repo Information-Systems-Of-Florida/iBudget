@@ -158,3 +158,780 @@
 2025-10-14 22:48:40 - Orchestrator - INFO - Models run: 7
 2025-10-14 22:48:40 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
 2025-10-14 22:48:40 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 00:18:14 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 00:18:14 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 00:18:14 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:18:14 - Orchestrator - INFO - 
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 00:18:14 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 00:18:14 - Orchestrator - INFO - 
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 00:18:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 00:18:14 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 00:18:14 - Orchestrator - INFO - Outlier removal: True
+2025-10-15 00:18:14 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 00:18:14 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:18:14 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 00:18:14 - Orchestrator - ERROR - FATAL ERROR in Model 1: unsupported format string passed to NoneType.__format__
+2025-10-15 00:18:14 - Orchestrator - ERROR - Traceback (most recent call last):
+  File "c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\script\models\Orchestrator.py", line 287, in run_single_model
+    self.logger.info(f"  R^2 Test: {model_results['r2_test']:.4f}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to NoneType.__format__
+
+2025-10-15 00:18:14 - Orchestrator - ERROR - 
+2025-10-15 00:18:14 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - ERROR - ORCHESTRATION FAILED
+2025-10-15 00:18:14 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:18:14 - Orchestrator - ERROR - Model 1 failed. Stopping orchestrator.
+Error: unsupported format string passed to NoneType.__format__
+See log file for details.
+2025-10-15 00:18:14 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 00:20:15 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 00:20:15 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 00:20:15 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:20:15 - Orchestrator - INFO - 
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 00:20:15 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 00:20:15 - Orchestrator - INFO - 
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 00:20:15 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 00:20:15 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 00:20:15 - Orchestrator - INFO - Outlier removal: True
+2025-10-15 00:20:15 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 00:20:15 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:20:15 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 00:20:15 - Orchestrator - ERROR - FATAL ERROR in Model 1: unsupported format string passed to NoneType.__format__
+2025-10-15 00:20:15 - Orchestrator - ERROR - Traceback (most recent call last):
+  File "c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\script\models\Orchestrator.py", line 287, in run_single_model
+    self.logger.info(f"  R^2 Test: {model_results['r2_test']:.4f}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to NoneType.__format__
+
+2025-10-15 00:20:15 - Orchestrator - ERROR - 
+2025-10-15 00:20:15 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - ERROR - ORCHESTRATION FAILED
+2025-10-15 00:20:15 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:20:15 - Orchestrator - ERROR - Model 1 failed. Stopping orchestrator.
+Error: unsupported format string passed to NoneType.__format__
+See log file for details.
+2025-10-15 00:20:15 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 00:21:27 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 00:21:27 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 00:21:27 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:21:27 - Orchestrator - INFO - 
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 00:21:27 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 00:21:27 - Orchestrator - INFO - 
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 00:21:27 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 00:21:27 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 00:21:27 - Orchestrator - INFO - Outlier removal: True
+2025-10-15 00:21:27 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 00:21:27 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:21:27 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 00:21:27 - Orchestrator - ERROR - FATAL ERROR in Model 1: unsupported format string passed to NoneType.__format__
+2025-10-15 00:21:27 - Orchestrator - ERROR - Traceback (most recent call last):
+  File "c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\script\models\Orchestrator.py", line 287, in run_single_model
+    self.logger.info(f"  R^2 Test: {model_results['r2_test']:.4f}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to NoneType.__format__
+
+2025-10-15 00:21:27 - Orchestrator - ERROR - 
+2025-10-15 00:21:27 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - ERROR - ORCHESTRATION FAILED
+2025-10-15 00:21:27 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:21:27 - Orchestrator - ERROR - Model 1 failed. Stopping orchestrator.
+Error: unsupported format string passed to NoneType.__format__
+See log file for details.
+2025-10-15 00:21:27 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 00:22:02 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 00:22:02 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 00:22:02 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:22:02 - Orchestrator - INFO - 
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - RUNNING 6 MODELS
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - Models: [2, 3, 4, 5, 6, 9]
+2025-10-15 00:22:02 - Orchestrator - INFO - [1/6] Starting Model 2...
+2025-10-15 00:22:02 - Orchestrator - INFO - 
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - RUNNING MODEL 2
+2025-10-15 00:22:02 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - INFO - Model: GLM Gamma
+2025-10-15 00:22:02 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:22:02 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:22:02 - Orchestrator - INFO - Initializing Model2GLMGamma...
+2025-10-15 00:22:02 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:22:02 - Orchestrator - INFO - + Model 2 completed successfully
+2025-10-15 00:22:02 - Orchestrator - ERROR - FATAL ERROR in Model 2: unsupported format string passed to NoneType.__format__
+2025-10-15 00:22:02 - Orchestrator - ERROR - Traceback (most recent call last):
+  File "c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\script\models\Orchestrator.py", line 287, in run_single_model
+    self.logger.info(f"  R^2 Test: {model_results['r2_test']:.4f}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to NoneType.__format__
+
+2025-10-15 00:22:02 - Orchestrator - ERROR - 
+2025-10-15 00:22:02 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - ERROR - ORCHESTRATION FAILED
+2025-10-15 00:22:02 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:22:02 - Orchestrator - ERROR - Model 2 failed. Stopping orchestrator.
+Error: unsupported format string passed to NoneType.__format__
+See log file for details.
+2025-10-15 00:22:02 - Orchestrator - ERROR - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 00:30:21 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 00:30:21 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 00:30:21 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:30:21 - Orchestrator - INFO - 
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - RUNNING 6 MODELS
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - Models: [2, 3, 4, 5, 6, 9]
+2025-10-15 00:30:21 - Orchestrator - INFO - [1/6] Starting Model 2...
+2025-10-15 00:30:21 - Orchestrator - INFO - 
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - RUNNING MODEL 2
+2025-10-15 00:30:21 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:30:21 - Orchestrator - INFO - Model: GLM Gamma
+2025-10-15 00:30:21 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:30:21 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:30:21 - Orchestrator - INFO - Initializing Model2GLMGamma...
+2025-10-15 00:31:31 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:31:31 - Orchestrator - INFO - + Model 2 completed successfully
+2025-10-15 00:31:31 - Orchestrator - INFO -   R^2 Test: 0.4386
+2025-10-15 00:31:31 - Orchestrator - INFO -   RMSE Test: $33,463
+2025-10-15 00:31:31 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:31:31 - Orchestrator - INFO - [2/6] Starting Model 3...
+2025-10-15 00:31:31 - Orchestrator - INFO - 
+2025-10-15 00:31:31 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:31 - Orchestrator - INFO - RUNNING MODEL 3
+2025-10-15 00:31:31 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:31 - Orchestrator - INFO - Model: Robust Regression
+2025-10-15 00:31:31 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:31:31 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:31:31 - Orchestrator - INFO - Initializing Model3Robust...
+2025-10-15 00:31:42 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:31:42 - Orchestrator - INFO - + Model 3 completed successfully
+2025-10-15 00:31:42 - Orchestrator - INFO -   R^2 Test: 0.4534
+2025-10-15 00:31:42 - Orchestrator - INFO -   RMSE Test: $33,019
+2025-10-15 00:31:42 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:31:42 - Orchestrator - INFO - [3/6] Starting Model 4...
+2025-10-15 00:31:42 - Orchestrator - INFO - 
+2025-10-15 00:31:42 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:42 - Orchestrator - INFO - RUNNING MODEL 4
+2025-10-15 00:31:42 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:42 - Orchestrator - INFO - Model: Weighted Least Squares
+2025-10-15 00:31:42 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:31:42 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:31:42 - Orchestrator - INFO - Initializing Model4WLS...
+2025-10-15 00:31:48 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:31:48 - Orchestrator - INFO - + Model 4 completed successfully
+2025-10-15 00:31:48 - Orchestrator - INFO -   R^2 Test: 0.4746
+2025-10-15 00:31:48 - Orchestrator - INFO -   RMSE Test: $32,372
+2025-10-15 00:31:48 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:31:48 - Orchestrator - INFO - [4/6] Starting Model 5...
+2025-10-15 00:31:48 - Orchestrator - INFO - 
+2025-10-15 00:31:48 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:48 - Orchestrator - INFO - RUNNING MODEL 5
+2025-10-15 00:31:48 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:31:48 - Orchestrator - INFO - Model: Ridge Regression
+2025-10-15 00:31:48 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:31:48 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:31:48 - Orchestrator - INFO - Initializing Model5Ridge...
+2025-10-15 00:32:53 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:32:53 - Orchestrator - INFO - + Model 5 completed successfully
+2025-10-15 00:32:53 - Orchestrator - INFO -   R^2 Test: 0.4772
+2025-10-15 00:32:53 - Orchestrator - INFO -   RMSE Test: $32,291
+2025-10-15 00:32:53 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:32:53 - Orchestrator - INFO - [5/6] Starting Model 6...
+2025-10-15 00:32:53 - Orchestrator - INFO - 
+2025-10-15 00:32:53 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:32:53 - Orchestrator - INFO - RUNNING MODEL 6
+2025-10-15 00:32:53 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:32:53 - Orchestrator - INFO - Model: Log-Normal GLM
+2025-10-15 00:32:53 - Orchestrator - INFO - Transformation: log
+2025-10-15 00:32:53 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:32:53 - Orchestrator - INFO - Initializing Model6LogNormal...
+2025-10-15 00:33:00 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:33:00 - Orchestrator - INFO - + Model 6 completed successfully
+2025-10-15 00:33:00 - Orchestrator - INFO -   R^2 Test: -0.3517
+2025-10-15 00:33:00 - Orchestrator - INFO -   RMSE Test: $51,923
+2025-10-15 00:33:00 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:33:00 - Orchestrator - INFO - [6/6] Starting Model 9...
+2025-10-15 00:33:00 - Orchestrator - INFO - 
+2025-10-15 00:33:00 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:00 - Orchestrator - INFO - RUNNING MODEL 9
+2025-10-15 00:33:00 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:00 - Orchestrator - INFO - Model: Random Forest
+2025-10-15 00:33:00 - Orchestrator - INFO - Transformation: none
+2025-10-15 00:33:00 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 00:33:00 - Orchestrator - INFO - Initializing Model9RandomForest...
+2025-10-15 00:33:12 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 00:33:12 - Orchestrator - INFO - + Model 9 completed successfully
+2025-10-15 00:33:12 - Orchestrator - INFO -   R^2 Test: 0.5245
+2025-10-15 00:33:12 - Orchestrator - INFO -   RMSE Test: $30,797
+2025-10-15 00:33:12 - Orchestrator - INFO -   Features: 57
+2025-10-15 00:33:12 - Orchestrator - INFO - 
+2025-10-15 00:33:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:12 - Orchestrator - INFO - ALL MODELS COMPLETED SUCCESSFULLY
+2025-10-15 00:33:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:12 - Orchestrator - INFO - 
+2025-10-15 00:33:12 - Orchestrator - INFO - Generating combined predictions CSV...
+2025-10-15 00:33:12 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 00:33:12 - Orchestrator - INFO -   Total records: 34173
+2025-10-15 00:33:12 - Orchestrator - INFO -   Train records: 27339
+2025-10-15 00:33:12 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 00:33:12 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 00:33:12 - Orchestrator - INFO -   Total records: 34173
+2025-10-15 00:33:12 - Orchestrator - INFO -   Train records: 27339
+2025-10-15 00:33:12 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 00:33:13 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 00:33:13 - Orchestrator - INFO -   Total records: 34173
+2025-10-15 00:33:13 - Orchestrator - INFO -   Train records: 27339
+2025-10-15 00:33:13 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 00:33:13 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 00:33:13 - Orchestrator - INFO -   Total records: 34173
+2025-10-15 00:33:13 - Orchestrator - INFO -   Train records: 27339
+2025-10-15 00:33:13 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 00:33:13 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 00:33:13 - Orchestrator - INFO -   Total records: 34173
+2025-10-15 00:33:13 - Orchestrator - INFO -   Train records: 27339
+2025-10-15 00:33:13 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO - Generating comparison report...
+2025-10-15 00:33:13 - Orchestrator - INFO - + Saved comparison table: ..\..\report\models\model_70\orchestration_comparison.csv
+2025-10-15 00:33:13 - Orchestrator - INFO - + Saved summary: ..\..\report\models\model_70\orchestration_summary.json
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - MODEL PERFORMANCE COMPARISON
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO -  Model_ID             Model_Name  R2_Train  R2_Test  RMSE_Train  RMSE_Test  MAE_Train   MAE_Test  MAPE_Train  MAPE_Test  CV_Mean  CV_Std  N_Features  N_Train  N_Test
+        9          Random Forest    0.7083   0.5245  24281.4210 30797.0460 17222.5978 21496.0187    374.1351   489.5380   0.5332  0.0170          57    27339    6834
+        5       Ridge Regression    0.4940   0.4772  31979.0065 32290.8038 22498.9857 22479.3794    461.8503   473.9900   0.4918  0.0164          57    27339    6834
+        4 Weighted Least Squares    0.4903   0.4746  32097.3459 32372.0798 22557.7207 22538.4886    472.6914   484.5645   0.4883  0.0151          57    27339    6834
+        3      Robust Regression    0.4703   0.4534  32720.4211 33018.5797 21853.8160 21819.7220    369.1361   377.5271   0.4689  0.0173          57    27339    6834
+        2              GLM Gamma    0.4469   0.4386  33435.4117 33463.2312 23576.2287 23279.0065    427.9167   445.8559   0.4432  0.0218          57    27339    6834
+        6         Log-Normal GLM   -0.3626  -0.3517  52479.2986 51923.3279 35825.0893 35373.7310    405.1384   423.8499  -0.3704  0.0754          57    27339    6834
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - BEST MODEL
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - Model 9: Random Forest
+2025-10-15 00:33:13 - Orchestrator - INFO - R^2 Test: 0.5245
+2025-10-15 00:33:13 - Orchestrator - INFO - RMSE Test: $30,797
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO - Checking for comparison plotting script...
+2025-10-15 00:33:13 - Orchestrator - INFO - generate_comparison_plots.py not found - skipping plots
+2025-10-15 00:33:13 - Orchestrator - INFO - Plots can be generated later if needed
+2025-10-15 00:33:13 - Orchestrator - INFO - 
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - ORCHESTRATION COMPLETE
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 00:33:13 - Orchestrator - INFO - Total time: 0:02:51.876274
+2025-10-15 00:33:13 - Orchestrator - INFO - Models run: 6
+2025-10-15 00:33:13 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 00:33:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 01:32:08 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 01:32:08 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 01:32:08 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 01:32:08 - Orchestrator - INFO - 
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 01:32:08 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 01:32:08 - Orchestrator - INFO - 
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 01:32:08 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:08 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 01:32:08 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 01:32:08 - Orchestrator - INFO - Outlier removal: True
+2025-10-15 01:32:08 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 01:32:12 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:32:12 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 01:32:12 - Orchestrator - INFO -   R^2 Test: 0.4300
+2025-10-15 01:32:12 - Orchestrator - INFO -   RMSE Test: $33,719
+2025-10-15 01:32:12 - Orchestrator - INFO -   Features: 21
+2025-10-15 01:32:12 - Orchestrator - INFO - [2/7] Starting Model 2...
+2025-10-15 01:32:12 - Orchestrator - INFO - 
+2025-10-15 01:32:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:12 - Orchestrator - INFO - RUNNING MODEL 2
+2025-10-15 01:32:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:32:12 - Orchestrator - INFO - Model: GLM Gamma
+2025-10-15 01:32:12 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:32:12 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:32:12 - Orchestrator - INFO - Initializing Model2GLMGamma...
+2025-10-15 01:33:41 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:33:41 - Orchestrator - INFO - + Model 2 completed successfully
+2025-10-15 01:33:41 - Orchestrator - INFO -   R^2 Test: 0.4386
+2025-10-15 01:33:41 - Orchestrator - INFO -   RMSE Test: $33,463
+2025-10-15 01:33:41 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:33:41 - Orchestrator - INFO - [3/7] Starting Model 3...
+2025-10-15 01:33:41 - Orchestrator - INFO - 
+2025-10-15 01:33:41 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:33:41 - Orchestrator - INFO - RUNNING MODEL 3
+2025-10-15 01:33:41 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:33:41 - Orchestrator - INFO - Model: Robust Regression
+2025-10-15 01:33:41 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:33:41 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:33:41 - Orchestrator - INFO - Initializing Model3Robust...
+2025-10-15 01:33:54 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:33:54 - Orchestrator - INFO - + Model 3 completed successfully
+2025-10-15 01:33:54 - Orchestrator - INFO -   R^2 Test: 0.4534
+2025-10-15 01:33:54 - Orchestrator - INFO -   RMSE Test: $33,019
+2025-10-15 01:33:54 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:33:54 - Orchestrator - INFO - [4/7] Starting Model 4...
+2025-10-15 01:33:54 - Orchestrator - INFO - 
+2025-10-15 01:33:54 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:33:54 - Orchestrator - INFO - RUNNING MODEL 4
+2025-10-15 01:33:54 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:33:54 - Orchestrator - INFO - Model: Weighted Least Squares
+2025-10-15 01:33:54 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:33:54 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:33:54 - Orchestrator - INFO - Initializing Model4WLS...
+2025-10-15 01:34:01 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:34:01 - Orchestrator - INFO - + Model 4 completed successfully
+2025-10-15 01:34:01 - Orchestrator - INFO -   R^2 Test: 0.4746
+2025-10-15 01:34:01 - Orchestrator - INFO -   RMSE Test: $32,372
+2025-10-15 01:34:01 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:34:01 - Orchestrator - INFO - [5/7] Starting Model 5...
+2025-10-15 01:34:01 - Orchestrator - INFO - 
+2025-10-15 01:34:01 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:34:01 - Orchestrator - INFO - RUNNING MODEL 5
+2025-10-15 01:34:01 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:34:01 - Orchestrator - INFO - Model: Ridge Regression
+2025-10-15 01:34:01 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:34:01 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:34:01 - Orchestrator - INFO - Initializing Model5Ridge...
+2025-10-15 01:35:13 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:35:13 - Orchestrator - INFO - + Model 5 completed successfully
+2025-10-15 01:35:13 - Orchestrator - INFO -   R^2 Test: 0.4772
+2025-10-15 01:35:13 - Orchestrator - INFO -   RMSE Test: $32,291
+2025-10-15 01:35:13 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:35:13 - Orchestrator - INFO - [6/7] Starting Model 6...
+2025-10-15 01:35:13 - Orchestrator - INFO - 
+2025-10-15 01:35:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:13 - Orchestrator - INFO - RUNNING MODEL 6
+2025-10-15 01:35:13 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:13 - Orchestrator - INFO - Model: Log-Normal GLM
+2025-10-15 01:35:13 - Orchestrator - INFO - Transformation: log
+2025-10-15 01:35:13 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:35:13 - Orchestrator - INFO - Initializing Model6LogNormal...
+2025-10-15 01:35:20 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:35:20 - Orchestrator - INFO - + Model 6 completed successfully
+2025-10-15 01:35:20 - Orchestrator - INFO -   R^2 Test: -0.3517
+2025-10-15 01:35:20 - Orchestrator - INFO -   RMSE Test: $51,923
+2025-10-15 01:35:20 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:35:20 - Orchestrator - INFO - [7/7] Starting Model 9...
+2025-10-15 01:35:20 - Orchestrator - INFO - 
+2025-10-15 01:35:20 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:20 - Orchestrator - INFO - RUNNING MODEL 9
+2025-10-15 01:35:20 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:20 - Orchestrator - INFO - Model: Random Forest
+2025-10-15 01:35:20 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:35:20 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:35:20 - Orchestrator - INFO - Initializing Model9RandomForest...
+2025-10-15 01:35:32 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:35:32 - Orchestrator - INFO - + Model 9 completed successfully
+2025-10-15 01:35:32 - Orchestrator - INFO -   R^2 Test: 0.5245
+2025-10-15 01:35:32 - Orchestrator - INFO -   RMSE Test: $30,797
+2025-10-15 01:35:32 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:35:32 - Orchestrator - INFO - 
+2025-10-15 01:35:32 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:32 - Orchestrator - INFO - ALL MODELS COMPLETED SUCCESSFULLY
+2025-10-15 01:35:32 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:32 - Orchestrator - INFO - 
+2025-10-15 01:35:32 - Orchestrator - INFO - Generating combined predictions CSV...
+2025-10-15 01:35:33 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 01:35:33 - Orchestrator - INFO -   Total records: 31755
+2025-10-15 01:35:33 - Orchestrator - INFO -   Train records: 24921
+2025-10-15 01:35:33 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO - Generating comparison report...
+2025-10-15 01:35:33 - Orchestrator - INFO - + Saved comparison table: ..\..\report\models\model_70\orchestration_comparison.csv
+2025-10-15 01:35:33 - Orchestrator - INFO - + Saved summary: ..\..\report\models\model_70\orchestration_summary.json
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - MODEL PERFORMANCE COMPARISON
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO -  Model_ID             Model_Name  R2_Train  R2_Test  RMSE_Train  RMSE_Test  MAE_Train   MAE_Test  MAPE_Train  MAPE_Test  CV_Mean  CV_Std  N_Features  N_Train  N_Test
+        9          Random Forest    0.7083   0.5245  24281.4210 30797.0460 17222.5978 21496.0187    374.1351   489.5380   0.5332  0.0170          57    27339    6834
+        5       Ridge Regression    0.4940   0.4772  31979.0065 32290.8038 22498.9857 22479.3794    461.8503   473.9900   0.4918  0.0164          57    27339    6834
+        4 Weighted Least Squares    0.4903   0.4746  32097.3459 32372.0798 22557.7207 22538.4886    472.6914   484.5645   0.4883  0.0151          57    27339    6834
+        3      Robust Regression    0.4703   0.4534  32720.4211 33018.5797 21853.8160 21819.7220    369.1361   377.5271   0.4689  0.0173          57    27339    6834
+        2              GLM Gamma    0.4469   0.4386  33435.4117 33463.2312 23576.2287 23279.0065    427.9167   445.8559   0.4432  0.0218          57    27339    6834
+        1  OLS Linear Regression    0.6852   0.4300  22374.8706 33718.6847 16447.7663 21798.5894    190.0830   302.1694   0.4454  0.0173          21    27339    6834
+        6         Log-Normal GLM   -0.3626  -0.3517  52479.2986 51923.3279 35825.0893 35373.7310    405.1384   423.8499  -0.3704  0.0754          57    27339    6834
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - BEST MODEL
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - Model 9: Random Forest
+2025-10-15 01:35:33 - Orchestrator - INFO - R^2 Test: 0.5245
+2025-10-15 01:35:33 - Orchestrator - INFO - RMSE Test: $30,797
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO - Checking for comparison plotting script...
+2025-10-15 01:35:33 - Orchestrator - INFO - generate_comparison_plots.py not found - skipping plots
+2025-10-15 01:35:33 - Orchestrator - INFO - Plots can be generated later if needed
+2025-10-15 01:35:33 - Orchestrator - INFO - 
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - ORCHESTRATION COMPLETE
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:35:33 - Orchestrator - INFO - Total time: 0:03:25.250644
+2025-10-15 01:35:33 - Orchestrator - INFO - Models run: 7
+2025-10-15 01:35:33 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 01:35:33 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 01:48:22 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 01:48:22 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 01:48:22 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 01:48:22 - Orchestrator - INFO - 
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 01:48:22 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 01:48:22 - Orchestrator - INFO - 
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 01:48:22 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:22 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 01:48:22 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 01:48:22 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:48:22 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 01:48:26 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:48:26 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 01:48:26 - Orchestrator - INFO -   R^2 Test: 0.4300
+2025-10-15 01:48:26 - Orchestrator - INFO -   RMSE Test: $33,719
+2025-10-15 01:48:26 - Orchestrator - INFO -   Features: 21
+2025-10-15 01:48:26 - Orchestrator - INFO - [2/7] Starting Model 2...
+2025-10-15 01:48:26 - Orchestrator - INFO - 
+2025-10-15 01:48:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:26 - Orchestrator - INFO - RUNNING MODEL 2
+2025-10-15 01:48:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:48:26 - Orchestrator - INFO - Model: GLM Gamma
+2025-10-15 01:48:26 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:48:26 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:48:26 - Orchestrator - INFO - Initializing Model2GLMGamma...
+2025-10-15 01:49:41 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:49:41 - Orchestrator - INFO - + Model 2 completed successfully
+2025-10-15 01:49:41 - Orchestrator - INFO -   R^2 Test: 0.4386
+2025-10-15 01:49:41 - Orchestrator - INFO -   RMSE Test: $33,463
+2025-10-15 01:49:41 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:49:41 - Orchestrator - INFO - [3/7] Starting Model 3...
+2025-10-15 01:49:41 - Orchestrator - INFO - 
+2025-10-15 01:49:41 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:41 - Orchestrator - INFO - RUNNING MODEL 3
+2025-10-15 01:49:41 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:41 - Orchestrator - INFO - Model: Robust Regression
+2025-10-15 01:49:41 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:49:41 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:49:41 - Orchestrator - INFO - Initializing Model3Robust...
+2025-10-15 01:49:52 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:49:52 - Orchestrator - INFO - + Model 3 completed successfully
+2025-10-15 01:49:52 - Orchestrator - INFO -   R^2 Test: 0.4534
+2025-10-15 01:49:52 - Orchestrator - INFO -   RMSE Test: $33,019
+2025-10-15 01:49:52 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:49:52 - Orchestrator - INFO - [4/7] Starting Model 4...
+2025-10-15 01:49:52 - Orchestrator - INFO - 
+2025-10-15 01:49:52 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:52 - Orchestrator - INFO - RUNNING MODEL 4
+2025-10-15 01:49:52 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:52 - Orchestrator - INFO - Model: Weighted Least Squares
+2025-10-15 01:49:52 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:49:52 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:49:52 - Orchestrator - INFO - Initializing Model4WLS...
+2025-10-15 01:49:59 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:49:59 - Orchestrator - INFO - + Model 4 completed successfully
+2025-10-15 01:49:59 - Orchestrator - INFO -   R^2 Test: 0.4746
+2025-10-15 01:49:59 - Orchestrator - INFO -   RMSE Test: $32,372
+2025-10-15 01:49:59 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:49:59 - Orchestrator - INFO - [5/7] Starting Model 5...
+2025-10-15 01:49:59 - Orchestrator - INFO - 
+2025-10-15 01:49:59 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:59 - Orchestrator - INFO - RUNNING MODEL 5
+2025-10-15 01:49:59 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:49:59 - Orchestrator - INFO - Model: Ridge Regression
+2025-10-15 01:49:59 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:49:59 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:49:59 - Orchestrator - INFO - Initializing Model5Ridge...
+2025-10-15 01:51:06 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:51:06 - Orchestrator - INFO - + Model 5 completed successfully
+2025-10-15 01:51:06 - Orchestrator - INFO -   R^2 Test: 0.4772
+2025-10-15 01:51:06 - Orchestrator - INFO -   RMSE Test: $32,291
+2025-10-15 01:51:06 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:51:06 - Orchestrator - INFO - [6/7] Starting Model 6...
+2025-10-15 01:51:06 - Orchestrator - INFO - 
+2025-10-15 01:51:06 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:06 - Orchestrator - INFO - RUNNING MODEL 6
+2025-10-15 01:51:06 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:06 - Orchestrator - INFO - Model: Log-Normal GLM
+2025-10-15 01:51:06 - Orchestrator - INFO - Transformation: log
+2025-10-15 01:51:06 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:51:06 - Orchestrator - INFO - Initializing Model6LogNormal...
+2025-10-15 01:51:14 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:51:14 - Orchestrator - INFO - + Model 6 completed successfully
+2025-10-15 01:51:14 - Orchestrator - INFO -   R^2 Test: -0.3517
+2025-10-15 01:51:14 - Orchestrator - INFO -   RMSE Test: $51,923
+2025-10-15 01:51:14 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:51:14 - Orchestrator - INFO - [7/7] Starting Model 9...
+2025-10-15 01:51:14 - Orchestrator - INFO - 
+2025-10-15 01:51:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:14 - Orchestrator - INFO - RUNNING MODEL 9
+2025-10-15 01:51:14 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:14 - Orchestrator - INFO - Model: Random Forest
+2025-10-15 01:51:14 - Orchestrator - INFO - Transformation: none
+2025-10-15 01:51:14 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 01:51:14 - Orchestrator - INFO - Initializing Model9RandomForest...
+2025-10-15 01:51:26 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 01:51:26 - Orchestrator - INFO - + Model 9 completed successfully
+2025-10-15 01:51:26 - Orchestrator - INFO -   R^2 Test: 0.5245
+2025-10-15 01:51:26 - Orchestrator - INFO -   RMSE Test: $30,797
+2025-10-15 01:51:26 - Orchestrator - INFO -   Features: 57
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - ALL MODELS COMPLETED SUCCESSFULLY
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - Generating combined predictions CSV...
+2025-10-15 01:51:26 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 01:51:26 - Orchestrator - INFO -   Total records: 31755
+2025-10-15 01:51:26 - Orchestrator - INFO -   Train records: 24921
+2025-10-15 01:51:26 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - Generating comparison report...
+2025-10-15 01:51:26 - Orchestrator - INFO - + Saved comparison table: ..\..\report\models\model_70\orchestration_comparison.csv
+2025-10-15 01:51:26 - Orchestrator - INFO - + Saved summary: ..\..\report\models\model_70\orchestration_summary.json
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - MODEL PERFORMANCE COMPARISON
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO -  Model_ID             Model_Name  R2_Train  R2_Test  RMSE_Train  RMSE_Test  MAE_Train   MAE_Test  MAPE_Train  MAPE_Test  CV_Mean  CV_Std  N_Features  N_Train  N_Test
+        9          Random Forest    0.7083   0.5245  24281.4210 30797.0460 17222.5978 21496.0187    374.1351   489.5380   0.5332  0.0170          57    27339    6834
+        5       Ridge Regression    0.4940   0.4772  31979.0065 32290.8038 22498.9857 22479.3794    461.8503   473.9900   0.4918  0.0164          57    27339    6834
+        4 Weighted Least Squares    0.4903   0.4746  32097.3459 32372.0798 22557.7207 22538.4886    472.6914   484.5645   0.4883  0.0151          57    27339    6834
+        3      Robust Regression    0.4703   0.4534  32720.4211 33018.5797 21853.8160 21819.7220    369.1361   377.5271   0.4689  0.0173          57    27339    6834
+        2              GLM Gamma    0.4469   0.4386  33435.4117 33463.2312 23576.2287 23279.0065    427.9167   445.8559   0.4432  0.0218          57    27339    6834
+        1  OLS Linear Regression    0.6852   0.4300  22374.8706 33718.6847 16447.7663 21798.5894    190.0830   302.1694   0.4454  0.0173          21    27339    6834
+        6         Log-Normal GLM   -0.3626  -0.3517  52479.2986 51923.3279 35825.0893 35373.7310    405.1384   423.8499  -0.3704  0.0754          57    27339    6834
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - BEST MODEL
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - Model 9: Random Forest
+2025-10-15 01:51:26 - Orchestrator - INFO - R^2 Test: 0.5245
+2025-10-15 01:51:26 - Orchestrator - INFO - RMSE Test: $30,797
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - Checking for comparison plotting script...
+2025-10-15 01:51:26 - Orchestrator - INFO - generate_comparison_plots.py not found - skipping plots
+2025-10-15 01:51:26 - Orchestrator - INFO - Plots can be generated later if needed
+2025-10-15 01:51:26 - Orchestrator - INFO - 
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - ORCHESTRATION COMPLETE
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 01:51:26 - Orchestrator - INFO - Total time: 0:03:04.476423
+2025-10-15 01:51:26 - Orchestrator - INFO - Models run: 7
+2025-10-15 01:51:26 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 01:51:26 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - IBUDGET MODEL ORCHESTRATOR
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - Configuration: Orchestrator.json
+2025-10-15 02:30:17 - Orchestrator - INFO - Scenario: Consensus_FeatureSelection_Optimal
+2025-10-15 02:30:17 - Orchestrator - INFO - Log file: ..\..\report\logs\Orchestrator_log_Scenario_1.txt
+2025-10-15 02:30:17 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 02:30:17 - Orchestrator - INFO - 
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - RUNNING 7 MODELS
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 02:30:17 - Orchestrator - INFO - [1/7] Starting Model 1...
+2025-10-15 02:30:17 - Orchestrator - INFO - 
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - RUNNING MODEL 1
+2025-10-15 02:30:17 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:17 - Orchestrator - INFO - Model: OLS Linear Regression
+2025-10-15 02:30:17 - Orchestrator - INFO - Transformation: sqrt
+2025-10-15 02:30:17 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:30:17 - Orchestrator - INFO - Initializing Model1Linear...
+2025-10-15 02:30:20 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:30:20 - Orchestrator - INFO - + Model 1 completed successfully
+2025-10-15 02:30:20 - Orchestrator - INFO -   R^2 Test: 0.4300
+2025-10-15 02:30:20 - Orchestrator - INFO -   RMSE Test: $33,719
+2025-10-15 02:30:20 - Orchestrator - INFO -   Features: 21
+2025-10-15 02:30:20 - Orchestrator - INFO - [2/7] Starting Model 2...
+2025-10-15 02:30:20 - Orchestrator - INFO - 
+2025-10-15 02:30:20 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:20 - Orchestrator - INFO - RUNNING MODEL 2
+2025-10-15 02:30:20 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:30:20 - Orchestrator - INFO - Model: GLM Gamma
+2025-10-15 02:30:20 - Orchestrator - INFO - Transformation: none
+2025-10-15 02:30:20 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:30:20 - Orchestrator - INFO - Initializing Model2GLMGamma...
+2025-10-15 02:31:53 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:31:53 - Orchestrator - INFO - + Model 2 completed successfully
+2025-10-15 02:31:53 - Orchestrator - INFO -   R^2 Test: 0.4386
+2025-10-15 02:31:53 - Orchestrator - INFO -   RMSE Test: $33,463
+2025-10-15 02:31:53 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:31:53 - Orchestrator - INFO - [3/7] Starting Model 3...
+2025-10-15 02:31:53 - Orchestrator - INFO - 
+2025-10-15 02:31:53 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:31:53 - Orchestrator - INFO - RUNNING MODEL 3
+2025-10-15 02:31:53 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:31:53 - Orchestrator - INFO - Model: Robust Regression
+2025-10-15 02:31:53 - Orchestrator - INFO - Transformation: none
+2025-10-15 02:31:53 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:31:53 - Orchestrator - INFO - Initializing Model3Robust...
+2025-10-15 02:32:05 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:32:05 - Orchestrator - INFO - + Model 3 completed successfully
+2025-10-15 02:32:05 - Orchestrator - INFO -   R^2 Test: 0.4534
+2025-10-15 02:32:05 - Orchestrator - INFO -   RMSE Test: $33,019
+2025-10-15 02:32:05 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:32:05 - Orchestrator - INFO - [4/7] Starting Model 4...
+2025-10-15 02:32:05 - Orchestrator - INFO - 
+2025-10-15 02:32:05 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:32:05 - Orchestrator - INFO - RUNNING MODEL 4
+2025-10-15 02:32:05 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:32:05 - Orchestrator - INFO - Model: Weighted Least Squares
+2025-10-15 02:32:05 - Orchestrator - INFO - Transformation: none
+2025-10-15 02:32:05 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:32:05 - Orchestrator - INFO - Initializing Model4WLS...
+2025-10-15 02:32:12 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:32:12 - Orchestrator - INFO - + Model 4 completed successfully
+2025-10-15 02:32:12 - Orchestrator - INFO -   R^2 Test: 0.4746
+2025-10-15 02:32:12 - Orchestrator - INFO -   RMSE Test: $32,372
+2025-10-15 02:32:12 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:32:12 - Orchestrator - INFO - [5/7] Starting Model 5...
+2025-10-15 02:32:12 - Orchestrator - INFO - 
+2025-10-15 02:32:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:32:12 - Orchestrator - INFO - RUNNING MODEL 5
+2025-10-15 02:32:12 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:32:12 - Orchestrator - INFO - Model: Ridge Regression
+2025-10-15 02:32:12 - Orchestrator - INFO - Transformation: none
+2025-10-15 02:32:12 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:32:12 - Orchestrator - INFO - Initializing Model5Ridge...
+2025-10-15 02:33:24 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:33:24 - Orchestrator - INFO - + Model 5 completed successfully
+2025-10-15 02:33:24 - Orchestrator - INFO -   R^2 Test: 0.4772
+2025-10-15 02:33:24 - Orchestrator - INFO -   RMSE Test: $32,291
+2025-10-15 02:33:24 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:33:24 - Orchestrator - INFO - [6/7] Starting Model 6...
+2025-10-15 02:33:24 - Orchestrator - INFO - 
+2025-10-15 02:33:24 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:24 - Orchestrator - INFO - RUNNING MODEL 6
+2025-10-15 02:33:24 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:24 - Orchestrator - INFO - Model: Log-Normal GLM
+2025-10-15 02:33:24 - Orchestrator - INFO - Transformation: log
+2025-10-15 02:33:24 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:33:24 - Orchestrator - INFO - Initializing Model6LogNormal...
+2025-10-15 02:33:32 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:33:32 - Orchestrator - INFO - + Model 6 completed successfully
+2025-10-15 02:33:32 - Orchestrator - INFO -   R^2 Test: -0.3517
+2025-10-15 02:33:32 - Orchestrator - INFO -   RMSE Test: $51,923
+2025-10-15 02:33:32 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:33:32 - Orchestrator - INFO - [7/7] Starting Model 9...
+2025-10-15 02:33:32 - Orchestrator - INFO - 
+2025-10-15 02:33:32 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:32 - Orchestrator - INFO - RUNNING MODEL 9
+2025-10-15 02:33:32 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:32 - Orchestrator - INFO - Model: Random Forest
+2025-10-15 02:33:32 - Orchestrator - INFO - Transformation: none
+2025-10-15 02:33:32 - Orchestrator - INFO - Outlier removal: False
+2025-10-15 02:33:32 - Orchestrator - INFO - Initializing Model9RandomForest...
+2025-10-15 02:33:45 - Orchestrator - INFO - Applied optimal feature configuration from Feature Selection
+2025-10-15 02:33:45 - Orchestrator - INFO - + Model 9 completed successfully
+2025-10-15 02:33:45 - Orchestrator - INFO -   R^2 Test: 0.5245
+2025-10-15 02:33:45 - Orchestrator - INFO -   RMSE Test: $30,797
+2025-10-15 02:33:45 - Orchestrator - INFO -   Features: 57
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - ALL MODELS COMPLETED SUCCESSFULLY
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - Generating combined predictions CSV...
+2025-10-15 02:33:45 - Orchestrator - INFO - + Saved combined predictions: ..\..\report\models\model_70\predictions.csv
+2025-10-15 02:33:45 - Orchestrator - INFO -   Total records: 31755
+2025-10-15 02:33:45 - Orchestrator - INFO -   Train records: 24921
+2025-10-15 02:33:45 - Orchestrator - INFO -   Test records: 6834
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - Generating comparison report...
+2025-10-15 02:33:45 - Orchestrator - INFO - + Saved comparison table: ..\..\report\models\model_70\orchestration_comparison.csv
+2025-10-15 02:33:45 - Orchestrator - INFO - + Saved summary: ..\..\report\models\model_70\orchestration_summary.json
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - MODEL PERFORMANCE COMPARISON
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO -  Model_ID             Model_Name  R2_Train  R2_Test  RMSE_Train  RMSE_Test  MAE_Train   MAE_Test  MAPE_Train  MAPE_Test  CV_Mean  CV_Std  N_Features  N_Train  N_Test
+        9          Random Forest    0.7083   0.5245  24281.4210 30797.0460 17222.5978 21496.0187    374.1351   489.5380   0.5332  0.0170          57    27339    6834
+        5       Ridge Regression    0.4940   0.4772  31979.0065 32290.8038 22498.9857 22479.3794    461.8503   473.9900   0.4918  0.0164          57    27339    6834
+        4 Weighted Least Squares    0.4903   0.4746  32097.3459 32372.0798 22557.7207 22538.4886    472.6914   484.5645   0.4883  0.0151          57    27339    6834
+        3      Robust Regression    0.4703   0.4534  32720.4211 33018.5797 21853.8160 21819.7220    369.1361   377.5271   0.4689  0.0173          57    27339    6834
+        2              GLM Gamma    0.4469   0.4386  33435.4117 33463.2312 23576.2287 23279.0065    427.9167   445.8559   0.4432  0.0218          57    27339    6834
+        1  OLS Linear Regression    0.6852   0.4300  22374.8706 33718.6847 16447.7663 21798.5894    190.0830   302.1694   0.4454  0.0173          21    27339    6834
+        6         Log-Normal GLM   -0.3626  -0.3517  52479.2986 51923.3279 35825.0893 35373.7310    405.1384   423.8499  -0.3704  0.0754          57    27339    6834
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - BEST MODEL
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - Model 9: Random Forest
+2025-10-15 02:33:45 - Orchestrator - INFO - R^2 Test: 0.5245
+2025-10-15 02:33:45 - Orchestrator - INFO - RMSE Test: $30,797
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - Checking for comparison plotting script...
+2025-10-15 02:33:45 - Orchestrator - INFO - generate_comparison_plots.py not found - skipping plots
+2025-10-15 02:33:45 - Orchestrator - INFO - Plots can be generated later if needed
+2025-10-15 02:33:45 - Orchestrator - INFO - 
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - ORCHESTRATION COMPLETE
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================
+2025-10-15 02:33:45 - Orchestrator - INFO - Total time: 0:03:28.515601
+2025-10-15 02:33:45 - Orchestrator - INFO - Models run: 7
+2025-10-15 02:33:45 - Orchestrator - INFO - Output directory: ..\..\report\models\model_70
+2025-10-15 02:33:45 - Orchestrator - INFO - ================================================================================

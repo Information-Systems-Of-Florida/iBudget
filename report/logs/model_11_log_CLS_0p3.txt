@@ -1,0 +1,532 @@
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ============================================================
+2025-10-15 02:53:53 - MODEL_11 - INFO - INITIALIZING MODEL 11: CONSENSUS
+2025-10-15 02:53:53 - MODEL_11 - INFO - ============================================================
+2025-10-15 02:53:53 - MODEL_11 - INFO - Output directory: ..\..\report\models\model_11
+2025-10-15 02:53:53 - MODEL_11 - INFO - ============================================================
+2025-10-15 02:53:53 - MODEL_11 - INFO - Configuration:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Outlier removal: False
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Transformation: none
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Random seed: 42
+2025-10-15 02:53:53 - MODEL_11 - INFO - Model 11 initialized: method=CLS, max_weight=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - MODEL 11 COMPLETE PIPELINE
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Loading predictions from: c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_70\predictions.csv
+2025-10-15 02:53:53 - MODEL_11 - INFO - Loaded 31755 predictions
+2025-10-15 02:53:53 - MODEL_11 - INFO - Columns: ['CaseNo', 'Dataset', 'Actual_Cost', 'Model_1', 'Model_2', 'Model_3', 'Model_4', 'Model_5', 'Model_6', 'Model_9']
+2025-10-15 02:53:53 - MODEL_11 - INFO - Detected 7 models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 24921
+2025-10-15 02:53:53 - MODEL_11 - INFO - Test samples: 6834
+2025-10-15 02:53:53 - MODEL_11 - INFO - Prediction summary:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_1: mean=$37,629.81, std=$34,156.38
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_2: mean=$45,961.09, std=$36,786.66
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_3: mean=$39,852.42, std=$30,616.79
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_4: mean=$44,593.31, std=$29,579.98
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_5: mean=$44,852.09, std=$31,250.00
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_6: mean=$61,798.45, std=$65,150.07
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model_9: mean=$44,798.36, std=$32,513.96
+2025-10-15 02:53:53 - MODEL_11 - INFO - Target statistics:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Training mean: $41,208.46
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Training std: $39,877.84
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Training range: $31.25 - $231,933.26
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING MODEL
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 24921
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 41460063464287.64
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4499
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0462
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4038
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1983
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8437
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - GENERATING PREDICTIONS
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - CALCULATING METRICS
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training R^2: -0.0462
+2025-10-15 02:53:53 - MODEL_11 - INFO - Test R^2: 0.4073
+2025-10-15 02:53:53 - MODEL_11 - INFO - RMSE (original): $34,384.04
+2025-10-15 02:53:53 - MODEL_11 - INFO - RMSE (sqrt scale): $34384.04
+2025-10-15 02:53:53 - MODEL_11 - INFO - MAE: $22,336.73
+2025-10-15 02:53:53 - MODEL_11 - INFO - MAPE: 305.00%
+2025-10-15 02:53:53 - MODEL_11 - INFO - CV R^2 (mean +- std): 0.0000 +- 0.0000
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - CROSS-VALIDATION (10-FOLD)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22428
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37478375127319.37
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 4
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4547
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0492
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4055
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.2450
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0500
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0500
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.1877
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.1877
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0500
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.1877
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8922
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 1: R^2 = -0.0313
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37450313013508.53
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 4
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4432
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0446
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.3986
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.2454
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0497
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0497
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.1887
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.1887
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0497
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.1887
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8921
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 2: R^2 = -0.0831
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37247125106626.39
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4543
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0468
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4076
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1984
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8434
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 3: R^2 = -0.0378
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37312450206667.65
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 2
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4527
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0472
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4055
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1983
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8435
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 4: R^2 = -0.0350
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37275696598808.55
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4433
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0440
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.3993
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1982
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0926
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8440
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 5: R^2 = -0.0694
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37389825161418.16
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 4
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4535
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0506
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4029
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.2452
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0498
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0498
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.1880
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.1880
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0498
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.1880
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8920
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 6: R^2 = -0.0195
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37399039155286.16
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 4
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4494
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0489
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4005
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.2456
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0495
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0495
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.1890
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.1890
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0495
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.1890
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8919
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 7: R^2 = -0.0450
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37340194401703.09
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 2
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4475
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0454
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4021
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1982
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8439
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 8: R^2 = -0.0559
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37209842850379.56
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4437
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0434
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4003
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1982
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0925
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8439
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 9: R^2 = -0.0736
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Training samples: 22429
+2025-10-15 02:53:53 - MODEL_11 - INFO - Constituent models: 7 ([1, 2, 3, 4, 5, 6, 9])
+2025-10-15 02:53:53 - MODEL_11 - INFO - Method: Constrained Least Squares (CLS)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Constraints: sum(w)=1, w_i>=0, w_i<=0.3
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimizing weights...
+2025-10-15 02:53:53 - MODEL_11 - WARNING - Optimization warning: Inequality constraints incompatible
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimization converged: False
+2025-10-15 02:53:53 - MODEL_11 - INFO - Final objective value: 37208403784590.48
+2025-10-15 02:53:53 - MODEL_11 - INFO - Iterations: 2
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 02:53:53 - MODEL_11 - INFO - Equal weights R²: -0.4572
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights R²: -0.0465
+2025-10-15 02:53:53 - MODEL_11 - INFO - Improvement: +0.4107
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1983
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.0924
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Diversity score: 0.8435
+2025-10-15 02:53:53 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Fold 10: R^2 = -0.0425
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Cross-validation summary:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Mean R^2: -0.0493
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Std R^2: 0.0195
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Min R^2: -0.0831 (Fold 2)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Max R^2: -0.0195 (Fold 6)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   95% CI: [-0.0875, -0.0111]
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Analyzing weight stability across folds...
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - Weight stability across folds:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 1: 0.1808 ± 0.0338
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 2: 0.1084 ± 0.0307
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 3: 0.1084 ± 0.0307
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 4: 0.1222 ± 0.0323
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 5: 0.1222 ± 0.0323
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 6: 0.1084 ± 0.0307
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Model 9: 0.1222 ± 0.0323
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - SUBGROUP ANALYSIS
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Calculated metrics for 4 subgroups
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO -   cost_QOneLow:
+2025-10-15 02:53:53 - MODEL_11 - INFO -     N: 1,709
+2025-10-15 02:53:53 - MODEL_11 - INFO -     R^2: -10.0000
+2025-10-15 02:53:53 - MODEL_11 - INFO -     RMSE: $17,832.42
+2025-10-15 02:53:53 - MODEL_11 - INFO -     Bias: $+13,626.48
+2025-10-15 02:53:53 - MODEL_11 - INFO -   cost_QTwo:
+2025-10-15 02:53:53 - MODEL_11 - INFO -     N: 1,708
+2025-10-15 02:53:53 - MODEL_11 - INFO -     R^2: -2.0913
+2025-10-15 02:53:53 - MODEL_11 - INFO -     RMSE: $13,568.31
+2025-10-15 02:53:53 - MODEL_11 - INFO -     Bias: $+1,794.85
+2025-10-15 02:53:53 - MODEL_11 - INFO -   cost_QThree:
+2025-10-15 02:53:53 - MODEL_11 - INFO -     N: 1,708
+2025-10-15 02:53:53 - MODEL_11 - INFO -     R^2: -3.6044
+2025-10-15 02:53:53 - MODEL_11 - INFO -     RMSE: $25,044.83
+2025-10-15 02:53:53 - MODEL_11 - INFO -     Bias: $-15,654.31
+2025-10-15 02:53:53 - MODEL_11 - INFO -   cost_QFourHigh:
+2025-10-15 02:53:53 - MODEL_11 - INFO -     N: 1,709
+2025-10-15 02:53:53 - MODEL_11 - INFO -     R^2: -1.8040
+2025-10-15 02:53:53 - MODEL_11 - INFO -     RMSE: $59,990.01
+2025-10-15 02:53:53 - MODEL_11 - INFO -     Bias: $-44,093.45
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - VARIANCE ANALYSIS
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - Variance metrics calculated
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Coefficient of Variation (Predicted): 0.7969
+2025-10-15 02:53:53 - MODEL_11 - INFO -   95% Prediction Interval Width: $63,795.91
+2025-10-15 02:53:53 - MODEL_11 - INFO -   Actual-Predicted Correlation: 0.6921
+2025-10-15 02:53:53 - MODEL_11 - INFO - Results saved:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Metrics JSON: ..\..\report\models\model_11\metrics.json
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Predictions CSV: ..\..\report\models\model_11\predictions.csv
+2025-10-15 02:53:53 - MODEL_11 - INFO -     (6,834 predictions)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Weights: ..\..\report\models\model_11\weights.json
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Contributions: ..\..\report\models\model_11\contribution_analysis.json
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Stability: ..\..\report\models\model_11\weight_stability.json
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - LATEX GENERATION
+2025-10-15 02:53:53 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 02:53:53 - MODEL_11 - INFO - LaTeX commands generated:
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Newcommands file: ..\..\report\models\model_11\model_11_newcommands.tex
+2025-10-15 02:53:53 - MODEL_11 - INFO -     (87 placeholder commands)
+2025-10-15 02:53:53 - MODEL_11 - INFO -   - Renewcommands file: ..\..\report\models\model_11\model_11_renewcommands.tex
+2025-10-15 02:53:53 - MODEL_11 - INFO -     (87 value commands)
+2025-10-15 02:53:53 - MODEL_11 - INFO - Model 11 consensus-specific LaTeX commands generated
+2025-10-15 02:53:53 - MODEL_11 - INFO - 
+2025-10-15 02:53:53 - MODEL_11 - INFO - ================================================================================
+2025-10-15 02:53:53 - MODEL_11 - INFO - MODEL 11 PIPELINE COMPLETE
+2025-10-15 02:53:53 - MODEL_11 - INFO - ================================================================================
+2025-10-15 02:53:54 - MODEL_11 - INFO - Diagnostic plots saved: ..\..\report\models\model_11\diagnostic_plots.png
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - ============================================================
+2025-10-15 02:53:54 - MODEL_11 - INFO - MODEL 11 FINAL SUMMARY
+2025-10-15 02:53:54 - MODEL_11 - INFO - ============================================================
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - Consensus Configuration:
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Method: CLS
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Max weight: 0.3
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Models: [1, 2, 3, 4, 5, 6, 9]
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - Performance Metrics:
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Training R²: -0.0462
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Test R²: 0.4073
+2025-10-15 02:53:54 - MODEL_11 - INFO -   RMSE: $34,384.04
+2025-10-15 02:53:54 - MODEL_11 - INFO -   MAE: $22,336.73
+2025-10-15 02:53:54 - MODEL_11 - INFO -   CV R²: 0.0000 ± 0.0000
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - Optimal Weights:
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 1: 0.1983
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 2: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 3: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 4: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 5: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 6: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Model 9: 0.0924
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - Consensus Analysis:
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Diversity: 0.8435
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Equal weights R²: -0.4572
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Optimal R²: -0.0465
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Improvement: +0.4107
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Top: Model 1 (w=0.1983)
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - Output:
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Results: ..\..\report\models\model_11
+2025-10-15 02:53:54 - MODEL_11 - INFO -   Plots: ..\..\report\models\model_11\diagnostic_plots.png
+2025-10-15 02:53:54 - MODEL_11 - INFO - 
+2025-10-15 02:53:54 - MODEL_11 - INFO - ================================================================================
+2025-10-15 02:53:54 - MODEL_11 - INFO - MODEL 11 COMPLETE
+2025-10-15 02:53:54 - MODEL_11 - INFO - ================================================================================

@@ -1,0 +1,37 @@
+{
+  "Model_2": {
+    "weight": 0.2,
+    "r2_individual": -0.8710676158257749,
+    "r2_without": -0.5938350181133587,
+    "marginal_contribution": -0.04126583500894965
+  },
+  "Model_3": {
+    "weight": 0.2,
+    "r2_individual": -0.591924874883109,
+    "r2_without": -0.6536991654645115,
+    "marginal_contribution": 0.018598312342203105
+  },
+  "Model_4": {
+    "weight": 0.2,
+    "r2_individual": -0.5604684035880094,
+    "r2_without": -0.6567779711238364,
+    "marginal_contribution": 0.02167711800152805
+  },
+  "Model_5": {
+    "weight": 0.2,
+    "r2_individual": -0.6254900858496282,
+    "r2_without": -0.6399950637556377,
+    "marginal_contribution": 0.004894210633329399
+  },
+  "Model_9": {
+    "weight": 0.2,
+    "r2_individual": -0.6822951224102878,
+    "r2_without": -0.6409309119632769,
+    "marginal_contribution": 0.005830058840968544
+  },
+  "_summary": {
+    "r2_equal_weights": -0.6351008531223084,
+    "r2_optimal_weights": -0.6351008531223084,
+    "improvement_over_equal": 0.0
+  }
+}

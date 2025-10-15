@@ -23,7 +23,7 @@
     "1": {
       "name": "OLS Linear Regression",
       "transformation": "sqrt",
-      "use_outlier_removal": true,
+      "use_outlier_removal": false,
       "outlier_threshold": 1.645,
       "comment": "Square-root transformation with ~10% outlier removal"
     },

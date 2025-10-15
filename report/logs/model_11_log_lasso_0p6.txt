@@ -1,0 +1,215 @@
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ============================================================
+2025-10-15 03:46:02 - MODEL_11 - INFO - INITIALIZING MODEL 11: CONSENSUS
+2025-10-15 03:46:02 - MODEL_11 - INFO - ============================================================
+2025-10-15 03:46:02 - MODEL_11 - INFO - Output directory: ..\..\report\models\model_11
+2025-10-15 03:46:02 - MODEL_11 - INFO - ============================================================
+2025-10-15 03:46:02 - MODEL_11 - INFO - Configuration:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Outlier removal: False
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Transformation: none
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Random seed: 42
+2025-10-15 03:46:02 - MODEL_11 - INFO - Model 11 initialized: method=LASSO, max_weight=0.6
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - MODEL 11 COMPLETE PIPELINE
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - Loading predictions from: c:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_70\predictions.csv
+2025-10-15 03:46:02 - MODEL_11 - INFO - Loaded 31755 predictions
+2025-10-15 03:46:02 - MODEL_11 - INFO - Columns: ['CaseNo', 'Dataset', 'Actual_Cost', 'Model_2', 'Model_3', 'Model_4', 'Model_5', 'Model_9']
+2025-10-15 03:46:02 - MODEL_11 - INFO - Detected 5 models: [2, 3, 4, 5, 9]
+2025-10-15 03:46:02 - MODEL_11 - INFO - Training samples: 24921
+2025-10-15 03:46:02 - MODEL_11 - INFO - Test samples: 6834
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Individual Model Performance on Training Set:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_2: R²=-0.8711, Correlation=-0.0032
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_3: R²=-0.5919, Correlation=-0.0009
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_4: R²=-0.5605, Correlation=-0.0021
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_5: R²=-0.6255, Correlation=-0.0019
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_9: R²=-0.6823, Correlation=-0.0058
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Individual Model Performance on Test Set:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_2: R²=0.4386, Correlation=0.6741
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_3: R²=0.4534, Correlation=0.6813
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_4: R²=0.4746, Correlation=0.6897
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_5: R²=0.4772, Correlation=0.6909
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_9: R²=0.5245, Correlation=0.7248
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Sample Data Alignment Check:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Row 0: Actual=$36,187.82
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_2: $20,252.77
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_3: $31,613.65
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_4: $35,724.82
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_5: $34,946.29
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_9: $41,540.03
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Row 100: Actual=$50,136.86
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_2: $18,020.61
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_3: $21,196.29
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_4: $24,763.74
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_5: $25,139.50
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_9: $18,469.18
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Row 1000: Actual=$4,311.68
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_2: $107,392.00
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_3: $98,772.84
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_4: $100,476.86
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_5: $105,126.43
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Model_9: $105,175.75
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Data Sanity Checks:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Any NaN in actuals (train): False
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Any NaN in predictions: False
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Actual range (train): $31.25 to $231,933.26
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_2 range: $2,193.97 to $264,706.84
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_3 range: $0.00 to $129,470.38
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_4 range: $0.00 to $137,540.87
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_5 range: $0.00 to $142,158.47
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_9 range: $3,095.98 to $201,821.40
+2025-10-15 03:46:02 - MODEL_11 - INFO - Prediction summary:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_2: mean=$45,961.09, std=$36,786.66
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_3: mean=$39,852.42, std=$30,616.79
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_4: mean=$44,593.31, std=$29,579.98
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_5: mean=$44,852.09, std=$31,250.00
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model_9: mean=$44,798.36, std=$32,513.96
+2025-10-15 03:46:02 - MODEL_11 - INFO - Target statistics:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Training mean: $41,208.46
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Training std: $39,877.84
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Training range: $31.25 - $231,933.26
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - FITTING MODEL
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - FITTING CONSENSUS MODEL (LASSO)
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - Training samples: 24921
+2025-10-15 03:46:02 - MODEL_11 - INFO - Constituent models: 5 ([2, 3, 4, 5, 9])
+2025-10-15 03:46:02 - MODEL_11 - INFO - Method: Lasso (L1 regularization)
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Using LassoCV to find optimal alpha...
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Optimal alpha: 10.000000
+2025-10-15 03:46:02 - MODEL_11 - WARNING - All Lasso weights are zero! Using equal weights.
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Non-zero weights: 5/5
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Calculating model contributions...
+2025-10-15 03:46:02 - MODEL_11 - INFO - Equal weights R²: -0.6351
+2025-10-15 03:46:02 - MODEL_11 - INFO - Optimal weights R²: -0.6351
+2025-10-15 03:46:02 - MODEL_11 - INFO - Improvement: +0.0000
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Optimal weights:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model 2: 0.2000
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model 3: 0.2000
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model 4: 0.2000
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model 5: 0.2000
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Model 9: 0.2000
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - Diversity score: 1.0000
+2025-10-15 03:46:02 - MODEL_11 - INFO -   (0=single model, 1=perfectly uniform)
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - GENERATING PREDICTIONS
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - CALCULATING METRICS
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - DEBUG check alignment: corr(y_train, pred_train) = -0.0029
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Training R²: -0.6351
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Test R²: 0.4938
+2025-10-15 03:46:02 - MODEL_11 - INFO -   RMSE: $31,773.84
+2025-10-15 03:46:02 - MODEL_11 - INFO -   MAE: $21,908.75
+2025-10-15 03:46:02 - MODEL_11 - INFO -   MAPE: 450.96%
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - SUBGROUP ANALYSIS
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - Calculated metrics for 4 subgroups
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO -   cost_QOneLow:
+2025-10-15 03:46:02 - MODEL_11 - INFO -     N: 1,709
+2025-10-15 03:46:02 - MODEL_11 - INFO -     R^2: -10.0000
+2025-10-15 03:46:02 - MODEL_11 - INFO -     RMSE: $26,227.24
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Bias: $+21,118.90
+2025-10-15 03:46:02 - MODEL_11 - INFO -   cost_QTwo:
+2025-10-15 03:46:02 - MODEL_11 - INFO -     N: 1,708
+2025-10-15 03:46:02 - MODEL_11 - INFO -     R^2: -4.8928
+2025-10-15 03:46:02 - MODEL_11 - INFO -     RMSE: $18,733.48
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Bias: $+9,056.73
+2025-10-15 03:46:02 - MODEL_11 - INFO -   cost_QThree:
+2025-10-15 03:46:02 - MODEL_11 - INFO -     N: 1,708
+2025-10-15 03:46:02 - MODEL_11 - INFO -     R^2: -2.7228
+2025-10-15 03:46:02 - MODEL_11 - INFO -     RMSE: $22,519.87
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Bias: $-4,532.20
+2025-10-15 03:46:02 - MODEL_11 - INFO -   cost_QFourHigh:
+2025-10-15 03:46:02 - MODEL_11 - INFO -     N: 1,709
+2025-10-15 03:46:02 - MODEL_11 - INFO -     R^2: -0.9414
+2025-10-15 03:46:02 - MODEL_11 - INFO -     RMSE: $49,916.65
+2025-10-15 03:46:02 - MODEL_11 - INFO -     Bias: $-28,258.59
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - VARIANCE ANALYSIS
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - Variance metrics calculated
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Coefficient of Variation (Predicted): 0.7117
+2025-10-15 03:46:02 - MODEL_11 - INFO -   95% Prediction Interval Width: $62,263.50
+2025-10-15 03:46:02 - MODEL_11 - INFO -   Actual-Predicted Correlation: 0.7029
+2025-10-15 03:46:02 - MODEL_11 - INFO - Results saved:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Metrics JSON: ..\..\report\models\model_11\metrics.json
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Predictions CSV: ..\..\report\models\model_11\predictions.csv
+2025-10-15 03:46:02 - MODEL_11 - INFO -     (6,834 predictions)
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Weights: ..\..\report\models\model_11\weights.json
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Contributions: ..\..\report\models\model_11\contribution_analysis.json
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - LATEX GENERATION
+2025-10-15 03:46:02 - MODEL_11 - INFO - ------------------------------------------------------------
+2025-10-15 03:46:02 - MODEL_11 - INFO - LaTeX commands generated:
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Newcommands file: ..\..\report\models\model_11\model_11_newcommands.tex
+2025-10-15 03:46:02 - MODEL_11 - INFO -     (87 placeholder commands)
+2025-10-15 03:46:02 - MODEL_11 - INFO -   - Renewcommands file: ..\..\report\models\model_11\model_11_renewcommands.tex
+2025-10-15 03:46:02 - MODEL_11 - INFO -     (87 value commands)
+2025-10-15 03:46:02 - MODEL_11 - INFO - Model 11 consensus-specific LaTeX commands generated
+2025-10-15 03:46:02 - MODEL_11 - INFO - 
+2025-10-15 03:46:02 - MODEL_11 - INFO - ================================================================================
+2025-10-15 03:46:02 - MODEL_11 - INFO - MODEL 11 PIPELINE COMPLETE
+2025-10-15 03:46:02 - MODEL_11 - INFO - ================================================================================
+2025-10-15 03:46:03 - MODEL_11 - INFO - Diagnostic plots saved: ..\..\report\models\model_11\diagnostic_plots.png
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - ============================================================
+2025-10-15 03:46:03 - MODEL_11 - INFO - MODEL 11 FINAL SUMMARY
+2025-10-15 03:46:03 - MODEL_11 - INFO - ============================================================
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - Consensus Configuration:
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Method: LASSO
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Max weight: 0.6
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Models: [2, 3, 4, 5, 9]
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - Performance Metrics:
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Training R²: -0.6351
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Test R²: 0.4938
+2025-10-15 03:46:03 - MODEL_11 - INFO -   RMSE: $31,773.84
+2025-10-15 03:46:03 - MODEL_11 - INFO -   MAE: $21,908.75
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - Optimal Weights:
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Model 2: 0.2000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Model 3: 0.2000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Model 4: 0.2000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Model 5: 0.2000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Model 9: 0.2000
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - Consensus Analysis:
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Diversity: 1.0000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Equal weights R²: -0.6351
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Optimal R²: -0.6351
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Improvement: +0.0000
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Top: Model 2 (w=0.2000)
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - Output:
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Results: ..\..\report\models\model_11
+2025-10-15 03:46:03 - MODEL_11 - INFO -   Plots: ..\..\report\models\model_11\diagnostic_plots.png
+2025-10-15 03:46:03 - MODEL_11 - INFO - 
+2025-10-15 03:46:03 - MODEL_11 - INFO - ================================================================================
+2025-10-15 03:46:03 - MODEL_11 - INFO - MODEL 11 COMPLETE
+2025-10-15 03:46:03 - MODEL_11 - INFO - ================================================================================

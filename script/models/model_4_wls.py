@@ -56,7 +56,7 @@ class Model4WLS(BaseiBudgetModel):
     """
     
     def __init__(self,
-                 use_sqrt_transform: bool = True,
+                 use_sqrt_transform: bool = False,
                  use_outlier_removal: bool = False,
                  outlier_threshold: float = 1.645,
                  weight_min: float = 0.1,

@@ -393,22 +393,22 @@ class ModelOrchestrator:
                     all_records[row_idx][f'Model_{model_id}'] = float(pred)
                     row_idx += 1
         
-            # Convert to DataFrame (no pivot needed - already one row per record)
-            df = pd.DataFrame(all_records)
+        # Convert to DataFrame (no pivot needed - already one row per record)
+        df = pd.DataFrame(all_records)
 
-            # Reorder columns
-            base_cols = ['CaseNo', 'Dataset', 'Actual_Cost']
-            model_cols = sorted([c for c in df.columns if c.startswith('Model_')])
-            df = df[base_cols + model_cols]
-        
-            # Save
-            output_file = self.output_dir / 'predictions.csv'
-            df.to_csv(output_file, index=False)
+        # Reorder columns
+        base_cols = ['CaseNo', 'Dataset', 'Actual_Cost']
+        model_cols = sorted([c for c in df.columns if c.startswith('Model_')])
+        df = df[base_cols + model_cols]
+    
+        # Save
+        output_file = self.output_dir / 'predictions.csv'
+        df.to_csv(output_file, index=False)
 
-            self.logger.info(f"+ Saved combined predictions: {output_file}")
-            self.logger.info(f"  Total records: {len(df)}")
-            self.logger.info(f"  Train records: {(df['Dataset'] == 'Train').sum()}")
-            self.logger.info(f"  Test records: {(df['Dataset'] == 'Test').sum()}")
+        self.logger.info(f"+ Saved combined predictions: {output_file}")
+        self.logger.info(f"  Total records: {len(df)}")
+        self.logger.info(f"  Train records: {(df['Dataset'] == 'Train').sum()}")
+        self.logger.info(f"  Test records: {(df['Dataset'] == 'Test').sum()}")
     
     def generate_comparison_report(self):
         """Generate comparison CSV and summary JSON"""
@@ -584,7 +584,7 @@ def main():
     parser.add_argument(
         '--config',
         type=str,
-        default='Orchestrator_test.json',
+        default='Orchestrator.json',
         help='Path to JSON configuration file (default: Orchestrator.json)'
     )
     
