@@ -1,256 +1,467 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Algorithm Comparison and Selection}  \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ============================================
+% CHAPTER: SHAP VALUES FOR MODEL 9 INTERPRETABILITY
+% ============================================
 
-% ============================================================================
-% MASTER MODEL COMPARISON TABLE - TEST SET PERFORMANCE
-% ============================================================================
+\chapter{SHAP Values: Mathematical Foundation for Model 9 (Random Forest) Interpretability}\label{ch:shap_values}
 
-\section{Comprehensive Model Performance Comparison}
 
-\subsection{Summary of All Viable Models}
+% ============================================
+\section{Introduction}
+% ============================================
+Model 9 implements a static Random Forest configuration with \ModelNineNTrees{} decision trees (150 in the implementation) and no target transformation or hyperparameter tuning.\footnote{See Model 9 code for fixed parameters: $n\_estimators=150$, $max\_depth=15$, $min\_samples\_split=8$, $min\_samples\_leaf=3$, $max\_features=\sqrt{\cdot}$, $bootstrap{=}$True, $oob\_score{=}$True, $random\_state{=}42$.} While the ensemble's predictions emerge from aggregating multiple tree decisions, individual allocation explanations require additional interpretation methods. SHAP (SHapley Additive exPlanations) values provide mathematically rigorous feature attribution, transforming Model 9's ensemble predictions into transparent, dollar-scale explanations as required by F.S. 393.0662. 
 
-\begin{table}[h!]
-\centering
-\caption{Master Comparison Table: Test Set Performance for All Viable Models}
-\label{tab:master_comparison}
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Model} & \textbf{Method} & \textbf{R²} & \textbf{RMSE} & \textbf{MAE} & \textbf{N} & \textbf{Data\%} \\
-\midrule
-Model 1 & Linear (OLS) & \ModelOneRSquaredTest{} & \$\ModelOneRMSETest{} & \$\ModelOneMAETest{} & \ModelOneTestSamples{} & 90.6\% \\
-Model 2 & GLM (Gamma) & \ModelTwoRSquaredTest{} & \$\ModelTwoRMSETest{} & \$\ModelTwoMAETest{} & \ModelTwoTestSamples{} & 100\% \\
-Model 3 & Robust (Huber) & \ModelThreeRSquaredTest{} & \$\ModelThreeRMSETest{} & \$\ModelThreeMAETest{} & \ModelThreeTestSamples{} & 100\% \\
-Model 4 & WLS & \ModelFourRSquaredTest{} & \$\ModelFourRMSETest{} & \$\ModelFourMAETest{} & \ModelFourTestSamples{} & 100\% \\
-Model 5 & Ridge & \ModelFiveRSquaredTest{} & \$\ModelFiveRMSETest{} & \$\ModelFiveMAETest{} & \ModelFiveTestSamples{} & 100\% \\
-Model 9 & Random Forest & \ModelNineRSquaredTest{} & \$\ModelNineRMSETest{} & \$\ModelNineMAETest{} & \ModelNineTestSamples{} & 100\% \\
-\bottomrule
-\end{tabular}
-\end{table}
+This chapter establishes the mathematical foundation of SHAP values and demonstrates their application to Model 9's specific Random Forest implementation—a nonparametric benchmark model using fixed parameters without adaptive optimization.
 
-\textbf{Key Findings:}
+% ============================================
+\section{Mathematical Foundation of SHAP Values}
+% ============================================
+
+% --------------------------------------------
+\subsection{The Shapley Value from Cooperative Game Theory}
+% --------------------------------------------
+%
+SHAP values originate from Lloyd Shapley's solution concept in cooperative game theory (Shapley, 1953)\footnote{Shapley, L.S. (1953). A value for n-person games. In \textit{Experts Insights}, Santa Monica, CA: RAND Corporation, 1952. \href{https://www.rand.org/pubs/papers/P295.html}{www.rand.org/pubs/papers/P295.html} Accessed on 10/14/2025.}. Consider a coalitional game with $p$ players (features) and a value function $v: 2^p \rightarrow \mathbb{R}$ that maps each coalition $S \subseteq \{1, ..., p\}$ to a real value. The Shapley value $\phi_i$ for player $i$ is:
+%
+\begin{equation}
+\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(p - |S| - 1)!}{p!} \left[v(S \cup \{i\}) - v(S)\right]
+\label{eq:shapley_original}
+\end{equation}
+%
+where 
 \begin{itemize}
-    \item \textbf{Highest R²}: Model 9 (Random Forest) demonstrates superior predictive power
-    \item \textbf{Lowest RMSE}: Indicates best prediction accuracy in dollar terms
-    \item \textbf{Lowest MAE}: Shows typical absolute prediction error
-    \item \textbf{Data Utilization}: Models 2-5 and 9 use 100\% of data; Model 1 excludes 9.4\% as outliers
+    \item $N = \{1, 2, ..., p\}$ is the set of all features,
+    \item $S$ is a subset of features not including feature $i$,
+    \item $v(S)$ is the value (prediction) using only features in subset $S$,
+    \item $|S|$ is the cardinality of set $S$.
 \end{itemize}
 
-% ============================================================================
-% DETAILED COMPARISON WITH PERCENTAGE IMPROVEMENTS
-% ============================================================================
+% --------------------------------------------
+\subsection{Adapting Shapley Values to Machine Learning}
+% --------------------------------------------
 
-\subsection{Performance Relative to Baseline (Model 1)}
-
-Using R² values relative to Model 1 as a baseline provides a scientifically rigorous framework for model comparison because R² represents the proportion of variance explained in a standardized, scale-invariant manner that facilitates direct performance assessment across different modeling approaches. Unlike absolute error metrics (RMSE, MAE) that are measured in the original units and can be influenced by data scale, R² is bounded between 0 and 1, making it inherently comparable across models regardless of transformation or scaling choices. By establishing Model 1 (OLS with outlier removal) as the baseline, we create a benchmark anchored to the current operational standard that stakeholders understand, allowing subsequent models to be evaluated not merely on their standalone merit but on their incremental value over existing practice. This approach is consistent with established statistical methodology where baseline models serve as controls in comparative studies, enabling researchers to isolate the specific contribution of methodological innovations (robust estimation, regularization, ensemble methods) while holding the feature set and data preparation pipeline relatively constant.
-
-Furthermore, R² comparison provides complementary information to error-based metrics by focusing on explained variance rather than prediction error magnitude, which is particularly valuable when assessing models with different outlier-handling strategies or data utilization rates. For instance, Model 1 excludes 9.4\% of consumers as outliers while Models 2-5 and 9 use 100\% of data; comparing R² values reveals whether the inclusive models can maintain or improve explanatory power despite retaining challenging cases that Model 1 discards. The R² metric also directly addresses the fundamental modeling objective of understanding and predicting variation in budget allocations—stakeholders naturally frame questions as "how much of the variation in costs can we explain?" rather than "what is the average dollar error?" Additionally, by examining both R² improvements and error metric reductions (RMSE, MAE) together, we gain a comprehensive performance profile: R² indicates model's capacity to capture systematic patterns in the data, while RMSE/MAE quantify practical prediction accuracy in dollar terms, providing both theoretical justification and operational utility for model selection decisions.
-
-\begin{table}[h!]
-\centering
-\caption{Model Performance with Percentage Improvement over Model 1 Baseline}
-\label{tab:comparison_with_improvements}
-\begin{tabular}{lccccc}
-\toprule
-\textbf{Model} & \textbf{R²} & \textbf{\% Improvement} & \textbf{RMSE} & \textbf{MAE} & \textbf{Method} \\
-\midrule
-Model 1 (Baseline) & \ModelOneRSquaredTest{} & --- & \$\ModelOneRMSETest{} & \$\ModelOneMAETest{} & OLS + Outlier Removal \\
-\midrule
-Model 2 & \ModelTwoRSquaredTest{} & -7.1\% & \$\ModelTwoRMSETest{} & \$\ModelTwoMAETest{} & GLM (Gamma) \\
-Model 3 & \ModelThreeRSquaredTest{} & -5.7\% & \$\ModelThreeRMSETest{} & \$\ModelThreeMAETest{} & Robust (Huber) \\
-Model 4 & \ModelFourRSquaredTest{} & +3.0\% & \$\ModelFourRMSETest{} & \$\ModelFourMAETest{} & Weighted LS \\
-Model 5 & \ModelFiveRSquaredTest{} & -2.3\% & \$\ModelFiveRMSETest{} & \$\ModelFiveMAETest{} & Ridge \\
-Model 9 & \ModelNineRSquaredTest{} & +19.5\% & \$\ModelNineRMSETest{} & \$\ModelNineMAETest{} & Random Forest \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Note:} Percentage improvements calculated as:
+For machine learning models, Lundberg and Lee (2017)\footnote{Lundberg, S.M. and Lee, S.I. (2017). A unified approach to interpreting model predictions. In \textit{NIPS'17: Proceedings of the 31st International Conference on Neural Information Processing Systems}, pages 4768-4777.} adapted Shapley values by defining the value function as the expected model output conditioned on a subset of features:
+%
 \begin{equation}
-\text{R² Improvement} = \frac{\text{Model}_i\text{ R²} - \text{Model 1 R²}}{\text{Model 1 R²}} \times 100\%
+v_x(S) \;=\; \mathbb{E}_{X_{\bar S}}\!\big[\,f\big(x_S, X_{\bar S}\big)\,\big]
+\label{eq:value_function}
+\end{equation}
+where 
+\begin{itemize}
+    \item $X_{\bar S}$ are the features not in $S$ integrated out under a reference distribution (background data), 
+     \item $f$ is our trained Random Forest model (static configuration), 
+     \item $x$ is the feature vector for a specific consumer, 
+     \item $x_S$ contains only the features in subset $S$, 
+     \item The expectation is over features not in $S$.
+\end{itemize}
+%
+In trees, TreeSHAP's default is the path-dependent formulation that uses training-data statistics along each path, yielding exact Shapley attributions in polynomial time for tree ensembles.
+
+% --------------------------------------------
+\subsection{SHAP Values for Model Interpretation}
+% --------------------------------------------
+
+For a consumer with features $x = (x_1, x_2, ..., x_p)$ and Model 9's prediction $f(x)$, the SHAP value $\phi_i$ for feature $i$ represents that feature's contribution to moving the prediction from the baseline to the actual prediction:
+%
+\begin{equation}
+f(x) = \phi_0 + \sum_{i=1}^{p} \phi_i(x)
+\label{eq:shap_decomposition}
+\end{equation}
+%
+where $\phi_0 = \mathbb{E}[f(x)]$ is the baseline prediction (mean iBudget allocation across training data).
+
+% --------------------------------------------
+\subsection{Properties of SHAP Values}
+% --------------------------------------------
+SHAP values satisfy four desirable properties ensuring consistent attribution:
+
+\begin{enumerate}
+    \item \textbf{Local Accuracy}: The sum of SHAP values equals the prediction minus expected value
+    \item \textbf{Missingness}: Absent features contribute zero
+    \item \textbf{Consistency}: If a model change increases a feature's marginal contribution to predictions for all coalitions, that feature's SHAP value does not decrease (TreeSHAP preserves this for trees)
+    \item \textbf{Symmetry}: Equal contributors receive equal attribution
+\end{enumerate}
+
+% ============================================
+\section{Model 9 Random Forest Implementation}
+% ============================================
+
+% --------------------------------------------
+\subsection{Static Model Configuration}
+% --------------------------------------------
+Model 9 uses a fixed Random Forest configuration without hyperparameter tuning:
+
+\begin{lstlisting}[language=Python, caption=Model 9 Static Configuration (from code)]
+RandomForestRegressor(
+    n_estimators=150,
+    max_depth=15,
+    min_samples_split=8,
+    min_samples_leaf=3,
+    max_features='sqrt',
+    bootstrap=True,
+    oob_score=True,
+    random_state=42,
+    n_jobs=-1
+)
+\end{lstlisting}
+This configuration is hard-coded in Model 9 and used consistently in the pipeline (no hyperparameter search). 
+
+Key characteristics:
+\begin{itemize}
+    \item \textbf{No transformation}: Direct prediction on dollar scale (transformation='none')
+    \item \textbf{No outlier removal}: 100\% data retention
+    \item \textbf{No adaptive weighting}: Standard bootstrap sampling
+    \item \textbf{No hyperparameter search}: Fixed parameters based on domain knowledge
+\end{itemize}
+
+% --------------------------------------------
+\subsection{Random Forest Prediction Structure}
+% --------------------------------------------
+Model 9 produces predictions through simple ensemble averaging:
+%
+\begin{equation}
+f_{\text{RF}}(x) = \frac{1}{150} \sum_{b=1}^{150} f_b(x)
+\label{eq:rf_prediction}
+\end{equation}
+%
+where $B = \ModelNineNTrees{}$ = 150 trees (actual implementation) and $f_b(x)$ is the prediction from tree $b$. Each tree partitions the feature space using binary splits:
+%
+\begin{equation}
+f_b(x) = \sum_{m=1}^{M_b} c_{bm} \cdot \mathbb{I}(x \in R_{bm})
+\label{eq:tree_structure}
+\end{equation}
+%
+where $c_{bm}$ is the mean of training observations in leaf region $R_{bm}$.
+
+% --------------------------------------------
+\subsection{Out-of-Bag Validation}
+% --------------------------------------------
+
+Model 9 uses OOB validation (not k-fold CV internally):
+
+\begin{equation}
+\text{OOB Error}_i = y_i - \frac{1}{|B_i^{\text{OOB}}|} \sum_{b \in B_i^{\text{OOB}}} f_b(x_i)
+\label{eq:oob_error}
 \end{equation}
 
+where $B_i^{\text{OOB}}$ contains trees where observation $i$ was not in the bootstrap sample. This provides:
+\begin{itemize}
+    \item OOB R$^2$ = \ModelNineOOBRSquared{}
+    \item OOB RMSE = \$\ModelNineOOBError{}
+\end{itemize}
+
+% ============================================
+\section{TreeSHAP Algorithm for Model 9}
+% ============================================
+
+% --------------------------------------------
+\subsection{Efficient SHAP Computation for Trees}
+% --------------------------------------------
+
+TreeSHAP (Lundberg et al., 2020)\footnote{Lundberg, S.M., Erion, G., Chen, H. et al. From local explanations to global understanding with explainable AI for trees. Nat Mach Intell 2, 56-67 (2020). DOI: \href{https://doi.org/10.1038/s42256-019-0138-9}{10.1038/s42256-019-0138-9}} computes exact SHAP values in polynomial time by exploiting tree structure. For a single decision tree:
+%
 \begin{equation}
-\text{RMSE Reduction} = \frac{\text{Model 1 RMSE} - \text{Model}_i\text{ RMSE}}{\text{Model 1 RMSE}} \times 100\%
+\phi_i^{\text{tree}} = \sum_{\text{paths } P} w_P \cdot \Delta_{i,P}
+\label{eq:treeshap_path}
 \end{equation}
+%
+where:
+\begin{itemize}
+    \item $P$ represents a path from root to leaf
+    \item $w_P$ is the proportion of training data following path $P$
+    \item $\Delta_{i,P}$ is feature $i$'s contribution along path $P$
+\end{itemize}
 
-% ============================================================================
-% R² COMPARISON ACROSS ALL MODELS (ADDRESSING USER REQUEST)
-% ============================================================================
+Intuitively, TreeSHAP sums each feature's marginal contribution along all root-to-leaf paths while weighting by path probabilities computed from training data. We omit the full combinatorial expression, but emphasize that TreeSHAP returns \emph{exact} Shapley values for trees in $O(TLD^2)$ time (trees $T$, average leaves $L$, depth $D$).
 
-\subsection{R² Values for Contextualization}
+% --------------------------------------------
+\subsection{Aggregating SHAP Values Across Ensemble}
+% --------------------------------------------
+For Model 9's ensemble, the final SHAP value for feature $i$ is:
+%
+\begin{equation}
+\phi_i^{\text{RF}} = \frac{1}{150} \sum_{b=1}^{150} \phi_i^{(b)}
+\label{eq:rf_shap}
+\end{equation}
+%
+Note: Using 150 trees as implemented in  {\ttfamily model\_9\_random\_forest.py}. This linear aggregation maintains computational efficiency while preserving exact Shapley properties.
 
-\begin{table}[h!]
+% --------------------------------------------
+\subsection{Computational Complexity}
+% --------------------------------------------
+For Model 9 with:
+\begin{itemize}
+    \item $B = \ModelNineNTrees{}$ trees (150 in implementation)
+    \item $D = \ModelNineMaxDepth{}$ maximum depth (15 in implementation)
+    \item $L \approx$ 500 average leaves per tree
+    \item $p = \ModelNineNumFeatures{}$ features
+\end{itemize}
+%
+Complexity for SHAP explanation computation: $O(B \cdot L \cdot D^2) = O(150 \cdot 500 \cdot 15^2) \approx 1.7 \times 10^7$ elementary operations for a single explanation, which is typically sub-second on standard hardware. This translates to approximately 100-200ms per consumer explanation on standard hardware (not for model training).
+
+% ============================================
+\section{Feature Importance vs. SHAP Values}
+% ============================================
+% --------------------------------------------
+\subsection{Impurity-Based Feature Importance (Regression)}
+% --------------------------------------------
+Model 9's native feature importance uses \emph{variance/MSE impurity reduction} (the regression analogue of Gini for classification):
+%
+\begin{equation}
+    \text{Importance}_i \;=\; \frac{1}{B} \sum_{b=1}^{B} \;\sum_{t \in T_b} \mathbb{I}(v_t = i) \cdot p_t \cdot \Delta I_t,
+    \qquad \Delta I_t \equiv I_{\text{parent}} - \big(p_L I_L + p_R I_R\big),
+    \label{eq:variance_importance}
+\end{equation}
+where:
+\begin{itemize}
+    \item $v_t$ is the splitting variable at node $t$
+    \item $p_t$ is the proportion of samples reaching node $t$
+    \item $\Delta G_t$ is the weighted Gini impurity decrease
+    \item $I$ is node variance (MSE) for regression trees. 
+\end{itemize}
+%
+\textbf{Critical distinctions}: (1) This ranks split usefulness but is \emph{not} directional and is not causal. (2) This measures average reduction in variance impurity, \textbf{not} directional impact or causality; SHAP supplies the signed, per-individual contributions.
+
+% --------------------------------------------
+\subsection{SHAP Advantages Over Gini Importance}
+% --------------------------------------------
+Table \ref{tab:importance_comparison} summarizes the key methodological differences between two approaches to measuring feature importance in tree-based models. The traditional Gini importance reflects only the average magnitude of variable splits within the ensemble, offering a relative ranking of predictors but no direction or individual-level attribution. In contrast, SHAP values provide a mathematically consistent framework that decomposes each prediction into additive feature contributions. This allows directional interpretation (positive or negative impact), person-specific explanations, and explicit accounting for feature interactions, producing results that are more transparent and policy-relevant for the iBudget analytical framework
+%
+\begin{table}[h]
 \centering
-\caption{R² Values Across All Viable Models (Test Set)}
-\label{tab:r2_comparison}
-\begin{tabular}{lccl}
+\caption{Feature Importance Methods Comparison}
+\begin{tabular}{lll}
 \toprule
-\textbf{Model} & \textbf{R² (Test)} & \textbf{R² (Train)} & \textbf{Interpretation} \\
+\textbf{Aspect} & \textbf{Gini Importance} & \textbf{SHAP Values} \\
 \midrule
-Model 1 & \ModelOneRSquaredTest{} & \ModelOneRSquaredTrain{} & Enhanced baseline with outlier removal \\
-Model 2 & \ModelTwoRSquaredTest{} & \ModelTwoRSquaredTrain{} & GLM with gamma distribution \\
-Model 3 & \ModelThreeRSquaredTest{} & \ModelThreeRSquaredTrain{} & Robust to outliers via weighting \\
-Model 4 & \ModelFourRSquaredTest{} & \ModelFourRSquaredTrain{} & Addresses heteroscedasticity \\
-Model 5 & \ModelFiveRSquaredTest{} & \ModelFiveRSquaredTrain{} & Regularized for multicollinearity \\
-Model 9 & \ModelNineRSquaredTest{} & \ModelNineRSquaredTrain{} & Non-linear ensemble method \\
+Direction & No (magnitude only) & Yes (positive/negative) \\
+Individual-level & No (global average) & Yes (per consumer) \\
+Interaction effects & Implicit & Explicit \\
+Consistency & Tree-dependent & Axiomatically guaranteed \\
+Interpretability & Relative ranking & Dollar contributions \\
 \bottomrule
 \end{tabular}
+\label{tab:importance_comparison}
 \end{table}
 
-\textbf{Variance Explained:}
-\begin{itemize}
-    \item Model 9 (Random Forest) achieves the highest R² on test data, capturing non-linear relationships
-    \item All linear models (1-5) achieve R² $\geq$ 0.42, indicating moderate predictive power
-    \item Model 4 (WLS) shows best performance among linear models with R² = \ModelFourRSquaredTest{}
-\end{itemize}
+% ============================================
+\section{Random Forest Model Object Structure (sklearn)}
+% ============================================
+% --------------------------------------------
+\subsection{Trained Model Components}
+% --------------------------------------------
+Model 9's serialized object contains structures necessary for SHAP computation:
+%
+\begin{lstlisting}[language=Python, caption=Random Forest Model Object Structure]
+class RandomForestRegressor:
+    # Core attributes
+    n_estimators = 150          # Number of trees (actual implementation)
+    estimators_ = [...]         # List of DecisionTreeRegressor objects
+    feature_importances_ = [...] # variance (MSE) impurity decrease (NOT causal)
+    oob_score_ = ...            # Out-of-bag R-squared (sklearn computes $R^2$ by default)
+    oob_prediction_ = [...]     # OOB predictions for training data
+    
+    # Each tree contains
+    class DecisionTreeRegressor:
+        tree_ = Tree object:
+            - children_left/right: child node indices
+            - feature: splitting feature index
+            - threshold: splitting value
+            - value: mean response at each node
+            - n_node_samples: sample count per node
+            - weighted_n_node_samples: weighted counts
+\end{lstlisting}
 
-% ============================================================================
-% CROSS-VALIDATION STABILITY COMPARISON
-% ============================================================================
+% --------------------------------------------
+\subsection{Information Required for SHAP}
+% --------------------------------------------
+SHAP computation accesses:
+%
+\begin{enumerate}
+    \item \textbf{Tree topology}: \texttt{children\_left}, \texttt{children\_right} for path traversal
+    \item \textbf{Split rules}: \texttt{feature} and \texttt{threshold} at each internal node
+    \item \textbf{Leaf values}: \texttt{value} array containing predictions
+    \item \textbf{Sample statistics}: \texttt{n\_node\_samples/weighted\_n\_node\_samples} for path probability weighting
+\end{enumerate}
+%
+These fields are available from the fitted Model 9 object used in the pipeline.
 
-\textbf{Stability Assessment:}
-\begin{itemize}
-    \item All models show CV standard deviation $<$ 0.02, indicating consistent performance across folds
-    \item Test R² values align with CV means, confirming good generalization
-    \item No evidence of overfitting in any viable model
-\end{itemize}
+% ============================================
+\section{Computing SHAP Values from Model 9}
+% ============================================
+% --------------------------------------------
+\subsection{Initialization Phase}
+% --------------------------------------------
+Given Model 9's trained object (no transformation, fixed parameters):
+\begin{lstlisting}[language=Python, caption=TreeSHAP initialization for Model 9 (dollar scale)]
+import shap
+import joblib
+import pandas as pd
 
-% ============================================================================
-% ERROR MAGNITUDE COMPARISON
-% ============================================================================
+model_9 = joblib.load(".../model_9/model_9_model.pkl")   # fitted sklearn RF
+X_train  = pd.read_parquet(".../model_9/X_train.parquet") # or reconstruct from pipeline
 
-\subsection{Prediction Error Magnitude Analysis}
+# Sanity-check fixed configuration (as implemented in code)
+assert model_9.n_estimators == 150 and model_9.max_depth == 15
+assert model_9.min_samples_split == 8 and model_9.min_samples_leaf == 3
 
-\begin{table}[h!]
+# For tree models, TreeSHAP is exact and does not require a background dataset;
+# we keep a small background to define the expected value clearly.
+bg = X_train.sample(n=min(1000, len(X_train)), random_state=42)
+explainer = shap.TreeExplainer(model_9, data=bg, model_output="raw")
+\end{lstlisting}
+%
+Model 9 predicts on the \emph{dollar} scale (no transformation), so SHAP values are in dollars. 
+
+% --------------------------------------------
+\subsection{Individual Prediction Explanation}
+% --------------------------------------------
+For a specific consumer:
+%
+\begin{lstlisting}[language=Python, caption=Computing SHAP values for one consumer (dollar scale)]
+    # Reindex consumer row to match model feature order
+    row = (pd.Series({
+        'bsum': 15, 'fsum': 12, 'RH3': 1, 'Age31Plus': 1, 'Q26': 3,
+        # ... include all features used in Model 9, ordered to match training columns
+    })
+    .reindex(X_train.columns).to_frame().T)
+
+    phi = explainer.shap_values(row)[0]              # 1D array of contributions in $
+    base = float(explainer.expected_value)           # baseline in $
+    pred = float(model_9.predict(row)[0])            # RF prediction in $
+
+    # Additivity (allow small numeric tolerance)
+    assert abs(base + phi.sum() - pred) < 1e-6
+\end{lstlisting}
+
+% --------------------------------------------
+\subsection{Practical Allocation Breakdown}
+% --------------------------------------------
+
+Example decomposition for a \$72,450 allocation (using 150-tree ensemble):
+
+\begin{align}
+\text{Allocation} &= \$40,000 \text{ (baseline mean)} \nonumber \\
+&+ \$18,000 \text{ (Living\_RH3 = 1)} \nonumber \\
+&+ \$8,500 \text{ (BSum = 15)} \nonumber \\
+&+ \$4,200 \text{ (Q26 = 3)} \nonumber \\
+&+ \$2,100 \text{ (Age31Plus = 1)} \nonumber \\
+&- \$350 \text{ (other features)} \nonumber \\
+&= \$72,450 \text{ (final prediction)}
+\label{eq:allocation_example}
+\end{align}
+
+Note: All values are in dollars (no transformation), directly interpretable for stakeholders.
+
+% ============================================
+\section{Model 9 Diagnostic Integration}
+% ============================================
+
+% --------------------------------------------
+\subsection{Reported Metrics from Implementation}
+% --------------------------------------------
+Model 9's actual diagnostics (from \texttt{model\_9\_random\_forest.py}):
+\begin{table}[h]
 \centering
-\caption{Test Set Error Metrics (Dollar Amounts)}
-\label{tab:error_magnitude}
-\begin{tabular}{lccccc}
+\caption{Model 9 Performance Metrics}
+\begin{tabular}{ll}
 \toprule
-\textbf{Model} & \textbf{RMSE (\$)} & \textbf{MAE (\$)} & \textbf{MAPE (\%)} & \textbf{Within \$5K} & \textbf{Within \$10K} \\
+\textbf{Metric} & \textbf{Value} \\
 \midrule
-Model 1 & \ModelOneRMSETest{} & \ModelOneMAETest{} & \ModelOneMAPETest{}\% & \ModelOneWithinFiveK{}\% & \ModelOneWithinTenK{}\% \\
-Model 2 & \ModelTwoRMSETest{} & \ModelTwoMAETest{} & \ModelTwoMAPETest{}\% & \ModelTwoWithinFiveK{}\% & \ModelTwoWithinTenK{}\% \\
-Model 3 & \ModelThreeRMSETest{} & \ModelThreeMAETest{} & \ModelThreeMAPETest{}\% & \ModelThreeWithinFiveK{}\% & \ModelThreeWithinTenK{}\% \\
-Model 4 & \ModelFourRMSETest{} & \ModelFourMAETest{} & \ModelFourMAPETest{}\% & \ModelFourWithinFiveK{}\% & \ModelFourWithinTenK{}\% \\
-Model 5 & \ModelFiveRMSETest{} & \ModelFiveMAETest{} & \ModelFiveMAPETest{}\% & \ModelFiveWithinFiveK{}\% & \ModelFiveWithinTenK{}\% \\
-Model 9 & \ModelNineRMSETest{} & \ModelNineMAETest{} & \ModelNineMAPETest{}\% & \ModelNineWithinFiveK{}\% & \ModelNineWithinTenK{}\% \\
+Training R$^2$ & \ModelNineRSquaredTrain{} \\
+Test R$^2$ & \ModelNineRSquaredTest{} \\
+Test RMSE & \$\ModelNineRMSETest{} (dollar scale) \\
+OOB R$^2$ & \ModelNineOOBRSquared{}\footnote{If value shows "N/A", ensure model\_9\_renewcommands.tex is generated from model\_9\_random\_forest.py} \\
+OOB RMSE & \$\ModelNineOOBError{} (dollar scale) \\
+Mean Tree Depth & \ModelNineMeanTreeDepth{} \\
+Training Time & \ModelNineTrainingTime{} seconds \\
+Data Retention & 100\% (no outlier removal) \\
+Transformation & None (direct dollar prediction) \\
 \bottomrule
 \end{tabular}
+\label{tab:model9_metrics}
 \end{table}
 
-\textbf{Practical Accuracy:}
+% --------------------------------------------
+\subsection{Top Features by Gini Importance}
+% --------------------------------------------
+
+Model 9's feature importance (variance reduction, not causal):
+
+\begin{enumerate}
+    \item \ModelNineTopFeatureOne{}: \ModelNineTopFeatureOneImportance{} (Gini)
+    \item \ModelNineTopFeatureTwo{}: \ModelNineTopFeatureTwoImportance{} (Gini)
+    \item \ModelNineTopFeatureThree{}: \ModelNineTopFeatureThreeImportance{} (Gini)
+    \item \ModelNineTopFeatureFour{}: \ModelNineTopFeatureFourImportance{} (Gini)
+    \item \ModelNineTopFeatureFive{}: \ModelNineTopFeatureFiveImportance{} (Gini)
+\end{enumerate}
+
+These reflect split frequency and variance reduction, not directional effects.
+
+% ============================================
+\section{Regulatory Compliance Through SHAP}
+% ============================================
+% --------------------------------------------
+\subsection{Meeting F.S. 393.0662 Requirements}
+% --------------------------------------------
+Florida Statute 393.0662 requires algorithm transparency. SHAP values provide:
+%
+\begin{enumerate}
+    \item \textbf{Individual explanations}: Dollar attribution for each feature
+    \item \textbf{Consistency}: Identical features produce identical contributions
+    \item \textbf{Completeness}: Full decomposition from baseline to final allocation
+    \item \textbf{Auditability}: Axiomatic attribution (local accuracy, missingness, symmetry, consistency) suitable for audit; nevertheless, SHAP is \emph{explanatory}, not causal.
+\end{enumerate}
+
+% --------------------------------------------
+\subsection{Appeal Process Documentation}
+% --------------------------------------------
+
+For allocation appeals, SHAP provides complete documentation:
+
 \begin{itemize}
-    \item \textbf{RMSE}: Root mean squared error provides overall prediction accuracy
-    \item \textbf{MAE}: Mean absolute error shows typical prediction error magnitude
-    \item \textbf{MAPE}: Mean absolute percentage error indicates relative accuracy
-    \item \textbf{Within \$5K/\$10K}: Percentage of predictions within tolerance bands for operational planning
+    \item Baseline allocation (population mean): \$40,000
+    \item Individual feature contributions: $\phi_1, ..., \phi_{78}$ in dollars
+    \item Final prediction: Sum of baseline plus all contributions
+    \item No hidden factors or transformations
 \end{itemize}
 
-% ============================================================================
-% VISUAL PERFORMANCE COMPARISON
-% ============================================================================
+% ============================================
+\section{Limitations and Considerations}
+% ============================================
+% --------------------------------------------
+\subsection{Model 9 Specific Limitations}
+% --------------------------------------------
+\begin{enumerate}
+    \item \textbf{No Causal Interpretation}: SHAP values show correlational contribution, not causation
+    \item \textbf{Static Configuration}: No adaptive optimization or fairness constraints applied
+    \item \textbf{Ensemble Averaging}: Outlier robustness is implicit through aggregation, not explicit weighting
+    \item \textbf{No Transformation}: All predictions and SHAP values on raw dollar scale (Model 9 trains and predicts in dollars)
+\end{enumerate}
 
-% \section{Visual Performance Analysis}
+% --------------------------------------------
+\subsection{Computational Considerations}
+% --------------------------------------------
 
-% This section presents comprehensive visual comparisons of model performance across multiple dimensions. These visualizations enable stakeholders to quickly identify performance patterns, trade-offs, and optimal model selection criteria for different operational scenarios.
+\begin{itemize}
+    \item \textbf{Storage}: Model object $\approx$50MB (150 trees $\times \approx$500 leaves each)
+    \item \textbf{Memory}: Background sample requires $\approx$50MB (1000 consumers $\times$ features)
+    \item \textbf{Speed}: 100-200ms per explanation on standard hardware (for SHAP computation, not model training)
+    \item \textbf{Scaling}: Linear in number of trees and consumers
+\end{itemize}
 
-% \subsection{Overall Performance Comparison}
+% ============================================
+\section{Conclusion}
+% ============================================
 
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_a_r2_comparison.png}
-% \caption{R² Performance Comparison Across Models}
-% \label{fig:r2_comparison}
-% \end{figure}
+SHAP values transform Model 9's static Random Forest ensemble—a nonparametric benchmark using fixed configuration without optimization—into an interpretable system suitable for iBudget allocation. The mathematical rigor of Shapley values, combined with TreeSHAP's computational efficiency, enables transparent explanations while maintaining Model 9's predictive performance (Test R$^2$ = \ModelNineRSquaredTest{}, OOB R$^2$ = \ModelNineOOBRSquared{}).
 
-% Figure \ref{fig:r2_comparison} presents the fundamental performance metric (R²) for all viable models, comparing both training and test set performance. \textbf{How to interpret}: Higher bars indicate better explanatory power. The gap between training and test bars reveals generalization quality—smaller gaps suggest better generalization, while large gaps may indicate overfitting. Model 9 (Random Forest) demonstrates the highest test set R², while maintaining reasonable train-test consistency.
+Model 9's implementation uses:
+\begin{itemize}
+    \item Fixed parameters (no tuning): 150 trees, max depth 15, min samples split 8, min samples leaf 3
+    \item No transformation: Direct dollar-scale predictions
+    \item No outlier removal: 100\% data retention
+    \item OOB validation: Internal performance assessment
+    \item Gini importance: Variance-based feature ranking (non-directional)
+\end{itemize}
 
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_b_multi_metric.png}
-% \caption{Multi-Metric Performance Comparison}
-% \label{fig:multi_metric}
-% \end{figure}
-
-% Figure \ref{fig:multi_metric} provides a holistic view by normalizing three key metrics (R², RMSE, MAE) to a common 0-1 scale where higher is better. \textbf{How to interpret}: Models with consistently tall bars across all three metrics demonstrate robust performance. This visualization reveals whether a model excels in one dimension while underperforming in others. Stakeholders can identify models that balance explained variance (R²) with practical prediction accuracy (RMSE/MAE).
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_c_error_metrics.png}
-% \caption{Prediction Error Comparison: RMSE and MAE}
-% \label{fig:error_metrics}
-% \end{figure}
-
-% Figure \ref{fig:error_metrics} ranks models by prediction error magnitude in dollar terms. \textbf{How to interpret}: Shorter bars indicate better (lower error) performance. The left panel shows RMSE, which penalizes large errors more heavily, while the right panel shows MAE, representing typical error magnitude. Models appearing near the top of both panels demonstrate superior prediction accuracy. This visualization directly addresses the operational question: "What is the typical dollar error for each model?"
-
-% \subsection{Prediction Accuracy Analysis}
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_d_cumulative_accuracy.png}
-% \caption{Cumulative Accuracy: Predictions Within Error Thresholds}
-% \label{fig:cumulative_accuracy}
-% \end{figure}
-
-% Figure \ref{fig:cumulative_accuracy} shows the percentage of predictions falling within specified error tolerances. \textbf{How to interpret}: Lines higher on the graph indicate more predictions within acceptable error bounds. The shape of each line reveals model behavior: steep initial slopes suggest many highly accurate predictions, while flatter portions indicate diminishing returns at larger tolerances. Stakeholders can use this to determine which model meets operational accuracy requirements—for example, if 35\% accuracy within \$10K is required, this plot immediately identifies qualifying models.
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.85\textwidth]{figures/plot_e_tolerance_heatmap.png}
-% \caption{Prediction Accuracy Heatmap by Error Tolerance}
-% \label{fig:tolerance_heatmap}
-% \end{figure}
-
-% Figure \ref{fig:tolerance_heatmap} presents accuracy information in a compact heatmap format. \textbf{How to interpret}: Darker blue cells indicate higher percentages of predictions within tolerance. This format enables quick pattern recognition: horizontal patterns reveal models performing consistently across tolerances, while vertical patterns show tolerance thresholds where all models improve similarly. The numerical annotations provide exact percentages for detailed comparison.
-
-% \subsection{Model Stability and Generalization}
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_f_cv_boxplot.png}
-% \caption{Cross-Validation Stability Analysis}
-% \label{fig:cv_stability}
-% \end{figure}
-
-% Figure \ref{fig:cv_stability} displays the distribution of R² scores across 10-fold cross-validation. \textbf{How to interpret}: Taller boxes indicate greater variability in performance across data subsets, suggesting potential instability. The red line shows the median performance, while whiskers extend to show the range. Models with narrow boxes and high medians demonstrate both strong and consistent performance. This visualization is critical for assessing whether a model's performance is reliable or dependent on specific data characteristics.
-
-% \subsection{Subgroup Performance Analysis}
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.95\textwidth]{figures/plot_h_living_setting.png}
-% \caption{Model Performance by Living Setting}
-% \label{fig:living_setting_performance}
-% \end{figure}
-
-% Figure \ref{fig:living_setting_performance} compares model performance across the three primary living settings. \textbf{How to interpret}: Taller bars indicate better R² performance for that subgroup. Consistent bar heights across settings suggest a model performs equally well for all living arrangements, while varying heights reveal differential performance. Stakeholders supporting specific populations can identify which models best serve their target groups. Note that negative R² values indicate performance worse than a simple mean prediction.
-
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.85\textwidth]{figures/plot_i_bias_heatmap.png}
-% \caption{Prediction Bias by Subgroup}
-% \label{fig:bias_heatmap}
-% \end{figure}
-
-% Figure \ref{fig:bias_heatmap} reveals systematic over- or under-prediction patterns across subgroups. \textbf{How to interpret}: Red cells indicate over-prediction (model predicts higher costs than actual), blue cells indicate under-prediction. Color intensity shows bias magnitude. White (near-zero bias) is ideal, indicating unbiased predictions. This visualization is essential for equity analysis: systematic under-prediction for certain groups could result in inadequate service funding, while over-prediction may indicate inefficient resource allocation. Cost quartile patterns are particularly informative—models often struggle with extreme cases (Q1 and Q4).
-
-% \subsection{Interpretation Guidelines for Stakeholders}
-
-% \textbf{For Model Selection:}
-% \begin{itemize}
-%     \item \textbf{If maximizing explained variance is paramount}: Choose the model with highest R² in Figure \ref{fig:r2_comparison}
-%     \item \textbf{If minimizing dollar prediction error}: Use Figure \ref{fig:error_metrics} to identify models with lowest RMSE/MAE
-%     \item \textbf{If operational accuracy targets exist}: Use Figure \ref{fig:cumulative_accuracy} to find models meeting specific tolerance requirements
-%     \item \textbf{If serving specific populations}: Examine Figures \ref{fig:living_setting_performance} and \ref{fig:bias_heatmap} for subgroup performance
-%     \item \textbf{If consistency is critical}: Prioritize models with narrow boxes in Figure \ref{fig:cv_stability}
-% \end{itemize}
-
-% \textbf{For Understanding Trade-offs:}
-% \begin{itemize}
-%     \item High R² with high RMSE may indicate a model captures variance but makes large errors on difficult cases
-%     \item Strong overall performance with poor subgroup performance reveals potential equity concerns
-%     \item Similar training and test performance (Figure \ref{fig:r2_comparison}) indicates good generalization
-%     \item Divergent RMSE and MAE rankings suggest different error distributions (RMSE more sensitive to outliers)
-% \end{itemize}
+By applying SHAP to this straightforward Random Forest configuration, Florida APD achieves transparent budget explanations that satisfy regulatory requirements while acknowledging the model's role as a robust, nonparametric alternative to the parametric Models 1-8.
