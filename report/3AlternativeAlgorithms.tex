@@ -428,11 +428,21 @@ Furthermore, R² comparison provides complementary information to error-based me
 \midrule
 Model 1 (Baseline) & \ModelOneRSquaredTest{} & --- & \$\ModelOneRMSETest{} & \$\ModelOneMAETest{} & OLS + Outlier Removal \\
 \midrule
-Model 2 & \ModelTwoRSquaredTest{} & -7.1\% & \$\ModelTwoRMSETest{} & \$\ModelTwoMAETest{} & GLM (Gamma) \\
-Model 3 & \ModelThreeRSquaredTest{} & -5.7\% & \$\ModelThreeRMSETest{} & \$\ModelThreeMAETest{} & Robust (Huber) \\
-Model 4 & \ModelFourRSquaredTest{} & +3.0\% & \$\ModelFourRMSETest{} & \$\ModelFourMAETest{} & Weighted LS \\
-Model 5 & \ModelFiveRSquaredTest{} & -2.3\% & \$\ModelFiveRMSETest{} & \$\ModelFiveMAETest{} & Ridge \\
-Model 9 & \ModelNineRSquaredTest{} & +19.5\% & \$\ModelNineRMSETest{} & \$\ModelNineMAETest{} & Random Forest \\
+Model 2 & \ModelTwoRSquaredTest{} & 
+\fpeval{round(100*(\ModelTwoRSquaredTest{} - \ModelOneRSquaredTest{})/\ModelOneRSquaredTest{},1)}\% & 
+\$\ModelTwoRMSETest{} & \$\ModelTwoMAETest{} & GLM (Gamma) \\
+Model 3 & \ModelThreeRSquaredTest{} & 
+\fpeval{round(100*(\ModelThreeRSquaredTest{} - \ModelOneRSquaredTest{})/\ModelOneRSquaredTest{},1)}\% & 
+\$\ModelThreeRMSETest{} & \$\ModelThreeMAETest{} & Robust (Huber) \\
+Model 4 & \ModelFourRSquaredTest{} & 
+\fpeval{round(100*(\ModelFourRSquaredTest{} - \ModelOneRSquaredTest{})/\ModelOneRSquaredTest{},1)}\% & 
+\$\ModelFourRMSETest{} & \$\ModelFourMAETest{} & Weighted LS \\
+Model 5 & \ModelFiveRSquaredTest{} & 
+\fpeval{round(100*(\ModelFiveRSquaredTest{} - \ModelOneRSquaredTest{})/\ModelOneRSquaredTest{},1)}\% & 
+\$\ModelFiveRMSETest{} & \$\ModelFiveMAETest{} & Ridge \\
+Model 9 & \ModelNineRSquaredTest{} & 
+\fpeval{round(100*(\ModelNineRSquaredTest{} - \ModelOneRSquaredTest{})/\ModelOneRSquaredTest{},1)}\% & 
+\$\ModelNineRMSETest{} & \$\ModelNineMAETest{} & Random Forest \\
 \bottomrule
 \end{tabular}
 \end{table}
