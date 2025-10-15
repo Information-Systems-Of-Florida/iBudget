@@ -1,9 +1,0 @@
-{
-  "cv_actual": 1.024917554184351,
-  "cv_predicted": 0.43454495053395414,
-  "prediction_interval": 2309.257486149563,
-  "budget_actual_corr": 0.42946421899320025,
-  "quarterly_variance": 44.963927238290765,
-  "annual_adjustment_rate": 198.96633485125102,
-  "mean_tree_std": 22.711033002199024
-}
