@@ -78,6 +78,62 @@ class Model5Ridge(BaseiBudgetModel):
         self.cv_scores = None
         self.cv_scores_std = None
     
+        self.logger.info("Configuration:")
+        self.logger.info(f"  - Square-root transformation: {'Yes' if use_sqrt_transform else 'No'}")
+        self.logger.info(f"  - Outlier removal: {'Yes' if use_outlier_removal else 'No'}")
+        self.logger.info("  - Feature standardization: Yes (required for Ridge)")
+        self.logger.info("  - Alpha selection: Cross-validation with 100 candidates")
+        self.logger.info("  - Data utilization: 100%")
+        self.logger.info("")
+        
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        self.generate_diagnostic_plots()
+        
+        self.log_section("MODEL 5 FINAL SUMMARY", "=")
+        if self.optimal_alpha:
+            self.logger.info(f"Optimal Alpha: {self.optimal_alpha:.6f}")
+        self.logger.info(f"Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        self.logger.info(f"Test RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
+        
+        # Use proper SMAPE instead of MAPE
+        if 'smape_test' in self.metrics:
+            self.logger.info(f"Test SMAPE: {self.metrics.get('smape_test', 0):.1f}%")
+        if 'median_ape_test' in self.metrics:
+            self.logger.info(f"Median APE: {self.metrics.get('median_ape_test', 0):.1f}%")
+        
+        if self.condition_number_before and self.condition_number_after:
+            improvement = (self.condition_number_before - self.condition_number_after) / self.condition_number_before * 100
+            self.logger.info(f"Condition Number: {self.condition_number_after:.1f} (from {self.condition_number_before:.1f}, {improvement:.1f}% improvement)")
+        if self.effective_dof and self.feature_names:
+            self.logger.info(f"Effective DOF: {self.effective_dof:.1f} / {len(self.feature_names)}")
+        if self.shrinkage_factor:
+            self.logger.info(f"Average Shrinkage: {self.shrinkage_factor:.1f}%")
+        
+        # Use correct CV metric keys
+        if 'cv_r2_mean' in self.metrics:
+            self.logger.info(f"CV R^2: {self.metrics.get('cv_r2_mean', 0):.4f} +- {self.metrics.get('cv_r2_std', 0):.4f}")
+        elif 'cv_mean' in self.metrics:
+            self.logger.info(f"CV R^2: {self.metrics.get('cv_mean', 0):.4f} +- {self.metrics.get('cv_std', 0):.4f}")
+    
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)
+    
+    
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """Prepare features following EXACT Model 1 pattern (Model 5b specification)"""
         
@@ -573,62 +629,5 @@ def main():
         log_suffix=suffix
     )
     
-    model.logger.info("Configuration:")
-    model.logger.info(f"  - Square-root transformation: {'Yes' if use_sqrt else 'No'}")
-    model.logger.info(f"  - Outlier removal: {'Yes' if use_outlier else 'No'}")
-    model.logger.info("  - Feature standardization: Yes (required for Ridge)")
-    model.logger.info("  - Alpha selection: Cross-validation with 100 candidates")
-    model.logger.info("  - Data utilization: 100%")
-    model.logger.info("")
-    
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    model.generate_diagnostic_plots()
-    
-    model.log_section("MODEL 5 FINAL SUMMARY", "=")
-    if model.optimal_alpha:
-        model.logger.info(f"Optimal Alpha: {model.optimal_alpha:.6f}")
-    model.logger.info(f"Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"Test RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-    
-    # Use proper SMAPE instead of MAPE
-    if 'smape_test' in model.metrics:
-        model.logger.info(f"Test SMAPE: {model.metrics.get('smape_test', 0):.1f}%")
-    if 'median_ape_test' in model.metrics:
-        model.logger.info(f"Median APE: {model.metrics.get('median_ape_test', 0):.1f}%")
-    
-    if model.condition_number_before and model.condition_number_after:
-        improvement = (model.condition_number_before - model.condition_number_after) / model.condition_number_before * 100
-        model.logger.info(f"Condition Number: {model.condition_number_after:.1f} (from {model.condition_number_before:.1f}, {improvement:.1f}% improvement)")
-    if model.effective_dof and model.feature_names:
-        model.logger.info(f"Effective DOF: {model.effective_dof:.1f} / {len(model.feature_names)}")
-    if model.shrinkage_factor:
-        model.logger.info(f"Average Shrinkage: {model.shrinkage_factor:.1f}%")
-    
-    # Use correct CV metric keys
-    if 'cv_r2_mean' in model.metrics:
-        model.logger.info(f"CV R^2: {model.metrics.get('cv_r2_mean', 0):.4f} +- {model.metrics.get('cv_r2_std', 0):.4f}")
-    elif 'cv_mean' in model.metrics:
-        model.logger.info(f"CV R^2: {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
- 
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    return results
-
 if __name__ == "__main__":
     main()

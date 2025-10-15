@@ -1,7 +1,11 @@
+"""
+Utility to count lines of code and capture folder structure
+"""
+
 import os
 import sys
 
-CODE_EXTENSIONS = {'.py', '.js', '.java', '.c', '.cpp', '.h', '.cs', '.rb', '.go', '.php', '.ts', '.tex', '.txt'}
+CODE_EXTENSIONS = {'.py', '.tex', '.json'}
 
 def is_code_file(filename):
     return os.path.splitext(filename)[1] in CODE_EXTENSIONS

@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-10-14T23:13:04.130582",
+  "scenario": "Consensus_FeatureSelection_Optimal",
+  "description": "Optimal feature set based on Feature Selection analysis with MI rankings. Uses 7 QSI items (Q19, Q21, Q26, Q27, Q30, Q36, Q44), all support levels, summary scores, living settings, age groups, and county effects.",
+  "configuration": "Orchestrator_test.json",
+  "total_models": 2,
+  "successful_models": 2,
+  "failed_models": 0,
+  "best_model": {
+    "id": 3,
+    "name": "Robust Regression",
+    "r2_test": 0.43466974688321314,
+    "rmse_test": 33579.79855728804
+  },
+  "all_results": {
+    "1": {
+      "model_id": 1,
+      "model_name": "OLS Linear Regression",
+      "r2_train": 0.6851833184605355,
+      "r2_test": 0.42998366138890476,
+      "rmse_train": 22374.870610009275,
+      "rmse_test": 33718.684687552006,
+      "mae_train": 16447.766331717907,
+      "mae_test": 21798.58940280372,
+      "mape_train": 190.08304511095525,
+      "mape_test": 302.16938630942894,
+      "cv_mean": 0.4454385923819301,
+      "cv_std": 0.017276252334832657,
+      "n_features": 21,
+      "n_train": 27339,
+      "n_test": 6834,
+      "success": true,
+      "error": null
+    },
+    "3": {
+      "model_id": 3,
+      "model_name": "Robust Regression",
+      "r2_train": 0.45243099557216426,
+      "r2_test": 0.43466974688321314,
+      "rmse_train": 33268.107103866096,
+      "rmse_test": 33579.79855728804,
+      "mae_train": 21677.58276428766,
+      "mae_test": 21632.877929889008,
+      "mape_train": 293.79611781592445,
+      "mape_test": 300.62263471524597,
+      "cv_mean": 0.4506693834078068,
+      "cv_std": 0.019204819294602056,
+      "n_features": 57,
+      "n_train": 27339,
+      "n_test": 6834,
+      "success": true,
+      "error": null
+    }
+  }
+}

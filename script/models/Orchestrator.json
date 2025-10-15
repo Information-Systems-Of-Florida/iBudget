@@ -1,0 +1,120 @@
+{
+  "scenario_name": "Consensus_FeatureSelection_Optimal",
+  "log_suffix": "Scenario_1",   
+  "description": "Optimal feature set based on Feature Selection analysis with MI rankings. Uses 7 QSI items (Q19, Q21, Q26, Q27, Q30, Q36, Q44), all support levels, summary scores, living settings, age groups, and county effects.",
+  
+  "data_settings": {
+    "fiscal_year_start": 2024,
+    "fiscal_year_end": 2024,
+    "test_size": 0.2,
+    "random_seed": 42
+  },
+  
+  "pipeline_settings": {
+    "perform_cv": true,
+    "cv_folds": 10,
+    "generate_plots": true,
+    "save_predictions": true
+  },
+  
+  "models_to_run": [1, 2, 3, 4, 5, 6, 9],
+  
+  "model_settings": {
+    "1": {
+      "name": "OLS Linear Regression",
+      "transformation": "sqrt",
+      "use_outlier_removal": true,
+      "outlier_threshold": 1.645,
+      "comment": "Square-root transformation with ~10% outlier removal"
+    },
+    "2": {
+      "name": "GLM Gamma",
+      "transformation": "none",
+      "use_outlier_removal": false,
+      "comment": "Gamma distribution naturally handles skewness"
+    },
+    "3": {
+      "name": "Robust Regression",
+      "transformation": "none",
+      "use_outlier_removal": false,
+      "comment": "Huber loss provides automatic robustness"
+    },
+    "4": {
+      "name": "Weighted Least Squares",
+      "transformation": "none",
+      "use_outlier_removal": false,
+      "comment": "Adaptive weights handle heteroscedasticity"
+    },
+    "5": {
+      "name": "Ridge Regression",
+      "transformation": "none",
+      "use_outlier_removal": false,
+      "comment": "L2 regularization for stability"
+    },
+    "6": {
+      "name": "Log-Normal GLM",
+      "transformation": "log",
+      "use_outlier_removal": false,
+      "comment": "Log transformation with Duan smearing"
+    },
+    "9": {
+      "name": "Random Forest",
+      "transformation": "none",
+      "use_outlier_removal": false,
+      "comment": "Non-parametric ensemble method"
+    }
+  },
+  
+  "feature_notes": {
+    "qsi_items": [19, 21, 26, 27, 30, 36, 44],
+    "qsi_description": "7 QSI items selected via Feature Selection MI analysis",
+    
+    "categorical_features": {
+      "living_setting": {
+        "categories": ["ILSL", "RH1", "RH2", "RH3", "RH4"],
+        "reference": "FH",
+        "note": "Family Home (FH) is reference category"
+      },
+      "age_group": {
+        "categories": ["Age21_30", "Age31Plus"],
+        "reference": "Age3_20",
+        "note": "Age 3-20 is reference category"
+      },
+      "county": {
+        "levels": 67,
+        "note": "All Florida counties included with dummy encoding"
+      }
+    },
+    
+    "numeric_features": [
+      "age (continuous)",
+      "bsum (Behavioral summary score)",
+      "fsum (Functional summary score)",
+      "psum (Physical summary score)",
+      "losri (Level of Support Rating Index)",
+      "olevel (Overall support level)",
+      "blevel (Behavioral support level)",
+      "flevel (Functional support level)",
+      "plevel (Physical support level)"
+    ],
+    
+    "interactions": [
+      "FH x FSum (Family Home interaction with Functional sum)",
+      "SL x FSum (Supported Living interaction with Functional sum)",
+      "SL x BSum (Supported Living interaction with Behavioral sum)"
+    ],
+    
+    "note": "Interaction terms are defined in orchestrator Python code as lambda functions and cannot be serialized in JSON"
+  },
+  
+  "output_settings": {
+    "output_base_dir": "../../report/models",
+    "orchestration_model_id": 70,
+    "orchestration_dir": "model_70",
+    "comparison_file": "orchestration_comparison.csv",
+    "summary_file": "orchestration_summary.json",
+    "predictions_file": "predictions.csv",
+    "predictions_include_train": true,
+    "predictions_include_test": true
+  }
+}

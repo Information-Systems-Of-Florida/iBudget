@@ -13,7 +13,7 @@ Features:
 - Calls generate_comparison_plots.py
 
 Usage:
-    python orchestrator.py                              # Uses ConsensusConfiguration.json
+    python orchestrator.py                              # Uses Orchestrator.json
     python orchestrator.py --config MyConfig.json       # Uses custom config
 """
 
@@ -99,7 +99,7 @@ class ModelOrchestrator:
     Master orchestrator for running multiple iBudget models
     """
     
-    def __init__(self, config_path: str = "ConsensusConfiguration.json"):
+    def __init__(self, config_path: str = "Orchestrator.json"):
         """
         Initialize orchestrator
         
@@ -122,7 +122,7 @@ class ModelOrchestrator:
         if not self.config_path.exists():
             raise FileNotFoundError(
                 f"Configuration file not found: {self.config_path}\n"
-                f"Please create ConsensusConfiguration.json or specify --config"
+                f"Please create Orchestrator.json or specify --config"
             )
         
         with open(self.config_path, 'r') as f:
@@ -144,12 +144,18 @@ class ModelOrchestrator:
         log_dir = Path('../../report/logs')
         log_dir.mkdir(parents=True, exist_ok=True)
         
-        log_file = log_dir / f'orchestrator_{timestamp}.log'
+        # Build log filename with optional suffix from config
+        log_suffix = self.config.get('log_suffix', None)
+        if log_suffix:
+            log_file = log_dir / f'Orchestrator_log_{log_suffix}.txt'
+        else:
+            log_file = log_dir / 'Orchestrator_log.txt'
         
         # Configure logging
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S',  # Match base class format (no milliseconds)
             handlers=[
                 logging.FileHandler(log_file),
                 logging.StreamHandler(sys.stdout)
@@ -234,25 +240,27 @@ class ModelOrchestrator:
             data_settings = self.config['data_settings']
             pipeline_settings = self.config.get('pipeline_settings', {})
             
-            self.logger.info("Running complete pipeline...")
-            results = model.run_complete_pipeline(
-                fiscal_year_start=data_settings['fiscal_year_start'],
-                fiscal_year_end=data_settings['fiscal_year_end'],
-                test_size=data_settings['test_size'],
-                perform_cv=pipeline_settings.get('perform_cv', True),
-                n_cv_folds=pipeline_settings.get('cv_folds', 10)
-            )
+            # self.logger.info("Running complete pipeline...")
+            # results = model.run_complete_pipeline(
+            #     fiscal_year_start=data_settings['fiscal_year_start'],
+            #     fiscal_year_end=data_settings['fiscal_year_end'],
+            #     test_size=data_settings['test_size'],
+            #     perform_cv=pipeline_settings.get('perform_cv', True),
+            #     n_cv_folds=pipeline_settings.get('cv_folds', 10)
+            # )
             
-            # Store predictions
-            if hasattr(model, 'y_train_pred') and hasattr(model, 'y_test_pred'):
+            # Store predictions (base class uses 'train_predictions' and 'test_predictions')
+            if hasattr(model, 'train_predictions') and hasattr(model, 'test_predictions'):
                 self.predictions[model_id] = {
                     'train_records': model.train_records,
                     'test_records': model.test_records,
                     'train_actual': model.y_train,
-                    'train_pred': model.y_train_pred,
+                    'train_pred': model.train_predictions,
                     'test_actual': model.y_test,
-                    'test_pred': model.y_test_pred
+                    'test_pred': model.test_predictions
                 }
+            else:
+                self.logger.warning(f"Model {model_id} did not generate predictions (missing attributes)")
             
             # Extract key metrics
             model_results = {
@@ -275,8 +283,8 @@ class ModelOrchestrator:
                 'error': None
             }
             
-            self.logger.info(f"✓ Model {model_id} completed successfully")
-            self.logger.info(f"  R² Test: {model_results['r2_test']:.4f}")
+            self.logger.info(f"+ Model {model_id} completed successfully")
+            self.logger.info(f"  R^2 Test: {model_results['r2_test']:.4f}")
             self.logger.info(f"  RMSE Test: ${model_results['rmse_test']:,.0f}")
             self.logger.info(f"  Features: {model_results['n_features']}")
             
@@ -307,7 +315,7 @@ class ModelOrchestrator:
         
         # Run each model sequentially
         for i, model_id in enumerate(models_to_run, 1):
-            self.logger.info(f"\n[{i}/{len(models_to_run)}] Starting Model {model_id}...")
+            self.logger.info(f"[{i}/{len(models_to_run)}] Starting Model {model_id}...")
             
             # Run model (will raise exception if fails)
             result = self.run_single_model(model_id)
@@ -324,59 +332,83 @@ class ModelOrchestrator:
         self.logger.info("Generating combined predictions CSV...")
         
         if not self.predictions:
-            self.logger.warning("No predictions available")
+            self.logger.error("No predictions available - models may not have completed successfully")
+            self.logger.error("Check that base class stores 'train_predictions' and 'test_predictions'")
             return
         
-        # Combine train and test predictions
+        # Build base rows with CaseNo, Dataset, Actual_Cost from first model
+        first_model_id = sorted(self.predictions.keys())[0]
+        first_pred = self.predictions[first_model_id]
+
         all_records = []
-        
+
+        # Process training set
+        for record, actual, pred in zip(first_pred['train_records'], 
+                                        first_pred['train_actual'], 
+                                        first_pred['train_pred']):
+            row = {
+                'CaseNo': record.consumer_id,
+                'Dataset': 'Train',
+                'Actual_Cost': float(actual),
+                f'Model_{first_model_id}': float(pred)
+            }
+            all_records.append(row)
+
+        # Process test set
+        for record, actual, pred in zip(first_pred['test_records'], 
+                                        first_pred['test_actual'], 
+                                        first_pred['test_pred']):
+            row = {
+                'CaseNo': record.consumer_id,
+                'Dataset': 'Test',
+                'Actual_Cost': float(actual),
+                f'Model_{first_model_id}': float(pred)
+            }
+            all_records.append(row)
+
+        # Add predictions from remaining models
         for model_id in sorted(self.predictions.keys()):
+            if model_id == first_model_id:
+                continue  # Already added
+            
             pred_data = self.predictions[model_id]
             
-            # Process training set
-            for i, record in enumerate(pred_data['train_records']):
-                row = {
-                    'CaseNo': record.consumer_id,
-                    'Dataset': 'Train',
-                    'Actual_Cost': pred_data['train_actual'][i],
-                    f'Model_{model_id}': pred_data['train_pred'][i]
-                }
-                all_records.append(row)
+            # Add training predictions
+            row_idx = 0
+            for record, pred in zip(pred_data['train_records'], pred_data['train_pred']):
+                # Find matching row by CaseNo
+                while row_idx < len(all_records) and all_records[row_idx]['Dataset'] != 'Train':
+                    row_idx += 1
+                if row_idx < len(all_records) and all_records[row_idx]['CaseNo'] == record.consumer_id:
+                    all_records[row_idx][f'Model_{model_id}'] = float(pred)
+                    row_idx += 1
             
-            # Process test set
-            for i, record in enumerate(pred_data['test_records']):
-                row = {
-                    'CaseNo': record.consumer_id,
-                    'Dataset': 'Test',
-                    'Actual_Cost': pred_data['test_actual'][i],
-                    f'Model_{model_id}': pred_data['test_pred'][i]
-                }
-                all_records.append(row)
+            # Add test predictions
+            row_idx = 0
+            for record, pred in zip(pred_data['test_records'], pred_data['test_pred']):
+                # Find matching row by CaseNo
+                while row_idx < len(all_records) and all_records[row_idx]['Dataset'] != 'Test':
+                    row_idx += 1
+                if row_idx < len(all_records) and all_records[row_idx]['CaseNo'] == record.consumer_id:
+                    all_records[row_idx][f'Model_{model_id}'] = float(pred)
+                    row_idx += 1
         
-        # Convert to DataFrame
-        df = pd.DataFrame(all_records)
+            # Convert to DataFrame (no pivot needed - already one row per record)
+            df = pd.DataFrame(all_records)
+
+            # Reorder columns
+            base_cols = ['CaseNo', 'Dataset', 'Actual_Cost']
+            model_cols = sorted([c for c in df.columns if c.startswith('Model_')])
+            df = df[base_cols + model_cols]
         
-        # Pivot to get one row per CaseNo
-        model_cols = [c for c in df.columns if c.startswith('Model_')]
-        
-        df_pivot = df.groupby('CaseNo').agg({
-            'Dataset': 'first',
-            'Actual_Cost': 'first',
-            **{col: 'first' for col in model_cols}
-        }).reset_index()
-        
-        # Reorder columns
-        cols = ['CaseNo', 'Dataset', 'Actual_Cost'] + sorted(model_cols)
-        df_pivot = df_pivot[cols]
-        
-        # Save
-        output_file = self.output_dir / 'predictions.csv'
-        df_pivot.to_csv(output_file, index=False)
-        
-        self.logger.info(f"✓ Saved combined predictions: {output_file}")
-        self.logger.info(f"  Total records: {len(df_pivot)}")
-        self.logger.info(f"  Train records: {(df_pivot['Dataset'] == 'Train').sum()}")
-        self.logger.info(f"  Test records: {(df_pivot['Dataset'] == 'Test').sum()}")
+            # Save
+            output_file = self.output_dir / 'predictions.csv'
+            df.to_csv(output_file, index=False)
+
+            self.logger.info(f"+ Saved combined predictions: {output_file}")
+            self.logger.info(f"  Total records: {len(df)}")
+            self.logger.info(f"  Train records: {(df['Dataset'] == 'Train').sum()}")
+            self.logger.info(f"  Test records: {(df['Dataset'] == 'Test').sum()}")
     
     def generate_comparison_report(self):
         """Generate comparison CSV and summary JSON"""
@@ -407,14 +439,14 @@ class ModelOrchestrator:
         
         df = pd.DataFrame(comparison_data)
         
-        # Sort by R² Test (descending)
+        # Sort by R^2 Test (descending)
         df = df.sort_values('R2_Test', ascending=False)
         
         # Save comparison CSV
         comparison_file = self.output_dir / 'orchestration_comparison.csv'
         df.to_csv(comparison_file, index=False)
         
-        self.logger.info(f"✓ Saved comparison table: {comparison_file}")
+        self.logger.info(f"+ Saved comparison table: {comparison_file}")
         
         # Create summary JSON
         summary = {
@@ -439,7 +471,7 @@ class ModelOrchestrator:
         with open(summary_file, 'w') as f:
             json.dump(summary, f, indent=2, default=str)
         
-        self.logger.info(f"✓ Saved summary: {summary_file}")
+        self.logger.info(f"+ Saved summary: {summary_file}")
         
         # Print comparison table
         self.logger.info("")
@@ -460,13 +492,21 @@ class ModelOrchestrator:
         self.logger.info("=" * 80)
         best = summary['best_model']
         self.logger.info(f"Model {best['id']}: {best['name']}")
-        self.logger.info(f"R² Test: {best['r2_test']:.4f}")
+        self.logger.info(f"R^2 Test: {best['r2_test']:.4f}")
         self.logger.info(f"RMSE Test: ${best['rmse_test']:,.0f}")
     
     def call_comparison_plots(self):
-        """Call generate_comparison_plots.py to create visualizations"""
+        """Call generate_comparison_plots.py to create visualizations (optional)"""
         self.logger.info("")
-        self.logger.info("Generating comparison plots...")
+        self.logger.info("Checking for comparison plotting script...")
+        
+        # Check if generate_comparison_plots.py exists
+        plot_script = Path(__file__).parent / 'generate_comparison_plots.py'
+        
+        if not plot_script.exists():
+            self.logger.info("generate_comparison_plots.py not found - skipping plots")
+            self.logger.info("Plots can be generated later if needed")
+            return
         
         try:
             # Import and run the plotting script
@@ -475,11 +515,14 @@ class ModelOrchestrator:
             # Run the main function
             gcp.main()
             
-            self.logger.info("✓ Comparison plots generated successfully")
+            self.logger.info("+ Comparison plots generated successfully")
             
+        except ImportError as e:
+            self.logger.warning(f"Could not import plotting script: {e}")
+            self.logger.warning("Continuing without plots")
         except Exception as e:
             self.logger.warning(f"Could not generate comparison plots: {e}")
-            self.logger.warning("You can run generate_comparison_plots.py manually")
+            self.logger.warning("Continuing without plots")
     
     def run(self):
         """Run complete orchestration pipeline"""
@@ -532,17 +575,17 @@ def main():
         description='iBudget Model Orchestrator',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  python orchestrator.py                              # Use ConsensusConfiguration.json
-  python orchestrator.py --config MyConfig.json       # Use custom configuration
-        """
+    Examples:
+    python orchestrator.py                              # Use Orchestrator.json
+    python orchestrator.py --config MyConfig.json       # Use custom configuration
+            """
     )
     
     parser.add_argument(
         '--config',
         type=str,
-        default='ConsensusConfiguration.json',
-        help='Path to JSON configuration file (default: ConsensusConfiguration.json)'
+        default='Orchestrator_test.json',
+        help='Path to JSON configuration file (default: Orchestrator.json)'
     )
     
     args = parser.parse_args()

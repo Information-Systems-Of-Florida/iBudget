@@ -113,6 +113,107 @@ class Model2GLMGamma(BaseiBudgetModel):
         # Additional metrics
         self.glm_diagnostics = {}
         
+        # Run complete pipeline
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        # Generate diagnostic plots
+        self.generate_diagnostic_plots()
+        
+        # Print summary
+        self.logger.info("=" * 80)
+        # Log final summary to BOTH file and console
+        self.log_section("MODEL 2 FINAL SUMMARY", "=")
+        
+        # Build summary for logging
+        summary_lines = []
+        summary_lines.append("Configuration:")
+        summary_lines.append(f"   Distribution: Gamma")
+        summary_lines.append(f"   Link Function: Log")
+        summary_lines.append(f"   Transformation: {self.transformation}")
+        summary_lines.append(f"   Outlier Removal: {self.use_outlier_removal}")
+        
+        if self.use_outlier_removal and hasattr(self, 'outlier_diagnostics'):
+            if self.outlier_diagnostics:
+                summary_lines.append(f"   Outliers Removed: {self.outlier_diagnostics.get('n_removed', 0)} "
+                                f"({self.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
+        
+        summary_lines.append(f"   Number of Features: {len(self.feature_names)}")
+        
+        summary_lines.append("Feature Categories:")
+        summary_lines.append(f"   Living Settings: 5")
+        summary_lines.append(f"   Age Groups: 2")
+        summary_lines.append(f"   Support Levels: 5")
+        summary_lines.append(f"   Clinical Scores: 3")
+        summary_lines.append(f"   Demographics: 2")
+        summary_lines.append(f"   QSI Items: 15+")
+        summary_lines.append(f"   Interactions: 3")
+        
+        summary_lines.append("Data Summary:")
+        summary_lines.append(f"   Total Records: {len(self.all_records)}")
+        summary_lines.append(f"   Training Records: {len(self.train_records)}")
+        summary_lines.append(f"   Test Records: {len(self.test_records)}")
+        
+        summary_lines.append("Model Performance:")
+        if self.metrics:
+            summary_lines.append(f"   Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+            summary_lines.append(f"   Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+            summary_lines.append(f"   RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
+            summary_lines.append(f"   MAE: ${self.metrics.get('mae_test', 0):,.2f}")
+            summary_lines.append(f"   CV R^2 (mean +- std): {self.metrics.get('cv_mean', 0):.4f} +- {self.metrics.get('cv_std', 0):.4f}")
+        
+        summary_lines.append("GLM-Specific Metrics:")
+        if self.glm_model:
+            summary_lines.append(f"   Dispersion Parameter: {self.dispersion:.3f}")
+            summary_lines.append(f"   Deviance R^2: {self.deviance_r2:.4f}")
+            summary_lines.append(f"   McFadden R^2: {self.mcfadden_r2:.4f}")
+            summary_lines.append(f"   AIC: {self.aic:.1f}")
+            
+            n = len(self.y_train) if hasattr(self, 'y_train') and self.y_train is not None else 1
+            k = self.num_parameters
+            correct_bic = -2 * self.glm_model.llf + k * np.log(n)
+            summary_lines.append(f"   BIC (corrected): {correct_bic:.1f}")
+        
+        summary_lines.append("Top 5 Features (by coefficient magnitude):")
+        if self.coefficients:
+            sig_features = [
+                (name, coef['value'], coef['pct_effect'])
+                for name, coef in self.coefficients.items()
+                if coef['p_value'] < 0.05 and name != 'const'
+            ]
+            sig_features.sort(key=lambda x: abs(x[1]), reverse=True)
+            
+            for i, (name, coef, pct) in enumerate(sig_features[:5], 1):
+                summary_lines.append(f"  {i}. {name}: Beta={coef:.4f} ({pct:+.1f}% effect)")
+        
+        # Write everything to log file
+        for line in summary_lines:
+            self.logger.info(line)
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)
+        
+        # Also print a brief summary to console for immediate visibility
+        print("\n" + "="*80)
+        print("MODEL 2 COMPLETE - See log file for detailed summary")
+        print(f"Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        print(f"RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
+        print(f"Results saved to: {self.output_dir_relative}")
+        print("="*80)
+
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
         Simplified feature preparation using generic method
@@ -525,107 +626,7 @@ def main():
         random_seed=42,              # For reproducibility
         log_suffix=suffix
     )
-    
-    # Run complete pipeline
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    # Generate diagnostic plots
-    model.generate_diagnostic_plots()
-    
-    # Print summary
-    model.logger.info("=" * 80)
-    # Log final summary to BOTH file and console
-    model.log_section("MODEL 2 FINAL SUMMARY", "=")
-    
-    # Build summary for logging
-    summary_lines = []
-    summary_lines.append("Configuration:")
-    summary_lines.append(f"   Distribution: Gamma")
-    summary_lines.append(f"   Link Function: Log")
-    summary_lines.append(f"   Transformation: {model.transformation}")
-    summary_lines.append(f"   Outlier Removal: {model.use_outlier_removal}")
-    
-    if model.use_outlier_removal and hasattr(model, 'outlier_diagnostics'):
-        if model.outlier_diagnostics:
-            summary_lines.append(f"   Outliers Removed: {model.outlier_diagnostics.get('n_removed', 0)} "
-                               f"({model.outlier_diagnostics.get('pct_removed', 0):.1f}%)")
-    
-    summary_lines.append(f"   Number of Features: {len(model.feature_names)}")
-    
-    summary_lines.append("Feature Categories:")
-    summary_lines.append(f"   Living Settings: 5")
-    summary_lines.append(f"   Age Groups: 2")
-    summary_lines.append(f"   Support Levels: 5")
-    summary_lines.append(f"   Clinical Scores: 3")
-    summary_lines.append(f"   Demographics: 2")
-    summary_lines.append(f"   QSI Items: 15+")
-    summary_lines.append(f"   Interactions: 3")
-    
-    summary_lines.append("Data Summary:")
-    summary_lines.append(f"   Total Records: {len(model.all_records)}")
-    summary_lines.append(f"   Training Records: {len(model.train_records)}")
-    summary_lines.append(f"   Test Records: {len(model.test_records)}")
-    
-    summary_lines.append("Model Performance:")
-    if model.metrics:
-        summary_lines.append(f"   Training R^2: {model.metrics.get('r2_train', 0):.4f}")
-        summary_lines.append(f"   Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-        summary_lines.append(f"   RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-        summary_lines.append(f"   MAE: ${model.metrics.get('mae_test', 0):,.2f}")
-        summary_lines.append(f"   CV R^2 (mean +- std): {model.metrics.get('cv_mean', 0):.4f} +- {model.metrics.get('cv_std', 0):.4f}")
-    
-    summary_lines.append("GLM-Specific Metrics:")
-    if model.glm_model:
-        summary_lines.append(f"   Dispersion Parameter: {model.dispersion:.3f}")
-        summary_lines.append(f"   Deviance R^2: {model.deviance_r2:.4f}")
-        summary_lines.append(f"   McFadden R^2: {model.mcfadden_r2:.4f}")
-        summary_lines.append(f"   AIC: {model.aic:.1f}")
-        
-        n = len(model.y_train) if hasattr(model, 'y_train') and model.y_train is not None else 1
-        k = model.num_parameters
-        correct_bic = -2 * model.glm_model.llf + k * np.log(n)
-        summary_lines.append(f"   BIC (corrected): {correct_bic:.1f}")
-    
-    summary_lines.append("Top 5 Features (by coefficient magnitude):")
-    if model.coefficients:
-        sig_features = [
-            (name, coef['value'], coef['pct_effect'])
-            for name, coef in model.coefficients.items()
-            if coef['p_value'] < 0.05 and name != 'const'
-        ]
-        sig_features.sort(key=lambda x: abs(x[1]), reverse=True)
-        
-        for i, (name, coef, pct) in enumerate(sig_features[:5], 1):
-            summary_lines.append(f"  {i}. {name}: Beta={coef:.4f} ({pct:+.1f}% effect)")
-    
-    # Write everything to log file
-    for line in summary_lines:
-        model.logger.info(line)
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    # Also print a brief summary to console for immediate visibility
-    print("\n" + "="*80)
-    print("MODEL 2 COMPLETE - See log file for detailed summary")
-    print(f"Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    print(f"RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-    print(f"Results saved to: {model.output_dir_relative}")
-    print("="*80)
+   
 
 if __name__ == "__main__":
     main()

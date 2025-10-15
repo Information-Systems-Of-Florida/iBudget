@@ -123,6 +123,80 @@ class Model9RandomForest(BaseiBudgetModel):
         self.mean_tree_depth = None
         self.feature_importances_dict = {}
         self.top_features = []
+        
+        # Log configuration
+        self.logger.info(f"  - n_estimators: {self.n_estimators}")
+        self.logger.info(f"  - max_depth: {self.max_depth}")
+        self.logger.info(f"  - Random seed: {self.random_seed}")
+        
+        # Run complete pipeline (base class handles metrics)
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        # Generate custom diagnostic plots for Random Forest
+        self.plot_diagnostics()
+        
+        # Log final summary
+        self.log_section(f"MODEL {self.model_id} FINAL SUMMARY", "=")
+        
+        self.logger.info("")
+        self.logger.info("Performance Metrics (Final):")
+        self.logger.info(f"  Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+        self.logger.info(f"  Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        self.logger.info(f"  RMSE (original scale): ${self.metrics.get('rmse_test', 0):,.2f}")
+        self.logger.info(f"  MAE (original scale): ${self.metrics.get('mae_test', 0):,.2f}")
+        
+        self.logger.info("")
+        self.logger.info("Percentage Error Metrics:")
+        if 'mape_test' in self.metrics:
+            self.logger.info(f"  MAPE: {self.metrics['mape_test']:.2f}%")
+        if 'smape' in self.metrics:
+            self.logger.info(f"  SMAPE: {self.metrics['smape']:.2f}%")
+        if 'mape_threshold' in self.metrics and not np.isnan(self.metrics.get('mape_threshold', np.nan)):
+            threshold = self.metrics.get('mape_threshold_value', 1000)
+            n = self.metrics.get('mape_n', 0)
+            self.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {self.metrics['mape_threshold']:.2f}%")
+        
+        if 'cv_mean' in self.metrics:
+            self.logger.info("")
+            self.logger.info(f"  CV R^2: {self.metrics['cv_mean']:.4f} +- {self.metrics['cv_std']:.4f}")
+        
+        self.logger.info("")
+        self.logger.info("Random Forest Specific:")
+        if self.oob_r2 is not None:
+            self.logger.info(f"  OOB R^2: {self.oob_r2:.4f}")
+            self.logger.info(f"  OOB RMSE: ${self.oob_error:,.2f}")
+        self.logger.info(f"  Mean tree depth: {self.mean_tree_depth:.1f}")
+        self.logger.info(f"  Training time: {self.training_time:.2f} seconds")
+        
+        self.logger.info("")
+        self.logger.info("Top 5 Features:")
+        for i, (feature, importance) in enumerate(self.top_features, 1):
+            self.logger.info(f"  {i}. {feature}: {importance:.4f}")
+        
+        self.logger.info("")
+        self.logger.info("Data Utilization:")
+        self.logger.info(f"  Training samples: {self.metrics.get('training_samples', 0):,}")
+        self.logger.info(f"  Test samples: {self.metrics.get('test_samples', 0):,}")
+        self.logger.info(f"  Total features: {len(self.feature_names)}")
+        self.logger.info(f"  Data retention: 100% (no outlier removal)")
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)
+        
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -503,82 +577,6 @@ def main():
         random_seed=42,  # For reproducibility
         log_suffix=suffix
     )
-    
-    # Log configuration
-    model.logger.info(f"  - n_estimators: {model.n_estimators}")
-    model.logger.info(f"  - max_depth: {model.max_depth}")
-    model.logger.info(f"  - Random seed: {model.random_seed}")
-    
-    # Run complete pipeline (base class handles metrics)
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    # Generate custom diagnostic plots for Random Forest
-    model.plot_diagnostics()
-    
-    # Log final summary
-    model.log_section(f"MODEL {model.model_id} FINAL SUMMARY", "=")
-    
-    model.logger.info("")
-    model.logger.info("Performance Metrics (Final):")
-    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
-    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"  RMSE (original scale): ${model.metrics.get('rmse_test', 0):,.2f}")
-    model.logger.info(f"  MAE (original scale): ${model.metrics.get('mae_test', 0):,.2f}")
-    
-    model.logger.info("")
-    model.logger.info("Percentage Error Metrics:")
-    if 'mape_test' in model.metrics:
-        model.logger.info(f"  MAPE: {model.metrics['mape_test']:.2f}%")
-    if 'smape' in model.metrics:
-        model.logger.info(f"  SMAPE: {model.metrics['smape']:.2f}%")
-    if 'mape_threshold' in model.metrics and not np.isnan(model.metrics.get('mape_threshold', np.nan)):
-        threshold = model.metrics.get('mape_threshold_value', 1000)
-        n = model.metrics.get('mape_n', 0)
-        model.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {model.metrics['mape_threshold']:.2f}%")
-    
-    if 'cv_mean' in model.metrics:
-        model.logger.info("")
-        model.logger.info(f"  CV R^2: {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
-    
-    model.logger.info("")
-    model.logger.info("Random Forest Specific:")
-    if model.oob_r2 is not None:
-        model.logger.info(f"  OOB R^2: {model.oob_r2:.4f}")
-        model.logger.info(f"  OOB RMSE: ${model.oob_error:,.2f}")
-    model.logger.info(f"  Mean tree depth: {model.mean_tree_depth:.1f}")
-    model.logger.info(f"  Training time: {model.training_time:.2f} seconds")
-    
-    model.logger.info("")
-    model.logger.info("Top 5 Features:")
-    for i, (feature, importance) in enumerate(model.top_features, 1):
-        model.logger.info(f"  {i}. {feature}: {importance:.4f}")
-    
-    model.logger.info("")
-    model.logger.info("Data Utilization:")
-    model.logger.info(f"  Training samples: {model.metrics.get('training_samples', 0):,}")
-    model.logger.info(f"  Test samples: {model.metrics.get('test_samples', 0):,}")
-    model.logger.info(f"  Total features: {len(model.feature_names)}")
-    model.logger.info(f"  Data retention: 100% (no outlier removal)")
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    return results
-
 
 if __name__ == "__main__":
     main()

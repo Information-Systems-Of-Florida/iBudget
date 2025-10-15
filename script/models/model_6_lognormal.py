@@ -117,6 +117,167 @@ class Model6LogNormal(BaseiBudgetModel):
         self.bic = 0.0
         self.num_parameters = 0
     
+        # Run complete pipeline
+        print("Running complete pipeline...")
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        self.plot_diagnostics() 
+        
+        # Generate diagnostic plots
+        if hasattr(self, 'plot_diagnostics'):
+            self.plot_diagnostics()
+        else:
+            self.logger.warning("plot_diagnostics() method not available - skipping plots")
+        
+        # Calculate proper metrics BEFORE final logging
+        if self.test_predictions is not None and self.y_test is not None:
+            # Use base class method with correct name
+            if hasattr(self, 'calculate_proper_mape_smape'):
+                proper_metrics = self.calculate_proper_mape_smape(
+                    self.y_test, 
+                    self.test_predictions,
+                    threshold=1000.0
+                )
+                self.metrics.update(proper_metrics)
+        
+        # Log final summary
+        self.log_section(f"MODEL {self.model_id} FINAL SUMMARY", "=")
+        
+        self.logger.info("")
+        self.logger.info("Performance Metrics (Final):")
+        self.logger.info(f"  Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+        self.logger.info(f"  Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        self.logger.info(f"  Log-scale R^2: {self.r2_log_scale:.4f}")
+        self.logger.info(f"  RMSE (original scale): ${self.metrics.get('rmse_test', 0):,.2f}")
+        self.logger.info(f"  MAE (original scale): ${self.metrics.get('mae_test', 0):,.2f}")
+        
+        self.logger.info("")
+        self.logger.info("Percentage Error Metrics:")
+        if 'smape' in self.metrics:
+            self.logger.info(f"  SMAPE (all cases): {self.metrics['smape']:.2f}%")
+        if 'mape_threshold' in self.metrics and not np.isnan(self.metrics['mape_threshold']):
+            threshold = self.metrics.get('mape_threshold_value', 1000)
+            n = self.metrics.get('mape_n', 0)
+            self.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {self.metrics['mape_threshold']:.2f}%")
+        
+        if 'cv_mean' in self.metrics:
+            self.logger.info("")
+            self.logger.info(f"  CV R^2: {self.metrics['cv_mean']:.4f} +- {self.metrics['cv_std']:.4f}")
+        
+        self.logger.info("")
+        self.logger.info("Log-Normal Specific Metrics:")
+        self.logger.info(f"  Global smearing factor: {self.smearing_factor:.6f}")
+        self.logger.info(f"  Retransformation bias (global): {(self.smearing_factor - 1) * 100:+.2f}%")
+        
+        # Conditional smearing info
+        if hasattr(self, '_cond_smearing_vals'):
+            min_smear = min(self._cond_smearing_vals)
+            max_smear = max(self._cond_smearing_vals)
+            self.logger.info(f"  Conditional smearing range: [{min_smear:.4f}, {max_smear:.4f}]")
+            self.logger.info(f"  Conditional smearing method: 10-bin decile-based")
+        
+        self.logger.info(f"  Sigma (log scale): {self.sigma_log:.4f}")
+        self.logger.info(f"  Variance (log scale): {self.sigma_log**2:.4f}")
+        skew_reduction = ((self.skewness_original - self.skewness_log) / 
+                        abs(self.skewness_original) * 100) if self.skewness_original != 0 else 0
+        self.logger.info(f"  Skewness (original): {self.skewness_original:.4f}")
+        self.logger.info(f"  Skewness (log scale): {self.skewness_log:.4f}")
+        self.logger.info(f"  Skewness reduction: {skew_reduction:.1f}%")
+        self.logger.info(f"  Heteroscedasticity p-value: {self.heteroscedasticity_pval:.6f}")
+        self.logger.info(f"  AIC: {self.aic:,.0f}")
+        self.logger.info(f"  BIC: {self.bic:,.0f}")
+        
+        # Add interpretation
+        self.logger.info("")
+        self.logger.info("  INTERPRETATION:")
+        if hasattr(self, '_cond_smearing_vals'):
+            test_r2 = self.metrics.get('r2_test', 0)
+            if test_r2 > 0:
+                self.logger.info(f"   Conditional smearing IMPROVED performance")
+                self.logger.info(f"    Test R^2 = {test_r2:.4f} (positive after conditional correction)")
+            else:
+                self.logger.info(f"  - Conditional smearing applied but performance still poor")
+                self.logger.info(f"    Test R^2 = {test_r2:.4f}")
+            self.logger.info(f"  - Smearing varies by bin: [{min_smear:.2f}, {max_smear:.2f}]")
+            self.logger.info(f"    (vs global: {self.smearing_factor:.2f})")
+        else:
+            self.logger.info(f"  - Using global smearing (conditional not computed)")
+            if self.smearing_factor > 1.5:
+                self.logger.info(f"  - High log-variance (sigma^2 = {self.sigma_log**2:.2f}) creates large bias")
+                self.logger.info(f"  - Consider using conditional smearing or Model 2 (Gamma GLM)")
+        
+        self.logger.info("")
+        self.logger.info("Data Utilization:")
+        self.logger.info(f"  Training: {self.metrics.get('training_samples', 0):,} (100% retention)")
+        self.logger.info(f"  Test: {self.metrics.get('test_samples', 0):,} (100% retention)")
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)
+        
+        print("\n" + "="*80)
+        print("MODEL 6 EXECUTION COMPLETE")
+        print("="*80)
+        print(f"\nTest R^2: {self.metrics.get('r2_test', 0):.4f}")
+        print(f"Log-scale R^2: {self.r2_log_scale:.4f}")
+        print(f"RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
+        
+        # Smearing information
+        print(f"\nSmearing Method: ", end="")
+        if hasattr(self, '_cond_smearing_vals'):
+            min_smear = min(self._cond_smearing_vals)
+            max_smear = max(self._cond_smearing_vals)
+            print(f"CONDITIONAL (10-bin)")
+            print(f"  Global smearing: {self.smearing_factor:.4f}")
+            print(f"  Conditional range: [{min_smear:.4f}, {max_smear:.4f}]")
+        else:
+            print(f"GLOBAL")
+            print(f"  Smearing factor: {self.smearing_factor:.4f}")
+        
+        skew_reduction = ((self.skewness_original - self.skewness_log) / 
+                        abs(self.skewness_original) * 100) if self.skewness_original != 0 else 0
+        print(f"  Skewness reduction: {skew_reduction:.1f}%")
+        
+        # Performance assessment
+        test_r2 = self.metrics.get('r2_test', 0)
+        print(f"\n{'='*80}")
+        if test_r2 > 0:
+            print(" MODEL PERFORMANCE: ACCEPTABLE")
+            print(f"{'='*80}")
+            print(f"Conditional smearing successfully improved performance")
+            print(f"Test R^2 = {test_r2:.4f} (positive)")
+            if hasattr(self, '_cond_smearing_vals'):
+                print(f"Bin-wise smearing addressed heteroscedasticity on log scale")
+        elif test_r2 > -0.1:
+            print(" MODEL PERFORMANCE: MARGINAL")
+            print(f"{'='*80}")
+            print(f"Test R^2 = {test_r2:.4f} (near zero)")
+            print(f"Conditional smearing helped but performance still marginal")
+            print(f"Consider Model 2 (Gamma GLM) for better results")
+        else:
+            print(" MODEL PERFORMANCE: POOR")
+            print(f"{'='*80}")
+            print(f"Negative R^2 ({test_r2:.4f}) indicates predictions worse than mean")
+            if hasattr(self, '_cond_smearing_vals'):
+                print(f"Even with conditional smearing, performance is poor")
+            else:
+                print(f"Global smearing (factor = {self.smearing_factor:.2f}) over-corrects")
+            print(f"Log-scale residual variance (sigma^2 = {self.sigma_log**2:.2f}) is too high")
+            print("\nRECOMMENDATION: Use Model 2 (Gamma GLM) instead")
+        print(f"{'='*80}")
     
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -592,171 +753,5 @@ def main():
         log_suffix=suffix                   # Clear log suffix
     )
     
-   
-    # Run complete pipeline
-    print("Running complete pipeline...")
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    model.plot_diagnostics() 
-    
-    # Generate diagnostic plots
-    if hasattr(model, 'plot_diagnostics'):
-        model.plot_diagnostics()
-    else:
-        model.logger.warning("plot_diagnostics() method not available - skipping plots")
-    
-    # Calculate proper metrics BEFORE final logging
-    if model.test_predictions is not None and model.y_test is not None:
-        # Use base class method with correct name
-        if hasattr(model, 'calculate_proper_mape_smape'):
-            proper_metrics = model.calculate_proper_mape_smape(
-                model.y_test, 
-                model.test_predictions,
-                threshold=1000.0
-            )
-            model.metrics.update(proper_metrics)
-    
-    # Log final summary
-    model.log_section(f"MODEL {model.model_id} FINAL SUMMARY", "=")
-    
-    model.logger.info("")
-    model.logger.info("Performance Metrics (Final):")
-    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
-    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"  Log-scale R^2: {model.r2_log_scale:.4f}")
-    model.logger.info(f"  RMSE (original scale): ${model.metrics.get('rmse_test', 0):,.2f}")
-    model.logger.info(f"  MAE (original scale): ${model.metrics.get('mae_test', 0):,.2f}")
-    
-    model.logger.info("")
-    model.logger.info("Percentage Error Metrics:")
-    if 'smape' in model.metrics:
-        model.logger.info(f"  SMAPE (all cases): {model.metrics['smape']:.2f}%")
-    if 'mape_threshold' in model.metrics and not np.isnan(model.metrics['mape_threshold']):
-        threshold = model.metrics.get('mape_threshold_value', 1000)
-        n = model.metrics.get('mape_n', 0)
-        model.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {model.metrics['mape_threshold']:.2f}%")
-    
-    if 'cv_mean' in model.metrics:
-        model.logger.info("")
-        model.logger.info(f"  CV R^2: {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
-    
-    model.logger.info("")
-    model.logger.info("Log-Normal Specific Metrics:")
-    model.logger.info(f"  Global smearing factor: {model.smearing_factor:.6f}")
-    model.logger.info(f"  Retransformation bias (global): {(model.smearing_factor - 1) * 100:+.2f}%")
-    
-    # Conditional smearing info
-    if hasattr(model, '_cond_smearing_vals'):
-        min_smear = min(model._cond_smearing_vals)
-        max_smear = max(model._cond_smearing_vals)
-        model.logger.info(f"  Conditional smearing range: [{min_smear:.4f}, {max_smear:.4f}]")
-        model.logger.info(f"  Conditional smearing method: 10-bin decile-based")
-    
-    model.logger.info(f"  Sigma (log scale): {model.sigma_log:.4f}")
-    model.logger.info(f"  Variance (log scale): {model.sigma_log**2:.4f}")
-    skew_reduction = ((model.skewness_original - model.skewness_log) / 
-                     abs(model.skewness_original) * 100) if model.skewness_original != 0 else 0
-    model.logger.info(f"  Skewness (original): {model.skewness_original:.4f}")
-    model.logger.info(f"  Skewness (log scale): {model.skewness_log:.4f}")
-    model.logger.info(f"  Skewness reduction: {skew_reduction:.1f}%")
-    model.logger.info(f"  Heteroscedasticity p-value: {model.heteroscedasticity_pval:.6f}")
-    model.logger.info(f"  AIC: {model.aic:,.0f}")
-    model.logger.info(f"  BIC: {model.bic:,.0f}")
-    
-    # Add interpretation
-    model.logger.info("")
-    model.logger.info("  INTERPRETATION:")
-    if hasattr(model, '_cond_smearing_vals'):
-        test_r2 = model.metrics.get('r2_test', 0)
-        if test_r2 > 0:
-            model.logger.info(f"   Conditional smearing IMPROVED performance")
-            model.logger.info(f"    Test R^2 = {test_r2:.4f} (positive after conditional correction)")
-        else:
-            model.logger.info(f"  - Conditional smearing applied but performance still poor")
-            model.logger.info(f"    Test R^2 = {test_r2:.4f}")
-        model.logger.info(f"  - Smearing varies by bin: [{min_smear:.2f}, {max_smear:.2f}]")
-        model.logger.info(f"    (vs global: {model.smearing_factor:.2f})")
-    else:
-        model.logger.info(f"  - Using global smearing (conditional not computed)")
-        if model.smearing_factor > 1.5:
-            model.logger.info(f"  - High log-variance (sigma^2 = {model.sigma_log**2:.2f}) creates large bias")
-            model.logger.info(f"  - Consider using conditional smearing or Model 2 (Gamma GLM)")
-    
-    model.logger.info("")
-    model.logger.info("Data Utilization:")
-    model.logger.info(f"  Training: {model.metrics.get('training_samples', 0):,} (100% retention)")
-    model.logger.info(f"  Test: {model.metrics.get('test_samples', 0):,} (100% retention)")
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    print("\n" + "="*80)
-    print("MODEL 6 EXECUTION COMPLETE")
-    print("="*80)
-    print(f"\nTest R^2: {model.metrics.get('r2_test', 0):.4f}")
-    print(f"Log-scale R^2: {model.r2_log_scale:.4f}")
-    print(f"RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-    
-    # Smearing information
-    print(f"\nSmearing Method: ", end="")
-    if hasattr(model, '_cond_smearing_vals'):
-        min_smear = min(model._cond_smearing_vals)
-        max_smear = max(model._cond_smearing_vals)
-        print(f"CONDITIONAL (10-bin)")
-        print(f"  Global smearing: {model.smearing_factor:.4f}")
-        print(f"  Conditional range: [{min_smear:.4f}, {max_smear:.4f}]")
-    else:
-        print(f"GLOBAL")
-        print(f"  Smearing factor: {model.smearing_factor:.4f}")
-    
-    skew_reduction = ((model.skewness_original - model.skewness_log) / 
-                     abs(model.skewness_original) * 100) if model.skewness_original != 0 else 0
-    print(f"  Skewness reduction: {skew_reduction:.1f}%")
-    
-    # Performance assessment
-    test_r2 = model.metrics.get('r2_test', 0)
-    print(f"\n{'='*80}")
-    if test_r2 > 0:
-        print(" MODEL PERFORMANCE: ACCEPTABLE")
-        print(f"{'='*80}")
-        print(f"Conditional smearing successfully improved performance")
-        print(f"Test R^2 = {test_r2:.4f} (positive)")
-        if hasattr(model, '_cond_smearing_vals'):
-            print(f"Bin-wise smearing addressed heteroscedasticity on log scale")
-    elif test_r2 > -0.1:
-        print(" MODEL PERFORMANCE: MARGINAL")
-        print(f"{'='*80}")
-        print(f"Test R^2 = {test_r2:.4f} (near zero)")
-        print(f"Conditional smearing helped but performance still marginal")
-        print(f"Consider Model 2 (Gamma GLM) for better results")
-    else:
-        print(" MODEL PERFORMANCE: POOR")
-        print(f"{'='*80}")
-        print(f"Negative R^2 ({test_r2:.4f}) indicates predictions worse than mean")
-        if hasattr(model, '_cond_smearing_vals'):
-            print(f"Even with conditional smearing, performance is poor")
-        else:
-            print(f"Global smearing (factor = {model.smearing_factor:.2f}) over-corrects")
-        print(f"Log-scale residual variance (sigma^2 = {model.sigma_log**2:.2f}) is too high")
-        print("\nRECOMMENDATION: Use Model 2 (Gamma GLM) instead")
-    print(f"{'='*80}")
-    
-    return results
-
-
 if __name__ == "__main__":
     main()

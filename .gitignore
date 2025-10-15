@@ -2,21 +2,30 @@
 *.xlsx
 *.pyc
 *.pkl
+*.csv
+
 # Ignore the local configuration for Visual Studio Code
 .vscode/*
+
 # Ignore the local configuration for Visual Studio
 .vs/*
+
 # Ignore a mac desktop file
 .DS_Store
+
 # Ignore virtual environemnt
 .venv/*
 __pycache__/*
+
 #Ignore chats
 chats/*
-# Ignore the ocnfiguration file. It is dowloaded but not updated
+
+# Ignore the configuration file. It is dowloaded but not updated
 config.json
+
 # Exclude workspace
 CommandLineGPT.code-workspace
+
 # Exclude local files 
 # *.txt
 *.mp3

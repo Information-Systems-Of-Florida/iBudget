@@ -112,6 +112,97 @@ class Model4WLS(BaseiBudgetModel):
         self.logger.info(f"  Weight bounds: [{weight_min}, {weight_max}]")
         self.logger.info(f"  Iterative WLS: {iterative_wls}")
         self.logger.info(f"  Transformation: {transformation}")
+   
+        # Run complete pipeline
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        # Generate diagnostic plots
+        self.generate_diagnostic_plots()
+        
+        # Log final summary
+        self.log_section("MODEL 4 FINAL SUMMARY", "=")
+        
+        # Calculate proper MAPE/SMAPE for final reporting
+        if self.test_predictions is not None and self.y_test is not None:
+            proper_metrics = self.calculate_proper_mape_smape(self.y_test, self.test_predictions)
+            self.metrics.update(proper_metrics)
+        
+        self.logger.info("")
+        self.logger.info("Performance Metrics (Final):")
+        self.logger.info(f"  Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+        self.logger.info(f"  Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        self.logger.info(f"  Weighted R^2: {self.metrics.get('weighted_r2', 0):.4f}")
+        rmse_test = self.metrics.get('rmse_test', 0)
+        self.logger.info(f"  RMSE (original scale): ${rmse_test:,.2f}")
+        self.logger.info(f"  MAE (original scale): ${self.metrics.get('mae_test', 0):,.2f}")
+        
+        # Log proper percentage error metrics (not raw MAPE)
+        self.logger.info("")
+        self.logger.info("Percentage Error Metrics (corrected for small denominators):")
+        if 'smape' in self.metrics:
+            self.logger.info(f"  SMAPE (Symmetric MAPE, all cases): {self.metrics['smape']:.2f}%")
+        if 'mape_threshold' in self.metrics and not np.isnan(self.metrics['mape_threshold']):
+            threshold = self.metrics.get('mape_threshold_value', 1000)
+            n = self.metrics.get('mape_n', 0)
+            self.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {self.metrics['mape_threshold']:.2f}%")
+            self.logger.info(f"  Note: Raw MAPE (all cases) is misleading due to small denominators")
+        
+        if 'cv_mean' in self.metrics:
+            self.logger.info("")
+            self.logger.info(f"  CV R^2 (mean +- std): {self.metrics['cv_mean']:.4f} +- {self.metrics['cv_std']:.4f}")
+        
+        self.logger.info("")
+        self.logger.info("WLS Specific Metrics:")
+        eff_ratio = self.metrics.get('efficiency_ratio', 1.0)
+        self.logger.info(f"  Efficiency ratio vs OLS: {eff_ratio:.4f}x")
+        if eff_ratio < 1.05:
+            self.logger.info(f"    Note: Low efficiency gain indicates successful variance normalization")
+            self.logger.info(f"    Weights are well-distributed (not concentrated at extremes)")
+        self.logger.info(f"  Breusch-Pagan before: LM={self.bp_statistic_before:.6f}, p={self.bp_pvalue_before:.6f}")
+        self.logger.info(f"  Breusch-Pagan after: LM={self.bp_statistic_after:.6f}, p={self.bp_pvalue_after:.6f}")
+        bp_improvement = self.bp_statistic_before - self.bp_statistic_after
+        pct_improvement = 100 * bp_improvement / self.bp_statistic_before if self.bp_statistic_before > 0 else 0
+        self.logger.info(f"  Heteroscedasticity reduction: {bp_improvement:.6f} ({pct_improvement:.1f}% improvement)")
+        
+        if self.weight_statistics:
+            self.logger.info("")
+            self.logger.info("Weight Statistics:")
+            self.logger.info(f"  Mean: {self.weight_statistics['mean']:.4f}")
+            self.logger.info(f"  Median: {self.weight_statistics['median']:.4f}")
+            self.logger.info(f"  At minimum bound: {self.weight_statistics['at_min_pct']:.1f}%")
+            self.logger.info(f"  At maximum bound: {self.weight_statistics['at_max_pct']:.1f}%")
+        
+        self.logger.info("")
+        self.logger.info("Data Utilization:")
+        self.logger.info(f"  Training samples: {self.metrics.get('training_samples', 0)}")
+        self.logger.info(f"  Test samples: {self.metrics.get('test_samples', 0)}")
+        self.logger.info("  Outliers removed: 0 (100% data retention)")
+        
+        self.logger.info("")
+        self.logger.info("Known Limitations:")
+        self.logger.info("  - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)")
+        self.logger.info("  - Recommended: Apply post-processing quartile-wise affine calibration")
+        self.logger.info("  - Family Home (FH) subgroup shows lower R^2 (~0.07)")
+        self.logger.info("  - See LaTeX report for detailed equity and calibration analysis")
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results saved to: {self.output_dir_relative}")
+        self.logger.info(f"  Diagnostic plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX commands: {self.output_dir_relative / 'model_4_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info("MODEL 4 PIPELINE COMPLETE")
+        self.logger.info("="*80)
+     
+        
 
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -775,97 +866,5 @@ def main():
         log_suffix=suffix
     )
     
-    # Run complete pipeline
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    # Generate diagnostic plots
-    model.generate_diagnostic_plots()
-    
-    # Log final summary
-    model.log_section("MODEL 4 FINAL SUMMARY", "=")
-    
-    # Calculate proper MAPE/SMAPE for final reporting
-    if model.test_predictions is not None and model.y_test is not None:
-        proper_metrics = model.calculate_proper_mape_smape(model.y_test, model.test_predictions)
-        model.metrics.update(proper_metrics)
-    
-    model.logger.info("")
-    model.logger.info("Performance Metrics (Final):")
-    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
-    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"  Weighted R^2: {model.metrics.get('weighted_r2', 0):.4f}")
-    rmse_test = model.metrics.get('rmse_test', 0)
-    model.logger.info(f"  RMSE (original scale): ${rmse_test:,.2f}")
-    model.logger.info(f"  MAE (original scale): ${model.metrics.get('mae_test', 0):,.2f}")
-    
-    # Log proper percentage error metrics (not raw MAPE)
-    model.logger.info("")
-    model.logger.info("Percentage Error Metrics (corrected for small denominators):")
-    if 'smape' in model.metrics:
-        model.logger.info(f"  SMAPE (Symmetric MAPE, all cases): {model.metrics['smape']:.2f}%")
-    if 'mape_threshold' in model.metrics and not np.isnan(model.metrics['mape_threshold']):
-        threshold = model.metrics.get('mape_threshold_value', 1000)
-        n = model.metrics.get('mape_n', 0)
-        model.logger.info(f"  MAPE (costs >= ${threshold:,.0f}, n={n:,}): {model.metrics['mape_threshold']:.2f}%")
-        model.logger.info(f"  Note: Raw MAPE (all cases) is misleading due to small denominators")
-    
-    if 'cv_mean' in model.metrics:
-        model.logger.info("")
-        model.logger.info(f"  CV R^2 (mean +- std): {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
-    
-    model.logger.info("")
-    model.logger.info("WLS Specific Metrics:")
-    eff_ratio = model.metrics.get('efficiency_ratio', 1.0)
-    model.logger.info(f"  Efficiency ratio vs OLS: {eff_ratio:.4f}x")
-    if eff_ratio < 1.05:
-        model.logger.info(f"    Note: Low efficiency gain indicates successful variance normalization")
-        model.logger.info(f"    Weights are well-distributed (not concentrated at extremes)")
-    model.logger.info(f"  Breusch-Pagan before: LM={model.bp_statistic_before:.6f}, p={model.bp_pvalue_before:.6f}")
-    model.logger.info(f"  Breusch-Pagan after: LM={model.bp_statistic_after:.6f}, p={model.bp_pvalue_after:.6f}")
-    bp_improvement = model.bp_statistic_before - model.bp_statistic_after
-    pct_improvement = 100 * bp_improvement / model.bp_statistic_before if model.bp_statistic_before > 0 else 0
-    model.logger.info(f"  Heteroscedasticity reduction: {bp_improvement:.6f} ({pct_improvement:.1f}% improvement)")
-    
-    if model.weight_statistics:
-        model.logger.info("")
-        model.logger.info("Weight Statistics:")
-        model.logger.info(f"  Mean: {model.weight_statistics['mean']:.4f}")
-        model.logger.info(f"  Median: {model.weight_statistics['median']:.4f}")
-        model.logger.info(f"  At minimum bound: {model.weight_statistics['at_min_pct']:.1f}%")
-        model.logger.info(f"  At maximum bound: {model.weight_statistics['at_max_pct']:.1f}%")
-    
-    model.logger.info("")
-    model.logger.info("Data Utilization:")
-    model.logger.info(f"  Training samples: {model.metrics.get('training_samples', 0)}")
-    model.logger.info(f"  Test samples: {model.metrics.get('test_samples', 0)}")
-    model.logger.info("  Outliers removed: 0 (100% data retention)")
-    
-    model.logger.info("")
-    model.logger.info("Known Limitations:")
-    model.logger.info("  - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)")
-    model.logger.info("  - Recommended: Apply post-processing quartile-wise affine calibration")
-    model.logger.info("  - Family Home (FH) subgroup shows lower R^2 (~0.07)")
-    model.logger.info("  - See LaTeX report for detailed equity and calibration analysis")
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results saved to: {model.output_dir_relative}")
-    model.logger.info(f"  Diagnostic plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX commands: {model.output_dir_relative / 'model_4_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info("MODEL 4 PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    return results
-
-
 if __name__ == "__main__":
     main()

@@ -36,7 +36,6 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 RANDOM_SEED = 42
 
-
 class Model3Robust(BaseiBudgetModel):
     """
     Model 3: Robust Linear Regression with Huber M-estimation
@@ -110,6 +109,56 @@ class Model3Robust(BaseiBudgetModel):
         self.logger.info(f"  Max iterations: {self.max_iter}")
         self.logger.info(f"  Transformation: {transformation}")
         self.logger.info("  Outlier handling: Adaptive weights (no removal)")
+        
+        # Run complete pipeline (following Model 1 & 2 pattern)
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )
+        
+        # Generate diagnostic plots
+        self.generate_diagnostic_plots()
+        
+        # Log final summary (following Model 2 pattern)
+        self.log_section("MODEL 3 FINAL SUMMARY", "=")
+        
+        self.logger.info("")
+        self.logger.info("Performance Metrics:")
+        self.logger.info(f"  Training R^2: {self.metrics.get('r2_train', 0):.4f}")
+        self.logger.info(f"  Test R^2: {self.metrics.get('r2_test', 0):.4f}")
+        self.logger.info(f"  RMSE: ${self.metrics.get('rmse_test', 0):,.2f}")
+        self.logger.info(f"  MAE: ${self.metrics.get('mae_test', 0):,.2f}")
+        if 'cv_mean' in self.metrics:
+            self.logger.info(f"  CV R^2 (mean +- std): {self.metrics['cv_mean']:.4f} +- {self.metrics['cv_std']:.4f}")
+        
+        self.logger.info("")
+        self.logger.info("Robust Regression Specific:")
+        if self.weight_statistics:
+            self.logger.info(f"  Mean weight: {self.weight_statistics['mean']:.4f}")
+            self.logger.info(f"  Median weight: {self.weight_statistics['median']:.4f}")
+            self.logger.info(f"  Full weight (>=0.99): {self.weight_statistics['full_weight_pct']:.1f}%")
+            self.logger.info(f"  Downweighted: {self.weight_statistics['downweighted_count']} observations")
+            self.logger.info(f"  Downweighted %: {self.weight_statistics['downweighted_pct']:.1f}%")
+        
+        self.logger.info("")
+        self.logger.info("Data Utilization:")
+        self.logger.info(f"  Training samples: {self.metrics.get('training_samples', 0)}")
+        self.logger.info(f"  Test samples: {self.metrics.get('test_samples', 0)}")
+        self.logger.info("  Outliers removed: 0 (100% data retention)")
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)        
 
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
@@ -498,60 +547,6 @@ def main():
         random_seed=42,                     # For reproducibility
         log_suffix=suffix                   # Clear log suffix
     )
-    
-   
-    # Run complete pipeline (following Model 1 & 2 pattern)
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-    
-    # Generate diagnostic plots
-    model.generate_diagnostic_plots()
-    
-    # Log final summary (following Model 2 pattern)
-    model.log_section("MODEL 3 FINAL SUMMARY", "=")
-    
-    model.logger.info("")
-    model.logger.info("Performance Metrics:")
-    model.logger.info(f"  Training R^2: {model.metrics.get('r2_train', 0):.4f}")
-    model.logger.info(f"  Test R^2: {model.metrics.get('r2_test', 0):.4f}")
-    model.logger.info(f"  RMSE: ${model.metrics.get('rmse_test', 0):,.2f}")
-    model.logger.info(f"  MAE: ${model.metrics.get('mae_test', 0):,.2f}")
-    if 'cv_mean' in model.metrics:
-        model.logger.info(f"  CV R^2 (mean +- std): {model.metrics['cv_mean']:.4f} +- {model.metrics['cv_std']:.4f}")
-    
-    model.logger.info("")
-    model.logger.info("Robust Regression Specific:")
-    if model.weight_statistics:
-        model.logger.info(f"  Mean weight: {model.weight_statistics['mean']:.4f}")
-        model.logger.info(f"  Median weight: {model.weight_statistics['median']:.4f}")
-        model.logger.info(f"  Full weight (>=0.99): {model.weight_statistics['full_weight_pct']:.1f}%")
-        model.logger.info(f"  Downweighted: {model.weight_statistics['downweighted_count']} observations")
-        model.logger.info(f"  Downweighted %: {model.weight_statistics['downweighted_pct']:.1f}%")
-    
-    model.logger.info("")
-    model.logger.info("Data Utilization:")
-    model.logger.info(f"  Training samples: {model.metrics.get('training_samples', 0)}")
-    model.logger.info(f"  Test samples: {model.metrics.get('test_samples', 0)}")
-    model.logger.info("  Outliers removed: 0 (100% data retention)")
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    return results
-
 
 if __name__ == "__main__":
     main()

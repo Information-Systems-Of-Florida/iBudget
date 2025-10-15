@@ -215,7 +215,10 @@ class BaseiBudgetModel(ABC):
         self.logger = logging.getLogger(f"MODEL_{self.model_id}")
         self.logger.setLevel(logging.INFO)
         self.logger.handlers.clear()
-        
+    
+        # Prevent duplicate output, e.g. from Orchestrator.py
+        self.logger.propagate = False 
+
         fh = logging.FileHandler(log_filename, mode='w', encoding='utf-8')
         fh.setLevel(logging.INFO)
         

@@ -93,6 +93,80 @@ class Model1Linear(BaseiBudgetModel):
         self.coefficients = None
         self.intercept = None
     
+        # Run complete pipeline
+        results = self.run_complete_pipeline(
+            fiscal_year_start=2024,
+            fiscal_year_end=2024,
+            test_size=0.2,
+            perform_cv=True,
+            n_cv_folds=10
+        )    
+        
+        self.logger.info("=" * 80)
+        self.logger.info("MODEL 1: RE-EVALUATION OF MODEL 5B WITH 2024 DATA")
+        self.logger.info("=" * 80)
+        self.logger.info("")
+        self.logger.info("This model replicates Model 5b (Tao & Niu 2015) specification exactly:")
+        self.logger.info("  - 21 features (includes 5 living, 2 age dummies, BSum, 3 interactions, 10 QSI)")
+        if use_sqrt_transform: 
+            self.logger.info("  - Square-root transformation")
+        if use_outlier_removal:
+            self.logger.info("  - Studentized residuals outlier detection (|t_i| >= 1.645)")
+        self.logger.info("  - Ordinary Least Squares regression")
+        self.logger.info("")
+        self.logger.info("Purpose: Direct comparison of Model 5b performance across 9 years")
+        self.logger.info("=" * 80)
+        self.logger.info("")
+
+        self.logger.info("="*80)
+        self.logger.info("SUBGROUP DIAGNOSTICS")
+        self.logger.info("="*80)
+        self.logger.info(f"Subgroups generated: {list(self.subgroup_metrics.keys())}")
+        self.logger.info("="*80)
+        
+        self.logger.info("")
+        self.logger.info("=" * 80)
+        self.logger.info("MODEL 5b COMPARISON SUMMARY")
+        self.logger.info("=" * 80)
+        self.logger.info(f"Model 5b (2015):")
+        self.logger.info(f"  R^2 = {self.MODEL_5B_R2_2015:.4f}")
+        self.logger.info(f"  SBC = {self.MODEL_5B_SBC_2015:,.1f}")
+        self.logger.info(f"  RMSE = ${self.MODEL_5B_RMSE_2015:.2f} (sqrt scale)")
+        if self.outlier_diagnostics:
+            self.logger.info(f"  Outliers = {self.MODEL_5B_OUTLIER_PCT_2015:.2f}%")
+        self.logger.info("")
+        self.logger.info(f"Model 1 (2024):")
+        self.logger.info(f"  R^2 = {self.metrics.get('r2_test', 0):.4f}")
+        if 'sbc' in self.metrics:
+            self.logger.info(f"  SBC = {self.metrics['sbc']:,.1f}")
+        self.logger.info(f"  RMSE = ${self.metrics.get('rmse_test_sqrt', 0):,.2f} (sqrt scale)")
+        self.logger.info(f"  RMSE = ${self.metrics.get('rmse_test', 0):,.2f} (original scale)")
+        if self.outlier_diagnostics:
+            self.logger.info(f"  Outliers = {self.outlier_diagnostics.get('pct_removed', 0):.2f}%")
+        self.logger.info("")
+        self.logger.info(f"Delta:")
+        if 'r2_delta_from_2015' in self.metrics:
+            delta = self.metrics['r2_delta_from_2015']
+            self.logger.info(f"  Delta R^2 = {delta:+.4f} ({abs(delta)*100:.2f}% {'improvement' if delta > 0 else 'decline'})")
+        if 'sbc_delta_from_2015' in self.metrics:
+            delta_sbc = self.metrics['sbc_delta_from_2015']
+            self.logger.info(f"  Delta SBC = {delta_sbc:+,.1f} ({'better' if delta_sbc < 0 else 'worse'})")
+        if self.outlier_diagnostics:
+            delta_outlier = self.outlier_diagnostics.get('pct_removed', 0) - self.MODEL_5B_OUTLIER_PCT_2015
+            self.logger.info(f"  Delta Outlier% = {delta_outlier:+.2f}%")
+        self.logger.info("=" * 80)
+        
+        self.logger.info("")
+        self.logger.info("Output:")
+        self.logger.info(f"  Results: {self.output_dir_relative}")
+        self.logger.info(f"  Plots: {self.output_dir_relative / 'diagnostic_plots.png'}")
+        self.logger.info(f"  LaTeX: {self.output_dir_relative / f'model_{self.model_id}_renewcommands.tex'}")
+        
+        self.logger.info("")
+        self.logger.info("="*80)
+        self.logger.info(f"MODEL {self.model_id} PIPELINE COMPLETE")
+        self.logger.info("="*80)
+        
     def prepare_features(self, records: List[ConsumerRecord]) -> Tuple[np.ndarray, List[str]]:
         """
         Model 1 feature preparation using generic configuration approach
@@ -407,89 +481,12 @@ def main():
     use_sqrt = True
     use_outlier = True
     suffix = 'Sqrt_' + str(use_sqrt) + '_Outliers_' + str(use_outlier)
-    model = Model1Linear(
+    results = Model1Linear(
                 use_sqrt_transform = use_sqrt,      # sqrt transformation
                 use_outlier_removal = use_outlier,      # enable outlier removal
                 outlier_threshold = 1.645,        # ~10% outliers (Model 5b default)
                 log_suffix = suffix  # Optional log suffix
             )    
     
-    model.logger.info("=" * 80)
-    model.logger.info("MODEL 1: RE-EVALUATION OF MODEL 5B WITH 2024 DATA")
-    model.logger.info("=" * 80)
-    model.logger.info("")
-    model.logger.info("This model replicates Model 5b (Tao & Niu 2015) specification exactly:")
-    model.logger.info("  - 21 features (includes 5 living, 2 age dummies, BSum, 3 interactions, 10 QSI)")
-    if use_sqrt: 
-        model.logger.info("  - Square-root transformation")
-    if use_outlier:
-        model.logger.info("  - Studentized residuals outlier detection (|t_i| >= 1.645)")
-    model.logger.info("  - Ordinary Least Squares regression")
-    model.logger.info("")
-    model.logger.info("Purpose: Direct comparison of Model 5b performance across 9 years")
-    model.logger.info("=" * 80)
-    model.logger.info("")
-    
-    # Run complete pipeline
-    results = model.run_complete_pipeline(
-        fiscal_year_start=2024,
-        fiscal_year_end=2024,
-        test_size=0.2,
-        perform_cv=True,
-        n_cv_folds=10
-    )
-
-    model.logger.info("="*80)
-    model.logger.info("SUBGROUP DIAGNOSTICS")
-    model.logger.info("="*80)
-    model.logger.info(f"Subgroups generated: {list(model.subgroup_metrics.keys())}")
-    model.logger.info("="*80)
-    
-    model.logger.info("")
-    model.logger.info("=" * 80)
-    model.logger.info("MODEL 5b COMPARISON SUMMARY")
-    model.logger.info("=" * 80)
-    model.logger.info(f"Model 5b (2015):")
-    model.logger.info(f"  R^2 = {model.MODEL_5B_R2_2015:.4f}")
-    model.logger.info(f"  SBC = {model.MODEL_5B_SBC_2015:,.1f}")
-    model.logger.info(f"  RMSE = ${model.MODEL_5B_RMSE_2015:.2f} (sqrt scale)")
-    if model.outlier_diagnostics:
-        model.logger.info(f"  Outliers = {model.MODEL_5B_OUTLIER_PCT_2015:.2f}%")
-    model.logger.info("")
-    model.logger.info(f"Model 1 (2024):")
-    model.logger.info(f"  R^2 = {model.metrics.get('r2_test', 0):.4f}")
-    if 'sbc' in model.metrics:
-        model.logger.info(f"  SBC = {model.metrics['sbc']:,.1f}")
-    model.logger.info(f"  RMSE = ${model.metrics.get('rmse_test_sqrt', 0):,.2f} (sqrt scale)")
-    model.logger.info(f"  RMSE = ${model.metrics.get('rmse_test', 0):,.2f} (original scale)")
-    if model.outlier_diagnostics:
-        model.logger.info(f"  Outliers = {model.outlier_diagnostics.get('pct_removed', 0):.2f}%")
-    model.logger.info("")
-    model.logger.info(f"Delta:")
-    if 'r2_delta_from_2015' in model.metrics:
-        delta = model.metrics['r2_delta_from_2015']
-        model.logger.info(f"  Delta R^2 = {delta:+.4f} ({abs(delta)*100:.2f}% {'improvement' if delta > 0 else 'decline'})")
-    if 'sbc_delta_from_2015' in model.metrics:
-        delta_sbc = model.metrics['sbc_delta_from_2015']
-        model.logger.info(f"  Delta SBC = {delta_sbc:+,.1f} ({'better' if delta_sbc < 0 else 'worse'})")
-    if model.outlier_diagnostics:
-        delta_outlier = model.outlier_diagnostics.get('pct_removed', 0) - model.MODEL_5B_OUTLIER_PCT_2015
-        model.logger.info(f"  Delta Outlier% = {delta_outlier:+.2f}%")
-    model.logger.info("=" * 80)
-    
-    model.logger.info("")
-    model.logger.info("Output:")
-    model.logger.info(f"  Results: {model.output_dir_relative}")
-    model.logger.info(f"  Plots: {model.output_dir_relative / 'diagnostic_plots.png'}")
-    model.logger.info(f"  LaTeX: {model.output_dir_relative / f'model_{model.model_id}_renewcommands.tex'}")
-    
-    model.logger.info("")
-    model.logger.info("="*80)
-    model.logger.info(f"MODEL {model.model_id} PIPELINE COMPLETE")
-    model.logger.info("="*80)
-    
-    return results
-
-
 if __name__ == "__main__":
     main()
