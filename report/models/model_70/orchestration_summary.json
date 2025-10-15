@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-15T02:33:45.586321",
+  "timestamp": "2025-10-15T13:36:58.341928",
   "scenario": "Consensus_FeatureSelection_Optimal",
   "description": "Optimal feature set based on Feature Selection analysis with MI rankings. Uses 7 QSI items (Q19, Q21, Q26, Q27, Q30, Q36, Q44), all support levels, summary scores, living settings, age groups, and county effects.",
   "configuration": "Orchestrator.json",
@@ -9,8 +9,8 @@
   "best_model": {
     "id": 9,
     "name": "Random Forest",
-    "r2_test": 0.5244850470801394,
-    "rmse_test": 30797.046030079153
+    "r2_test": 0.6411774315867071,
+    "rmse_test": 24727.14875533548
   },
   "all_results": {
     "1": {
@@ -130,19 +130,19 @@
     "9": {
       "model_id": 9,
       "model_name": "Random Forest",
-      "r2_train": 0.7083037319145227,
-      "r2_test": 0.5244850470801394,
-      "rmse_train": 24281.42100863549,
-      "rmse_test": 30797.046030079153,
-      "mae_train": 17222.597828317328,
-      "mae_test": 21496.018658299792,
-      "mape_train": 374.1350847489415,
-      "mape_test": 489.5379534372727,
-      "cv_mean": 0.533190170885337,
-      "cv_std": 0.016995040188367286,
+      "r2_train": 0.732178260527836,
+      "r2_test": 0.6411774315867071,
+      "rmse_train": 21641.569513506976,
+      "rmse_test": 24727.14875533548,
+      "mae_train": 15413.479771441394,
+      "mae_test": 17381.672829177183,
+      "mape_train": 354.0253530915435,
+      "mape_test": 398.50381447196753,
+      "cv_mean": 0.6324070838254767,
+      "cv_std": 0.002824867665469446,
       "n_features": 57,
-      "n_train": 27339,
-      "n_test": 6834,
+      "n_train": 79572,
+      "n_test": 19893,
       "success": true,
       "error": null
     }

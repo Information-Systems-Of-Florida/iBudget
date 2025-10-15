@@ -17,30 +17,51 @@ BASE_DIR = Path("../report")
 MODEL_DIR = BASE_DIR / "models"
 FIGURES_DIR = BASE_DIR / "figures"
 LOGS_DIR = BASE_DIR / "logs"
+BASE_YEAR=2024
 
 # Create directories if they don't exist
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def load_model_data(model_num):
-    """Load predictions and metrics for a specific model."""
+def load_model_data(model_num, base_year=2024):
+    """Load full-population predictions and metrics for a specific model."""
     model_path = MODEL_DIR / f"model_{model_num}"
     
-    # Load predictions
-    pred_file = model_path / "predictions.csv"
+    # Look for full-population file first
+    pred_file = model_path / f"predictions_full_{base_year}.csv"
     if not pred_file.exists():
-        # Try .txt extension as fallback
-        pred_file = model_path / "predictions.txt"
+        # Fallback to the old train/test predictions.csv if needed
+        pred_file = model_path / "predictions.csv"
+        print(f"[Warning] Using {pred_file.name} (full-population file not found for Model {model_num})")
+    else:
+        print(f"[Info] Loaded full-population predictions for Model {model_num} ({pred_file.name})")
     
+    # Load predictions CSV
     predictions = pd.read_csv(pred_file)
     
-    # Load metrics
+    # Standardize column names
+    predictions.columns = [c.strip().lower() for c in predictions.columns]
+    rename_map = {
+        'actual': 'actual',
+        'predicted': 'predicted',
+        'error': 'error'
+    }
+    # If error column not present, compute it
+    if 'error' not in predictions.columns and {'actual', 'predicted'}.issubset(predictions.columns):
+        predictions['error'] = predictions['predicted'] - predictions['actual']
+    
+    # Load metrics JSON (for R², RMSE, etc.)
     metrics_file = model_path / "metrics.json"
-    with open(metrics_file, 'r') as f:
-        metrics = json.load(f)
+    metrics = {}
+    if metrics_file.exists():
+        with open(metrics_file, 'r') as f:
+            metrics = json.load(f)
+    else:
+        print(f"[Warning] metrics.json not found for Model {model_num}")
     
     return predictions, metrics
+
 
 
 def calculate_conservative_estimates(predictions_df):
@@ -611,7 +632,7 @@ def main():
         
         try:
             # Load data
-            predictions_df, model_metrics = load_model_data(model_num)
+            predictions_df, model_metrics = load_model_data(model_num,  BASE_YEAR)
             print(f"  Loaded {len(predictions_df)} predictions")
             
             # Calculate conservative estimates

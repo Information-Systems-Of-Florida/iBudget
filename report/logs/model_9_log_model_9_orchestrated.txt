@@ -1,552 +1,593 @@
-2025-10-15 02:33:32 - MODEL_9 - INFO - 
-2025-10-15 02:33:32 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:32 - MODEL_9 - INFO - INITIALIZING MODEL 9: RANDOM-FOREST
-2025-10-15 02:33:32 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:32 - MODEL_9 - INFO - Output directory: ..\..\report\models\model_9
-2025-10-15 02:33:32 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:32 - MODEL_9 - INFO - Configuration:
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - Outlier removal: False
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - Transformation: none
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - Random seed: 42
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - n_estimators: 150
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - max_depth: 15
-2025-10-15 02:33:32 - MODEL_9 - INFO -   - Random seed: 42
-2025-10-15 02:33:32 - MODEL_9 - INFO - 
-2025-10-15 02:33:32 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:32 - MODEL_9 - INFO - STARTING PIPELINE: RANDOM-FOREST
-2025-10-15 02:33:32 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:32 - MODEL_9 - INFO - 
-2025-10-15 02:33:32 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:32 - MODEL_9 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 02:33:32 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:32 - MODEL_9 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 02:33:32 - MODEL_9 - INFO - Found 47259 records in 'data' key
-2025-10-15 02:33:34 - MODEL_9 - INFO - FY2024 Summary:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   - Processed: 34,173
-2025-10-15 02:33:34 - MODEL_9 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 02:33:34 - MODEL_9 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 02:33:34 - MODEL_9 - INFO -   - Skipped (errors): 0
-2025-10-15 02:33:34 - MODEL_9 - INFO - Total loaded: 34,173 usable records
-2025-10-15 02:33:34 - MODEL_9 - INFO - 
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - DATA SPLIT
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - Training samples: 27,339
-2025-10-15 02:33:34 - MODEL_9 - INFO - Test samples: 6,834
-2025-10-15 02:33:34 - MODEL_9 - INFO - Split ratio: 20.0%
-2025-10-15 02:33:34 - MODEL_9 - INFO - 
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - FEATURE PREPARATION
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - Features prepared: 57 total features from 27339 records
-2025-10-15 02:33:34 - MODEL_9 - INFO - Feature breakdown:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 02:33:34 - MODEL_9 - INFO - Feature counts by type:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   numeric: 9
-2025-10-15 02:33:34 - MODEL_9 - INFO -   categorical: 5
-2025-10-15 02:33:34 - MODEL_9 - INFO -   binary: 3
-2025-10-15 02:33:34 - MODEL_9 - INFO -   qsi: 37
-2025-10-15 02:33:34 - MODEL_9 - INFO -   interactions: 3
-2025-10-15 02:33:34 - MODEL_9 - INFO - Features prepared: 57 total features from 6834 records
-2025-10-15 02:33:34 - MODEL_9 - INFO - Feature breakdown:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 02:33:34 - MODEL_9 - INFO - Feature counts by type:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   numeric: 9
-2025-10-15 02:33:34 - MODEL_9 - INFO -   categorical: 5
-2025-10-15 02:33:34 - MODEL_9 - INFO -   binary: 3
-2025-10-15 02:33:34 - MODEL_9 - INFO -   qsi: 37
-2025-10-15 02:33:34 - MODEL_9 - INFO -   interactions: 3
-2025-10-15 02:33:34 - MODEL_9 - INFO - Features prepared: 57 features
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Training shape: (27339, 57)
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Test shape: (6834, 57)
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Target range: $31.25 - $346,560.68
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Target mean: $44,675.37
-2025-10-15 02:33:34 - MODEL_9 - INFO -   Target median: $32,279.60
-2025-10-15 02:33:34 - MODEL_9 - INFO - 
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - 
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:34 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:34 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:34 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:34 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:34 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:34 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:34 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:34 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:34 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:35 - MODEL_9 - INFO - Random Forest fitted in 0.64 seconds
-2025-10-15 02:33:35 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5337
-2025-10-15 02:33:35 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,711.20
-2025-10-15 02:33:35 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:35 - MODEL_9 - INFO - 
-2025-10-15 02:33:35 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:35 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1352
-2025-10-15 02:33:35 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1324
-2025-10-15 02:33:35 - MODEL_9 - INFO -   3. RH1: 0.1131
-2025-10-15 02:33:35 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0568
-2025-10-15 02:33:35 - MODEL_9 - INFO -   5. age: 0.0402
-2025-10-15 02:33:35 - MODEL_9 - INFO -   Fold 1: R^2 = 0.5105
-2025-10-15 02:33:35 - MODEL_9 - INFO - 
-2025-10-15 02:33:35 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:35 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:35 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:35 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:35 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:35 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:35 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:35 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:35 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:35 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:35 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:35 - MODEL_9 - INFO - Random Forest fitted in 0.60 seconds
-2025-10-15 02:33:35 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5342
-2025-10-15 02:33:35 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,678.21
-2025-10-15 02:33:35 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:36 - MODEL_9 - INFO - 
-2025-10-15 02:33:36 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:36 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1489
-2025-10-15 02:33:36 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1306
-2025-10-15 02:33:36 - MODEL_9 - INFO -   3. RH1: 0.1025
-2025-10-15 02:33:36 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0582
-2025-10-15 02:33:36 - MODEL_9 - INFO -   5. age: 0.0414
-2025-10-15 02:33:36 - MODEL_9 - INFO -   Fold 2: R^2 = 0.5059
-2025-10-15 02:33:36 - MODEL_9 - INFO - 
-2025-10-15 02:33:36 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:36 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:36 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:36 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:36 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:36 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:36 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:36 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:36 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:36 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:36 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:36 - MODEL_9 - INFO - Random Forest fitted in 0.61 seconds
-2025-10-15 02:33:36 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5307
-2025-10-15 02:33:36 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,794.65
-2025-10-15 02:33:36 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:36 - MODEL_9 - INFO - 
-2025-10-15 02:33:36 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:36 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1419
-2025-10-15 02:33:36 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1398
-2025-10-15 02:33:36 - MODEL_9 - INFO -   3. RH1: 0.1068
-2025-10-15 02:33:36 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0590
-2025-10-15 02:33:36 - MODEL_9 - INFO -   5. age: 0.0424
-2025-10-15 02:33:36 - MODEL_9 - INFO -   Fold 3: R^2 = 0.5391
-2025-10-15 02:33:36 - MODEL_9 - INFO - 
-2025-10-15 02:33:36 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:36 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:36 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:36 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:36 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:36 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:36 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:36 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:36 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:36 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:36 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:37 - MODEL_9 - INFO - Random Forest fitted in 0.64 seconds
-2025-10-15 02:33:37 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5273
-2025-10-15 02:33:37 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,806.12
-2025-10-15 02:33:37 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:37 - MODEL_9 - INFO - 
-2025-10-15 02:33:37 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:37 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1383
-2025-10-15 02:33:37 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1350
-2025-10-15 02:33:37 - MODEL_9 - INFO -   3. RH1: 0.1099
-2025-10-15 02:33:37 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0576
-2025-10-15 02:33:37 - MODEL_9 - INFO -   5. age: 0.0421
-2025-10-15 02:33:37 - MODEL_9 - INFO -   Fold 4: R^2 = 0.5419
-2025-10-15 02:33:37 - MODEL_9 - INFO - 
-2025-10-15 02:33:37 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:37 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:37 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:37 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:37 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:37 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:37 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:37 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:37 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:37 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:37 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:38 - MODEL_9 - INFO - Random Forest fitted in 0.60 seconds
-2025-10-15 02:33:38 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5326
-2025-10-15 02:33:38 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,777.85
-2025-10-15 02:33:38 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:38 - MODEL_9 - INFO - 
-2025-10-15 02:33:38 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:38 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1488
-2025-10-15 02:33:38 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1371
-2025-10-15 02:33:38 - MODEL_9 - INFO -   3. RH1: 0.1001
-2025-10-15 02:33:38 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0559
-2025-10-15 02:33:38 - MODEL_9 - INFO -   5. age: 0.0422
-2025-10-15 02:33:38 - MODEL_9 - INFO -   Fold 5: R^2 = 0.5111
-2025-10-15 02:33:38 - MODEL_9 - INFO - 
-2025-10-15 02:33:38 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:38 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:38 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:38 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:38 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:38 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:38 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:38 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:38 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:38 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:38 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:38 - MODEL_9 - INFO - Random Forest fitted in 0.78 seconds
-2025-10-15 02:33:38 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5301
-2025-10-15 02:33:38 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,767.70
-2025-10-15 02:33:38 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:38 - MODEL_9 - INFO - 
-2025-10-15 02:33:38 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:38 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1457
-2025-10-15 02:33:38 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1345
-2025-10-15 02:33:38 - MODEL_9 - INFO -   3. RH1: 0.1079
-2025-10-15 02:33:38 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0591
-2025-10-15 02:33:38 - MODEL_9 - INFO -   5. age: 0.0420
-2025-10-15 02:33:39 - MODEL_9 - INFO -   Fold 6: R^2 = 0.5332
-2025-10-15 02:33:39 - MODEL_9 - INFO - 
-2025-10-15 02:33:39 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:39 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:39 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:39 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:39 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:39 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:39 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:39 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:39 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:39 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:39 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:39 - MODEL_9 - INFO - Random Forest fitted in 0.63 seconds
-2025-10-15 02:33:39 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5289
-2025-10-15 02:33:39 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,950.72
-2025-10-15 02:33:39 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:39 - MODEL_9 - INFO - 
-2025-10-15 02:33:39 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:39 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1408
-2025-10-15 02:33:39 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1333
-2025-10-15 02:33:39 - MODEL_9 - INFO -   3. RH1: 0.1116
-2025-10-15 02:33:39 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0573
-2025-10-15 02:33:39 - MODEL_9 - INFO -   5. age: 0.0418
-2025-10-15 02:33:39 - MODEL_9 - INFO -   Fold 7: R^2 = 0.5440
-2025-10-15 02:33:39 - MODEL_9 - INFO - 
-2025-10-15 02:33:39 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:39 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:39 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:39 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:39 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:39 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:39 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:39 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:39 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:39 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:39 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:40 - MODEL_9 - INFO - Random Forest fitted in 0.62 seconds
-2025-10-15 02:33:40 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5293
-2025-10-15 02:33:40 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,781.67
-2025-10-15 02:33:40 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:40 - MODEL_9 - INFO - 
-2025-10-15 02:33:40 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:40 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1378
-2025-10-15 02:33:40 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1377
-2025-10-15 02:33:40 - MODEL_9 - INFO -   3. RH1: 0.1033
-2025-10-15 02:33:40 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0619
-2025-10-15 02:33:40 - MODEL_9 - INFO -   5. age: 0.0422
-2025-10-15 02:33:40 - MODEL_9 - INFO -   Fold 8: R^2 = 0.5383
-2025-10-15 02:33:40 - MODEL_9 - INFO - 
-2025-10-15 02:33:40 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:40 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:40 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:40 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:40 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:40 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:40 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:40 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:40 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:40 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:40 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:41 - MODEL_9 - INFO - Random Forest fitted in 0.60 seconds
-2025-10-15 02:33:41 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5273
-2025-10-15 02:33:41 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,877.96
-2025-10-15 02:33:41 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:41 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1385
-2025-10-15 02:33:41 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1372
-2025-10-15 02:33:41 - MODEL_9 - INFO -   3. RH1: 0.1140
-2025-10-15 02:33:41 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0591
-2025-10-15 02:33:41 - MODEL_9 - INFO -   5. age: 0.0422
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Fold 9: R^2 = 0.5507
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:41 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:41 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:41 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:41 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:41 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:41 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:41 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:41 - MODEL_9 - INFO - Random Forest fitted in 0.64 seconds
-2025-10-15 02:33:41 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5279
-2025-10-15 02:33:41 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,998.61
-2025-10-15 02:33:41 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:41 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1477
-2025-10-15 02:33:41 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1315
-2025-10-15 02:33:41 - MODEL_9 - INFO -   3. RH1: 0.1066
-2025-10-15 02:33:41 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0550
-2025-10-15 02:33:41 - MODEL_9 - INFO -   5. age: 0.0416
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Fold 10: R^2 = 0.5572
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - Cross-validation summary:
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Mean R^2: 0.5332
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Std R^2: 0.0170
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Min R^2: 0.5059 (Fold 2)
-2025-10-15 02:33:41 - MODEL_9 - INFO -   Max R^2: 0.5572 (Fold 10)
-2025-10-15 02:33:41 - MODEL_9 - INFO -   95% CI: [0.4999, 0.5665]
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - MODEL TRAINING
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - 
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - FITTING RANDOM FOREST
-2025-10-15 02:33:41 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:41 - MODEL_9 - INFO - Random Forest Configuration:
-2025-10-15 02:33:41 - MODEL_9 - INFO -   n_estimators: 150
-2025-10-15 02:33:41 - MODEL_9 - INFO -   max_depth: 15
-2025-10-15 02:33:41 - MODEL_9 - INFO -   min_samples_split: 8
-2025-10-15 02:33:41 - MODEL_9 - INFO -   min_samples_leaf: 3
-2025-10-15 02:33:41 - MODEL_9 - INFO -   max_features: sqrt
-2025-10-15 02:33:41 - MODEL_9 - INFO -   bootstrap: True
-2025-10-15 02:33:41 - MODEL_9 - INFO -   oob_score: True
-2025-10-15 02:33:42 - MODEL_9 - INFO - Random Forest fitted in 0.74 seconds
-2025-10-15 02:33:42 - MODEL_9 - INFO - Out-of-Bag R^2: 0.5304
-2025-10-15 02:33:42 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $30,807.37
-2025-10-15 02:33:42 - MODEL_9 - INFO - Mean tree depth: 15.0
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - Top 5 Features by Importance:
-2025-10-15 02:33:42 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1405
-2025-10-15 02:33:42 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1400
-2025-10-15 02:33:42 - MODEL_9 - INFO -   3. RH1: 0.1028
-2025-10-15 02:33:42 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0579
-2025-10-15 02:33:42 - MODEL_9 - INFO -   5. age: 0.0421
-2025-10-15 02:33:42 - MODEL_9 - INFO - Model training complete
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - MAKING PREDICTIONS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - Predictions complete
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - CALCULATING METRICS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - Training R^2: 0.7083
-2025-10-15 02:33:42 - MODEL_9 - INFO - Test R^2: 0.5245
-2025-10-15 02:33:42 - MODEL_9 - INFO - RMSE (original): $30,797.05
-2025-10-15 02:33:42 - MODEL_9 - INFO - RMSE (sqrt scale): $30797.05
-2025-10-15 02:33:42 - MODEL_9 - INFO - MAE: $21,496.02
-2025-10-15 02:33:42 - MODEL_9 - INFO - MAPE: 489.54%
-2025-10-15 02:33:42 - MODEL_9 - INFO - CV R^2 (mean +- std): 0.5332 +- 0.0170
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - SUBGROUP ANALYSIS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - Calculated metrics for 10 subgroups
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO -   living_FH:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 3,767
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.1829
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $28,788.10
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+361.93
-2025-10-15 02:33:42 - MODEL_9 - INFO -   living_ILSL:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 893
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.3633
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $32,167.66
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $-462.11
-2025-10-15 02:33:42 - MODEL_9 - INFO -   living_RH1-4:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 2,174
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.3345
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $33,472.74
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+422.48
-2025-10-15 02:33:42 - MODEL_9 - INFO -   age_AgeUnderTwentyOne:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 694
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.5459
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $25,142.95
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+6,306.43
-2025-10-15 02:33:42 - MODEL_9 - INFO -   age_AgeTwentyOneToThirty:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 1,797
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.5009
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $34,516.04
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+13.24
-2025-10-15 02:33:42 - MODEL_9 - INFO -   age_AgeThirtyOnePlus:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 4,343
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: 0.5102
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $29,974.93
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $-582.84
-2025-10-15 02:33:42 - MODEL_9 - INFO -   cost_QOneLow:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 1,709
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: -10.0000
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $27,925.54
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+22,583.79
-2025-10-15 02:33:42 - MODEL_9 - INFO -   cost_QTwo:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 1,708
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: -5.4436
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $19,589.39
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $+9,594.13
-2025-10-15 02:33:42 - MODEL_9 - INFO -   cost_QThree:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 1,708
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: -2.5927
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $22,122.98
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $-4,240.38
-2025-10-15 02:33:42 - MODEL_9 - INFO -   cost_QFourHigh:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     N: 1,709
-2025-10-15 02:33:42 - MODEL_9 - INFO -     R^2: -0.6676
-2025-10-15 02:33:42 - MODEL_9 - INFO -     RMSE: $46,262.59
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Bias: $-26,840.67
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - VARIANCE ANALYSIS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - Variance metrics calculated
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO -   Coefficient of Variation (Actual): 1.0101
-2025-10-15 02:33:42 - MODEL_9 - INFO -   Coefficient of Variation (Predicted): 0.7002
-2025-10-15 02:33:42 - MODEL_9 - INFO -   95% Prediction Interval Width: $60,359.83
-2025-10-15 02:33:42 - MODEL_9 - INFO -   Actual-Predicted Correlation: 0.7248
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - POPULATION SCENARIOS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - Calculated 4 population scenarios
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO -   Base budget: $1,200,000,000
-2025-10-15 02:33:42 - MODEL_9 - INFO -   currentbaseline:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Clients served: 26,972
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Avg allocation: $44,489.70
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist change: +0
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist %: +0.0%
-2025-10-15 02:33:42 - MODEL_9 - INFO -   modelbalanced:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Clients served: 27,511
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Avg allocation: $43,599.90
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist change: +539
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist %: +2.0%
-2025-10-15 02:33:42 - MODEL_9 - INFO -   modelefficiency:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Clients served: 28,320
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Avg allocation: $42,265.21
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist change: +1,348
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist %: +5.0%
-2025-10-15 02:33:42 - MODEL_9 - INFO -   categoryfocused:
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Clients served: 22,926
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Avg allocation: $52,497.84
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist change: -4,045
-2025-10-15 02:33:42 - MODEL_9 - INFO -     Waitlist %: -15.0%
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - GENERATING OUTPUTS
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - 
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - LATEX GENERATION
-2025-10-15 02:33:42 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:42 - MODEL_9 - INFO - LaTeX commands generated:
-2025-10-15 02:33:42 - MODEL_9 - INFO -   - Newcommands file: ..\..\report\models\model_9\model_9_newcommands.tex
-2025-10-15 02:33:42 - MODEL_9 - INFO -     (87 placeholder commands)
-2025-10-15 02:33:42 - MODEL_9 - INFO -   - Renewcommands file: ..\..\report\models\model_9\model_9_renewcommands.tex
-2025-10-15 02:33:42 - MODEL_9 - INFO -     (87 value commands)
-2025-10-15 02:33:42 - MODEL_9 - INFO - Appending Model 9 specific LaTeX commands...
-2025-10-15 02:33:42 - MODEL_9 - INFO - Model 9 specific commands appended successfully
-2025-10-15 02:33:43 - MODEL_9 - INFO - Results saved:
-2025-10-15 02:33:43 - MODEL_9 - INFO -   - Metrics JSON: ..\..\report\models\model_9\metrics.json
-2025-10-15 02:33:43 - MODEL_9 - INFO -   - Predictions CSV: ..\..\report\models\model_9\predictions.csv
-2025-10-15 02:33:43 - MODEL_9 - INFO -     (27,339 train + 6,834 test predictions)
-2025-10-15 02:33:43 - MODEL_9 - INFO - 
-2025-10-15 02:33:43 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:43 - MODEL_9 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 02:33:43 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:44 - MODEL_9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
-2025-10-15 02:33:44 - MODEL_9 - INFO - 
-2025-10-15 02:33:44 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:44 - MODEL_9 - INFO - PIPELINE COMPLETE: RANDOM-FOREST
-2025-10-15 02:33:44 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:44 - MODEL_9 - INFO - 
-2025-10-15 02:33:44 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:44 - MODEL_9 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 02:33:44 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:44 - MODEL_9 - INFO - Training R^2: 0.7083
-2025-10-15 02:33:44 - MODEL_9 - INFO - Test R^2: 0.5245
-2025-10-15 02:33:44 - MODEL_9 - INFO - RMSE: $30,797.05
-2025-10-15 02:33:44 - MODEL_9 - INFO - MAE: $21,496.02
-2025-10-15 02:33:44 - MODEL_9 - INFO - MAPE: 489.54%
-2025-10-15 02:33:44 - MODEL_9 - INFO - CV R^2 (mean +- std): 0.5332 +- 0.0170
-2025-10-15 02:33:44 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:44 - MODEL_9 - INFO - 
-2025-10-15 02:33:44 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:44 - MODEL_9 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 02:33:44 - MODEL_9 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:45 - MODEL_9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:45 - MODEL_9 - INFO - MODEL 9 FINAL SUMMARY
-2025-10-15 02:33:45 - MODEL_9 - INFO - ============================================================
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Performance Metrics (Final):
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Training R^2: 0.7083
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Test R^2: 0.5245
-2025-10-15 02:33:45 - MODEL_9 - INFO -   RMSE (original scale): $30,797.05
-2025-10-15 02:33:45 - MODEL_9 - INFO -   MAE (original scale): $21,496.02
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Percentage Error Metrics:
-2025-10-15 02:33:45 - MODEL_9 - INFO -   MAPE: 489.54%
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO -   CV R^2: 0.5332 +- 0.0170
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Random Forest Specific:
-2025-10-15 02:33:45 - MODEL_9 - INFO -   OOB R^2: 0.5304
-2025-10-15 02:33:45 - MODEL_9 - INFO -   OOB RMSE: $30,807.37
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Mean tree depth: 15.0
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Training time: 0.74 seconds
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Top 5 Features:
-2025-10-15 02:33:45 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1405
-2025-10-15 02:33:45 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1400
-2025-10-15 02:33:45 - MODEL_9 - INFO -   3. RH1: 0.1028
-2025-10-15 02:33:45 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0579
-2025-10-15 02:33:45 - MODEL_9 - INFO -   5. age: 0.0421
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Data Utilization:
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Training samples: 27,339
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Test samples: 6,834
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Total features: 57
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Data retention: 100% (no outlier removal)
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - Output:
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Results: ..\..\report\models\model_9
-2025-10-15 02:33:45 - MODEL_9 - INFO -   Plots: ..\..\report\models\model_9\diagnostic_plots.png
-2025-10-15 02:33:45 - MODEL_9 - INFO -   LaTeX: ..\..\report\models\model_9\model_9_renewcommands.tex
-2025-10-15 02:33:45 - MODEL_9 - INFO - 
-2025-10-15 02:33:45 - MODEL_9 - INFO - ================================================================================
-2025-10-15 02:33:45 - MODEL_9 - INFO - MODEL 9 PIPELINE COMPLETE
-2025-10-15 02:33:45 - MODEL_9 - INFO - ================================================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - 
+2025-10-15 13:36:22 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - INITIALIZING MODEL 9: RANDOM-FOREST
+2025-10-15 13:36:22 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - Output directory: ..\..\report\models\model_9
+2025-10-15 13:36:22 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - Configuration:
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - Outlier removal: False
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - Transformation: none
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - Random seed: 42
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - n_estimators: 150
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - max_depth: 15
+2025-10-15 13:36:22 - MODEL_9 - INFO -   - Random seed: 42
+2025-10-15 13:36:22 - MODEL_9 - INFO - 
+2025-10-15 13:36:22 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - STARTING PIPELINE: RANDOM-FOREST
+2025-10-15 13:36:22 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:22 - MODEL_9 - INFO - 
+2025-10-15 13:36:22 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:22 - MODEL_9 - INFO - LOADING DATA: FY2022-2024
+2025-10-15 13:36:22 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:22 - MODEL_9 - INFO - Loading data from data\cached\fy2022.pkl
+2025-10-15 13:36:22 - MODEL_9 - INFO - Found 45270 records in 'data' key
+2025-10-15 13:36:24 - MODEL_9 - INFO - FY2022 Summary:
+2025-10-15 13:36:24 - MODEL_9 - INFO -   - Processed: 32,200
+2025-10-15 13:36:24 - MODEL_9 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:36:24 - MODEL_9 - INFO -   - Skipped (no cost): 13,070
+2025-10-15 13:36:24 - MODEL_9 - INFO -   - Skipped (errors): 0
+2025-10-15 13:36:24 - MODEL_9 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-15 13:36:24 - MODEL_9 - INFO - Found 46193 records in 'data' key
+2025-10-15 13:36:25 - MODEL_9 - INFO - FY2023 Summary:
+2025-10-15 13:36:25 - MODEL_9 - INFO -   - Processed: 33,092
+2025-10-15 13:36:25 - MODEL_9 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:36:25 - MODEL_9 - INFO -   - Skipped (no cost): 13,101
+2025-10-15 13:36:25 - MODEL_9 - INFO -   - Skipped (errors): 0
+2025-10-15 13:36:25 - MODEL_9 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 13:36:26 - MODEL_9 - INFO - Found 47259 records in 'data' key
+2025-10-15 13:36:27 - MODEL_9 - INFO - FY2024 Summary:
+2025-10-15 13:36:27 - MODEL_9 - INFO -   - Processed: 34,173
+2025-10-15 13:36:27 - MODEL_9 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:36:27 - MODEL_9 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 13:36:27 - MODEL_9 - INFO -   - Skipped (errors): 0
+2025-10-15 13:36:27 - MODEL_9 - INFO - Total loaded: 99,465 usable records
+2025-10-15 13:36:27 - MODEL_9 - INFO - 
+2025-10-15 13:36:27 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:27 - MODEL_9 - INFO - DATA SPLIT
+2025-10-15 13:36:27 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:27 - MODEL_9 - INFO - Training samples: 79,572
+2025-10-15 13:36:27 - MODEL_9 - INFO - Test samples: 19,893
+2025-10-15 13:36:27 - MODEL_9 - INFO - Split ratio: 20.0%
+2025-10-15 13:36:27 - MODEL_9 - INFO - 
+2025-10-15 13:36:27 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:27 - MODEL_9 - INFO - FEATURE PREPARATION
+2025-10-15 13:36:27 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:28 - MODEL_9 - INFO - Features prepared: 57 total features from 79572 records
+2025-10-15 13:36:28 - MODEL_9 - INFO - Feature breakdown:
+2025-10-15 13:36:28 - MODEL_9 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:36:28 - MODEL_9 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:36:28 - MODEL_9 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:36:28 - MODEL_9 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:36:28 - MODEL_9 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:36:28 - MODEL_9 - INFO - Feature counts by type:
+2025-10-15 13:36:28 - MODEL_9 - INFO -   numeric: 9
+2025-10-15 13:36:28 - MODEL_9 - INFO -   categorical: 5
+2025-10-15 13:36:28 - MODEL_9 - INFO -   binary: 3
+2025-10-15 13:36:28 - MODEL_9 - INFO -   qsi: 37
+2025-10-15 13:36:28 - MODEL_9 - INFO -   interactions: 3
+2025-10-15 13:36:29 - MODEL_9 - INFO - Features prepared: 57 total features from 19893 records
+2025-10-15 13:36:29 - MODEL_9 - INFO - Feature breakdown:
+2025-10-15 13:36:29 - MODEL_9 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:36:29 - MODEL_9 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:36:29 - MODEL_9 - INFO - Feature counts by type:
+2025-10-15 13:36:29 - MODEL_9 - INFO -   numeric: 9
+2025-10-15 13:36:29 - MODEL_9 - INFO -   categorical: 5
+2025-10-15 13:36:29 - MODEL_9 - INFO -   binary: 3
+2025-10-15 13:36:29 - MODEL_9 - INFO -   qsi: 37
+2025-10-15 13:36:29 - MODEL_9 - INFO -   interactions: 3
+2025-10-15 13:36:29 - MODEL_9 - INFO - Features prepared: 57 features
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Training shape: (79572, 57)
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Test shape: (19893, 57)
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Target range: $31.25 - $335,039.30
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Target mean: $40,201.64
+2025-10-15 13:36:29 - MODEL_9 - INFO -   Target median: $27,068.27
+2025-10-15 13:36:29 - MODEL_9 - INFO - 
+2025-10-15 13:36:29 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:29 - MODEL_9 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-15 13:36:29 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:29 - MODEL_9 - INFO - 
+2025-10-15 13:36:29 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:29 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:29 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:29 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:29 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:29 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:29 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:29 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:29 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:29 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:29 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:31 - MODEL_9 - INFO - Random Forest fitted in 1.83 seconds
+2025-10-15 13:36:31 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6300
+2025-10-15 13:36:31 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,466.99
+2025-10-15 13:36:31 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:31 - MODEL_9 - INFO - 
+2025-10-15 13:36:31 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:31 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1338
+2025-10-15 13:36:31 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1326
+2025-10-15 13:36:31 - MODEL_9 - INFO -   3. RH1: 0.1018
+2025-10-15 13:36:31 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0610
+2025-10-15 13:36:31 - MODEL_9 - INFO -   5. age: 0.0396
+2025-10-15 13:36:31 - MODEL_9 - INFO -   Fold 1: R^2 = 0.6345
+2025-10-15 13:36:31 - MODEL_9 - INFO - 
+2025-10-15 13:36:31 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:31 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:31 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:31 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:31 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:31 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:31 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:31 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:31 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:31 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:31 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:33 - MODEL_9 - INFO - Random Forest fitted in 1.84 seconds
+2025-10-15 13:36:33 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6290
+2025-10-15 13:36:33 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,450.46
+2025-10-15 13:36:33 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:33 - MODEL_9 - INFO - 
+2025-10-15 13:36:33 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:33 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1342
+2025-10-15 13:36:33 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1300
+2025-10-15 13:36:33 - MODEL_9 - INFO -   3. RH1: 0.1058
+2025-10-15 13:36:33 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0608
+2025-10-15 13:36:33 - MODEL_9 - INFO -   5. age: 0.0430
+2025-10-15 13:36:33 - MODEL_9 - INFO -   Fold 2: R^2 = 0.6291
+2025-10-15 13:36:33 - MODEL_9 - INFO - 
+2025-10-15 13:36:33 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:33 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:33 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:33 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:33 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:33 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:33 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:33 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:33 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:33 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:33 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:34 - MODEL_9 - INFO - Random Forest fitted in 1.81 seconds
+2025-10-15 13:36:34 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6270
+2025-10-15 13:36:34 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,555.31
+2025-10-15 13:36:34 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:35 - MODEL_9 - INFO - 
+2025-10-15 13:36:35 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:35 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1397
+2025-10-15 13:36:35 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1242
+2025-10-15 13:36:35 - MODEL_9 - INFO -   3. RH1: 0.1026
+2025-10-15 13:36:35 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0597
+2025-10-15 13:36:35 - MODEL_9 - INFO -   5. age: 0.0417
+2025-10-15 13:36:35 - MODEL_9 - INFO -   Fold 3: R^2 = 0.6341
+2025-10-15 13:36:35 - MODEL_9 - INFO - 
+2025-10-15 13:36:35 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:35 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:35 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:35 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:35 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:35 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:35 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:35 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:35 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:35 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:35 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:37 - MODEL_9 - INFO - Random Forest fitted in 1.95 seconds
+2025-10-15 13:36:37 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6297
+2025-10-15 13:36:37 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,374.47
+2025-10-15 13:36:37 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:37 - MODEL_9 - INFO - 
+2025-10-15 13:36:37 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:37 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1392
+2025-10-15 13:36:37 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1341
+2025-10-15 13:36:37 - MODEL_9 - INFO -   3. RH1: 0.0994
+2025-10-15 13:36:37 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0564
+2025-10-15 13:36:37 - MODEL_9 - INFO -   5. age: 0.0406
+2025-10-15 13:36:37 - MODEL_9 - INFO -   Fold 4: R^2 = 0.6267
+2025-10-15 13:36:37 - MODEL_9 - INFO - 
+2025-10-15 13:36:37 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:37 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:37 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:37 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:37 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:37 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:37 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:37 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:37 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:37 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:37 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:39 - MODEL_9 - INFO - Random Forest fitted in 2.08 seconds
+2025-10-15 13:36:39 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6303
+2025-10-15 13:36:39 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,442.91
+2025-10-15 13:36:39 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:39 - MODEL_9 - INFO - 
+2025-10-15 13:36:39 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:39 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1329
+2025-10-15 13:36:39 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1192
+2025-10-15 13:36:39 - MODEL_9 - INFO -   3. RH1: 0.1168
+2025-10-15 13:36:39 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0586
+2025-10-15 13:36:39 - MODEL_9 - INFO -   5. age: 0.0400
+2025-10-15 13:36:39 - MODEL_9 - INFO -   Fold 5: R^2 = 0.6301
+2025-10-15 13:36:39 - MODEL_9 - INFO - 
+2025-10-15 13:36:39 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:39 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:39 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:39 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:39 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:39 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:39 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:39 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:39 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:39 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:39 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:41 - MODEL_9 - INFO - Random Forest fitted in 1.93 seconds
+2025-10-15 13:36:41 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6304
+2025-10-15 13:36:41 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,439.75
+2025-10-15 13:36:41 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:41 - MODEL_9 - INFO - 
+2025-10-15 13:36:41 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:41 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1392
+2025-10-15 13:36:41 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1241
+2025-10-15 13:36:41 - MODEL_9 - INFO -   3. RH1: 0.1016
+2025-10-15 13:36:41 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0598
+2025-10-15 13:36:41 - MODEL_9 - INFO -   5. age: 0.0425
+2025-10-15 13:36:41 - MODEL_9 - INFO -   Fold 6: R^2 = 0.6353
+2025-10-15 13:36:41 - MODEL_9 - INFO - 
+2025-10-15 13:36:41 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:41 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:41 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:41 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:41 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:41 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:41 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:41 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:41 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:41 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:41 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:43 - MODEL_9 - INFO - Random Forest fitted in 1.95 seconds
+2025-10-15 13:36:43 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6300
+2025-10-15 13:36:43 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,475.67
+2025-10-15 13:36:43 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:43 - MODEL_9 - INFO - 
+2025-10-15 13:36:43 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:43 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1359
+2025-10-15 13:36:43 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1311
+2025-10-15 13:36:43 - MODEL_9 - INFO -   3. RH1: 0.1051
+2025-10-15 13:36:43 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0586
+2025-10-15 13:36:43 - MODEL_9 - INFO -   5. age: 0.0398
+2025-10-15 13:36:43 - MODEL_9 - INFO -   Fold 7: R^2 = 0.6320
+2025-10-15 13:36:43 - MODEL_9 - INFO - 
+2025-10-15 13:36:43 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:43 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:43 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:43 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:43 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:43 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:43 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:43 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:43 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:43 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:43 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:45 - MODEL_9 - INFO - Random Forest fitted in 1.85 seconds
+2025-10-15 13:36:45 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6301
+2025-10-15 13:36:45 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,406.23
+2025-10-15 13:36:45 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:45 - MODEL_9 - INFO - 
+2025-10-15 13:36:45 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:45 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1373
+2025-10-15 13:36:45 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1206
+2025-10-15 13:36:45 - MODEL_9 - INFO -   3. RH1: 0.1094
+2025-10-15 13:36:45 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0592
+2025-10-15 13:36:45 - MODEL_9 - INFO -   5. age: 0.0398
+2025-10-15 13:36:45 - MODEL_9 - INFO -   Fold 8: R^2 = 0.6324
+2025-10-15 13:36:45 - MODEL_9 - INFO - 
+2025-10-15 13:36:45 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:45 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:45 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:45 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:45 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:45 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:45 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:45 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:45 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:45 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:45 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:47 - MODEL_9 - INFO - Random Forest fitted in 1.95 seconds
+2025-10-15 13:36:47 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6298
+2025-10-15 13:36:47 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,464.91
+2025-10-15 13:36:47 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:47 - MODEL_9 - INFO - 
+2025-10-15 13:36:47 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:47 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1339
+2025-10-15 13:36:47 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1256
+2025-10-15 13:36:47 - MODEL_9 - INFO -   3. RH1: 0.1050
+2025-10-15 13:36:47 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0624
+2025-10-15 13:36:47 - MODEL_9 - INFO -   5. age: 0.0410
+2025-10-15 13:36:47 - MODEL_9 - INFO -   Fold 9: R^2 = 0.6338
+2025-10-15 13:36:47 - MODEL_9 - INFO - 
+2025-10-15 13:36:47 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:47 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:47 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:47 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:47 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:47 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:47 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:47 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:47 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:47 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:47 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:49 - MODEL_9 - INFO - Random Forest fitted in 2.02 seconds
+2025-10-15 13:36:49 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6264
+2025-10-15 13:36:49 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,538.77
+2025-10-15 13:36:49 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:49 - MODEL_9 - INFO - 
+2025-10-15 13:36:49 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:49 - MODEL_9 - INFO -   1. SupportedLiving_x_LOSRI: 0.1355
+2025-10-15 13:36:49 - MODEL_9 - INFO -   2. FH_x_FSum: 0.1256
+2025-10-15 13:36:49 - MODEL_9 - INFO -   3. RH1: 0.1065
+2025-10-15 13:36:49 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0614
+2025-10-15 13:36:49 - MODEL_9 - INFO -   5. age: 0.0404
+2025-10-15 13:36:49 - MODEL_9 - INFO -   Fold 10: R^2 = 0.6361
+2025-10-15 13:36:49 - MODEL_9 - INFO - 
+2025-10-15 13:36:49 - MODEL_9 - INFO - Cross-validation summary:
+2025-10-15 13:36:49 - MODEL_9 - INFO -   Mean R^2: 0.6324
+2025-10-15 13:36:49 - MODEL_9 - INFO -   Std R^2: 0.0028
+2025-10-15 13:36:49 - MODEL_9 - INFO -   Min R^2: 0.6267 (Fold 4)
+2025-10-15 13:36:49 - MODEL_9 - INFO -   Max R^2: 0.6361 (Fold 10)
+2025-10-15 13:36:49 - MODEL_9 - INFO -   95% CI: [0.6269, 0.6379]
+2025-10-15 13:36:49 - MODEL_9 - INFO - 
+2025-10-15 13:36:49 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:49 - MODEL_9 - INFO - MODEL TRAINING
+2025-10-15 13:36:49 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:49 - MODEL_9 - INFO - 
+2025-10-15 13:36:49 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:49 - MODEL_9 - INFO - FITTING RANDOM FOREST
+2025-10-15 13:36:49 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:49 - MODEL_9 - INFO - Random Forest Configuration:
+2025-10-15 13:36:49 - MODEL_9 - INFO -   n_estimators: 150
+2025-10-15 13:36:49 - MODEL_9 - INFO -   max_depth: 15
+2025-10-15 13:36:49 - MODEL_9 - INFO -   min_samples_split: 8
+2025-10-15 13:36:49 - MODEL_9 - INFO -   min_samples_leaf: 3
+2025-10-15 13:36:49 - MODEL_9 - INFO -   max_features: sqrt
+2025-10-15 13:36:49 - MODEL_9 - INFO -   bootstrap: True
+2025-10-15 13:36:49 - MODEL_9 - INFO -   oob_score: True
+2025-10-15 13:36:51 - MODEL_9 - INFO - Random Forest fitted in 2.11 seconds
+2025-10-15 13:36:51 - MODEL_9 - INFO - Out-of-Bag R^2: 0.6369
+2025-10-15 13:36:51 - MODEL_9 - INFO - Out-of-Bag RMSE (original scale): $25,199.31
+2025-10-15 13:36:51 - MODEL_9 - INFO - Mean tree depth: 15.0
+2025-10-15 13:36:51 - MODEL_9 - INFO - 
+2025-10-15 13:36:51 - MODEL_9 - INFO - Top 5 Features by Importance:
+2025-10-15 13:36:51 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1319
+2025-10-15 13:36:51 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1256
+2025-10-15 13:36:51 - MODEL_9 - INFO -   3. RH1: 0.1137
+2025-10-15 13:36:51 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0603
+2025-10-15 13:36:51 - MODEL_9 - INFO -   5. age: 0.0412
+2025-10-15 13:36:51 - MODEL_9 - INFO - Model training complete
+2025-10-15 13:36:51 - MODEL_9 - INFO - 
+2025-10-15 13:36:51 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:51 - MODEL_9 - INFO - MAKING PREDICTIONS
+2025-10-15 13:36:51 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - Predictions complete
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - CALCULATING METRICS
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - Training R^2: 0.7322
+2025-10-15 13:36:52 - MODEL_9 - INFO - Test R^2: 0.6412
+2025-10-15 13:36:52 - MODEL_9 - INFO - RMSE (original): $24,727.15
+2025-10-15 13:36:52 - MODEL_9 - INFO - RMSE (sqrt scale): $24727.15
+2025-10-15 13:36:52 - MODEL_9 - INFO - MAE: $17,381.67
+2025-10-15 13:36:52 - MODEL_9 - INFO - MAPE: 398.50%
+2025-10-15 13:36:52 - MODEL_9 - INFO - CV R^2 (mean +- std): 0.6324 +- 0.0028
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - SUBGROUP ANALYSIS
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - Calculated metrics for 10 subgroups
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO -   living_FH:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 10,934
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.3761
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $22,205.36
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $+693.18
+2025-10-15 13:36:52 - MODEL_9 - INFO -   living_ILSL:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 2,644
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.5393
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $24,175.75
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $-654.01
+2025-10-15 13:36:52 - MODEL_9 - INFO -   living_RH1-4:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 6,315
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.4768
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $28,768.79
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $-152.49
+2025-10-15 13:36:52 - MODEL_9 - INFO -   age_AgeUnderTwentyOne:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 1,917
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.6535
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $20,419.28
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $+2,643.31
+2025-10-15 13:36:52 - MODEL_9 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 5,679
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.6268
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $27,496.21
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $+88.96
+2025-10-15 13:36:52 - MODEL_9 - INFO -   age_AgeThirtyOnePlus:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 12,297
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: 0.6328
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $23,978.47
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $-55.74
+2025-10-15 13:36:52 - MODEL_9 - INFO -   cost_QOneLow:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 4,973
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: -10.0000
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $21,046.55
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $+17,133.68
+2025-10-15 13:36:52 - MODEL_9 - INFO -   cost_QTwo:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 4,973
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: -5.8581
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $16,239.30
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $+8,378.05
+2025-10-15 13:36:52 - MODEL_9 - INFO -   cost_QThree:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 4,973
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: -1.9959
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $19,024.66
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $-2,765.94
+2025-10-15 13:36:52 - MODEL_9 - INFO -   cost_QFourHigh:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     N: 4,974
+2025-10-15 13:36:52 - MODEL_9 - INFO -     R^2: -0.2053
+2025-10-15 13:36:52 - MODEL_9 - INFO -     RMSE: $37,107.46
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Bias: $-21,758.70
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - VARIANCE ANALYSIS
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - Variance metrics calculated
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO -   Coefficient of Variation (Actual): 1.0426
+2025-10-15 13:36:52 - MODEL_9 - INFO -   Coefficient of Variation (Predicted): 0.7404
+2025-10-15 13:36:52 - MODEL_9 - INFO -   95% Prediction Interval Width: $48,462.82
+2025-10-15 13:36:52 - MODEL_9 - INFO -   Actual-Predicted Correlation: 0.8060
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - POPULATION SCENARIOS
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - Calculated 4 population scenarios
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO -   Base budget: $1,200,000,000
+2025-10-15 13:36:52 - MODEL_9 - INFO -   currentbaseline:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Clients served: 30,121
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Avg allocation: $39,838.56
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist change: +0
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist %: +0.0%
+2025-10-15 13:36:52 - MODEL_9 - INFO -   modelbalanced:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Clients served: 30,723
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Avg allocation: $39,041.79
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist change: +602
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist %: +2.0%
+2025-10-15 13:36:52 - MODEL_9 - INFO -   modelefficiency:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Clients served: 31,627
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Avg allocation: $37,846.63
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist change: +1,506
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist %: +5.0%
+2025-10-15 13:36:52 - MODEL_9 - INFO -   categoryfocused:
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Clients served: 25,602
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Avg allocation: $47,009.50
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist change: -4,518
+2025-10-15 13:36:52 - MODEL_9 - INFO -     Waitlist %: -15.0%
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - GENERATING OUTPUTS
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - 
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - LATEX GENERATION
+2025-10-15 13:36:52 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:52 - MODEL_9 - INFO - LaTeX commands generated:
+2025-10-15 13:36:52 - MODEL_9 - INFO -   - Newcommands file: ..\..\report\models\model_9\model_9_newcommands.tex
+2025-10-15 13:36:52 - MODEL_9 - INFO -     (87 placeholder commands)
+2025-10-15 13:36:52 - MODEL_9 - INFO -   - Renewcommands file: ..\..\report\models\model_9\model_9_renewcommands.tex
+2025-10-15 13:36:52 - MODEL_9 - INFO -     (87 value commands)
+2025-10-15 13:36:52 - MODEL_9 - INFO - Appending Model 9 specific LaTeX commands...
+2025-10-15 13:36:52 - MODEL_9 - INFO - Model 9 specific commands appended successfully
+2025-10-15 13:36:53 - MODEL_9 - INFO - Results saved:
+2025-10-15 13:36:53 - MODEL_9 - INFO -   - Metrics JSON: ..\..\report\models\model_9\metrics.json
+2025-10-15 13:36:53 - MODEL_9 - INFO -   - Predictions CSV: ..\..\report\models\model_9\predictions.csv
+2025-10-15 13:36:53 - MODEL_9 - INFO -     (79,572 train + 19,893 test predictions)
+2025-10-15 13:36:53 - MODEL_9 - INFO - 
+2025-10-15 13:36:53 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:53 - MODEL_9 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 13:36:53 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
+2025-10-15 13:36:54 - MODEL_9 - INFO - 
+2025-10-15 13:36:54 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:54 - MODEL_9 - INFO - PIPELINE COMPLETE: RANDOM-FOREST
+2025-10-15 13:36:54 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:54 - MODEL_9 - INFO - 
+2025-10-15 13:36:54 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 13:36:54 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - Training R^2: 0.7322
+2025-10-15 13:36:54 - MODEL_9 - INFO - Test R^2: 0.6412
+2025-10-15 13:36:54 - MODEL_9 - INFO - RMSE: $24,727.15
+2025-10-15 13:36:54 - MODEL_9 - INFO - MAE: $17,381.67
+2025-10-15 13:36:54 - MODEL_9 - INFO - MAPE: 398.50%
+2025-10-15 13:36:54 - MODEL_9 - INFO - CV R^2 (mean +- std): 0.6324 +- 0.0028
+2025-10-15 13:36:54 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - Generating full-population predictions for BASE_YEAR=2024 ...
+2025-10-15 13:36:54 - MODEL_9 - INFO - 
+2025-10-15 13:36:54 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - LOADING DATA: FY2024-2024
+2025-10-15 13:36:54 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:54 - MODEL_9 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 13:36:54 - MODEL_9 - INFO - Found 47259 records in 'data' key
+2025-10-15 13:36:56 - MODEL_9 - INFO - FY2024 Summary:
+2025-10-15 13:36:56 - MODEL_9 - INFO -   - Processed: 34,173
+2025-10-15 13:36:56 - MODEL_9 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:36:56 - MODEL_9 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 13:36:56 - MODEL_9 - INFO -   - Skipped (errors): 0
+2025-10-15 13:36:56 - MODEL_9 - INFO - Total loaded: 34,173 usable records
+2025-10-15 13:36:56 - MODEL_9 - INFO - Features prepared: 57 total features from 34173 records
+2025-10-15 13:36:56 - MODEL_9 - INFO - Feature breakdown:
+2025-10-15 13:36:56 - MODEL_9 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:36:56 - MODEL_9 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:36:56 - MODEL_9 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:36:56 - MODEL_9 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:36:56 - MODEL_9 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:36:56 - MODEL_9 - INFO - Feature counts by type:
+2025-10-15 13:36:56 - MODEL_9 - INFO -   numeric: 9
+2025-10-15 13:36:56 - MODEL_9 - INFO -   categorical: 5
+2025-10-15 13:36:56 - MODEL_9 - INFO -   binary: 3
+2025-10-15 13:36:56 - MODEL_9 - INFO -   qsi: 37
+2025-10-15 13:36:56 - MODEL_9 - INFO -   interactions: 3
+2025-10-15 13:36:56 - MODEL_9 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_9\predictions_full_2024.csv
+2025-10-15 13:36:56 - MODEL_9 - INFO - 
+2025-10-15 13:36:56 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:56 - MODEL_9 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 13:36:56 - MODEL_9 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:57 - MODEL_9 - INFO - Diagnostic plots saved to ..\..\report\models\model_9\diagnostic_plots.png
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:57 - MODEL_9 - INFO - MODEL 9 FINAL SUMMARY
+2025-10-15 13:36:57 - MODEL_9 - INFO - ============================================================
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Performance Metrics (Final):
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Training R^2: 0.7322
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Test R^2: 0.6412
+2025-10-15 13:36:57 - MODEL_9 - INFO -   RMSE (original scale): $24,727.15
+2025-10-15 13:36:57 - MODEL_9 - INFO -   MAE (original scale): $17,381.67
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Percentage Error Metrics:
+2025-10-15 13:36:57 - MODEL_9 - INFO -   MAPE: 398.50%
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO -   CV R^2: 0.6324 +- 0.0028
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Random Forest Specific:
+2025-10-15 13:36:57 - MODEL_9 - INFO -   OOB R^2: 0.6369
+2025-10-15 13:36:57 - MODEL_9 - INFO -   OOB RMSE: $25,199.31
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Mean tree depth: 15.0
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Training time: 2.11 seconds
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Top 5 Features:
+2025-10-15 13:36:57 - MODEL_9 - INFO -   1. FH_x_FSum: 0.1319
+2025-10-15 13:36:57 - MODEL_9 - INFO -   2. SupportedLiving_x_LOSRI: 0.1256
+2025-10-15 13:36:57 - MODEL_9 - INFO -   3. RH1: 0.1137
+2025-10-15 13:36:57 - MODEL_9 - INFO -   4. Age_x_BSum: 0.0603
+2025-10-15 13:36:57 - MODEL_9 - INFO -   5. age: 0.0412
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Data Utilization:
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Training samples: 79,572
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Test samples: 19,893
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Total features: 57
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Data retention: 100% (no outlier removal)
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - Output:
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Results: ..\..\report\models\model_9
+2025-10-15 13:36:57 - MODEL_9 - INFO -   Plots: ..\..\report\models\model_9\diagnostic_plots.png
+2025-10-15 13:36:57 - MODEL_9 - INFO -   LaTeX: ..\..\report\models\model_9\model_9_renewcommands.tex
+2025-10-15 13:36:57 - MODEL_9 - INFO - 
+2025-10-15 13:36:57 - MODEL_9 - INFO - ================================================================================
+2025-10-15 13:36:57 - MODEL_9 - INFO - MODEL 9 PIPELINE COMPLETE
+2025-10-15 13:36:57 - MODEL_9 - INFO - ================================================================================

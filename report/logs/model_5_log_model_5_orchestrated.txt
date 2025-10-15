@@ -1,450 +1,477 @@
-2025-10-15 02:32:12 - MODEL_5 - INFO - 
-2025-10-15 02:32:12 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:32:12 - MODEL_5 - INFO - INITIALIZING MODEL 5: RIDGE REGRESSION
-2025-10-15 02:32:12 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:32:12 - MODEL_5 - INFO - Output directory: ..\..\report\models\model_5
-2025-10-15 02:32:12 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:32:12 - MODEL_5 - INFO - Configuration:
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Outlier removal: False
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Transformation: none
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Random seed: 42
-2025-10-15 02:32:12 - MODEL_5 - INFO - Configuration:
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Square-root transformation: No
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Outlier removal: No
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Feature standardization: Yes (required for Ridge)
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Alpha selection: Cross-validation with 100 candidates
-2025-10-15 02:32:12 - MODEL_5 - INFO -   - Data utilization: 100%
-2025-10-15 02:32:12 - MODEL_5 - INFO - 
-2025-10-15 02:32:12 - MODEL_5 - INFO - 
-2025-10-15 02:32:12 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:32:12 - MODEL_5 - INFO - STARTING PIPELINE: RIDGE REGRESSION
-2025-10-15 02:32:12 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:32:12 - MODEL_5 - INFO - 
-2025-10-15 02:32:12 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:12 - MODEL_5 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 02:32:12 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:12 - MODEL_5 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 02:32:12 - MODEL_5 - INFO - Found 47259 records in 'data' key
-2025-10-15 02:32:14 - MODEL_5 - INFO - FY2024 Summary:
-2025-10-15 02:32:14 - MODEL_5 - INFO -   - Processed: 34,173
-2025-10-15 02:32:14 - MODEL_5 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 02:32:14 - MODEL_5 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 02:32:14 - MODEL_5 - INFO -   - Skipped (errors): 0
-2025-10-15 02:32:14 - MODEL_5 - INFO - Total loaded: 34,173 usable records
-2025-10-15 02:32:14 - MODEL_5 - INFO - 
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - DATA SPLIT
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - Training samples: 27,339
-2025-10-15 02:32:14 - MODEL_5 - INFO - Test samples: 6,834
-2025-10-15 02:32:14 - MODEL_5 - INFO - Split ratio: 20.0%
-2025-10-15 02:32:14 - MODEL_5 - INFO - 
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - FEATURE PREPARATION
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - Features prepared: 57 total features from 27339 records
-2025-10-15 02:32:14 - MODEL_5 - INFO - Feature breakdown:
-2025-10-15 02:32:14 - MODEL_5 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 02:32:14 - MODEL_5 - INFO - Feature counts by type:
-2025-10-15 02:32:14 - MODEL_5 - INFO -   numeric: 9
-2025-10-15 02:32:14 - MODEL_5 - INFO -   categorical: 5
-2025-10-15 02:32:14 - MODEL_5 - INFO -   binary: 3
-2025-10-15 02:32:14 - MODEL_5 - INFO -   qsi: 37
-2025-10-15 02:32:14 - MODEL_5 - INFO -   interactions: 3
-2025-10-15 02:32:14 - MODEL_5 - INFO - Features prepared: 57 total features from 6834 records
-2025-10-15 02:32:14 - MODEL_5 - INFO - Feature breakdown:
-2025-10-15 02:32:14 - MODEL_5 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 02:32:14 - MODEL_5 - INFO - Feature counts by type:
-2025-10-15 02:32:14 - MODEL_5 - INFO -   numeric: 9
-2025-10-15 02:32:14 - MODEL_5 - INFO -   categorical: 5
-2025-10-15 02:32:14 - MODEL_5 - INFO -   binary: 3
-2025-10-15 02:32:14 - MODEL_5 - INFO -   qsi: 37
-2025-10-15 02:32:14 - MODEL_5 - INFO -   interactions: 3
-2025-10-15 02:32:14 - MODEL_5 - INFO - Features prepared: 57 features
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Training shape: (27339, 57)
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Test shape: (6834, 57)
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Target range: $31.25 - $346,560.68
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Target mean: $44,675.37
-2025-10-15 02:32:14 - MODEL_5 - INFO -   Target median: $32,279.60
-2025-10-15 02:32:14 - MODEL_5 - INFO - 
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - 
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:14 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:14 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.44
-2025-10-15 02:32:14 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:20 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
-2025-10-15 02:32:20 - MODEL_5 - INFO - Condition number after regularization: 78.49
-2025-10-15 02:32:20 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
-2025-10-15 02:32:20 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:20 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:20 - MODEL_5 - INFO -   Age groups: 1.1%
-2025-10-15 02:32:20 - MODEL_5 - INFO -   QSI items: 4.4%
-2025-10-15 02:32:20 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:20 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:20 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:20 - MODEL_5 - INFO -   Fold 1: R^2 = 0.4670
-2025-10-15 02:32:20 - MODEL_5 - INFO - 
-2025-10-15 02:32:20 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:20 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:20 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:20 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.23
-2025-10-15 02:32:20 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:26 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
-2025-10-15 02:32:26 - MODEL_5 - INFO - Condition number after regularization: 73.23
-2025-10-15 02:32:26 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
-2025-10-15 02:32:26 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:26 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:26 - MODEL_5 - INFO -   Age groups: 1.2%
-2025-10-15 02:32:26 - MODEL_5 - INFO -   QSI items: 3.6%
-2025-10-15 02:32:26 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:26 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:26 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:26 - MODEL_5 - INFO -   Fold 2: R^2 = 0.4623
-2025-10-15 02:32:26 - MODEL_5 - INFO - 
-2025-10-15 02:32:26 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:26 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:26 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:26 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.35
-2025-10-15 02:32:26 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:33 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
-2025-10-15 02:32:33 - MODEL_5 - INFO - Condition number after regularization: 78.62
-2025-10-15 02:32:33 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
-2025-10-15 02:32:33 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:33 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:33 - MODEL_5 - INFO -   Age groups: 1.1%
-2025-10-15 02:32:33 - MODEL_5 - INFO -   QSI items: 3.4%
-2025-10-15 02:32:33 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:33 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:33 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:33 - MODEL_5 - INFO -   Fold 3: R^2 = 0.4995
-2025-10-15 02:32:33 - MODEL_5 - INFO - 
-2025-10-15 02:32:33 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:33 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:33 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:33 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.29
-2025-10-15 02:32:33 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:39 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
-2025-10-15 02:32:39 - MODEL_5 - INFO - Condition number after regularization: 73.36
-2025-10-15 02:32:39 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
-2025-10-15 02:32:39 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:39 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:39 - MODEL_5 - INFO -   Age groups: 1.2%
-2025-10-15 02:32:39 - MODEL_5 - INFO -   QSI items: 3.6%
-2025-10-15 02:32:39 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:39 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:39 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:39 - MODEL_5 - INFO -   Fold 4: R^2 = 0.5032
-2025-10-15 02:32:39 - MODEL_5 - INFO - 
-2025-10-15 02:32:39 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:39 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:39 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:39 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.33
-2025-10-15 02:32:39 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:45 - MODEL_5 - INFO - Optimal alpha selected: 40.370173
-2025-10-15 02:32:45 - MODEL_5 - INFO - Condition number after regularization: 84.26+0.00j
-2025-10-15 02:32:45 - MODEL_5 - INFO - Effective degrees of freedom: 50.68 / 57
-2025-10-15 02:32:45 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:45 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:45 - MODEL_5 - INFO -   Age groups: 0.9%
-2025-10-15 02:32:45 - MODEL_5 - INFO -   QSI items: 3.7%
-2025-10-15 02:32:45 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:45 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:45 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:45 - MODEL_5 - INFO -   Fold 5: R^2 = 0.4759
-2025-10-15 02:32:45 - MODEL_5 - INFO - 
-2025-10-15 02:32:45 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:45 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:45 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:45 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.39
-2025-10-15 02:32:45 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:51 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
-2025-10-15 02:32:51 - MODEL_5 - INFO - Condition number after regularization: 73.30
-2025-10-15 02:32:51 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
-2025-10-15 02:32:51 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:51 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:51 - MODEL_5 - INFO -   Age groups: 1.2%
-2025-10-15 02:32:51 - MODEL_5 - INFO -   QSI items: 3.4%
-2025-10-15 02:32:51 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:51 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:51 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:51 - MODEL_5 - INFO -   Fold 6: R^2 = 0.4924
-2025-10-15 02:32:51 - MODEL_5 - INFO - 
-2025-10-15 02:32:51 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:51 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:51 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:51 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.39
-2025-10-15 02:32:51 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:32:57 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
-2025-10-15 02:32:57 - MODEL_5 - INFO - Condition number after regularization: 73.33
-2025-10-15 02:32:58 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
-2025-10-15 02:32:58 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:32:58 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:32:58 - MODEL_5 - INFO -   Age groups: 1.2%
-2025-10-15 02:32:58 - MODEL_5 - INFO -   QSI items: 3.5%
-2025-10-15 02:32:58 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:32:58 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:32:58 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:32:58 - MODEL_5 - INFO -   Fold 7: R^2 = 0.5000
-2025-10-15 02:32:58 - MODEL_5 - INFO - 
-2025-10-15 02:32:58 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:58 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:32:58 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:32:58 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.48
-2025-10-15 02:32:58 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:33:04 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
-2025-10-15 02:33:04 - MODEL_5 - INFO - Condition number after regularization: 73.32
-2025-10-15 02:33:04 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
-2025-10-15 02:33:04 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:33:04 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:33:04 - MODEL_5 - INFO -   Age groups: 1.2%
-2025-10-15 02:33:04 - MODEL_5 - INFO -   QSI items: 3.6%
-2025-10-15 02:33:04 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:33:04 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:33:04 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:33:04 - MODEL_5 - INFO -   Fold 8: R^2 = 0.4985
-2025-10-15 02:33:04 - MODEL_5 - INFO - 
-2025-10-15 02:33:04 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:04 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:33:04 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:04 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.28
-2025-10-15 02:33:04 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:33:10 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
-2025-10-15 02:33:10 - MODEL_5 - INFO - Condition number after regularization: 78.60
-2025-10-15 02:33:10 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
-2025-10-15 02:33:10 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:33:10 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:33:10 - MODEL_5 - INFO -   Age groups: 1.1%
-2025-10-15 02:33:10 - MODEL_5 - INFO -   QSI items: 3.4%
-2025-10-15 02:33:10 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:33:10 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:33:10 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:33:10 - MODEL_5 - INFO -   Fold 9: R^2 = 0.5070
-2025-10-15 02:33:10 - MODEL_5 - INFO - 
-2025-10-15 02:33:10 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:10 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:33:10 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:10 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.37
-2025-10-15 02:33:10 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:33:16 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
-2025-10-15 02:33:16 - MODEL_5 - INFO - Condition number after regularization: 78.49
-2025-10-15 02:33:16 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
-2025-10-15 02:33:16 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Age groups: 1.1%
-2025-10-15 02:33:16 - MODEL_5 - INFO -   QSI items: 3.7%
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:33:16 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:33:16 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Fold 10: R^2 = 0.5123
-2025-10-15 02:33:16 - MODEL_5 - INFO - 
-2025-10-15 02:33:16 - MODEL_5 - INFO - Cross-validation summary:
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Mean R^2: 0.4918
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Std R^2: 0.0164
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Min R^2: 0.4623 (Fold 2)
-2025-10-15 02:33:16 - MODEL_5 - INFO -   Max R^2: 0.5123 (Fold 10)
-2025-10-15 02:33:16 - MODEL_5 - INFO -   95% CI: [0.4596, 0.5240]
-2025-10-15 02:33:16 - MODEL_5 - INFO - 
-2025-10-15 02:33:16 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:16 - MODEL_5 - INFO - MODEL TRAINING
-2025-10-15 02:33:16 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:16 - MODEL_5 - INFO - 
-2025-10-15 02:33:16 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:16 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
-2025-10-15 02:33:16 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:16 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.35
-2025-10-15 02:33:16 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
-2025-10-15 02:33:22 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
-2025-10-15 02:33:22 - MODEL_5 - INFO - Condition number after regularization: 82.83
-2025-10-15 02:33:22 - MODEL_5 - INFO - Effective degrees of freedom: 50.67 / 57
-2025-10-15 02:33:23 - MODEL_5 - INFO - Shrinkage by category:
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Living settings: 0.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Age groups: 1.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   QSI items: 3.4%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Interactions: 0.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
-2025-10-15 02:33:23 - MODEL_5 - INFO - Regularization strength: strong
-2025-10-15 02:33:23 - MODEL_5 - INFO - Model training complete
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - MAKING PREDICTIONS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Predictions complete
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - CALCULATING METRICS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Training R^2: 0.4940
-2025-10-15 02:33:23 - MODEL_5 - INFO - Test R^2: 0.4772
-2025-10-15 02:33:23 - MODEL_5 - INFO - RMSE (original): $32,290.80
-2025-10-15 02:33:23 - MODEL_5 - INFO - RMSE (sqrt scale): $32336.38
-2025-10-15 02:33:23 - MODEL_5 - INFO - MAE: $22,479.38
-2025-10-15 02:33:23 - MODEL_5 - INFO - MAPE: 473.99%
-2025-10-15 02:33:23 - MODEL_5 - INFO - CV R^2 (mean +- std): 0.4918 +- 0.0164
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - SUBGROUP ANALYSIS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Calculated metrics for 10 subgroups
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO -   living_FH:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 3,767
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.1280
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $29,739.60
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $-10.66
-2025-10-15 02:33:23 - MODEL_5 - INFO -   living_ILSL:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 893
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.2710
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $34,419.95
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+119.68
-2025-10-15 02:33:23 - MODEL_5 - INFO -   living_RH1-4:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 2,174
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.2524
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $35,476.24
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+766.81
-2025-10-15 02:33:23 - MODEL_5 - INFO -   age_AgeUnderTwentyOne:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 694
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.5123
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $26,057.21
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+2,699.39
-2025-10-15 02:33:23 - MODEL_5 - INFO -   age_AgeTwentyOneToThirty:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 1,797
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.4446
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $36,412.26
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+1,167.27
-2025-10-15 02:33:23 - MODEL_5 - INFO -   age_AgeThirtyOnePlus:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 4,343
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: 0.4638
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $31,363.28
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $-515.13
-2025-10-15 02:33:23 - MODEL_5 - INFO -   cost_QOneLow:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 1,709
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: -10.0000
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $28,143.39
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+22,222.61
-2025-10-15 02:33:23 - MODEL_5 - INFO -   cost_QTwo:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 1,708
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: -5.8140
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $20,144.51
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $+10,034.67
-2025-10-15 02:33:23 - MODEL_5 - INFO -   cost_QThree:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 1,708
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: -2.7297
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $22,540.80
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $-3,306.52
-2025-10-15 02:33:23 - MODEL_5 - INFO -   cost_QFourHigh:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     N: 1,709
-2025-10-15 02:33:23 - MODEL_5 - INFO -     R^2: -0.9200
-2025-10-15 02:33:23 - MODEL_5 - INFO -     RMSE: $49,640.29
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Bias: $-27,932.34
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - VARIANCE ANALYSIS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Variance metrics calculated
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Coefficient of Variation (Actual): 1.0101
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Coefficient of Variation (Predicted): 0.6964
-2025-10-15 02:33:23 - MODEL_5 - INFO -   95% Prediction Interval Width: $63,288.02
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Actual-Predicted Correlation: 0.6909
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - POPULATION SCENARIOS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Calculated 4 population scenarios
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO -   Base budget: $1,200,000,000
-2025-10-15 02:33:23 - MODEL_5 - INFO -   currentbaseline:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Clients served: 26,984
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Avg allocation: $44,469.88
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist change: +0
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist %: +0.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   modelbalanced:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Clients served: 27,523
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Avg allocation: $43,580.48
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist change: +539
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist %: +2.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   modelefficiency:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Clients served: 28,333
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Avg allocation: $42,246.39
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist change: +1,349
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist %: +5.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO -   categoryfocused:
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Clients served: 22,936
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Avg allocation: $52,474.46
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist change: -4,047
-2025-10-15 02:33:23 - MODEL_5 - INFO -     Waitlist %: -15.0%
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - GENERATING OUTPUTS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - LATEX GENERATION
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - LaTeX commands generated:
-2025-10-15 02:33:23 - MODEL_5 - INFO -   - Newcommands file: ..\..\report\models\model_5\model_5_newcommands.tex
-2025-10-15 02:33:23 - MODEL_5 - INFO -     (87 placeholder commands)
-2025-10-15 02:33:23 - MODEL_5 - INFO -   - Renewcommands file: ..\..\report\models\model_5\model_5_renewcommands.tex
-2025-10-15 02:33:23 - MODEL_5 - INFO -     (87 value commands)
-2025-10-15 02:33:23 - MODEL_5 - INFO - Results saved:
-2025-10-15 02:33:23 - MODEL_5 - INFO -   - Metrics JSON: ..\..\report\models\model_5\metrics.json
-2025-10-15 02:33:23 - MODEL_5 - INFO -   - Predictions CSV: ..\..\report\models\model_5\predictions.csv
-2025-10-15 02:33:23 - MODEL_5 - INFO -     (27,339 train + 6,834 test predictions)
-2025-10-15 02:33:23 - MODEL_5 - INFO - Diagnostic plots saved to ..\..\report\models\model_5\diagnostic_plots.png
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:33:23 - MODEL_5 - INFO - PIPELINE COMPLETE: RIDGE REGRESSION
-2025-10-15 02:33:23 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - Training R^2: 0.4940
-2025-10-15 02:33:23 - MODEL_5 - INFO - Test R^2: 0.4772
-2025-10-15 02:33:23 - MODEL_5 - INFO - RMSE: $32,290.80
-2025-10-15 02:33:23 - MODEL_5 - INFO - MAE: $22,479.38
-2025-10-15 02:33:23 - MODEL_5 - INFO - MAPE: 473.99%
-2025-10-15 02:33:23 - MODEL_5 - INFO - CV R^2 (mean +- std): 0.4918 +- 0.0164
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - 
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:23 - MODEL_5 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 02:33:23 - MODEL_5 - INFO - ------------------------------------------------------------
-2025-10-15 02:33:24 - MODEL_5 - INFO - Diagnostic plots saved to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_5\diagnostic_plots.png
-2025-10-15 02:33:24 - MODEL_5 - INFO - 
-2025-10-15 02:33:24 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:33:24 - MODEL_5 - INFO - MODEL 5 FINAL SUMMARY
-2025-10-15 02:33:24 - MODEL_5 - INFO - ============================================================
-2025-10-15 02:33:24 - MODEL_5 - INFO - Optimal Alpha: 46.415888
-2025-10-15 02:33:24 - MODEL_5 - INFO - Test R^2: 0.4772
-2025-10-15 02:33:24 - MODEL_5 - INFO - Test RMSE: $32,290.80
-2025-10-15 02:33:24 - MODEL_5 - INFO - Condition Number: 82.8 (from 22.4, -270.6% improvement)
-2025-10-15 02:33:24 - MODEL_5 - INFO - Effective DOF: 50.7 / 57
-2025-10-15 02:33:24 - MODEL_5 - INFO - Average Shrinkage: 6.3%
-2025-10-15 02:33:24 - MODEL_5 - INFO - CV R^2: 0.4918 +- 0.0164
-2025-10-15 02:33:24 - MODEL_5 - INFO - 
-2025-10-15 02:33:24 - MODEL_5 - INFO - Output:
-2025-10-15 02:33:24 - MODEL_5 - INFO -   Results: ..\..\report\models\model_5
-2025-10-15 02:33:24 - MODEL_5 - INFO -   Plots: ..\..\report\models\model_5\diagnostic_plots.png
-2025-10-15 02:33:24 - MODEL_5 - INFO -   LaTeX: ..\..\report\models\model_5\model_5_renewcommands.tex
-2025-10-15 02:33:24 - MODEL_5 - INFO - 
-2025-10-15 02:33:24 - MODEL_5 - INFO - ================================================================================
-2025-10-15 02:33:24 - MODEL_5 - INFO - MODEL 5 PIPELINE COMPLETE
-2025-10-15 02:33:24 - MODEL_5 - INFO - ================================================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - 
+2025-10-15 13:34:57 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - INITIALIZING MODEL 5: RIDGE REGRESSION
+2025-10-15 13:34:57 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - Output directory: ..\..\report\models\model_5
+2025-10-15 13:34:57 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - Configuration:
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Outlier removal: False
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Transformation: none
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Random seed: 42
+2025-10-15 13:34:57 - MODEL_5 - INFO - Configuration:
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Square-root transformation: No
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Outlier removal: No
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Feature standardization: Yes (required for Ridge)
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Alpha selection: Cross-validation with 100 candidates
+2025-10-15 13:34:57 - MODEL_5 - INFO -   - Data utilization: 100%
+2025-10-15 13:34:57 - MODEL_5 - INFO - 
+2025-10-15 13:34:57 - MODEL_5 - INFO - 
+2025-10-15 13:34:57 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - STARTING PIPELINE: RIDGE REGRESSION
+2025-10-15 13:34:57 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:34:57 - MODEL_5 - INFO - 
+2025-10-15 13:34:57 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:57 - MODEL_5 - INFO - LOADING DATA: FY2024-2024
+2025-10-15 13:34:57 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:57 - MODEL_5 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 13:34:57 - MODEL_5 - INFO - Found 47259 records in 'data' key
+2025-10-15 13:34:58 - MODEL_5 - INFO - FY2024 Summary:
+2025-10-15 13:34:58 - MODEL_5 - INFO -   - Processed: 34,173
+2025-10-15 13:34:58 - MODEL_5 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:34:58 - MODEL_5 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 13:34:58 - MODEL_5 - INFO -   - Skipped (errors): 0
+2025-10-15 13:34:58 - MODEL_5 - INFO - Total loaded: 34,173 usable records
+2025-10-15 13:34:58 - MODEL_5 - INFO - 
+2025-10-15 13:34:58 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:58 - MODEL_5 - INFO - DATA SPLIT
+2025-10-15 13:34:58 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:58 - MODEL_5 - INFO - Training samples: 27,339
+2025-10-15 13:34:58 - MODEL_5 - INFO - Test samples: 6,834
+2025-10-15 13:34:58 - MODEL_5 - INFO - Split ratio: 20.0%
+2025-10-15 13:34:58 - MODEL_5 - INFO - 
+2025-10-15 13:34:58 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:58 - MODEL_5 - INFO - FEATURE PREPARATION
+2025-10-15 13:34:58 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:59 - MODEL_5 - INFO - Features prepared: 57 total features from 27339 records
+2025-10-15 13:34:59 - MODEL_5 - INFO - Feature breakdown:
+2025-10-15 13:34:59 - MODEL_5 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:34:59 - MODEL_5 - INFO - Feature counts by type:
+2025-10-15 13:34:59 - MODEL_5 - INFO -   numeric: 9
+2025-10-15 13:34:59 - MODEL_5 - INFO -   categorical: 5
+2025-10-15 13:34:59 - MODEL_5 - INFO -   binary: 3
+2025-10-15 13:34:59 - MODEL_5 - INFO -   qsi: 37
+2025-10-15 13:34:59 - MODEL_5 - INFO -   interactions: 3
+2025-10-15 13:34:59 - MODEL_5 - INFO - Features prepared: 57 total features from 6834 records
+2025-10-15 13:34:59 - MODEL_5 - INFO - Feature breakdown:
+2025-10-15 13:34:59 - MODEL_5 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:34:59 - MODEL_5 - INFO - Feature counts by type:
+2025-10-15 13:34:59 - MODEL_5 - INFO -   numeric: 9
+2025-10-15 13:34:59 - MODEL_5 - INFO -   categorical: 5
+2025-10-15 13:34:59 - MODEL_5 - INFO -   binary: 3
+2025-10-15 13:34:59 - MODEL_5 - INFO -   qsi: 37
+2025-10-15 13:34:59 - MODEL_5 - INFO -   interactions: 3
+2025-10-15 13:34:59 - MODEL_5 - INFO - Features prepared: 57 features
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Training shape: (27339, 57)
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Test shape: (6834, 57)
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Target range: $31.25 - $346,560.68
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Target mean: $44,675.37
+2025-10-15 13:34:59 - MODEL_5 - INFO -   Target median: $32,279.60
+2025-10-15 13:34:59 - MODEL_5 - INFO - 
+2025-10-15 13:34:59 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:59 - MODEL_5 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-15 13:34:59 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:59 - MODEL_5 - INFO - 
+2025-10-15 13:34:59 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:59 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:34:59 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:34:59 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.44
+2025-10-15 13:34:59 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:05 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
+2025-10-15 13:35:05 - MODEL_5 - INFO - Condition number after regularization: 78.49
+2025-10-15 13:35:05 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
+2025-10-15 13:35:05 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:05 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:05 - MODEL_5 - INFO -   Age groups: 1.1%
+2025-10-15 13:35:05 - MODEL_5 - INFO -   QSI items: 4.4%
+2025-10-15 13:35:05 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:05 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:05 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:05 - MODEL_5 - INFO -   Fold 1: R^2 = 0.4670
+2025-10-15 13:35:05 - MODEL_5 - INFO - 
+2025-10-15 13:35:05 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:05 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:05 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:05 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.23
+2025-10-15 13:35:05 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:11 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
+2025-10-15 13:35:11 - MODEL_5 - INFO - Condition number after regularization: 73.23
+2025-10-15 13:35:11 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
+2025-10-15 13:35:11 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:11 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:11 - MODEL_5 - INFO -   Age groups: 1.2%
+2025-10-15 13:35:11 - MODEL_5 - INFO -   QSI items: 3.6%
+2025-10-15 13:35:11 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:11 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:11 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:11 - MODEL_5 - INFO -   Fold 2: R^2 = 0.4623
+2025-10-15 13:35:11 - MODEL_5 - INFO - 
+2025-10-15 13:35:11 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:11 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:11 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:11 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.35
+2025-10-15 13:35:11 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:17 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
+2025-10-15 13:35:17 - MODEL_5 - INFO - Condition number after regularization: 78.62
+2025-10-15 13:35:17 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
+2025-10-15 13:35:18 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:18 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:18 - MODEL_5 - INFO -   Age groups: 1.1%
+2025-10-15 13:35:18 - MODEL_5 - INFO -   QSI items: 3.4%
+2025-10-15 13:35:18 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:18 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:18 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:18 - MODEL_5 - INFO -   Fold 3: R^2 = 0.4995
+2025-10-15 13:35:18 - MODEL_5 - INFO - 
+2025-10-15 13:35:18 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:18 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:18 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:18 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.29
+2025-10-15 13:35:18 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:23 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
+2025-10-15 13:35:23 - MODEL_5 - INFO - Condition number after regularization: 73.36
+2025-10-15 13:35:24 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
+2025-10-15 13:35:24 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:24 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:24 - MODEL_5 - INFO -   Age groups: 1.2%
+2025-10-15 13:35:24 - MODEL_5 - INFO -   QSI items: 3.6%
+2025-10-15 13:35:24 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:24 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:24 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:24 - MODEL_5 - INFO -   Fold 4: R^2 = 0.5032
+2025-10-15 13:35:24 - MODEL_5 - INFO - 
+2025-10-15 13:35:24 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:24 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:24 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:24 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.33
+2025-10-15 13:35:24 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:29 - MODEL_5 - INFO - Optimal alpha selected: 40.370173
+2025-10-15 13:35:30 - MODEL_5 - INFO - Condition number after regularization: 84.26+0.00j
+2025-10-15 13:35:30 - MODEL_5 - INFO - Effective degrees of freedom: 50.68 / 57
+2025-10-15 13:35:30 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:30 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:30 - MODEL_5 - INFO -   Age groups: 0.9%
+2025-10-15 13:35:30 - MODEL_5 - INFO -   QSI items: 3.7%
+2025-10-15 13:35:30 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:30 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:30 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:30 - MODEL_5 - INFO -   Fold 5: R^2 = 0.4759
+2025-10-15 13:35:30 - MODEL_5 - INFO - 
+2025-10-15 13:35:30 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:30 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:30 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:30 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.39
+2025-10-15 13:35:30 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:36 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
+2025-10-15 13:35:36 - MODEL_5 - INFO - Condition number after regularization: 73.30
+2025-10-15 13:35:36 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
+2025-10-15 13:35:36 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:36 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:36 - MODEL_5 - INFO -   Age groups: 1.2%
+2025-10-15 13:35:36 - MODEL_5 - INFO -   QSI items: 3.4%
+2025-10-15 13:35:36 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:36 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:36 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:36 - MODEL_5 - INFO -   Fold 6: R^2 = 0.4924
+2025-10-15 13:35:36 - MODEL_5 - INFO - 
+2025-10-15 13:35:36 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:36 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:36 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:36 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.39
+2025-10-15 13:35:36 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:42 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
+2025-10-15 13:35:42 - MODEL_5 - INFO - Condition number after regularization: 73.33
+2025-10-15 13:35:42 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
+2025-10-15 13:35:42 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:42 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:42 - MODEL_5 - INFO -   Age groups: 1.2%
+2025-10-15 13:35:42 - MODEL_5 - INFO -   QSI items: 3.5%
+2025-10-15 13:35:42 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:42 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:42 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:42 - MODEL_5 - INFO -   Fold 7: R^2 = 0.5000
+2025-10-15 13:35:42 - MODEL_5 - INFO - 
+2025-10-15 13:35:42 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:42 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:42 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:42 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.48
+2025-10-15 13:35:42 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:48 - MODEL_5 - INFO - Optimal alpha selected: 53.366992
+2025-10-15 13:35:48 - MODEL_5 - INFO - Condition number after regularization: 73.32
+2025-10-15 13:35:48 - MODEL_5 - INFO - Effective degrees of freedom: 50.58 / 57
+2025-10-15 13:35:48 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:48 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:48 - MODEL_5 - INFO -   Age groups: 1.2%
+2025-10-15 13:35:48 - MODEL_5 - INFO -   QSI items: 3.6%
+2025-10-15 13:35:48 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:48 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:48 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:48 - MODEL_5 - INFO -   Fold 8: R^2 = 0.4985
+2025-10-15 13:35:48 - MODEL_5 - INFO - 
+2025-10-15 13:35:48 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:48 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:48 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:49 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.28
+2025-10-15 13:35:49 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:35:55 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
+2025-10-15 13:35:55 - MODEL_5 - INFO - Condition number after regularization: 78.60
+2025-10-15 13:35:55 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
+2025-10-15 13:35:55 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:35:55 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:35:55 - MODEL_5 - INFO -   Age groups: 1.1%
+2025-10-15 13:35:55 - MODEL_5 - INFO -   QSI items: 3.4%
+2025-10-15 13:35:55 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:35:55 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:35:55 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:35:55 - MODEL_5 - INFO -   Fold 9: R^2 = 0.5070
+2025-10-15 13:35:55 - MODEL_5 - INFO - 
+2025-10-15 13:35:55 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:55 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:35:55 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:35:55 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.37
+2025-10-15 13:35:55 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:36:01 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
+2025-10-15 13:36:01 - MODEL_5 - INFO - Condition number after regularization: 78.49
+2025-10-15 13:36:01 - MODEL_5 - INFO - Effective degrees of freedom: 50.63 / 57
+2025-10-15 13:36:01 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Age groups: 1.1%
+2025-10-15 13:36:01 - MODEL_5 - INFO -   QSI items: 3.7%
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:36:01 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:36:01 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Fold 10: R^2 = 0.5123
+2025-10-15 13:36:01 - MODEL_5 - INFO - 
+2025-10-15 13:36:01 - MODEL_5 - INFO - Cross-validation summary:
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Mean R^2: 0.4918
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Std R^2: 0.0164
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Min R^2: 0.4623 (Fold 2)
+2025-10-15 13:36:01 - MODEL_5 - INFO -   Max R^2: 0.5123 (Fold 10)
+2025-10-15 13:36:01 - MODEL_5 - INFO -   95% CI: [0.4596, 0.5240]
+2025-10-15 13:36:01 - MODEL_5 - INFO - 
+2025-10-15 13:36:01 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:01 - MODEL_5 - INFO - MODEL TRAINING
+2025-10-15 13:36:01 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:01 - MODEL_5 - INFO - 
+2025-10-15 13:36:01 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:01 - MODEL_5 - INFO - FITTING RIDGE REGRESSION
+2025-10-15 13:36:01 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:01 - MODEL_5 - INFO - Condition number before regularization (standardized): 22.35
+2025-10-15 13:36:01 - MODEL_5 - INFO - Selecting optimal alpha from 100 candidates (with standardization)
+2025-10-15 13:36:08 - MODEL_5 - INFO - Optimal alpha selected: 46.415888
+2025-10-15 13:36:08 - MODEL_5 - INFO - Condition number after regularization: 82.83
+2025-10-15 13:36:08 - MODEL_5 - INFO - Effective degrees of freedom: 50.67 / 57
+2025-10-15 13:36:08 - MODEL_5 - INFO - Shrinkage by category:
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Living settings: 0.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Age groups: 1.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   QSI items: 3.4%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Interactions: 0.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO - Ridge regression fitted with 57 coefficients
+2025-10-15 13:36:08 - MODEL_5 - INFO - Regularization strength: strong
+2025-10-15 13:36:08 - MODEL_5 - INFO - Model training complete
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - MAKING PREDICTIONS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - Predictions complete
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - CALCULATING METRICS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - Training R^2: 0.4940
+2025-10-15 13:36:08 - MODEL_5 - INFO - Test R^2: 0.4772
+2025-10-15 13:36:08 - MODEL_5 - INFO - RMSE (original): $32,290.80
+2025-10-15 13:36:08 - MODEL_5 - INFO - RMSE (sqrt scale): $32336.38
+2025-10-15 13:36:08 - MODEL_5 - INFO - MAE: $22,479.38
+2025-10-15 13:36:08 - MODEL_5 - INFO - MAPE: 473.99%
+2025-10-15 13:36:08 - MODEL_5 - INFO - CV R^2 (mean +- std): 0.4918 +- 0.0164
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - SUBGROUP ANALYSIS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - Calculated metrics for 10 subgroups
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO -   living_FH:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 3,767
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.1280
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $29,739.60
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $-10.66
+2025-10-15 13:36:08 - MODEL_5 - INFO -   living_ILSL:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 893
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.2710
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $34,419.95
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+119.68
+2025-10-15 13:36:08 - MODEL_5 - INFO -   living_RH1-4:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 2,174
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.2524
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $35,476.24
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+766.81
+2025-10-15 13:36:08 - MODEL_5 - INFO -   age_AgeUnderTwentyOne:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 694
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.5123
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $26,057.21
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+2,699.39
+2025-10-15 13:36:08 - MODEL_5 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 1,797
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.4446
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $36,412.26
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+1,167.27
+2025-10-15 13:36:08 - MODEL_5 - INFO -   age_AgeThirtyOnePlus:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 4,343
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: 0.4638
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $31,363.28
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $-515.13
+2025-10-15 13:36:08 - MODEL_5 - INFO -   cost_QOneLow:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 1,709
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: -10.0000
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $28,143.39
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+22,222.61
+2025-10-15 13:36:08 - MODEL_5 - INFO -   cost_QTwo:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 1,708
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: -5.8140
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $20,144.51
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $+10,034.67
+2025-10-15 13:36:08 - MODEL_5 - INFO -   cost_QThree:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 1,708
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: -2.7297
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $22,540.80
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $-3,306.52
+2025-10-15 13:36:08 - MODEL_5 - INFO -   cost_QFourHigh:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     N: 1,709
+2025-10-15 13:36:08 - MODEL_5 - INFO -     R^2: -0.9200
+2025-10-15 13:36:08 - MODEL_5 - INFO -     RMSE: $49,640.29
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Bias: $-27,932.34
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - VARIANCE ANALYSIS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - Variance metrics calculated
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Coefficient of Variation (Predicted): 0.6964
+2025-10-15 13:36:08 - MODEL_5 - INFO -   95% Prediction Interval Width: $63,288.02
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Actual-Predicted Correlation: 0.6909
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - POPULATION SCENARIOS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - Calculated 4 population scenarios
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO -   Base budget: $1,200,000,000
+2025-10-15 13:36:08 - MODEL_5 - INFO -   currentbaseline:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Clients served: 26,984
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Avg allocation: $44,469.88
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist change: +0
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist %: +0.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   modelbalanced:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Clients served: 27,523
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Avg allocation: $43,580.48
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist change: +539
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist %: +2.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   modelefficiency:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Clients served: 28,333
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Avg allocation: $42,246.39
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist change: +1,349
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist %: +5.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO -   categoryfocused:
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Clients served: 22,936
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Avg allocation: $52,474.46
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist change: -4,047
+2025-10-15 13:36:08 - MODEL_5 - INFO -     Waitlist %: -15.0%
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - GENERATING OUTPUTS
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - 
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - LATEX GENERATION
+2025-10-15 13:36:08 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:08 - MODEL_5 - INFO - LaTeX commands generated:
+2025-10-15 13:36:08 - MODEL_5 - INFO -   - Newcommands file: ..\..\report\models\model_5\model_5_newcommands.tex
+2025-10-15 13:36:08 - MODEL_5 - INFO -     (87 placeholder commands)
+2025-10-15 13:36:08 - MODEL_5 - INFO -   - Renewcommands file: ..\..\report\models\model_5\model_5_renewcommands.tex
+2025-10-15 13:36:08 - MODEL_5 - INFO -     (87 value commands)
+2025-10-15 13:36:08 - MODEL_5 - INFO - Results saved:
+2025-10-15 13:36:08 - MODEL_5 - INFO -   - Metrics JSON: ..\..\report\models\model_5\metrics.json
+2025-10-15 13:36:08 - MODEL_5 - INFO -   - Predictions CSV: ..\..\report\models\model_5\predictions.csv
+2025-10-15 13:36:08 - MODEL_5 - INFO -     (27,339 train + 6,834 test predictions)
+2025-10-15 13:36:09 - MODEL_5 - INFO - Diagnostic plots saved to ..\..\report\models\model_5\diagnostic_plots.png
+2025-10-15 13:36:09 - MODEL_5 - INFO - 
+2025-10-15 13:36:09 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:36:09 - MODEL_5 - INFO - PIPELINE COMPLETE: RIDGE REGRESSION
+2025-10-15 13:36:09 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:36:09 - MODEL_5 - INFO - 
+2025-10-15 13:36:09 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:09 - MODEL_5 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 13:36:09 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:09 - MODEL_5 - INFO - Training R^2: 0.4940
+2025-10-15 13:36:09 - MODEL_5 - INFO - Test R^2: 0.4772
+2025-10-15 13:36:09 - MODEL_5 - INFO - RMSE: $32,290.80
+2025-10-15 13:36:09 - MODEL_5 - INFO - MAE: $22,479.38
+2025-10-15 13:36:09 - MODEL_5 - INFO - MAPE: 473.99%
+2025-10-15 13:36:09 - MODEL_5 - INFO - CV R^2 (mean +- std): 0.4918 +- 0.0164
+2025-10-15 13:36:09 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:09 - MODEL_5 - INFO - Generating full-population predictions for BASE_YEAR=2024 ...
+2025-10-15 13:36:09 - MODEL_5 - INFO - 
+2025-10-15 13:36:09 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:09 - MODEL_5 - INFO - LOADING DATA: FY2024-2024
+2025-10-15 13:36:09 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:09 - MODEL_5 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 13:36:09 - MODEL_5 - INFO - Found 47259 records in 'data' key
+2025-10-15 13:36:11 - MODEL_5 - INFO - FY2024 Summary:
+2025-10-15 13:36:11 - MODEL_5 - INFO -   - Processed: 34,173
+2025-10-15 13:36:11 - MODEL_5 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 13:36:11 - MODEL_5 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 13:36:11 - MODEL_5 - INFO -   - Skipped (errors): 0
+2025-10-15 13:36:11 - MODEL_5 - INFO - Total loaded: 34,173 usable records
+2025-10-15 13:36:11 - MODEL_5 - INFO - Features prepared: 57 total features from 34173 records
+2025-10-15 13:36:11 - MODEL_5 - INFO - Feature breakdown:
+2025-10-15 13:36:11 - MODEL_5 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 13:36:11 - MODEL_5 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 13:36:11 - MODEL_5 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 13:36:11 - MODEL_5 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 13:36:11 - MODEL_5 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 13:36:11 - MODEL_5 - INFO - Feature counts by type:
+2025-10-15 13:36:11 - MODEL_5 - INFO -   numeric: 9
+2025-10-15 13:36:11 - MODEL_5 - INFO -   categorical: 5
+2025-10-15 13:36:11 - MODEL_5 - INFO -   binary: 3
+2025-10-15 13:36:11 - MODEL_5 - INFO -   qsi: 37
+2025-10-15 13:36:11 - MODEL_5 - INFO -   interactions: 3
+2025-10-15 13:36:11 - MODEL_5 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_5\predictions_full_2024.csv
+2025-10-15 13:36:11 - MODEL_5 - INFO - 
+2025-10-15 13:36:11 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:11 - MODEL_5 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 13:36:11 - MODEL_5 - INFO - ------------------------------------------------------------
+2025-10-15 13:36:12 - MODEL_5 - INFO - Diagnostic plots saved to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_5\diagnostic_plots.png
+2025-10-15 13:36:12 - MODEL_5 - INFO - 
+2025-10-15 13:36:12 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:36:12 - MODEL_5 - INFO - MODEL 5 FINAL SUMMARY
+2025-10-15 13:36:12 - MODEL_5 - INFO - ============================================================
+2025-10-15 13:36:12 - MODEL_5 - INFO - Optimal Alpha: 46.415888
+2025-10-15 13:36:12 - MODEL_5 - INFO - Test R^2: 0.4772
+2025-10-15 13:36:12 - MODEL_5 - INFO - Test RMSE: $32,290.80
+2025-10-15 13:36:12 - MODEL_5 - INFO - Condition Number: 82.8 (from 22.4, -270.6% improvement)
+2025-10-15 13:36:12 - MODEL_5 - INFO - Effective DOF: 50.7 / 57
+2025-10-15 13:36:12 - MODEL_5 - INFO - Average Shrinkage: 6.3%
+2025-10-15 13:36:12 - MODEL_5 - INFO - CV R^2: 0.4918 +- 0.0164
+2025-10-15 13:36:12 - MODEL_5 - INFO - 
+2025-10-15 13:36:12 - MODEL_5 - INFO - Output:
+2025-10-15 13:36:12 - MODEL_5 - INFO -   Results: ..\..\report\models\model_5
+2025-10-15 13:36:12 - MODEL_5 - INFO -   Plots: ..\..\report\models\model_5\diagnostic_plots.png
+2025-10-15 13:36:12 - MODEL_5 - INFO -   LaTeX: ..\..\report\models\model_5\model_5_renewcommands.tex
+2025-10-15 13:36:12 - MODEL_5 - INFO - 
+2025-10-15 13:36:12 - MODEL_5 - INFO - ================================================================================
+2025-10-15 13:36:12 - MODEL_5 - INFO - MODEL 5 PIPELINE COMPLETE
+2025-10-15 13:36:12 - MODEL_5 - INFO - ================================================================================

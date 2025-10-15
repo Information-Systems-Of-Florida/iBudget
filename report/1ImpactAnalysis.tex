@@ -6,5 +6,15 @@ The Florida iBudget algorithm represents a critical component of the state's dev
 
 The enactment of House Bill 1103 in the 2025 legislative session has fundamentally altered the regulatory landscape for iBudget allocation methodologies. This legislation mandates a comprehensive study to review, evaluate, and identify recommendations regarding the current algorithm, with particular emphasis on ensuring compliance with person-centered planning requirements under section 393.0662, Florida Statutes. The bill's requirements extend beyond simple algorithmic refinement, demanding a fundamental reassessment of how statistical methods align with person-centered planning principles and contemporary disability services philosophy.
 
-This analysis addresses the impact of the iBudget recommendations detailed in the [======] Report. 
+This analysis addresses the impact of the iBudget recommendations detailed in the iBudget Study commissioned by APD in September/November 2025. 
+
+The model evaluation distinguishes three fiscal aggregates used for policy interpretation: 
+\begin{itemize}
+    \item \textbf{Total Actual Cost} --- the sum of all observed expenditures in the historical dataset for the base year.  This represents the agency's actual fiscal outlay for waiver services and serves as the empirical baseline.  
+    \item \textbf{Total Predicted Cost} --- the sum of the model's estimated allocations for each individual, based solely on assessed need and model parameters.  This reflects the theoretical distribution of funds if the predictive algorithm were implemented without any legal or policy constraints.  
+    \item \textbf{Total Compliant Budget} --- this measure enforces statutory protections against reductions in individual allocations by setting each person's projected cost to the greater of the actual and predicted values, that is, 
+    $\text{Compliant}_i = \max(\text{Actual}_i, \text{Predicted}_i)$.  
+    The Total Compliant Budget therefore guarantees that no participant receives less than their current level of support, ensuring compliance with legislative requirements such as F.S.~393.0662.  
+\end{itemize}
+
 

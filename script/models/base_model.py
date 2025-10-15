@@ -9,6 +9,7 @@ FIXED: Type conversion issues for ConsumerRecord creation
 - QSI questions: None -> 0.0
 - Enhanced error logging
 """
+BASE_YEAR = 2024  # default for full-population prediction
 
 import numpy as np
 import pandas as pd
@@ -129,7 +130,8 @@ class BaseiBudgetModel(ABC):
                     use_outlier_removal: bool = False,
                     outlier_threshold: float = 3,
                     random_seed: int = 42,
-                    log_suffix: str = None):
+                    log_suffix: str = None,
+                    base_year: int = 2024,):
         """
         Initialize base model
         
@@ -143,6 +145,7 @@ class BaseiBudgetModel(ABC):
         """
         self.model_id = model_id
         self.model_name = model_name
+        self.BASE_YEAR = base_year
         
         # Outlier configuration
         self.use_outlier_removal = use_outlier_removal
@@ -1446,12 +1449,44 @@ class BaseiBudgetModel(ABC):
         # print(f"DEBUG: variance_metrics keys = {list(self.variance_metrics.keys())}")
         # print(f"DEBUG: population_scenarios keys = {list(self.population_scenarios.keys())}")
         
+        # ================================================================
+        # Patch to produce estimated for a given year, BASE_YEAR 
+        # ================================================================
+        try:
+            self.generate_full_population_predictions()
+        except Exception as e:
+            self.logger.warning(f"Could not generate full-population predictions: {e}")
+        # ================================================================        
+        
         return {
             'metrics': self.metrics,
             'subgroup_metrics': self.subgroup_metrics,
             'variance_metrics': self.variance_metrics,
             'population_scenarios': self.population_scenarios
         }
+
+    def generate_full_population_predictions(self):
+        """Predict on entire base year population for impact evaluation."""
+        self.logger.info(f"Generating full-population predictions for BASE_YEAR={self.BASE_YEAR} ...")
+        all_records_full = self.load_data(fiscal_year_start=self.BASE_YEAR, fiscal_year_end=self.BASE_YEAR)
+        X_full, _ = self.prepare_features(all_records_full)
+        y_full_actual = np.array([r.total_cost for r in all_records_full])
+        y_full_pred = self.predict_original(X_full)
+        
+        self.full_population_results = {
+            "records": all_records_full,
+            "y_actual": y_full_actual,
+            "y_pred": y_full_pred
+        }
+        # Optionally save
+        out_file = self.output_dir / f"predictions_full_{self.BASE_YEAR}.csv"
+        pd.DataFrame({
+            "CaseNo": [r.consumer_id for r in all_records_full],
+            "Actual": y_full_actual,
+            "Predicted": y_full_pred
+        }).to_csv(out_file, index=False)
+        self.logger.info(f"Saved full-population predictions to {out_file}")
+
     
     # ========================================================================
     # OUTPUT GENERATION

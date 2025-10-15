@@ -1,6 +1,7 @@
 {
   "scenario_name": "Consensus_FeatureSelection_Optimal",
   "log_suffix": "Scenario_1",   
+  "base_year": 2024,
   "description": "Optimal feature set based on Feature Selection analysis with MI rankings. Uses 7 QSI items (Q19, Q21, Q26, Q27, Q30, Q36, Q44), all support levels, summary scores, living settings, age groups, and county effects.",
   
   "data_settings": {

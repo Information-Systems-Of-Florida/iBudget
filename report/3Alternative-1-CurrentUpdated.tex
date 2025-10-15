@@ -372,18 +372,20 @@ Since Model 1 uses the same methodology as operational Model 5b:
  \section{Comparison of 2015 and 2024 Model Outcomes}
 % %===========================================================
 
-The 2015 Model 5B was originally estimated using data from fiscal years 2013--2014 and reported an in-sample coefficient of determination ($R^2$) of approximately 0.80 after transformation and outlier adjustment.  When the same specification was replicated using fiscal year 2024 data, the model achieved an $R^2$ of about 0.46 on the test set, with comparable results under cross-validation.  
+The 2015 Model 5B was originally estimated using data from fiscal years 2013--2014 and reported an in-sample coefficient of determination ($R^2$) of approximately 0.80 from an OLS model fit on the square-root of costs, in-sample, after removing outliers.  
+
+When the same specification was replicated using fiscal year 2024 data, the model achieved an $R^2$ of about 0.46 on the test set, with comparable results under cross-validation. However, this  $R^2$ is an out-of-sample value computed on the original dollar scale. Thus, the $R^2$ of Niu \& Tao (2015) cannot be directly compared to the $R^2$ in Model 1 (fiscal year 2023-24). 
 
 A review of alternative formulations, including generalized linear models, robust regressions, and variance-weighted specifications, reveals that multiple approaches converge to similar levels of explanatory power.  
 Across these models, the coefficient of determination ($R^2$) consistently falls between 0.45 and 0.50 when applied to fiscal year 2024 data.  This convergence suggests that the observed performance level reflects an empirical boundary determined by the available predictors, rather than a limitation of any specific \textbf{linear} method.
 
-The core predictor framework for all models remains the \textit{Questionnaire for Situational Information (QSI)}, which evaluates individual functional status, behavioral support needs, and living arrangements.  The QSI instrument continues to perform as intended within its assessment domain and remains psychometrically consistent over time.  However, its relationship to total authorized cost has evolved.  Programmatic diversification means that two individuals with identical QSI profiles can now receive markedly different service packages and expenditure levels depending on setting, provider configuration, and support planning choices.  Thus, the instrument's predictive signal has weakened, even though it remains psychometrically consistent.
+The core predictor framework for all models remains the \textit{Questionnaire for Situational Information (QSI)}, which evaluates individual functional status, behavioral support needs, and living arrangements.  %The QSI instrument continues to perform as intended within its assessment domain and remains psychometrically consistent over time.
+However, its relationship to total authorized cost has evolved.  Programmatic diversification means that two individuals with identical QSI profiles can now receive markedly different service packages and expenditure levels depending on setting, provider configuration, and support planning choices.  Thus, the instrument's predictive signal has weakened, even though it remains psychometrically consistent.
 
-\paragraph{Epistemic Frontier:} 
-%
-When multiple regression families yield nearly identical explanatory strength, this indicates that the remaining variance is largely structural rather than methodological.  The model is therefore truthfully weak rather than poorly constructed: it accurately represents the portion of expenditure variance that the available linear predictors can explain, while acknowledging that a substantial share of variation now originates from external and administrative factors outside the model's scope.
+%\paragraph{Epistemic Frontier:} 
+%When multiple regression families yield nearly identical explanatory strength, this indicates that the remaining variance is largely structural rather than methodological.  The model is therefore truthfully weak rather than poorly constructed: it accurately represents the portion of expenditure variance that the available linear predictors can explain, while acknowledging that a substantial share of variation now originates from external and administrative factors outside the model's scope.
 
-From an epistemic standpoint, the convergence of results across models reinforces that the observed explanatory ceiling reflects the present structure of the system rather than analytical design. The 2024 models therefore offer a faithful empirical description of current relationships between assessed needs and authorized costs within the waiver program.
+%From an epistemic standpoint, the convergence of results across models reinforces that the observed explanatory ceiling reflects the present structure of the system rather than analytical design. The 2024 models therefore offer a faithful empirical description of current relationships between assessed needs and authorized costs within the waiver program.
 
 
 \paragraph{Implications for Model Development:} 
