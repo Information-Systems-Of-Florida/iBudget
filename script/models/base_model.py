@@ -9,7 +9,7 @@ FIXED: Type conversion issues for ConsumerRecord creation
 - QSI questions: None -> 0.0
 - Enhanced error logging
 """
-BASE_YEAR = 2024  # default for full-population prediction
+BASE_YEAR = 2023  # default for full-population prediction
 
 import numpy as np
 import pandas as pd
@@ -131,7 +131,7 @@ class BaseiBudgetModel(ABC):
                     outlier_threshold: float = 3,
                     random_seed: int = 42,
                     log_suffix: str = None,
-                    base_year: int = 2024,):
+                    base_year: int = BASE_YEAR,):
         """
         Initialize base model
         
@@ -686,18 +686,18 @@ class BaseiBudgetModel(ABC):
                 # FiscalYear needs to be int
                 elif cache_key == 'FiscalYear':
                     if value is None:
-                        value = 2024
+                        value = BASE_YEAR
                     else:
                         try:
                             value = int(value)
                         except:
-                            value = 2024
+                            value = BASE_YEAR
                 
                 mapped[record_key] = value
         
         return mapped
     
-    def load_data(self, fiscal_year_start: int = 2024, fiscal_year_end: int = 2024) -> List[ConsumerRecord]:
+    def load_data(self, fiscal_year_start: int = BASE_YEAR, fiscal_year_end: int = BASE_YEAR) -> List[ConsumerRecord]:
         """Load data from cached pickle files"""
         self.log_section(f"LOADING DATA: FY{fiscal_year_start}-{fiscal_year_end}")
         
@@ -1380,8 +1380,8 @@ class BaseiBudgetModel(ABC):
     # ========================================================================
     
     def run_complete_pipeline(self,
-                             fiscal_year_start: int = 2024,
-                             fiscal_year_end: int = 2024,
+                             fiscal_year_start: int = BASE_YEAR,
+                             fiscal_year_end: int = BASE_YEAR,
                              test_size: float = 0.2,
                              perform_cv: bool = True,
                              n_cv_folds: int = 10) -> Dict[str, Any]:

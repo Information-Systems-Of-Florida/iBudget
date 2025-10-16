@@ -81,7 +81,7 @@
 \lhead{\includegraphics[width=1cm]{../assets/ISF-logo-tight.png}} % 
 \rhead{\footnotesize{\sc{iBudget}}} 
 \setcounter{page}{1} 
-\lfoot{\sc{\footnotesize Version $\TheVersion$. Planned obsolescence. Discard after: \TheObsolescenceDate} } 
+\lfoot{{\footnotesize  \VersionMsg}} 
 %\cfoot{\sc{\footnotesize }}
 \rfoot{\sc{\footnotesize Page \thepage \hspace{0.005cm} of \pageref*{TotPages}}} % \ThePageCount
 %%************************************************
@@ -101,10 +101,10 @@
 \usepackage{rotating}
 
 %********** Watermark *******
-\usepackage{draftwatermark}
-\SetWatermarkText{\phantom{} \\DRAFT}
-\SetWatermarkScale{1} % Adjust size
-\SetWatermarkColor[gray]{0.95} % Set color and transparency
+% \usepackage{draftwatermark}
+% \SetWatermarkText{\phantom{} \\DRAFT}
+% \SetWatermarkScale{1} % Adjust size
+% \SetWatermarkColor[gray]{0.95} % Set color and transparency
 
 %********** Enybeling Hyperlinks *******
 \usepackage{hyperref}% this enables jumping from a reference and table of content in the pdf file to its target
@@ -230,8 +230,9 @@
 
 % Outlier analysis commands
 
-\newcommand{\WarningRunPiepeline}{WARNING: Value undefined. Run the analysis pipeline}
-\newcommand{\placeholder}{\textcolor{red}{[VALUE NOT SET]}}
+\newcommand{\WarningRunPiepeline}{\textcolor{red}{[VALUE NOT SET]}}
+\newcommand{\placeholder}{\WarningRunPiepeline}
+\newcommand{\FiscalYear}{\WarningRunPiepeline}
 
 
 % Overall statistics

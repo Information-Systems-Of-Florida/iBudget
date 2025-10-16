@@ -17,14 +17,14 @@ BASE_DIR = Path("../report")
 MODEL_DIR = BASE_DIR / "models"
 FIGURES_DIR = BASE_DIR / "figures"
 LOGS_DIR = BASE_DIR / "logs"
-BASE_YEAR=2024
+BASE_YEAR=2025
 
 # Create directories if they don't exist
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def load_model_data(model_num, base_year=2024):
+def load_model_data(model_num, base_year=BASE_YEAR):
     """Load full-population predictions and metrics for a specific model."""
     model_path = MODEL_DIR / f"model_{model_num}"
     
@@ -279,6 +279,7 @@ def generate_latex_output(all_results):
     
     with open(output_file, 'w') as f:
         # Header
+        f.write(f"\\renewcommand{{\\FiscalYear}}{{(fiscal year {BASE_YEAR-1}--{BASE_YEAR})}}\n")
         f.write("% Economic Impact Analysis Report\n")
         f.write(f"% Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("% Conservative Budget Estimation Analysis\n\n")
@@ -307,7 +308,7 @@ def generate_latex_output(all_results):
             f.write(f"\\begin{{table}}[htbp]\n")
             f.write("\\centering\n")
             f.write("\\small\n")
-            f.write(f"\\caption{{Model {model_num}: Economic Impact Summary}}\n")
+            f.write(f"\\caption{{Model {model_num}: Economic Impact Summary \\FiscalYear}}\n")
             f.write(f"\\label{{tab:model{model_num}_impact_summary}}\n")
             f.write("\\begin{tabular}{lrr}\n")
             f.write("\\toprule\n")
@@ -362,8 +363,8 @@ def generate_latex_output(all_results):
                 f.write(f"\\begin{{table}}[htbp]\n")
                 f.write("\\centering\n")
                 f.write("\\small\n")
-                f.write(f"\\caption{{Model {model_num}: Economic Impact by Age Group}}\n")
-                f.write(f"\\label{{tab:model{model_num}_impact_age}}\n")
+                f.write(f"\\caption{{Model {model_num}: Economic Impact by Age Group \\FiscalYear}}\n")
+                f.write(f"\\label{{tab:model{model_num}_impact_summary}}\n")
                 f.write("\\begin{tabular}{lrrrrrr}\n")
                 f.write("\\toprule\n")
                 f.write("\\textbf{Age Group} & \\textbf{N} & \\textbf{\\%} & \\textbf{Mean Actual} & ")
@@ -397,7 +398,7 @@ def generate_latex_output(all_results):
                 f.write(f"\\begin{{table}}[htbp]\n")
                 f.write("\\centering\n")
                 f.write("\\small\n")
-                f.write(f"\\caption{{Model {model_num}: Economic Impact by Living Setting}}\n")
+                f.write(f"\\caption{{Model {model_num}: Economic Impact by Living Setting \\FiscalYear}}\n")
                 f.write(f"\\label{{tab:model{model_num}_impact_living}}\n")
                 f.write("\\begin{tabular}{lrrrrrr}\n")
                 f.write("\\toprule\n")
@@ -433,7 +434,7 @@ def generate_latex_output(all_results):
                 f.write(f"\\begin{{table}}[htbp]\n")
                 f.write("\\centering\n")
                 f.write("\\small\n")
-                f.write(f"\\caption{{Model {model_num}: Economic Impact by Budget Quartile}}\n")
+                f.write(f"\\caption{{Model {model_num}: Economic Impact by Budget Quartile \\FiscalYear}}\n")
                 f.write(f"\\label{{tab:model{model_num}_impact_quartile}}\n")
                 f.write("\\begin{tabular}{lrrrrr}\n")
                 f.write("\\toprule\n")
@@ -465,7 +466,7 @@ def generate_latex_output(all_results):
                 f.write(f"\\begin{{table}}[htbp]\n")
                 f.write("\\centering\n")
                 f.write("\\small\n")
-                f.write(f"\\caption{{Model {model_num}: Distribution by Impact Level}}\n")
+                f.write(f"\\caption{{Model {model_num}: Distribution by Impact Level \\FiscalYear}}\n")
                 f.write(f"\\label{{tab:model{model_num}_impact_distribution}}\n")
                 f.write("\\begin{tabular}{lrrrrr}\n")
                 f.write("\\toprule\n")
@@ -494,7 +495,7 @@ def generate_latex_output(all_results):
                 f.write("\\end{table}\n\n")
             
             # Figure reference
-            f.write(f"Tables~\\ref{{tab:model{model_num}_impact_age}} through ")
+            f.write(f"Tables~\\ref{{tab:model{model_num}_impact_summary}} through ")
             f.write(f"\\ref{{tab:model{model_num}_impact_distribution}} present detailed ")
             f.write("subgroup analyses, revealing how economic impact varies across ")
             f.write("age groups, living settings, budget levels, and impact categories. ")
@@ -511,7 +512,7 @@ def generate_latex_output(all_results):
             f.write(f"\\includegraphics[width=0.95\\textwidth]{{figures/model_{model_num}_Impact_Histograms.pdf}}\n")
             f.write(f"\\caption{{Model {model_num}: Distribution of costs, predictions, errors, ")
             f.write("and conservative budget estimates. The conservative estimate takes the ")
-            f.write("maximum of actual and predicted costs to ensure adequate funding.}\n")
+            f.write("maximum of actual and predicted costs to ensure adequate funding \\FiscalYear.}\n")
             f.write(f"\\label{{fig:model{model_num}_impact_histograms}}\n")
             f.write("\\end{figure}\n\n")
             
@@ -546,7 +547,7 @@ def generate_latex_output(all_results):
             f.write("\\clearpage\n\n")
         
         # Comparative analysis
-        f.write("\\subsection{Comparative Analysis Across Models}\n")
+        f.write(f"\\section{{Comparative Analysis Across Models }}\n")
         f.write("\\label{subsec:comparative_impact}\n\n")
         
         f.write("Table~\\ref{tab:all_models_impact_comparison} presents a comprehensive ")
@@ -556,7 +557,7 @@ def generate_latex_output(all_results):
         f.write("\\begin{table}[htbp]\n")
         f.write("\\centering\n")
         f.write("\\small\n")
-        f.write("\\caption{Comparative Economic Impact Analysis Across All Models}\n")
+        f.write("\\caption{Comparative Economic Impact Analysis Across All Models \\FiscalYear}\n")
         f.write("\\label{tab:all_models_impact_comparison}\n")
         f.write("\\begin{tabular}{lrrrrr}\n")
         f.write("\\toprule\n")
@@ -585,7 +586,7 @@ def generate_latex_output(all_results):
         f.write("\\end{table}\n\n")
         
         # Summary insights
-        f.write("\\subsubsection{Key Insights}\n\n")
+        f.write("\\section{Key Insights}\n\n")
         f.write("\\begin{itemize}\n")
         
         # Find best and worst performing models

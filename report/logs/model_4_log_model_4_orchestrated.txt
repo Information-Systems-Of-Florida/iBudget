@@ -1,1560 +1,1560 @@
-2025-10-15 13:34:47 - MODEL_4 - INFO - 
-2025-10-15 13:34:47 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:47 - MODEL_4 - INFO - INITIALIZING MODEL 4: WEIGHTED-LEAST-SQUARES
-2025-10-15 13:34:47 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:47 - MODEL_4 - INFO - Output directory: ..\..\report\models\model_4
-2025-10-15 13:34:47 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:47 - MODEL_4 - INFO - Configuration:
-2025-10-15 13:34:47 - MODEL_4 - INFO -   - Outlier removal: False
-2025-10-15 13:34:47 - MODEL_4 - INFO -   - Transformation: none
-2025-10-15 13:34:47 - MODEL_4 - INFO -   - Random seed: 42
-2025-10-15 13:34:47 - MODEL_4 - INFO -   Weight bounds: [0.1, 10.0]
-2025-10-15 13:34:47 - MODEL_4 - INFO -   Iterative WLS: False
-2025-10-15 13:34:47 - MODEL_4 - INFO -   Transformation: none
-2025-10-15 13:34:47 - MODEL_4 - INFO - 
-2025-10-15 13:34:47 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:47 - MODEL_4 - INFO - STARTING PIPELINE: WEIGHTED-LEAST-SQUARES
-2025-10-15 13:34:47 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:47 - MODEL_4 - INFO - 
-2025-10-15 13:34:47 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:47 - MODEL_4 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 13:34:47 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:47 - MODEL_4 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 13:34:48 - MODEL_4 - INFO - Found 47259 records in 'data' key
-2025-10-15 13:34:49 - MODEL_4 - INFO - FY2024 Summary:
-2025-10-15 13:34:49 - MODEL_4 - INFO -   - Processed: 34,173
-2025-10-15 13:34:49 - MODEL_4 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 13:34:49 - MODEL_4 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 13:34:49 - MODEL_4 - INFO -   - Skipped (errors): 0
-2025-10-15 13:34:49 - MODEL_4 - INFO - Total loaded: 34,173 usable records
-2025-10-15 13:34:49 - MODEL_4 - INFO - 
-2025-10-15 13:34:49 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:49 - MODEL_4 - INFO - DATA SPLIT
-2025-10-15 13:34:49 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:49 - MODEL_4 - INFO - Training samples: 27,339
-2025-10-15 13:34:49 - MODEL_4 - INFO - Test samples: 6,834
-2025-10-15 13:34:49 - MODEL_4 - INFO - Split ratio: 20.0%
-2025-10-15 13:34:49 - MODEL_4 - INFO - 
-2025-10-15 13:34:49 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:49 - MODEL_4 - INFO - FEATURE PREPARATION
-2025-10-15 13:34:49 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:49 - MODEL_4 - INFO - Features prepared: 57 total features from 27339 records
-2025-10-15 13:34:49 - MODEL_4 - INFO - Feature breakdown:
-2025-10-15 13:34:49 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:34:49 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:34:49 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:34:49 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:34:49 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:34:49 - MODEL_4 - INFO - Feature counts by type:
-2025-10-15 13:34:49 - MODEL_4 - INFO -   numeric: 9
-2025-10-15 13:34:49 - MODEL_4 - INFO -   categorical: 5
-2025-10-15 13:34:49 - MODEL_4 - INFO -   binary: 3
-2025-10-15 13:34:49 - MODEL_4 - INFO -   qsi: 37
-2025-10-15 13:34:49 - MODEL_4 - INFO -   interactions: 3
-2025-10-15 13:34:50 - MODEL_4 - INFO - Features prepared: 57 total features from 6834 records
-2025-10-15 13:34:50 - MODEL_4 - INFO - Feature breakdown:
-2025-10-15 13:34:50 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:34:50 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:34:50 - MODEL_4 - INFO - Feature counts by type:
-2025-10-15 13:34:50 - MODEL_4 - INFO -   numeric: 9
-2025-10-15 13:34:50 - MODEL_4 - INFO -   categorical: 5
-2025-10-15 13:34:50 - MODEL_4 - INFO -   binary: 3
-2025-10-15 13:34:50 - MODEL_4 - INFO -   qsi: 37
-2025-10-15 13:34:50 - MODEL_4 - INFO -   interactions: 3
-2025-10-15 13:34:50 - MODEL_4 - INFO - Features prepared: 57 features
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Training shape: (27339, 57)
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Test shape: (6834, 57)
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Target range: $31.25 - $346,560.68
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Target mean: $44,675.37
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Target median: $32,279.60
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:28 - MODEL_4 - INFO - 
+2025-10-15 16:57:28 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:28 - MODEL_4 - INFO - INITIALIZING MODEL 4: WEIGHTED-LEAST-SQUARES
+2025-10-15 16:57:28 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:28 - MODEL_4 - INFO - Output directory: ..\..\report\models\model_4
+2025-10-15 16:57:28 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:28 - MODEL_4 - INFO - Configuration:
+2025-10-15 16:57:28 - MODEL_4 - INFO -   - Outlier removal: False
+2025-10-15 16:57:28 - MODEL_4 - INFO -   - Transformation: none
+2025-10-15 16:57:28 - MODEL_4 - INFO -   - Random seed: 42
+2025-10-15 16:57:28 - MODEL_4 - INFO -   Weight bounds: [0.1, 10.0]
+2025-10-15 16:57:28 - MODEL_4 - INFO -   Iterative WLS: False
+2025-10-15 16:57:28 - MODEL_4 - INFO -   Transformation: none
+2025-10-15 16:57:28 - MODEL_4 - INFO - 
+2025-10-15 16:57:28 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:28 - MODEL_4 - INFO - STARTING PIPELINE: WEIGHTED-LEAST-SQUARES
+2025-10-15 16:57:28 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:28 - MODEL_4 - INFO - 
+2025-10-15 16:57:28 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:28 - MODEL_4 - INFO - LOADING DATA: FY2024-2024
+2025-10-15 16:57:28 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:28 - MODEL_4 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 16:57:28 - MODEL_4 - INFO - Found 47259 records in 'data' key
+2025-10-15 16:57:30 - MODEL_4 - INFO - FY2024 Summary:
+2025-10-15 16:57:30 - MODEL_4 - INFO -   - Processed: 34,173
+2025-10-15 16:57:30 - MODEL_4 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 16:57:30 - MODEL_4 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 16:57:30 - MODEL_4 - INFO -   - Skipped (errors): 0
+2025-10-15 16:57:30 - MODEL_4 - INFO - Total loaded: 34,173 usable records
+2025-10-15 16:57:30 - MODEL_4 - INFO - 
+2025-10-15 16:57:30 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:30 - MODEL_4 - INFO - DATA SPLIT
+2025-10-15 16:57:30 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:30 - MODEL_4 - INFO - Training samples: 27,339
+2025-10-15 16:57:30 - MODEL_4 - INFO - Test samples: 6,834
+2025-10-15 16:57:30 - MODEL_4 - INFO - Split ratio: 20.0%
+2025-10-15 16:57:30 - MODEL_4 - INFO - 
+2025-10-15 16:57:30 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:30 - MODEL_4 - INFO - FEATURE PREPARATION
+2025-10-15 16:57:30 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:30 - MODEL_4 - INFO - Features prepared: 57 total features from 27339 records
+2025-10-15 16:57:30 - MODEL_4 - INFO - Feature breakdown:
+2025-10-15 16:57:30 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:57:30 - MODEL_4 - INFO - Feature counts by type:
+2025-10-15 16:57:30 - MODEL_4 - INFO -   numeric: 9
+2025-10-15 16:57:30 - MODEL_4 - INFO -   categorical: 5
+2025-10-15 16:57:30 - MODEL_4 - INFO -   binary: 3
+2025-10-15 16:57:30 - MODEL_4 - INFO -   qsi: 37
+2025-10-15 16:57:30 - MODEL_4 - INFO -   interactions: 3
+2025-10-15 16:57:30 - MODEL_4 - INFO - Features prepared: 57 total features from 6834 records
+2025-10-15 16:57:30 - MODEL_4 - INFO - Feature breakdown:
+2025-10-15 16:57:30 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:57:30 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:57:30 - MODEL_4 - INFO - Feature counts by type:
+2025-10-15 16:57:30 - MODEL_4 - INFO -   numeric: 9
+2025-10-15 16:57:30 - MODEL_4 - INFO -   categorical: 5
+2025-10-15 16:57:30 - MODEL_4 - INFO -   binary: 3
+2025-10-15 16:57:30 - MODEL_4 - INFO -   qsi: 37
+2025-10-15 16:57:30 - MODEL_4 - INFO -   interactions: 3
+2025-10-15 16:57:31 - MODEL_4 - INFO - Features prepared: 57 features
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Training shape: (27339, 57)
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Test shape: (6834, 57)
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Target range: $31.25 - $346,560.68
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Target mean: $44,675.37
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Target median: $32,279.60
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     LM statistic: 2107.902483
-2025-10-15 13:34:50 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO -     R^2 (auxiliary): 0.085670
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 2107.902483
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.085670
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Mean: 1.3120
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Median: 1.1847
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Mean: 1.3120
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median: 1.1847
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     LM statistic: 1962.487089
-2025-10-15 13:34:50 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079760
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Improvement: 145.415395
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 1962.487089
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079760
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Improvement: 145.415395
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Median weight change: 0.384984
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:50 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1962.487089 -> LM2=2073.699023
-2025-10-15 13:34:50 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Final BP (single-pass): LM=1962.487089, p=0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median weight change: 0.384984
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1962.487089 -> LM2=2073.699023
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Final BP (single-pass): LM=1962.487089, p=0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weighted R^2: 0.4857
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29255.5196
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29255.5196
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:50 - MODEL_4 - INFO -   losri: 349.4416
-2025-10-15 13:34:50 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   blevel: -1652.7847
-2025-10-15 13:34:50 - MODEL_4 - INFO -   flevel: -15.5716
-2025-10-15 13:34:50 - MODEL_4 - INFO -   plevel: -863.7369
-2025-10-15 13:34:50 - MODEL_4 - INFO -   bsum: 1016.9607
-2025-10-15 13:34:50 - MODEL_4 - INFO -   fsum: 1179.9883
-2025-10-15 13:34:50 - MODEL_4 - INFO -   psum: 161.2193
-2025-10-15 13:34:50 - MODEL_4 - INFO -   age: -11.8394
-2025-10-15 13:34:50 - MODEL_4 - INFO -   ILSL: 20699.3256
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH1: 17532.4158
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH2: 8023.7868
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH3: 8782.5352
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH4: -1100.7236
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age21_30: 24429.2341
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age31Plus: 22905.8301
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q14: -859.1964
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q15: -1161.2874
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q16: -70.1834
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q17: 617.9715
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q18: 1138.4772
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q19: -933.6557
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q20: 262.6573
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q21: 988.6523
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q22: -1909.3669
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q23: 3149.3965
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q24: -43.4768
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q25: -358.0594
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q26: 489.0291
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q27: -65.5460
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q28: 2225.0553
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q29: 289.3971
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q30: -1562.9154
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q31: -0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q32: 239.8095
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q33: 1602.0286
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q34: 1146.7122
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q35: -2103.6490
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q36: 2113.5293
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q37: -120.1271
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q38: -192.1651
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q39: 768.7076
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q40: -1740.7336
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q41: -124.4540
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q42: -167.2577
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q43: 1576.9130
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q44: 38.1835
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q45: -114.3364
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q46: -2248.1555
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q47: 1660.5963
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q48: 946.3257
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q49: -773.1960
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q50: -2347.5120
-2025-10-15 13:34:50 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5058.2538
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age_x_BSum: 635.5781
-2025-10-15 13:34:50 - MODEL_4 - INFO -   FH_x_FSum: -468.3636
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Intercept: -18533.1276
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Fold 1: R^2 = 0.4664
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   losri: 349.4416
+2025-10-15 16:57:31 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   blevel: -1652.7847
+2025-10-15 16:57:31 - MODEL_4 - INFO -   flevel: -15.5716
+2025-10-15 16:57:31 - MODEL_4 - INFO -   plevel: -863.7369
+2025-10-15 16:57:31 - MODEL_4 - INFO -   bsum: 1016.9607
+2025-10-15 16:57:31 - MODEL_4 - INFO -   fsum: 1179.9883
+2025-10-15 16:57:31 - MODEL_4 - INFO -   psum: 161.2193
+2025-10-15 16:57:31 - MODEL_4 - INFO -   age: -11.8394
+2025-10-15 16:57:31 - MODEL_4 - INFO -   ILSL: 20699.3256
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH1: 17532.4158
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH2: 8023.7868
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH3: 8782.5352
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH4: -1100.7236
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age21_30: 24429.2341
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age31Plus: 22905.8301
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q14: -859.1964
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q15: -1161.2874
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q16: -70.1834
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q17: 617.9715
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q18: 1138.4772
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q19: -933.6557
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q20: 262.6573
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q21: 988.6523
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q22: -1909.3669
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q23: 3149.3965
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q24: -43.4768
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q25: -358.0594
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q26: 489.0291
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q27: -65.5460
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q28: 2225.0553
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q29: 289.3971
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q30: -1562.9154
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q31: -0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q32: 239.8095
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q33: 1602.0286
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q34: 1146.7122
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q35: -2103.6490
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q36: 2113.5293
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q37: -120.1271
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q38: -192.1651
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q39: 768.7076
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q40: -1740.7336
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q41: -124.4540
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q42: -167.2577
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q43: 1576.9130
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q44: 38.1835
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q45: -114.3364
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q46: -2248.1555
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q47: 1660.5963
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q48: 946.3257
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q49: -773.1960
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q50: -2347.5120
+2025-10-15 16:57:31 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5058.2538
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age_x_BSum: 635.5781
+2025-10-15 16:57:31 - MODEL_4 - INFO -   FH_x_FSum: -468.3636
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Intercept: -18533.1276
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Fold 1: R^2 = 0.4664
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     LM statistic: 2042.494108
-2025-10-15 13:34:50 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083011
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 2042.494108
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083011
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Mean: 1.2987
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Median: 1.1911
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Mean: 1.2987
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median: 1.1911
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     LM statistic: 1934.456390
-2025-10-15 13:34:50 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078620
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Improvement: 108.037718
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 1934.456390
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078620
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Improvement: 108.037718
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Median weight change: 0.393787
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:50 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1934.456390 -> LM2=1997.195376
-2025-10-15 13:34:50 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Final BP (single-pass): LM=1934.456390, p=0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median weight change: 0.393787
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1934.456390 -> LM2=1997.195376
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Final BP (single-pass): LM=1934.456390, p=0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weighted R^2: 0.4882
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29265.4383
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29265.4383
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:50 - MODEL_4 - INFO -   losri: 253.5674
-2025-10-15 13:34:50 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   blevel: -1865.2124
-2025-10-15 13:34:50 - MODEL_4 - INFO -   flevel: -87.2238
-2025-10-15 13:34:50 - MODEL_4 - INFO -   plevel: -739.4711
-2025-10-15 13:34:50 - MODEL_4 - INFO -   bsum: 1110.8122
-2025-10-15 13:34:50 - MODEL_4 - INFO -   fsum: 1128.7239
-2025-10-15 13:34:50 - MODEL_4 - INFO -   psum: 144.2262
-2025-10-15 13:34:50 - MODEL_4 - INFO -   age: -5.2519
-2025-10-15 13:34:50 - MODEL_4 - INFO -   ILSL: 21904.2986
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH1: 18344.0343
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH2: 9449.9111
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH3: 9412.8998
-2025-10-15 13:34:50 - MODEL_4 - INFO -   RH4: 860.4761
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age21_30: 24621.7847
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age31Plus: 22903.7123
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q14: -1260.1589
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q15: -969.5606
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q16: 47.9668
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q17: 549.4698
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q18: 1206.6257
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q19: -885.3093
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q20: 43.1588
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q21: 895.0925
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q22: -1915.6483
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q23: 3186.6279
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q24: 230.4595
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q25: -126.3073
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q26: 571.0254
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q27: -204.2751
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q28: 2386.8384
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q29: 213.1017
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q30: -1729.5709
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q32: 123.5599
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q33: 1426.7122
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q34: 988.5204
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q35: -2038.2625
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q36: 2140.3018
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q37: -196.1545
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q38: -83.7624
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q39: 637.1083
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q40: -1554.8848
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q41: -151.7129
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q42: -193.1886
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q43: 1661.4323
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q44: 130.5401
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q45: -112.6925
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q46: -2150.8785
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q47: 1571.2480
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q48: 942.3603
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q49: -768.1979
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Q50: -2227.8225
-2025-10-15 13:34:50 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5116.0712
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Age_x_BSum: 667.0894
-2025-10-15 13:34:50 - MODEL_4 - INFO -   FH_x_FSum: -403.2934
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Intercept: -18772.3423
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Fold 2: R^2 = 0.4607
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:50 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   losri: 253.5674
+2025-10-15 16:57:31 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   blevel: -1865.2124
+2025-10-15 16:57:31 - MODEL_4 - INFO -   flevel: -87.2238
+2025-10-15 16:57:31 - MODEL_4 - INFO -   plevel: -739.4711
+2025-10-15 16:57:31 - MODEL_4 - INFO -   bsum: 1110.8122
+2025-10-15 16:57:31 - MODEL_4 - INFO -   fsum: 1128.7239
+2025-10-15 16:57:31 - MODEL_4 - INFO -   psum: 144.2262
+2025-10-15 16:57:31 - MODEL_4 - INFO -   age: -5.2519
+2025-10-15 16:57:31 - MODEL_4 - INFO -   ILSL: 21904.2986
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH1: 18344.0343
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH2: 9449.9111
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH3: 9412.8998
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH4: 860.4761
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age21_30: 24621.7847
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age31Plus: 22903.7123
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q14: -1260.1589
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q15: -969.5606
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q16: 47.9668
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q17: 549.4698
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q18: 1206.6257
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q19: -885.3093
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q20: 43.1588
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q21: 895.0925
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q22: -1915.6483
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q23: 3186.6279
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q24: 230.4595
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q25: -126.3073
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q26: 571.0254
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q27: -204.2751
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q28: 2386.8384
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q29: 213.1017
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q30: -1729.5709
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q32: 123.5599
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q33: 1426.7122
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q34: 988.5204
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q35: -2038.2625
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q36: 2140.3018
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q37: -196.1545
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q38: -83.7624
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q39: 637.1083
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q40: -1554.8848
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q41: -151.7129
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q42: -193.1886
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q43: 1661.4323
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q44: 130.5401
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q45: -112.6925
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q46: -2150.8785
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q47: 1571.2480
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q48: 942.3603
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q49: -768.1979
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q50: -2227.8225
+2025-10-15 16:57:31 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5116.0712
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age_x_BSum: 667.0894
+2025-10-15 16:57:31 - MODEL_4 - INFO -   FH_x_FSum: -403.2934
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Intercept: -18772.3423
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Fold 2: R^2 = 0.4607
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:50 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     LM statistic: 2082.809725
-2025-10-15 13:34:50 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:50 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084650
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 2082.809725
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084650
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:50 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Mean: 1.2976
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Median: 1.1978
-2025-10-15 13:34:50 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:50 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Mean: 1.2976
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median: 1.1978
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 1933.717972
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078590
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Improvement: 149.091752
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 1933.717972
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078590
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Improvement: 149.091752
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median weight change: 0.356834
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1933.717972 -> LM2=2039.575553
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Final BP (single-pass): LM=1933.717972, p=0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median weight change: 0.356834
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1933.717972 -> LM2=2039.575553
+2025-10-15 16:57:31 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Final BP (single-pass): LM=1933.717972, p=0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weighted R^2: 0.4852
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29412.1247
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29412.1247
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:51 - MODEL_4 - INFO -   losri: 230.7571
-2025-10-15 13:34:51 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   blevel: -1722.4520
-2025-10-15 13:34:51 - MODEL_4 - INFO -   flevel: 77.9584
-2025-10-15 13:34:51 - MODEL_4 - INFO -   plevel: -686.7908
-2025-10-15 13:34:51 - MODEL_4 - INFO -   bsum: 1048.6762
-2025-10-15 13:34:51 - MODEL_4 - INFO -   fsum: 1105.8446
-2025-10-15 13:34:51 - MODEL_4 - INFO -   psum: 153.9859
-2025-10-15 13:34:51 - MODEL_4 - INFO -   age: -9.5367
-2025-10-15 13:34:51 - MODEL_4 - INFO -   ILSL: 21803.1776
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH1: 18237.3959
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH2: 9228.0327
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH3: 10112.0602
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH4: 107.2570
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age21_30: 24526.8056
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age31Plus: 23064.1959
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q14: -1055.3597
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q15: -999.9951
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q16: 68.2304
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q17: 608.5697
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q18: 1076.2748
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q19: -916.7728
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q20: 214.3824
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q21: 794.9521
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q22: -1922.1308
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q23: 3036.1477
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q24: 201.5458
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q25: -122.2246
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q26: 403.0392
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q27: -35.8835
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q28: 2175.7618
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q29: 232.6771
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q30: -1604.6938
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q32: -126.6982
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q33: 1546.8071
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q34: 1334.0064
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q35: -1886.1087
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q36: 1913.8494
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q37: -212.3648
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q38: -70.6197
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q39: 581.6246
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q40: -1646.1177
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q41: -155.9160
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q42: -208.2056
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q43: 1580.1068
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q44: 1.3323
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q45: 451.2008
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q46: -2417.2294
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q47: 1519.3987
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q48: 983.6377
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q49: -872.4175
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q50: -2162.3004
-2025-10-15 13:34:51 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5287.2158
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age_x_BSum: 685.1588
-2025-10-15 13:34:51 - MODEL_4 - INFO -   FH_x_FSum: -375.1997
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Intercept: -18591.1202
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Fold 3: R^2 = 0.4942
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   losri: 230.7571
+2025-10-15 16:57:31 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   blevel: -1722.4520
+2025-10-15 16:57:31 - MODEL_4 - INFO -   flevel: 77.9584
+2025-10-15 16:57:31 - MODEL_4 - INFO -   plevel: -686.7908
+2025-10-15 16:57:31 - MODEL_4 - INFO -   bsum: 1048.6762
+2025-10-15 16:57:31 - MODEL_4 - INFO -   fsum: 1105.8446
+2025-10-15 16:57:31 - MODEL_4 - INFO -   psum: 153.9859
+2025-10-15 16:57:31 - MODEL_4 - INFO -   age: -9.5367
+2025-10-15 16:57:31 - MODEL_4 - INFO -   ILSL: 21803.1776
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH1: 18237.3959
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH2: 9228.0327
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH3: 10112.0602
+2025-10-15 16:57:31 - MODEL_4 - INFO -   RH4: 107.2570
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age21_30: 24526.8056
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age31Plus: 23064.1959
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q14: -1055.3597
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q15: -999.9951
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q16: 68.2304
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q17: 608.5697
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q18: 1076.2748
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q19: -916.7728
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q20: 214.3824
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q21: 794.9521
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q22: -1922.1308
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q23: 3036.1477
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q24: 201.5458
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q25: -122.2246
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q26: 403.0392
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q27: -35.8835
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q28: 2175.7618
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q29: 232.6771
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q30: -1604.6938
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q32: -126.6982
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q33: 1546.8071
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q34: 1334.0064
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q35: -1886.1087
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q36: 1913.8494
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q37: -212.3648
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q38: -70.6197
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q39: 581.6246
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q40: -1646.1177
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q41: -155.9160
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q42: -208.2056
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q43: 1580.1068
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q44: 1.3323
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q45: 451.2008
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q46: -2417.2294
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q47: 1519.3987
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q48: 983.6377
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q49: -872.4175
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Q50: -2162.3004
+2025-10-15 16:57:31 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5287.2158
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Age_x_BSum: 685.1588
+2025-10-15 16:57:31 - MODEL_4 - INFO -   FH_x_FSum: -375.1997
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Intercept: -18591.1202
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Fold 3: R^2 = 0.4942
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:31 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 2057.207285
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083609
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:31 - MODEL_4 - INFO -     LM statistic: 2057.207285
+2025-10-15 16:57:31 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:31 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083609
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:31 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Mean: 1.3072
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median: 1.1803
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Mean: 1.3072
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Median: 1.1803
+2025-10-15 16:57:31 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:31 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 1932.997658
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078561
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Improvement: 124.209627
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 1932.997658
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078561
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Improvement: 124.209627
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median weight change: 0.359937
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1932.997658 -> LM2=2005.090623
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Final BP (single-pass): LM=1932.997658, p=0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median weight change: 0.359937
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1932.997658 -> LM2=2005.090623
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Final BP (single-pass): LM=1932.997658, p=0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weighted R^2: 0.4858
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29345.9578
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29345.9578
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:51 - MODEL_4 - INFO -   losri: 334.3729
-2025-10-15 13:34:51 - MODEL_4 - INFO -   olevel: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   blevel: -1708.3504
-2025-10-15 13:34:51 - MODEL_4 - INFO -   flevel: 101.5664
-2025-10-15 13:34:51 - MODEL_4 - INFO -   plevel: -572.3067
-2025-10-15 13:34:51 - MODEL_4 - INFO -   bsum: 1002.1476
-2025-10-15 13:34:51 - MODEL_4 - INFO -   fsum: 1084.7651
-2025-10-15 13:34:51 - MODEL_4 - INFO -   psum: 138.7441
-2025-10-15 13:34:51 - MODEL_4 - INFO -   age: -16.6007
-2025-10-15 13:34:51 - MODEL_4 - INFO -   ILSL: 22061.3620
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH1: 18438.4396
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH2: 11445.9062
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH3: 9561.5251
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH4: 228.5595
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age21_30: 24475.9718
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age31Plus: 22743.0311
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q14: -1107.7397
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q15: -1027.2447
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q16: 53.2607
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q17: 671.8557
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q18: 1000.8459
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q19: -945.6505
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q20: 197.4804
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q21: 915.8258
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q22: -1929.7368
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q23: 3168.8202
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q24: 87.0482
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q25: -255.0091
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q26: 499.7040
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q27: -49.0731
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q28: 2184.4016
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q29: 273.6701
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q30: -1651.5459
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q32: -44.9071
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q33: 1409.0581
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q34: 1161.1880
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q35: -2093.4409
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q36: 2022.9183
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q37: -152.3531
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q38: -191.4860
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q39: 842.2606
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q40: -1708.5196
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q41: -105.3696
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q42: -225.2097
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q43: 1523.5896
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q44: 154.0483
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q45: 341.4353
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q46: -2225.4752
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q47: 1535.2023
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q48: 969.4941
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q49: -902.2480
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q50: -2171.4413
-2025-10-15 13:34:51 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5210.3780
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age_x_BSum: 713.1031
-2025-10-15 13:34:51 - MODEL_4 - INFO -   FH_x_FSum: -383.7943
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Intercept: -18763.0734
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Fold 4: R^2 = 0.4982
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   losri: 334.3729
+2025-10-15 16:57:32 - MODEL_4 - INFO -   olevel: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   blevel: -1708.3504
+2025-10-15 16:57:32 - MODEL_4 - INFO -   flevel: 101.5664
+2025-10-15 16:57:32 - MODEL_4 - INFO -   plevel: -572.3067
+2025-10-15 16:57:32 - MODEL_4 - INFO -   bsum: 1002.1476
+2025-10-15 16:57:32 - MODEL_4 - INFO -   fsum: 1084.7651
+2025-10-15 16:57:32 - MODEL_4 - INFO -   psum: 138.7441
+2025-10-15 16:57:32 - MODEL_4 - INFO -   age: -16.6007
+2025-10-15 16:57:32 - MODEL_4 - INFO -   ILSL: 22061.3620
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH1: 18438.4396
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH2: 11445.9062
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH3: 9561.5251
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH4: 228.5595
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age21_30: 24475.9718
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age31Plus: 22743.0311
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q14: -1107.7397
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q15: -1027.2447
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q16: 53.2607
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q17: 671.8557
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q18: 1000.8459
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q19: -945.6505
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q20: 197.4804
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q21: 915.8258
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q22: -1929.7368
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q23: 3168.8202
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q24: 87.0482
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q25: -255.0091
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q26: 499.7040
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q27: -49.0731
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q28: 2184.4016
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q29: 273.6701
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q30: -1651.5459
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q32: -44.9071
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q33: 1409.0581
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q34: 1161.1880
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q35: -2093.4409
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q36: 2022.9183
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q37: -152.3531
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q38: -191.4860
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q39: 842.2606
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q40: -1708.5196
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q41: -105.3696
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q42: -225.2097
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q43: 1523.5896
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q44: 154.0483
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q45: 341.4353
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q46: -2225.4752
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q47: 1535.2023
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q48: 969.4941
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q49: -902.2480
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q50: -2171.4413
+2025-10-15 16:57:32 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5210.3780
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age_x_BSum: 713.1031
+2025-10-15 16:57:32 - MODEL_4 - INFO -   FH_x_FSum: -383.7943
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Intercept: -18763.0734
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Fold 4: R^2 = 0.4982
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 2080.090436
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084539
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 2080.090436
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084539
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Mean: 1.3025
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median: 1.1895
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Mean: 1.3025
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median: 1.1895
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 1945.346966
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079063
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Improvement: 134.743471
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 1945.346966
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079063
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Improvement: 134.743471
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median weight change: 0.369577
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1945.346966 -> LM2=2047.602561
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Final BP (single-pass): LM=1945.346966, p=0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median weight change: 0.369577
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1945.346966 -> LM2=2047.602561
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Final BP (single-pass): LM=1945.346966, p=0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weighted R^2: 0.4878
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29353.6125
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29353.6125
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:51 - MODEL_4 - INFO -   losri: 312.1300
-2025-10-15 13:34:51 - MODEL_4 - INFO -   olevel: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   blevel: -1732.3123
-2025-10-15 13:34:51 - MODEL_4 - INFO -   flevel: 70.5172
-2025-10-15 13:34:51 - MODEL_4 - INFO -   plevel: -1018.2474
-2025-10-15 13:34:51 - MODEL_4 - INFO -   bsum: 1032.9692
-2025-10-15 13:34:51 - MODEL_4 - INFO -   fsum: 1133.0979
-2025-10-15 13:34:51 - MODEL_4 - INFO -   psum: 188.0036
-2025-10-15 13:34:51 - MODEL_4 - INFO -   age: -13.1289
-2025-10-15 13:34:51 - MODEL_4 - INFO -   ILSL: 21267.8065
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH1: 17028.2612
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH2: 8637.9204
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH3: 8235.1553
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH4: -1088.6674
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age21_30: 24225.2318
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age31Plus: 22732.8480
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q14: -1144.4710
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q15: -1120.6266
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q16: 111.3905
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q17: 500.4530
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q18: 1330.8479
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q19: -988.7996
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q20: 379.8471
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q21: 707.2997
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q22: -1957.0841
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q23: 3137.5754
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q24: 176.6656
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q25: -335.7269
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q26: 515.3645
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q27: -31.2606
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q28: 2233.5309
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q29: 209.9549
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q30: -1558.8937
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q31: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q32: -99.4044
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q33: 1489.6331
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q34: 1407.5660
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q35: -1971.4511
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q36: 2020.2062
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q37: -104.4801
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q38: -61.0498
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q39: 726.5925
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q40: -1543.9477
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q41: -141.4537
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q42: -205.3104
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q43: 1785.0998
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q44: 70.6051
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q45: -67.7335
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q46: -2332.3276
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q47: 1426.7403
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q48: 964.8685
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q49: -876.1120
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q50: -2300.0378
-2025-10-15 13:34:51 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5377.5003
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age_x_BSum: 715.8571
-2025-10-15 13:34:51 - MODEL_4 - INFO -   FH_x_FSum: -425.2929
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Intercept: -18329.4571
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Fold 5: R^2 = 0.4747
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   losri: 312.1300
+2025-10-15 16:57:32 - MODEL_4 - INFO -   olevel: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   blevel: -1732.3123
+2025-10-15 16:57:32 - MODEL_4 - INFO -   flevel: 70.5172
+2025-10-15 16:57:32 - MODEL_4 - INFO -   plevel: -1018.2474
+2025-10-15 16:57:32 - MODEL_4 - INFO -   bsum: 1032.9692
+2025-10-15 16:57:32 - MODEL_4 - INFO -   fsum: 1133.0979
+2025-10-15 16:57:32 - MODEL_4 - INFO -   psum: 188.0036
+2025-10-15 16:57:32 - MODEL_4 - INFO -   age: -13.1289
+2025-10-15 16:57:32 - MODEL_4 - INFO -   ILSL: 21267.8065
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH1: 17028.2612
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH2: 8637.9204
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH3: 8235.1553
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH4: -1088.6674
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age21_30: 24225.2318
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age31Plus: 22732.8480
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q14: -1144.4710
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q15: -1120.6266
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q16: 111.3905
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q17: 500.4530
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q18: 1330.8479
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q19: -988.7996
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q20: 379.8471
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q21: 707.2997
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q22: -1957.0841
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q23: 3137.5754
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q24: 176.6656
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q25: -335.7269
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q26: 515.3645
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q27: -31.2606
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q28: 2233.5309
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q29: 209.9549
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q30: -1558.8937
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q31: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q32: -99.4044
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q33: 1489.6331
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q34: 1407.5660
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q35: -1971.4511
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q36: 2020.2062
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q37: -104.4801
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q38: -61.0498
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q39: 726.5925
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q40: -1543.9477
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q41: -141.4537
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q42: -205.3104
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q43: 1785.0998
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q44: 70.6051
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q45: -67.7335
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q46: -2332.3276
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q47: 1426.7403
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q48: 964.8685
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q49: -876.1120
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q50: -2300.0378
+2025-10-15 16:57:32 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5377.5003
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age_x_BSum: 715.8571
+2025-10-15 16:57:32 - MODEL_4 - INFO -   FH_x_FSum: -425.2929
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Intercept: -18329.4571
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Fold 5: R^2 = 0.4747
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 2085.723754
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084768
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 2085.723754
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084768
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Mean: 1.2962
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median: 1.1925
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Mean: 1.2962
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median: 1.1925
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 1932.296423
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078533
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Improvement: 153.427331
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 1932.296423
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078533
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Improvement: 153.427331
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median weight change: 0.380027
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1932.296423 -> LM2=2054.938079
-2025-10-15 13:34:51 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Final BP (single-pass): LM=1932.296423, p=0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median weight change: 0.380027
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1932.296423 -> LM2=2054.938079
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Final BP (single-pass): LM=1932.296423, p=0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weighted R^2: 0.4855
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29349.4941
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29349.4941
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:51 - MODEL_4 - INFO -   losri: 514.5368
-2025-10-15 13:34:51 - MODEL_4 - INFO -   olevel: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   blevel: -1884.3570
-2025-10-15 13:34:51 - MODEL_4 - INFO -   flevel: -145.2047
-2025-10-15 13:34:51 - MODEL_4 - INFO -   plevel: -1034.1683
-2025-10-15 13:34:51 - MODEL_4 - INFO -   bsum: 1043.3463
-2025-10-15 13:34:51 - MODEL_4 - INFO -   fsum: 1148.4650
-2025-10-15 13:34:51 - MODEL_4 - INFO -   psum: 145.8363
-2025-10-15 13:34:51 - MODEL_4 - INFO -   age: -10.9327
-2025-10-15 13:34:51 - MODEL_4 - INFO -   ILSL: 21498.4658
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH1: 18048.5813
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH2: 8735.5939
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH3: 10162.4640
-2025-10-15 13:34:51 - MODEL_4 - INFO -   RH4: -267.6388
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age21_30: 24672.0985
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age31Plus: 23173.0396
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Male: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q14: -1252.5220
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q15: -1068.4243
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q16: 68.8575
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q17: 593.9530
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q18: 1163.1715
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q19: -879.8055
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q20: 396.9911
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q21: 692.2234
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q22: -1852.8720
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q23: 3242.4637
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q24: 44.4286
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q25: -269.2559
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q26: 532.8793
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q27: -116.0515
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q28: 2193.9028
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q29: 265.2425
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q30: -1563.3708
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q31: -0.0000
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q32: -125.5114
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q33: 1679.7147
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q34: 1277.4295
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q35: -2189.1223
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q36: 1919.9703
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q37: -191.8691
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q38: -72.8427
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q39: 651.0777
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q40: -1653.8873
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q41: -49.7841
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q42: -277.0746
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q43: 1730.3840
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q44: 98.6912
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q45: -234.1302
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q46: -2281.3308
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q47: 1641.7552
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q48: 988.0883
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q49: -806.3146
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Q50: -1959.4078
-2025-10-15 13:34:51 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5145.9463
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Age_x_BSum: 752.8687
-2025-10-15 13:34:51 - MODEL_4 - INFO -   FH_x_FSum: -419.7285
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Intercept: -18770.4884
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Fold 6: R^2 = 0.4880
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:51 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   losri: 514.5368
+2025-10-15 16:57:32 - MODEL_4 - INFO -   olevel: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   blevel: -1884.3570
+2025-10-15 16:57:32 - MODEL_4 - INFO -   flevel: -145.2047
+2025-10-15 16:57:32 - MODEL_4 - INFO -   plevel: -1034.1683
+2025-10-15 16:57:32 - MODEL_4 - INFO -   bsum: 1043.3463
+2025-10-15 16:57:32 - MODEL_4 - INFO -   fsum: 1148.4650
+2025-10-15 16:57:32 - MODEL_4 - INFO -   psum: 145.8363
+2025-10-15 16:57:32 - MODEL_4 - INFO -   age: -10.9327
+2025-10-15 16:57:32 - MODEL_4 - INFO -   ILSL: 21498.4658
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH1: 18048.5813
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH2: 8735.5939
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH3: 10162.4640
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH4: -267.6388
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age21_30: 24672.0985
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age31Plus: 23173.0396
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Male: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q14: -1252.5220
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q15: -1068.4243
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q16: 68.8575
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q17: 593.9530
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q18: 1163.1715
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q19: -879.8055
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q20: 396.9911
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q21: 692.2234
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q22: -1852.8720
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q23: 3242.4637
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q24: 44.4286
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q25: -269.2559
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q26: 532.8793
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q27: -116.0515
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q28: 2193.9028
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q29: 265.2425
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q30: -1563.3708
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q31: -0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q32: -125.5114
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q33: 1679.7147
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q34: 1277.4295
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q35: -2189.1223
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q36: 1919.9703
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q37: -191.8691
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q38: -72.8427
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q39: 651.0777
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q40: -1653.8873
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q41: -49.7841
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q42: -277.0746
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q43: 1730.3840
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q44: 98.6912
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q45: -234.1302
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q46: -2281.3308
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q47: 1641.7552
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q48: 988.0883
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q49: -806.3146
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q50: -1959.4078
+2025-10-15 16:57:32 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5145.9463
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age_x_BSum: 752.8687
+2025-10-15 16:57:32 - MODEL_4 - INFO -   FH_x_FSum: -419.7285
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Intercept: -18770.4884
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Fold 6: R^2 = 0.4880
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:51 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     LM statistic: 2088.682888
-2025-10-15 13:34:51 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:51 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084889
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 2088.682888
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084889
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:51 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:51 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:32 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Mean: 1.3137
-2025-10-15 13:34:51 - MODEL_4 - INFO -     Median: 1.1895
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Mean: 1.3137
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median: 1.1895
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 1959.609693
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079643
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Improvement: 129.073194
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     LM statistic: 1959.609693
+2025-10-15 16:57:32 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079643
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Improvement: 129.073194
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median weight change: 0.376855
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1959.609693 -> LM2=2069.847340
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Final BP (single-pass): LM=1959.609693, p=0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Median weight change: 0.376855
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1959.609693 -> LM2=2069.847340
+2025-10-15 16:57:32 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:32 - MODEL_4 - INFO -     Final BP (single-pass): LM=1959.609693, p=0.000000
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
   Weighted R^2: 0.4842
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29435.4879
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29435.4879
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:52 - MODEL_4 - INFO -   losri: 517.6930
-2025-10-15 13:34:52 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   blevel: -1835.5299
-2025-10-15 13:34:52 - MODEL_4 - INFO -   flevel: -78.6768
-2025-10-15 13:34:52 - MODEL_4 - INFO -   plevel: -1081.5264
-2025-10-15 13:34:52 - MODEL_4 - INFO -   bsum: 1059.7716
-2025-10-15 13:34:52 - MODEL_4 - INFO -   fsum: 1143.7583
-2025-10-15 13:34:52 - MODEL_4 - INFO -   psum: 187.9655
-2025-10-15 13:34:52 - MODEL_4 - INFO -   age: -4.6069
-2025-10-15 13:34:52 - MODEL_4 - INFO -   ILSL: 21436.3885
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH1: 17721.1567
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH2: 9277.6614
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH3: 8982.0108
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH4: -1163.1158
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age21_30: 24550.3426
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age31Plus: 23022.7775
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q14: -1175.8156
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q15: -901.6904
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q16: 215.2759
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q17: 537.3852
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q18: 1167.6685
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q19: -821.3395
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q20: 423.9516
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q21: 658.6175
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q22: -2152.3422
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q23: 3220.7882
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q24: -28.7409
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q25: -134.2899
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q26: 538.2519
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q27: -102.6250
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q28: 2082.5177
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q29: 245.8963
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q30: -1569.9794
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q32: -104.7622
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q33: 1440.0852
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q34: 1332.3826
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q35: -1799.9892
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q36: 1947.8369
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q37: -204.1237
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q38: -146.6775
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q39: 512.4231
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q40: -1481.4539
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q41: -152.1153
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q42: -143.9778
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q43: 1674.1890
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q44: 158.9032
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q45: 269.0461
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q46: -2363.5788
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q47: 1349.2945
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q48: 957.7970
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q49: -803.6572
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q50: -2253.6564
-2025-10-15 13:34:52 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5263.7086
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age_x_BSum: 638.6522
-2025-10-15 13:34:52 - MODEL_4 - INFO -   FH_x_FSum: -413.6312
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Intercept: -19035.6019
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Fold 7: R^2 = 0.4977
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO -   losri: 517.6930
+2025-10-15 16:57:32 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   blevel: -1835.5299
+2025-10-15 16:57:32 - MODEL_4 - INFO -   flevel: -78.6768
+2025-10-15 16:57:32 - MODEL_4 - INFO -   plevel: -1081.5264
+2025-10-15 16:57:32 - MODEL_4 - INFO -   bsum: 1059.7716
+2025-10-15 16:57:32 - MODEL_4 - INFO -   fsum: 1143.7583
+2025-10-15 16:57:32 - MODEL_4 - INFO -   psum: 187.9655
+2025-10-15 16:57:32 - MODEL_4 - INFO -   age: -4.6069
+2025-10-15 16:57:32 - MODEL_4 - INFO -   ILSL: 21436.3885
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH1: 17721.1567
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH2: 9277.6614
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH3: 8982.0108
+2025-10-15 16:57:32 - MODEL_4 - INFO -   RH4: -1163.1158
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age21_30: 24550.3426
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age31Plus: 23022.7775
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q14: -1175.8156
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q15: -901.6904
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q16: 215.2759
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q17: 537.3852
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q18: 1167.6685
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q19: -821.3395
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q20: 423.9516
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q21: 658.6175
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q22: -2152.3422
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q23: 3220.7882
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q24: -28.7409
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q25: -134.2899
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q26: 538.2519
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q27: -102.6250
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q28: 2082.5177
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q29: 245.8963
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q30: -1569.9794
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q32: -104.7622
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q33: 1440.0852
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q34: 1332.3826
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q35: -1799.9892
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q36: 1947.8369
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q37: -204.1237
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q38: -146.6775
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q39: 512.4231
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q40: -1481.4539
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q41: -152.1153
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q42: -143.9778
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q43: 1674.1890
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q44: 158.9032
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q45: 269.0461
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q46: -2363.5788
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q47: 1349.2945
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q48: 957.7970
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q49: -803.6572
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Q50: -2253.6564
+2025-10-15 16:57:32 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5263.7086
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Age_x_BSum: 638.6522
+2025-10-15 16:57:32 - MODEL_4 - INFO -   FH_x_FSum: -413.6312
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Intercept: -19035.6019
+2025-10-15 16:57:32 - MODEL_4 - INFO -   Fold 7: R^2 = 0.4977
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:32 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:32 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 2100.662283
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.085375
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2100.662283
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.085375
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Mean: 1.2955
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median: 1.1725
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Range: [0.2000, 4.7482]
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Mean: 1.2955
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median: 1.1725
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Range: [0.2000, 4.7482]
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 2035.190309
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.082715
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Improvement: 65.471974
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2035.190309
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.082715
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Improvement: 65.471974
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median weight change: 0.356979
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass BP comparison: LM1=2035.190309 -> LM2=2056.797035
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Final BP (single-pass): LM=2035.190309, p=0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median weight change: 0.356979
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass BP comparison: LM1=2035.190309 -> LM2=2056.797035
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Final BP (single-pass): LM=2035.190309, p=0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weighted R^2: 0.4854
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29373.0132
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29373.0132
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:52 - MODEL_4 - INFO -   losri: 187.1656
-2025-10-15 13:34:52 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   blevel: -1497.4209
-2025-10-15 13:34:52 - MODEL_4 - INFO -   flevel: -157.9840
-2025-10-15 13:34:52 - MODEL_4 - INFO -   plevel: -786.3777
-2025-10-15 13:34:52 - MODEL_4 - INFO -   bsum: 982.1786
-2025-10-15 13:34:52 - MODEL_4 - INFO -   fsum: 1174.6427
-2025-10-15 13:34:52 - MODEL_4 - INFO -   psum: 165.3428
-2025-10-15 13:34:52 - MODEL_4 - INFO -   age: -3.2445
-2025-10-15 13:34:52 - MODEL_4 - INFO -   ILSL: 21399.5979
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH1: 18096.9280
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH2: 11487.4185
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH3: 9048.1672
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH4: -1025.1809
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age21_30: 24296.2101
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age31Plus: 22666.0713
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Male: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q14: -1039.5243
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q15: -1030.5813
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q16: -85.7593
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q17: 575.1669
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q18: 1090.4169
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q19: -922.5056
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q20: 327.7552
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q21: 797.6111
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q22: -1923.4331
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q23: 3258.2666
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q24: 127.2296
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q25: -334.1940
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q26: 597.9432
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q27: 80.1321
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q28: 2165.2268
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q29: 187.7574
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q30: -1714.6869
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q31: -0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q32: -18.1209
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q33: 1225.6093
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q34: 1239.1602
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q35: -2046.3579
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q36: 2074.1232
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q37: -140.3185
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q38: -130.0382
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q39: 691.1417
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q40: -1676.1630
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q41: -96.6578
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q42: -252.3449
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q43: 1735.1511
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q44: 125.6138
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q45: 311.3580
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q46: -2247.5441
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q47: 1458.8389
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q48: 834.7844
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q49: -759.8897
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q50: -2163.0029
-2025-10-15 13:34:52 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5104.4389
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age_x_BSum: 643.5233
-2025-10-15 13:34:52 - MODEL_4 - INFO -   FH_x_FSum: -428.0978
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Intercept: -18674.3893
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Fold 8: R^2 = 0.4925
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   losri: 187.1656
+2025-10-15 16:57:33 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   blevel: -1497.4209
+2025-10-15 16:57:33 - MODEL_4 - INFO -   flevel: -157.9840
+2025-10-15 16:57:33 - MODEL_4 - INFO -   plevel: -786.3777
+2025-10-15 16:57:33 - MODEL_4 - INFO -   bsum: 982.1786
+2025-10-15 16:57:33 - MODEL_4 - INFO -   fsum: 1174.6427
+2025-10-15 16:57:33 - MODEL_4 - INFO -   psum: 165.3428
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age: -3.2445
+2025-10-15 16:57:33 - MODEL_4 - INFO -   ILSL: 21399.5979
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH1: 18096.9280
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH2: 11487.4185
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH3: 9048.1672
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH4: -1025.1809
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age21_30: 24296.2101
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age31Plus: 22666.0713
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Male: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q14: -1039.5243
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q15: -1030.5813
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q16: -85.7593
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q17: 575.1669
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q18: 1090.4169
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q19: -922.5056
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q20: 327.7552
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q21: 797.6111
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q22: -1923.4331
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q23: 3258.2666
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q24: 127.2296
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q25: -334.1940
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q26: 597.9432
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q27: 80.1321
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q28: 2165.2268
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q29: 187.7574
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q30: -1714.6869
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q31: -0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q32: -18.1209
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q33: 1225.6093
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q34: 1239.1602
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q35: -2046.3579
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q36: 2074.1232
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q37: -140.3185
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q38: -130.0382
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q39: 691.1417
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q40: -1676.1630
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q41: -96.6578
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q42: -252.3449
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q43: 1735.1511
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q44: 125.6138
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q45: 311.3580
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q46: -2247.5441
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q47: 1458.8389
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q48: 834.7844
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q49: -759.8897
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q50: -2163.0029
+2025-10-15 16:57:33 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5104.4389
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age_x_BSum: 643.5233
+2025-10-15 16:57:33 - MODEL_4 - INFO -   FH_x_FSum: -428.0978
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Intercept: -18674.3893
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Fold 8: R^2 = 0.4925
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 2083.334249
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084671
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2083.334249
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084671
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Mean: 1.2935
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median: 1.1941
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Mean: 1.2935
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median: 1.1941
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 1945.578536
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079072
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Improvement: 137.755713
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 1945.578536
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079072
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Improvement: 137.755713
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median weight change: 0.360623
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1945.578536 -> LM2=2044.989082
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Final BP (single-pass): LM=1945.578536, p=0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median weight change: 0.360623
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1945.578536 -> LM2=2044.989082
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Final BP (single-pass): LM=1945.578536, p=0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weighted R^2: 0.4841
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29435.5078
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29435.5078
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:52 - MODEL_4 - INFO -   losri: 394.1489
-2025-10-15 13:34:52 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   blevel: -1893.8442
-2025-10-15 13:34:52 - MODEL_4 - INFO -   flevel: -42.8018
-2025-10-15 13:34:52 - MODEL_4 - INFO -   plevel: -828.5796
-2025-10-15 13:34:52 - MODEL_4 - INFO -   bsum: 1094.6017
-2025-10-15 13:34:52 - MODEL_4 - INFO -   fsum: 1173.9696
-2025-10-15 13:34:52 - MODEL_4 - INFO -   psum: 133.3906
-2025-10-15 13:34:52 - MODEL_4 - INFO -   age: -2.1598
-2025-10-15 13:34:52 - MODEL_4 - INFO -   ILSL: 21279.8811
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH1: 17591.0617
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH2: 9962.4800
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH3: 8118.0006
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH4: -812.8235
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age21_30: 24602.1742
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age31Plus: 23101.4019
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Male: -0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q14: -948.8298
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q15: -1132.0036
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q16: 155.5165
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q17: 700.4808
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q18: 1086.3657
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q19: -987.8133
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q20: 360.8615
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q21: 720.6402
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q22: -2046.5650
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q23: 3227.5882
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q24: 37.7282
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q25: -154.5294
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q26: 572.3578
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q27: -30.9158
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q28: 2047.0174
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q29: 251.5559
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q30: -1590.8843
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q32: -96.6322
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q33: 1346.6241
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q34: 969.9697
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q35: -1802.9380
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q36: 2007.7804
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q37: -257.1251
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q38: -193.5645
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q39: 743.2977
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q40: -1664.7357
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q41: -9.3592
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q42: -227.1889
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q43: 1564.2760
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q44: 142.6670
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q45: 273.0044
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q46: -2279.5344
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q47: 1516.3862
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q48: 994.6032
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q49: -798.6022
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q50: -2095.5379
-2025-10-15 13:34:52 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5163.6684
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age_x_BSum: 570.0407
-2025-10-15 13:34:52 - MODEL_4 - INFO -   FH_x_FSum: -454.3222
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Intercept: -18912.6308
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Fold 9: R^2 = 0.5030
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   losri: 394.1489
+2025-10-15 16:57:33 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   blevel: -1893.8442
+2025-10-15 16:57:33 - MODEL_4 - INFO -   flevel: -42.8018
+2025-10-15 16:57:33 - MODEL_4 - INFO -   plevel: -828.5796
+2025-10-15 16:57:33 - MODEL_4 - INFO -   bsum: 1094.6017
+2025-10-15 16:57:33 - MODEL_4 - INFO -   fsum: 1173.9696
+2025-10-15 16:57:33 - MODEL_4 - INFO -   psum: 133.3906
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age: -2.1598
+2025-10-15 16:57:33 - MODEL_4 - INFO -   ILSL: 21279.8811
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH1: 17591.0617
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH2: 9962.4800
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH3: 8118.0006
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH4: -812.8235
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age21_30: 24602.1742
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age31Plus: 23101.4019
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Male: -0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q14: -948.8298
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q15: -1132.0036
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q16: 155.5165
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q17: 700.4808
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q18: 1086.3657
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q19: -987.8133
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q20: 360.8615
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q21: 720.6402
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q22: -2046.5650
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q23: 3227.5882
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q24: 37.7282
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q25: -154.5294
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q26: 572.3578
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q27: -30.9158
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q28: 2047.0174
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q29: 251.5559
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q30: -1590.8843
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q32: -96.6322
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q33: 1346.6241
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q34: 969.9697
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q35: -1802.9380
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q36: 2007.7804
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q37: -257.1251
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q38: -193.5645
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q39: 743.2977
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q40: -1664.7357
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q41: -9.3592
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q42: -227.1889
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q43: 1564.2760
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q44: 142.6670
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q45: 273.0044
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q46: -2279.5344
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q47: 1516.3862
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q48: 994.6032
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q49: -798.6022
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q50: -2095.5379
+2025-10-15 16:57:33 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5163.6684
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age_x_BSum: 570.0407
+2025-10-15 16:57:33 - MODEL_4 - INFO -   FH_x_FSum: -454.3222
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Intercept: -18912.6308
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Fold 9: R^2 = 0.5030
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 2063.505274
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083862
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2063.505274
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.083862
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:52 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Mean: 1.3090
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median: 1.2096
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Mean: 1.3090
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median: 1.2096
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:52 - MODEL_4 - INFO -     LM statistic: 1942.576919
-2025-10-15 13:34:52 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078947
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Improvement: 120.928356
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 1942.576919
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.078947
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Improvement: 120.928356
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Median weight change: 0.382652
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1942.576919 -> LM2=2040.890835
-2025-10-15 13:34:52 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:52 - MODEL_4 - INFO -     Final BP (single-pass): LM=1942.576919, p=0.000000
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median weight change: 0.382652
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass BP comparison: LM1=1942.576919 -> LM2=2040.890835
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Final BP (single-pass): LM=1942.576919, p=0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weighted R^2: 0.4841
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29574.5314
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29574.5314
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:52 - MODEL_4 - INFO -   losri: 100.1604
-2025-10-15 13:34:52 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   blevel: -1754.6899
-2025-10-15 13:34:52 - MODEL_4 - INFO -   flevel: 158.0791
-2025-10-15 13:34:52 - MODEL_4 - INFO -   plevel: -834.6112
-2025-10-15 13:34:52 - MODEL_4 - INFO -   bsum: 1070.3726
-2025-10-15 13:34:52 - MODEL_4 - INFO -   fsum: 1078.4332
-2025-10-15 13:34:52 - MODEL_4 - INFO -   psum: 168.6526
-2025-10-15 13:34:52 - MODEL_4 - INFO -   age: -5.6009
-2025-10-15 13:34:52 - MODEL_4 - INFO -   ILSL: 22455.8669
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH1: 18086.5859
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH2: 10756.5879
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH3: 8699.4491
-2025-10-15 13:34:52 - MODEL_4 - INFO -   RH4: -146.7598
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age21_30: 24944.6197
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age31Plus: 23236.9668
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Male: -0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q14: -1173.9912
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q15: -1163.6847
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q16: 214.7151
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q17: 479.9986
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q18: 1128.9219
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q19: -911.7671
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q20: 414.0733
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q21: 747.7984
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q22: -1847.1673
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q23: 3017.6490
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q24: 171.8872
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q25: -109.7906
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q26: 566.1608
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q27: 1.8866
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q28: 2086.7555
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q29: 147.9661
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q30: -1622.6058
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q31: -0.0000
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q32: -74.8202
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q33: 1725.3857
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q34: 1180.5379
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q35: -2034.8167
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q36: 1859.9521
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q37: -117.7769
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q38: -54.1960
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q39: 610.1032
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q40: -1693.1022
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q41: -67.1462
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q42: -230.4970
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q43: 1698.1705
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q44: -35.1371
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q45: 201.1014
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q46: -2158.0617
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q47: 1656.7148
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q48: 916.1994
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q49: -857.5245
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Q50: -2356.4338
-2025-10-15 13:34:52 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5422.7520
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Age_x_BSum: 567.7059
-2025-10-15 13:34:52 - MODEL_4 - INFO -   FH_x_FSum: -355.2679
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Intercept: -18859.3407
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Fold 10: R^2 = 0.5081
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - Cross-validation summary:
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Mean R^2: 0.4883
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Std R^2: 0.0151
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Min R^2: 0.4607 (Fold 2)
-2025-10-15 13:34:52 - MODEL_4 - INFO -   Max R^2: 0.5081 (Fold 10)
-2025-10-15 13:34:52 - MODEL_4 - INFO -   95% CI: [0.4588, 0.5179]
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - MODEL TRAINING
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
-2025-10-15 13:34:52 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:52 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   losri: 100.1604
+2025-10-15 16:57:33 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   blevel: -1754.6899
+2025-10-15 16:57:33 - MODEL_4 - INFO -   flevel: 158.0791
+2025-10-15 16:57:33 - MODEL_4 - INFO -   plevel: -834.6112
+2025-10-15 16:57:33 - MODEL_4 - INFO -   bsum: 1070.3726
+2025-10-15 16:57:33 - MODEL_4 - INFO -   fsum: 1078.4332
+2025-10-15 16:57:33 - MODEL_4 - INFO -   psum: 168.6526
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age: -5.6009
+2025-10-15 16:57:33 - MODEL_4 - INFO -   ILSL: 22455.8669
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH1: 18086.5859
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH2: 10756.5879
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH3: 8699.4491
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH4: -146.7598
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age21_30: 24944.6197
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age31Plus: 23236.9668
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Male: -0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q14: -1173.9912
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q15: -1163.6847
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q16: 214.7151
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q17: 479.9986
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q18: 1128.9219
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q19: -911.7671
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q20: 414.0733
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q21: 747.7984
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q22: -1847.1673
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q23: 3017.6490
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q24: 171.8872
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q25: -109.7906
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q26: 566.1608
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q27: 1.8866
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q28: 2086.7555
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q29: 147.9661
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q30: -1622.6058
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q31: -0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q32: -74.8202
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q33: 1725.3857
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q34: 1180.5379
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q35: -2034.8167
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q36: 1859.9521
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q37: -117.7769
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q38: -54.1960
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q39: 610.1032
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q40: -1693.1022
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q41: -67.1462
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q42: -230.4970
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q43: 1698.1705
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q44: -35.1371
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q45: 201.1014
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q46: -2158.0617
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q47: 1656.7148
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q48: 916.1994
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q49: -857.5245
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q50: -2356.4338
+2025-10-15 16:57:33 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5422.7520
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age_x_BSum: 567.7059
+2025-10-15 16:57:33 - MODEL_4 - INFO -   FH_x_FSum: -355.2679
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Intercept: -18859.3407
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Fold 10: R^2 = 0.5081
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - Cross-validation summary:
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Mean R^2: 0.4883
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Std R^2: 0.0151
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Min R^2: 0.4607 (Fold 2)
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Max R^2: 0.5081 (Fold 10)
+2025-10-15 16:57:33 - MODEL_4 - INFO -   95% CI: [0.4588, 0.5179]
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - MODEL TRAINING
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - FITTING WEIGHTED LEAST SQUARES (TWO-STAGE FGLS)
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 1: OLS for variance estimation
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
-2025-10-15 13:34:53 - MODEL_4 - INFO -     LM statistic: 2304.253949
-2025-10-15 13:34:53 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084285
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Breusch-Pagan test (before WLS):
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2304.253949
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.084285
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Conclusion: Significant heteroscedasticity detected (p < 0.001)
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Variance model predictors (10 features):
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - Intercept
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - ILSL
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - RH1
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - RH2
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - RH3
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - RH4
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - bsum
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - Age21_30
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - Age31Plus
-2025-10-15 13:34:53 - MODEL_4 - INFO -     - FH_x_BSum
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Intercept
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - ILSL
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH1
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH2
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH3
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - RH4
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - bsum
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age21_30
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - Age31Plus
+2025-10-15 16:57:33 - MODEL_4 - INFO -     - FH_x_BSum
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weight statistics (initial):
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Mean: 1.3009
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Median: 1.1728
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
-2025-10-15 13:34:53 - MODEL_4 - INFO -     At minimum bound: 0.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO -     At maximum bound: 0.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Mean: 1.3009
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median: 1.1728
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Range: [0.2000, 5.0000]
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At minimum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -     At maximum bound: 0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Stage 2: Weighted Least Squares
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Breusch-Pagan test (after WLS - on Pearson residuals):
-2025-10-15 13:34:53 - MODEL_4 - INFO -     LM statistic: 2164.111955
-2025-10-15 13:34:53 - MODEL_4 - INFO -     P-value: 0.000000
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079158
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Degrees of freedom: 57
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Improvement: 140.141994
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     LM statistic: 2164.111955
+2025-10-15 16:57:33 - MODEL_4 - INFO -     P-value: 0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2 (auxiliary): 0.079158
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Degrees of freedom: 57
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Improvement: 140.141994
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Attempting second FGLS pass...
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Median weight change: 0.369803
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Applying second pass...
-2025-10-15 13:34:53 - MODEL_4 - INFO -     2-pass BP comparison: LM1=2164.111955 -> LM2=2260.441719
-2025-10-15 13:34:53 - MODEL_4 - INFO -     2-pass improved BP? False
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Final BP (single-pass): LM=2164.111955, p=0.000000
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Median weight change: 0.369803
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Applying second pass...
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass BP comparison: LM1=2164.111955 -> LM2=2260.441719
+2025-10-15 16:57:33 - MODEL_4 - INFO -     2-pass improved BP? False
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Rejecting 2-pass results (BP worsened); retaining single-pass
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Final BP (single-pass): LM=2164.111955, p=0.000000
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
   Weighted R^2: 0.4852
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29389.6548
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Weighted RMSE (training scale): 29389.6548
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.19x
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
 Final WLS coefficient summary:
-2025-10-15 13:34:53 - MODEL_4 - INFO -   losri: 325.0417
-2025-10-15 13:34:53 - MODEL_4 - INFO -   olevel: 0.0000
-2025-10-15 13:34:53 - MODEL_4 - INFO -   blevel: -1753.4717
-2025-10-15 13:34:53 - MODEL_4 - INFO -   flevel: -13.4755
-2025-10-15 13:34:53 - MODEL_4 - INFO -   plevel: -845.5124
-2025-10-15 13:34:53 - MODEL_4 - INFO -   bsum: 1045.9271
-2025-10-15 13:34:53 - MODEL_4 - INFO -   fsum: 1138.4291
-2025-10-15 13:34:53 - MODEL_4 - INFO -   psum: 158.6008
-2025-10-15 13:34:53 - MODEL_4 - INFO -   age: -8.2151
-2025-10-15 13:34:53 - MODEL_4 - INFO -   ILSL: 21553.8220
-2025-10-15 13:34:53 - MODEL_4 - INFO -   RH1: 17920.3755
-2025-10-15 13:34:53 - MODEL_4 - INFO -   RH2: 9685.8887
-2025-10-15 13:34:53 - MODEL_4 - INFO -   RH3: 9100.2239
-2025-10-15 13:34:53 - MODEL_4 - INFO -   RH4: -437.6539
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Age21_30: 24532.3458
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Age31Plus: 22957.0795
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Male: -0.0000
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q14: -1103.3148
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q15: -1059.7510
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q16: 77.7157
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q17: 580.6183
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q18: 1142.0773
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q19: -919.9923
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q20: 303.8577
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q21: 792.0332
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q22: -1948.1332
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q23: 3172.6758
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q24: 100.6423
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q25: -222.5688
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q26: 527.7631
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q27: -55.1061
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q28: 2183.1090
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q29: 230.6472
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q30: -1617.9173
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q31: 0.0000
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q32: -33.3076
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q33: 1487.3239
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q34: 1204.5286
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q35: -1998.2101
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q36: 2004.5490
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q37: -168.6680
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q38: -119.0973
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q39: 676.0905
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q40: -1634.7349
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q41: -106.6913
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q42: -213.8606
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q43: 1652.7022
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q44: 88.3644
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q45: 131.3254
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q46: -2270.5895
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q47: 1533.6558
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q48: 949.6862
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q49: -819.6689
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Q50: -2204.7968
-2025-10-15 13:34:53 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5198.1902
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Age_x_BSum: 660.2128
-2025-10-15 13:34:53 - MODEL_4 - INFO -   FH_x_FSum: -415.7669
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Intercept: -18760.5527
-2025-10-15 13:34:53 - MODEL_4 - INFO - Model training complete
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - MAKING PREDICTIONS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - Predictions complete
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - CALCULATING METRICS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - Training R^2: 0.4903
-2025-10-15 13:34:53 - MODEL_4 - INFO - Test R^2: 0.4746
-2025-10-15 13:34:53 - MODEL_4 - INFO - RMSE (original): $32,372.08
-2025-10-15 13:34:53 - MODEL_4 - INFO - RMSE (sqrt scale): $32397.13
-2025-10-15 13:34:53 - MODEL_4 - INFO - MAE: $22,538.49
-2025-10-15 13:34:53 - MODEL_4 - INFO - MAPE: 484.56%
-2025-10-15 13:34:53 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4883 +- 0.0151
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - SUBGROUP ANALYSIS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - Calculated metrics for 10 subgroups
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO -   living_FH:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 3,767
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.1342
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $29,634.89
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $+912.75
-2025-10-15 13:34:53 - MODEL_4 - INFO -   living_ILSL:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 893
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.2648
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $34,564.56
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $-640.41
-2025-10-15 13:34:53 - MODEL_4 - INFO -   living_RH1-4:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 2,174
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.2386
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $35,801.67
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $-1,315.76
-2025-10-15 13:34:53 - MODEL_4 - INFO -   age_AgeUnderTwentyOne:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 694
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.5103
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $26,110.71
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $+2,417.07
-2025-10-15 13:34:53 - MODEL_4 - INFO -   age_AgeTwentyOneToThirty:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 1,797
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.4375
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $36,643.10
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $+1,031.74
-2025-10-15 13:34:53 - MODEL_4 - INFO -   age_AgeThirtyOnePlus:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 4,343
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: 0.4633
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $31,376.77
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $-811.77
-2025-10-15 13:34:53 - MODEL_4 - INFO -   cost_QOneLow:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 1,709
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: -10.0000
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $28,237.26
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $+22,914.46
-2025-10-15 13:34:53 - MODEL_4 - INFO -   cost_QTwo:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 1,708
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: -5.4939
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $19,665.77
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $+10,696.52
-2025-10-15 13:34:53 - MODEL_4 - INFO -   cost_QThree:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 1,708
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: -2.3653
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $21,411.22
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $-3,589.01
-2025-10-15 13:34:53 - MODEL_4 - INFO -   cost_QFourHigh:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     N: 1,709
-2025-10-15 13:34:53 - MODEL_4 - INFO -     R^2: -0.9857
-2025-10-15 13:34:53 - MODEL_4 - INFO -     RMSE: $50,483.15
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Bias: $-30,014.31
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - VARIANCE ANALYSIS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - Variance metrics calculated
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Coefficient of Variation (Actual): 1.0101
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Coefficient of Variation (Predicted): 0.6635
-2025-10-15 13:34:53 - MODEL_4 - INFO -   95% Prediction Interval Width: $63,449.28
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Actual-Predicted Correlation: 0.6897
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - POPULATION SCENARIOS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - Calculated 4 population scenarios
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO -   Base budget: $1,200,000,000
-2025-10-15 13:34:53 - MODEL_4 - INFO -   currentbaseline:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Clients served: 27,138
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Avg allocation: $44,217.05
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist change: +0
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist %: +0.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO -   modelbalanced:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Clients served: 27,680
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Avg allocation: $43,332.71
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist change: +542
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist %: +2.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO -   modelefficiency:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Clients served: 28,494
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Avg allocation: $42,006.20
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist change: +1,356
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist %: +5.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO -   categoryfocused:
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Clients served: 23,067
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Avg allocation: $52,176.12
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist change: -4,070
-2025-10-15 13:34:53 - MODEL_4 - INFO -     Waitlist %: -15.0%
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - GENERATING OUTPUTS
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - 
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - LATEX GENERATION
-2025-10-15 13:34:53 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:53 - MODEL_4 - INFO - LaTeX commands generated:
-2025-10-15 13:34:53 - MODEL_4 - INFO -   - Newcommands file: ..\..\report\models\model_4\model_4_newcommands.tex
-2025-10-15 13:34:53 - MODEL_4 - INFO -     (87 placeholder commands)
-2025-10-15 13:34:53 - MODEL_4 - INFO -   - Renewcommands file: ..\..\report\models\model_4\model_4_renewcommands.tex
-2025-10-15 13:34:53 - MODEL_4 - INFO -     (87 value commands)
-2025-10-15 13:34:53 - MODEL_4 - INFO - Model 4 specific commands appended to both files
-2025-10-15 13:34:53 - MODEL_4 - INFO - Results saved:
-2025-10-15 13:34:53 - MODEL_4 - INFO -   - Metrics JSON: ..\..\report\models\model_4\metrics.json
-2025-10-15 13:34:53 - MODEL_4 - INFO -   - Predictions CSV: ..\..\report\models\model_4\predictions.csv
-2025-10-15 13:34:53 - MODEL_4 - INFO -     (27,339 train + 6,834 test predictions)
-2025-10-15 13:34:54 - MODEL_4 - INFO - Diagnostic plots saved to ..\..\report\models\model_4\diagnostic_plots.png
-2025-10-15 13:34:54 - MODEL_4 - INFO - 
-2025-10-15 13:34:54 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:54 - MODEL_4 - INFO - PIPELINE COMPLETE: WEIGHTED-LEAST-SQUARES
-2025-10-15 13:34:54 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:54 - MODEL_4 - INFO - 
-2025-10-15 13:34:54 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:54 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 13:34:54 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:54 - MODEL_4 - INFO - Training R^2: 0.4903
-2025-10-15 13:34:54 - MODEL_4 - INFO - Test R^2: 0.4746
-2025-10-15 13:34:54 - MODEL_4 - INFO - RMSE: $32,372.08
-2025-10-15 13:34:54 - MODEL_4 - INFO - MAE: $22,538.49
-2025-10-15 13:34:54 - MODEL_4 - INFO - MAPE: 484.56%
-2025-10-15 13:34:54 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4883 +- 0.0151
-2025-10-15 13:34:54 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:54 - MODEL_4 - INFO - Generating full-population predictions for BASE_YEAR=2024 ...
-2025-10-15 13:34:54 - MODEL_4 - INFO - 
-2025-10-15 13:34:54 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:54 - MODEL_4 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 13:34:54 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:54 - MODEL_4 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 13:34:54 - MODEL_4 - INFO - Found 47259 records in 'data' key
-2025-10-15 13:34:55 - MODEL_4 - INFO - FY2024 Summary:
-2025-10-15 13:34:55 - MODEL_4 - INFO -   - Processed: 34,173
-2025-10-15 13:34:55 - MODEL_4 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 13:34:55 - MODEL_4 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 13:34:55 - MODEL_4 - INFO -   - Skipped (errors): 0
-2025-10-15 13:34:55 - MODEL_4 - INFO - Total loaded: 34,173 usable records
-2025-10-15 13:34:56 - MODEL_4 - INFO - Features prepared: 57 total features from 34173 records
-2025-10-15 13:34:56 - MODEL_4 - INFO - Feature breakdown:
-2025-10-15 13:34:56 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:34:56 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:34:56 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:34:56 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:34:56 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:34:56 - MODEL_4 - INFO - Feature counts by type:
-2025-10-15 13:34:56 - MODEL_4 - INFO -   numeric: 9
-2025-10-15 13:34:56 - MODEL_4 - INFO -   categorical: 5
-2025-10-15 13:34:56 - MODEL_4 - INFO -   binary: 3
-2025-10-15 13:34:56 - MODEL_4 - INFO -   qsi: 37
-2025-10-15 13:34:56 - MODEL_4 - INFO -   interactions: 3
-2025-10-15 13:34:56 - MODEL_4 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\predictions_full_2024.csv
-2025-10-15 13:34:56 - MODEL_4 - INFO - 
-2025-10-15 13:34:56 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:56 - MODEL_4 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 13:34:56 - MODEL_4 - INFO - ------------------------------------------------------------
-2025-10-15 13:34:57 - MODEL_4 - INFO - Diagnostic plots saved to: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\diagnostic_plots.png
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:57 - MODEL_4 - INFO - MODEL 4 FINAL SUMMARY
-2025-10-15 13:34:57 - MODEL_4 - INFO - ============================================================
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Performance Metrics (Final):
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Training R^2: 0.4903
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Test R^2: 0.4746
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Weighted R^2: 0.4852
-2025-10-15 13:34:57 - MODEL_4 - INFO -   RMSE (original scale): $32,372.08
-2025-10-15 13:34:57 - MODEL_4 - INFO -   MAE (original scale): $22,538.49
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Percentage Error Metrics (corrected for small denominators):
-2025-10-15 13:34:57 - MODEL_4 - INFO -   SMAPE (Symmetric MAPE, all cases): 76.92%
-2025-10-15 13:34:57 - MODEL_4 - INFO -   MAPE (costs >= $1,000, n=6,403): 306.01%
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Note: Raw MAPE (all cases) is misleading due to small denominators
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO -   CV R^2 (mean +- std): 0.4883 +- 0.0151
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - WLS Specific Metrics:
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.1878x
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Breusch-Pagan before: LM=2304.253949, p=0.000000
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Breusch-Pagan after: LM=2164.111955, p=0.000000
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Heteroscedasticity reduction: 140.141994 (6.1% improvement)
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Weight Statistics:
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Mean: 1.3009
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Median: 1.1728
-2025-10-15 13:34:57 - MODEL_4 - INFO -   At minimum bound: 0.0%
-2025-10-15 13:34:57 - MODEL_4 - INFO -   At maximum bound: 0.0%
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Data Utilization:
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Training samples: 27339
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Test samples: 6834
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Outliers removed: 0 (100% data retention)
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Known Limitations:
-2025-10-15 13:34:57 - MODEL_4 - INFO -   - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)
-2025-10-15 13:34:57 - MODEL_4 - INFO -   - Recommended: Apply post-processing quartile-wise affine calibration
-2025-10-15 13:34:57 - MODEL_4 - INFO -   - Family Home (FH) subgroup shows lower R^2 (~0.07)
-2025-10-15 13:34:57 - MODEL_4 - INFO -   - See LaTeX report for detailed equity and calibration analysis
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - Output:
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Results saved to: ..\..\report\models\model_4
-2025-10-15 13:34:57 - MODEL_4 - INFO -   Diagnostic plots: ..\..\report\models\model_4\diagnostic_plots.png
-2025-10-15 13:34:57 - MODEL_4 - INFO -   LaTeX commands: ..\..\report\models\model_4\model_4_renewcommands.tex
-2025-10-15 13:34:57 - MODEL_4 - INFO - 
-2025-10-15 13:34:57 - MODEL_4 - INFO - ================================================================================
-2025-10-15 13:34:57 - MODEL_4 - INFO - MODEL 4 PIPELINE COMPLETE
-2025-10-15 13:34:57 - MODEL_4 - INFO - ================================================================================
+2025-10-15 16:57:33 - MODEL_4 - INFO -   losri: 325.0417
+2025-10-15 16:57:33 - MODEL_4 - INFO -   olevel: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   blevel: -1753.4717
+2025-10-15 16:57:33 - MODEL_4 - INFO -   flevel: -13.4755
+2025-10-15 16:57:33 - MODEL_4 - INFO -   plevel: -845.5124
+2025-10-15 16:57:33 - MODEL_4 - INFO -   bsum: 1045.9271
+2025-10-15 16:57:33 - MODEL_4 - INFO -   fsum: 1138.4291
+2025-10-15 16:57:33 - MODEL_4 - INFO -   psum: 158.6008
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age: -8.2151
+2025-10-15 16:57:33 - MODEL_4 - INFO -   ILSL: 21553.8220
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH1: 17920.3755
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH2: 9685.8887
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH3: 9100.2239
+2025-10-15 16:57:33 - MODEL_4 - INFO -   RH4: -437.6539
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age21_30: 24532.3458
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age31Plus: 22957.0795
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Male: -0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q14: -1103.3148
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q15: -1059.7510
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q16: 77.7157
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q17: 580.6183
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q18: 1142.0773
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q19: -919.9923
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q20: 303.8577
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q21: 792.0332
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q22: -1948.1332
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q23: 3172.6758
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q24: 100.6423
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q25: -222.5688
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q26: 527.7631
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q27: -55.1061
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q28: 2183.1090
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q29: 230.6472
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q30: -1617.9173
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q31: 0.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q32: -33.3076
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q33: 1487.3239
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q34: 1204.5286
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q35: -1998.2101
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q36: 2004.5490
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q37: -168.6680
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q38: -119.0973
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q39: 676.0905
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q40: -1634.7349
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q41: -106.6913
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q42: -213.8606
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q43: 1652.7022
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q44: 88.3644
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q45: 131.3254
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q46: -2270.5895
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q47: 1533.6558
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q48: 949.6862
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q49: -819.6689
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Q50: -2204.7968
+2025-10-15 16:57:33 - MODEL_4 - INFO -   SupportedLiving_x_LOSRI: 5198.1902
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Age_x_BSum: 660.2128
+2025-10-15 16:57:33 - MODEL_4 - INFO -   FH_x_FSum: -415.7669
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Intercept: -18760.5527
+2025-10-15 16:57:33 - MODEL_4 - INFO - Model training complete
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - MAKING PREDICTIONS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - Predictions complete
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - CALCULATING METRICS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - Training R^2: 0.4903
+2025-10-15 16:57:33 - MODEL_4 - INFO - Test R^2: 0.4746
+2025-10-15 16:57:33 - MODEL_4 - INFO - RMSE (original): $32,372.08
+2025-10-15 16:57:33 - MODEL_4 - INFO - RMSE (sqrt scale): $32397.13
+2025-10-15 16:57:33 - MODEL_4 - INFO - MAE: $22,538.49
+2025-10-15 16:57:33 - MODEL_4 - INFO - MAPE: 484.56%
+2025-10-15 16:57:33 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4883 +- 0.0151
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - SUBGROUP ANALYSIS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - Calculated metrics for 10 subgroups
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   living_FH:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 3,767
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.1342
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $29,634.89
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $+912.75
+2025-10-15 16:57:33 - MODEL_4 - INFO -   living_ILSL:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 893
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.2648
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $34,564.56
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $-640.41
+2025-10-15 16:57:33 - MODEL_4 - INFO -   living_RH1-4:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 2,174
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.2386
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $35,801.67
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $-1,315.76
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age_AgeUnderTwentyOne:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 694
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.5103
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $26,110.71
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $+2,417.07
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 1,797
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.4375
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $36,643.10
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $+1,031.74
+2025-10-15 16:57:33 - MODEL_4 - INFO -   age_AgeThirtyOnePlus:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 4,343
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: 0.4633
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $31,376.77
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $-811.77
+2025-10-15 16:57:33 - MODEL_4 - INFO -   cost_QOneLow:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 1,709
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: -10.0000
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $28,237.26
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $+22,914.46
+2025-10-15 16:57:33 - MODEL_4 - INFO -   cost_QTwo:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 1,708
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: -5.4939
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $19,665.77
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $+10,696.52
+2025-10-15 16:57:33 - MODEL_4 - INFO -   cost_QThree:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 1,708
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: -2.3653
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $21,411.22
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $-3,589.01
+2025-10-15 16:57:33 - MODEL_4 - INFO -   cost_QFourHigh:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     N: 1,709
+2025-10-15 16:57:33 - MODEL_4 - INFO -     R^2: -0.9857
+2025-10-15 16:57:33 - MODEL_4 - INFO -     RMSE: $50,483.15
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Bias: $-30,014.31
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - VARIANCE ANALYSIS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - Variance metrics calculated
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Coefficient of Variation (Predicted): 0.6635
+2025-10-15 16:57:33 - MODEL_4 - INFO -   95% Prediction Interval Width: $63,449.28
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Actual-Predicted Correlation: 0.6897
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - POPULATION SCENARIOS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - Calculated 4 population scenarios
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO -   Base budget: $1,200,000,000
+2025-10-15 16:57:33 - MODEL_4 - INFO -   currentbaseline:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Clients served: 27,138
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Avg allocation: $44,217.05
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist change: +0
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist %: +0.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -   modelbalanced:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Clients served: 27,680
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Avg allocation: $43,332.71
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist change: +542
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist %: +2.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -   modelefficiency:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Clients served: 28,494
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Avg allocation: $42,006.20
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist change: +1,356
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist %: +5.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO -   categoryfocused:
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Clients served: 23,067
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Avg allocation: $52,176.12
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist change: -4,070
+2025-10-15 16:57:33 - MODEL_4 - INFO -     Waitlist %: -15.0%
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - GENERATING OUTPUTS
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - 
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - LATEX GENERATION
+2025-10-15 16:57:33 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:33 - MODEL_4 - INFO - LaTeX commands generated:
+2025-10-15 16:57:33 - MODEL_4 - INFO -   - Newcommands file: ..\..\report\models\model_4\model_4_newcommands.tex
+2025-10-15 16:57:33 - MODEL_4 - INFO -     (87 placeholder commands)
+2025-10-15 16:57:33 - MODEL_4 - INFO -   - Renewcommands file: ..\..\report\models\model_4\model_4_renewcommands.tex
+2025-10-15 16:57:33 - MODEL_4 - INFO -     (87 value commands)
+2025-10-15 16:57:34 - MODEL_4 - INFO - Model 4 specific commands appended to both files
+2025-10-15 16:57:34 - MODEL_4 - INFO - Results saved:
+2025-10-15 16:57:34 - MODEL_4 - INFO -   - Metrics JSON: ..\..\report\models\model_4\metrics.json
+2025-10-15 16:57:34 - MODEL_4 - INFO -   - Predictions CSV: ..\..\report\models\model_4\predictions.csv
+2025-10-15 16:57:34 - MODEL_4 - INFO -     (27,339 train + 6,834 test predictions)
+2025-10-15 16:57:34 - MODEL_4 - INFO - Diagnostic plots saved to ..\..\report\models\model_4\diagnostic_plots.png
+2025-10-15 16:57:34 - MODEL_4 - INFO - 
+2025-10-15 16:57:34 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:34 - MODEL_4 - INFO - PIPELINE COMPLETE: WEIGHTED-LEAST-SQUARES
+2025-10-15 16:57:34 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:34 - MODEL_4 - INFO - 
+2025-10-15 16:57:34 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:34 - MODEL_4 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 16:57:34 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:34 - MODEL_4 - INFO - Training R^2: 0.4903
+2025-10-15 16:57:34 - MODEL_4 - INFO - Test R^2: 0.4746
+2025-10-15 16:57:34 - MODEL_4 - INFO - RMSE: $32,372.08
+2025-10-15 16:57:34 - MODEL_4 - INFO - MAE: $22,538.49
+2025-10-15 16:57:34 - MODEL_4 - INFO - MAPE: 484.56%
+2025-10-15 16:57:34 - MODEL_4 - INFO - CV R^2 (mean +- std): 0.4883 +- 0.0151
+2025-10-15 16:57:34 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:34 - MODEL_4 - INFO - Generating full-population predictions for BASE_YEAR=2023 ...
+2025-10-15 16:57:34 - MODEL_4 - INFO - 
+2025-10-15 16:57:34 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:34 - MODEL_4 - INFO - LOADING DATA: FY2023-2023
+2025-10-15 16:57:34 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:34 - MODEL_4 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-15 16:57:34 - MODEL_4 - INFO - Found 46193 records in 'data' key
+2025-10-15 16:57:36 - MODEL_4 - INFO - FY2023 Summary:
+2025-10-15 16:57:36 - MODEL_4 - INFO -   - Processed: 33,092
+2025-10-15 16:57:36 - MODEL_4 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 16:57:36 - MODEL_4 - INFO -   - Skipped (no cost): 13,101
+2025-10-15 16:57:36 - MODEL_4 - INFO -   - Skipped (errors): 0
+2025-10-15 16:57:36 - MODEL_4 - INFO - Total loaded: 33,092 usable records
+2025-10-15 16:57:36 - MODEL_4 - INFO - Features prepared: 57 total features from 33092 records
+2025-10-15 16:57:36 - MODEL_4 - INFO - Feature breakdown:
+2025-10-15 16:57:36 - MODEL_4 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:57:36 - MODEL_4 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:57:36 - MODEL_4 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:57:36 - MODEL_4 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:57:36 - MODEL_4 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:57:36 - MODEL_4 - INFO - Feature counts by type:
+2025-10-15 16:57:36 - MODEL_4 - INFO -   numeric: 9
+2025-10-15 16:57:36 - MODEL_4 - INFO -   categorical: 5
+2025-10-15 16:57:36 - MODEL_4 - INFO -   binary: 3
+2025-10-15 16:57:36 - MODEL_4 - INFO -   qsi: 37
+2025-10-15 16:57:36 - MODEL_4 - INFO -   interactions: 3
+2025-10-15 16:57:36 - MODEL_4 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\predictions_full_2023.csv
+2025-10-15 16:57:36 - MODEL_4 - INFO - 
+2025-10-15 16:57:36 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:36 - MODEL_4 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 16:57:36 - MODEL_4 - INFO - ------------------------------------------------------------
+2025-10-15 16:57:37 - MODEL_4 - INFO - Diagnostic plots saved to: C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_4\diagnostic_plots.png
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:37 - MODEL_4 - INFO - MODEL 4 FINAL SUMMARY
+2025-10-15 16:57:37 - MODEL_4 - INFO - ============================================================
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Performance Metrics (Final):
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Training R^2: 0.4903
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Test R^2: 0.4746
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Weighted R^2: 0.4852
+2025-10-15 16:57:37 - MODEL_4 - INFO -   RMSE (original scale): $32,372.08
+2025-10-15 16:57:37 - MODEL_4 - INFO -   MAE (original scale): $22,538.49
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Percentage Error Metrics (corrected for small denominators):
+2025-10-15 16:57:37 - MODEL_4 - INFO -   SMAPE (Symmetric MAPE, all cases): 76.92%
+2025-10-15 16:57:37 - MODEL_4 - INFO -   MAPE (costs >= $1,000, n=6,403): 306.01%
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Note: Raw MAPE (all cases) is misleading due to small denominators
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO -   CV R^2 (mean +- std): 0.4883 +- 0.0151
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - WLS Specific Metrics:
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Efficiency ratio vs OLS: 1.1878x
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Breusch-Pagan before: LM=2304.253949, p=0.000000
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Breusch-Pagan after: LM=2164.111955, p=0.000000
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Heteroscedasticity reduction: 140.141994 (6.1% improvement)
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Weight Statistics:
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Mean: 1.3009
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Median: 1.1728
+2025-10-15 16:57:37 - MODEL_4 - INFO -   At minimum bound: 0.0%
+2025-10-15 16:57:37 - MODEL_4 - INFO -   At maximum bound: 0.0%
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Data Utilization:
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Training samples: 27339
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Test samples: 6834
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Outliers removed: 0 (100% data retention)
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Known Limitations:
+2025-10-15 16:57:37 - MODEL_4 - INFO -   - Systematic calibration bias by cost quartile (Q1 over-predicts, Q4 under-predicts)
+2025-10-15 16:57:37 - MODEL_4 - INFO -   - Recommended: Apply post-processing quartile-wise affine calibration
+2025-10-15 16:57:37 - MODEL_4 - INFO -   - Family Home (FH) subgroup shows lower R^2 (~0.07)
+2025-10-15 16:57:37 - MODEL_4 - INFO -   - See LaTeX report for detailed equity and calibration analysis
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - Output:
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Results saved to: ..\..\report\models\model_4
+2025-10-15 16:57:37 - MODEL_4 - INFO -   Diagnostic plots: ..\..\report\models\model_4\diagnostic_plots.png
+2025-10-15 16:57:37 - MODEL_4 - INFO -   LaTeX commands: ..\..\report\models\model_4\model_4_renewcommands.tex
+2025-10-15 16:57:37 - MODEL_4 - INFO - 
+2025-10-15 16:57:37 - MODEL_4 - INFO - ================================================================================
+2025-10-15 16:57:37 - MODEL_4 - INFO - MODEL 4 PIPELINE COMPLETE
+2025-10-15 16:57:37 - MODEL_4 - INFO - ================================================================================

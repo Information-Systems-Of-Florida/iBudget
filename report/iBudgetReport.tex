@@ -1,12 +1,13 @@
 \documentclass[letterpaper]{report} 
 %-----------------------
-\newcommand{\TheTitle}{Scientific Report for iBudget Algorithm Study}
+\newcommand{\TheTitle}{Scientific Report for the iBudget Algorithm Study}
 %Analysis of the Florida iBudget Algorithm:\\Proposed Quantitative Alternatives} 
 \newcommand{\TheSubtitle}{Agency for Persons with Disabilities}
 \newcommand{\TheAuthor}{ISF}  % Information Systems of Florida
 \newcommand{\ThePageCount}{39}
-\newcommand{\TheObsolescenceDate}{October 17, 2025}  
-\newcommand{\TheVersion}{\texttt{0.1.4-beta}}
+\newcommand{\TheObsolescenceDate}{October 24, 2025}  
+\newcommand{\TheVersion}{\texttt{1.0.0-beta}}
+\newcommand{\VersionMsg}{\sc{Version $\TheVersion$. Planned obsolescence. Discard after: \TheObsolescenceDate} }
 %-----------------------
 \input{0.1.config}
 \rhead{\footnotesize{\sc{iBudget Scientific Report}}} 
@@ -18,5 +19,6 @@
     \include{2FeatureSelection} 
     \include{3AlternativeAlgorithms}
     \include{4Implementation} 
+    \include{1ImpactAnalysis.tex}
     \include{5Appendix}
 \end{document}    

@@ -1,708 +1,708 @@
-2025-10-15 13:36:12 - MODEL_6 - INFO - 
-2025-10-15 13:36:12 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:12 - MODEL_6 - INFO - INITIALIZING MODEL 6: LOG-NORMAL GLM (CONDITIONAL SMEARING)
-2025-10-15 13:36:12 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:12 - MODEL_6 - INFO - Output directory: ..\..\report\models\model_6
-2025-10-15 13:36:12 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:12 - MODEL_6 - INFO - Configuration:
-2025-10-15 13:36:12 - MODEL_6 - INFO -   - Outlier removal: False
-2025-10-15 13:36:12 - MODEL_6 - INFO -   - Transformation: log
-2025-10-15 13:36:12 - MODEL_6 - INFO -   - Random seed: 42
-2025-10-15 13:36:12 - MODEL_6 - INFO - 
-2025-10-15 13:36:12 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:12 - MODEL_6 - INFO - STARTING PIPELINE: LOG-NORMAL GLM (CONDITIONAL SMEARING)
-2025-10-15 13:36:12 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:12 - MODEL_6 - INFO - 
-2025-10-15 13:36:12 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:12 - MODEL_6 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 13:36:12 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:12 - MODEL_6 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 13:36:12 - MODEL_6 - INFO - Found 47259 records in 'data' key
-2025-10-15 13:36:14 - MODEL_6 - INFO - FY2024 Summary:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   - Processed: 34,173
-2025-10-15 13:36:14 - MODEL_6 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 13:36:14 - MODEL_6 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 13:36:14 - MODEL_6 - INFO -   - Skipped (errors): 0
-2025-10-15 13:36:14 - MODEL_6 - INFO - Total loaded: 34,173 usable records
-2025-10-15 13:36:14 - MODEL_6 - INFO - 
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - DATA SPLIT
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - Training samples: 27,339
-2025-10-15 13:36:14 - MODEL_6 - INFO - Test samples: 6,834
-2025-10-15 13:36:14 - MODEL_6 - INFO - Split ratio: 20.0%
-2025-10-15 13:36:14 - MODEL_6 - INFO - 
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - FEATURE PREPARATION
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - Features prepared: 57 total features from 27339 records
-2025-10-15 13:36:14 - MODEL_6 - INFO - Feature breakdown:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:36:14 - MODEL_6 - INFO - Feature counts by type:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   numeric: 9
-2025-10-15 13:36:14 - MODEL_6 - INFO -   categorical: 5
-2025-10-15 13:36:14 - MODEL_6 - INFO -   binary: 3
-2025-10-15 13:36:14 - MODEL_6 - INFO -   qsi: 37
-2025-10-15 13:36:14 - MODEL_6 - INFO -   interactions: 3
-2025-10-15 13:36:14 - MODEL_6 - INFO - Features prepared: 57 total features from 6834 records
-2025-10-15 13:36:14 - MODEL_6 - INFO - Feature breakdown:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:36:14 - MODEL_6 - INFO - Feature counts by type:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   numeric: 9
-2025-10-15 13:36:14 - MODEL_6 - INFO -   categorical: 5
-2025-10-15 13:36:14 - MODEL_6 - INFO -   binary: 3
-2025-10-15 13:36:14 - MODEL_6 - INFO -   qsi: 37
-2025-10-15 13:36:14 - MODEL_6 - INFO -   interactions: 3
-2025-10-15 13:36:14 - MODEL_6 - INFO - Features prepared: 57 features
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Training shape: (27339, 57)
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Test shape: (6834, 57)
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Target range: $31.25 - $346,560.68
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Target mean: $44,675.37
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Target median: $32,279.60
-2025-10-15 13:36:14 - MODEL_6 - INFO - 
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - 10-FOLD CROSS-VALIDATION
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - 
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:14 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:14 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness (log scale): -0.6355
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness reduction: 148.9%
-2025-10-15 13:36:14 - MODEL_6 - INFO - R-squared (log scale): 0.4376
-2025-10-15 13:36:14 - MODEL_6 - INFO - Sigma (log scale): 1.2217
-2025-10-15 13:36:14 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Std: 1.2204
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Min: -6.34
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Max: 3.83
-2025-10-15 13:36:14 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Mean (smearing factor): 1.879894
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Min: 0.001761
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Max: 46.031684
-2025-10-15 13:36:14 - MODEL_6 - INFO - Smearing factor: 1.879894
-2025-10-15 13:36:14 - MODEL_6 - INFO - Retransformation bias: +87.99%
-2025-10-15 13:36:14 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:14 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:14 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:14 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
-2025-10-15 13:36:14 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:14 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:14 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:14 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:14 - MODEL_6 - INFO - AIC: 79,732
-2025-10-15 13:36:14 - MODEL_6 - INFO - BIC: 80,154
-2025-10-15 13:36:14 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:14 - MODEL_6 - INFO - Inverse transformation using GLOBAL smearing:
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Log predictions range: [6.94, 12.16]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Smearing factor: 1.879894
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Dollar predictions range: [$1,950, $357,274]
-2025-10-15 13:36:14 - MODEL_6 - INFO -   Fold 1: R^2 = -0.4282
-2025-10-15 13:36:14 - MODEL_6 - INFO - 
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:14 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:14 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:14 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:14 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness (log scale): -0.6385
-2025-10-15 13:36:14 - MODEL_6 - INFO - Skewness reduction: 149.1%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4377
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2207
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: -0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2194
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.37
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.77
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.872065
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001720
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 43.591873
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.872065
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +87.21%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.87 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:15 - MODEL_6 - INFO - AIC: 79,693
-2025-10-15 13:36:15 - MODEL_6 - INFO - BIC: 80,115
-2025-10-15 13:36:15 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Fold 2: R^2 = -0.3875
-2025-10-15 13:36:15 - MODEL_6 - INFO - 
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:15 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:15 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (log scale): -0.6414
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness reduction: 149.3%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4336
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2254
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2241
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.37
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.78
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.879069
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001718
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 43.883420
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.879069
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +87.91%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:15 - MODEL_6 - INFO - AIC: 79,880
-2025-10-15 13:36:15 - MODEL_6 - INFO - BIC: 80,301
-2025-10-15 13:36:15 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Fold 3: R^2 = -0.3274
-2025-10-15 13:36:15 - MODEL_6 - INFO - 
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:15 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:15 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (log scale): -0.6394
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness reduction: 149.1%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4355
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2243
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2230
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.35
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.82
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.882445
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001754
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 45.729806
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.882445
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +88.24%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:15 - MODEL_6 - INFO - AIC: 79,836
-2025-10-15 13:36:15 - MODEL_6 - INFO - BIC: 80,258
-2025-10-15 13:36:15 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Fold 4: R^2 = -0.2264
-2025-10-15 13:36:15 - MODEL_6 - INFO - 
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:15 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:15 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (log scale): -0.6398
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness reduction: 149.2%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4377
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2221
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2208
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.35
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.83
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.876834
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001739
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 46.142259
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.876834
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +87.68%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:15 - MODEL_6 - INFO - AIC: 79,750
-2025-10-15 13:36:15 - MODEL_6 - INFO - BIC: 80,171
-2025-10-15 13:36:15 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Fold 5: R^2 = -0.4426
-2025-10-15 13:36:15 - MODEL_6 - INFO - 
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:15 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:15 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (log scale): -0.6397
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness reduction: 149.2%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4362
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2237
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: -0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2224
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.32
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.90
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.877023
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001798
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 49.551135
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.877023
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +87.70%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:15 - MODEL_6 - INFO - AIC: 79,812
-2025-10-15 13:36:15 - MODEL_6 - INFO - BIC: 80,234
-2025-10-15 13:36:15 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Fold 6: R^2 = -0.3573
-2025-10-15 13:36:15 - MODEL_6 - INFO - 
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:15 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:15 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:15 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:15 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness (log scale): -0.6366
-2025-10-15 13:36:15 - MODEL_6 - INFO - Skewness reduction: 148.9%
-2025-10-15 13:36:15 - MODEL_6 - INFO - R-squared (log scale): 0.4347
-2025-10-15 13:36:15 - MODEL_6 - INFO - Sigma (log scale): 1.2281
-2025-10-15 13:36:15 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean: -0.000000
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Std: 1.2268
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: -6.36
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 3.81
-2025-10-15 13:36:15 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Mean (smearing factor): 1.887294
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Min: 0.001726
-2025-10-15 13:36:15 - MODEL_6 - INFO -   Max: 45.274571
-2025-10-15 13:36:15 - MODEL_6 - INFO - Smearing factor: 1.887294
-2025-10-15 13:36:15 - MODEL_6 - INFO - Retransformation bias: +88.73%
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:15 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Smearing factor = 1.89 means predictions multiplied by ~1.9x
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.51)
-2025-10-15 13:36:15 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:15 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:16 - MODEL_6 - INFO - AIC: 79,990
-2025-10-15 13:36:16 - MODEL_6 - INFO - BIC: 80,412
-2025-10-15 13:36:16 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Fold 7: R^2 = -0.4850
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:16 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:16 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (log scale): -0.6438
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness reduction: 149.5%
-2025-10-15 13:36:16 - MODEL_6 - INFO - R-squared (log scale): 0.4365
-2025-10-15 13:36:16 - MODEL_6 - INFO - Sigma (log scale): 1.2209
-2025-10-15 13:36:16 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Std: 1.2196
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: -6.22
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 3.79
-2025-10-15 13:36:16 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean (smearing factor): 1.875747
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: 0.001986
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 44.074387
-2025-10-15 13:36:16 - MODEL_6 - INFO - Smearing factor: 1.875747
-2025-10-15 13:36:16 - MODEL_6 - INFO - Retransformation bias: +87.57%
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:16 - MODEL_6 - INFO - AIC: 79,698
-2025-10-15 13:36:16 - MODEL_6 - INFO - BIC: 80,120
-2025-10-15 13:36:16 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Fold 8: R^2 = -0.2870
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Training samples: 24,605
-2025-10-15 13:36:16 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:16 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (log scale): -0.6369
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness reduction: 149.0%
-2025-10-15 13:36:16 - MODEL_6 - INFO - R-squared (log scale): 0.4365
-2025-10-15 13:36:16 - MODEL_6 - INFO - Sigma (log scale): 1.2214
-2025-10-15 13:36:16 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Std: 1.2201
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: -6.33
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 3.87
-2025-10-15 13:36:16 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean (smearing factor): 1.875595
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: 0.001791
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 47.957982
-2025-10-15 13:36:16 - MODEL_6 - INFO - Smearing factor: 1.875595
-2025-10-15 13:36:16 - MODEL_6 - INFO - Retransformation bias: +87.56%
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:16 - MODEL_6 - INFO - AIC: 79,721
-2025-10-15 13:36:16 - MODEL_6 - INFO - BIC: 80,143
-2025-10-15 13:36:16 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Fold 9: R^2 = -0.4307
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Training samples: 24,606
-2025-10-15 13:36:16 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:16 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (log scale): -0.6383
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness reduction: 149.1%
-2025-10-15 13:36:16 - MODEL_6 - INFO - R-squared (log scale): 0.4367
-2025-10-15 13:36:16 - MODEL_6 - INFO - Sigma (log scale): 1.2237
-2025-10-15 13:36:16 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Std: 1.2224
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: -6.32
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 3.77
-2025-10-15 13:36:16 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean (smearing factor): 1.879162
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: 0.001792
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 43.300450
-2025-10-15 13:36:16 - MODEL_6 - INFO - Smearing factor: 1.879162
-2025-10-15 13:36:16 - MODEL_6 - INFO - Retransformation bias: +87.92%
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:16 - MODEL_6 - INFO - AIC: 79,815
-2025-10-15 13:36:16 - MODEL_6 - INFO - BIC: 80,237
-2025-10-15 13:36:16 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Fold 10: R^2 = -0.3315
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - Cross-validation summary:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean R^2: -0.3704
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Std R^2: 0.0754
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min R^2: -0.4850 (Fold 7)
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max R^2: -0.2264 (Fold 4)
-2025-10-15 13:36:16 - MODEL_6 - INFO -   95% CI: [-0.5181, -0.2226]
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MODEL TRAINING
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Training samples: 27,339
-2025-10-15 13:36:16 - MODEL_6 - INFO - Features: 57
-2025-10-15 13:36:16 - MODEL_6 - INFO - Note: y already log-transformed by base class
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (original scale): 1.3009
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness (log scale): -0.6390
-2025-10-15 13:36:16 - MODEL_6 - INFO - Skewness reduction: 149.1%
-2025-10-15 13:36:16 - MODEL_6 - INFO - R-squared (log scale): 0.4362
-2025-10-15 13:36:16 - MODEL_6 - INFO - Sigma (log scale): 1.2232
-2025-10-15 13:36:16 - MODEL_6 - INFO - Residual statistics (log scale):
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Std: 1.2220
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: -6.34
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 3.83
-2025-10-15 13:36:16 - MODEL_6 - INFO - exp(residuals) statistics:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Mean (smearing factor): 1.878673
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Min: 0.001756
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Max: 46.066134
-2025-10-15 13:36:16 - MODEL_6 - INFO - Smearing factor: 1.878673
-2025-10-15 13:36:16 - MODEL_6 - INFO - Retransformation bias: +87.87%
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
-2025-10-15 13:36:16 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
-2025-10-15 13:36:16 - MODEL_6 - WARNING - ============================================================
-2025-10-15 13:36:16 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
-2025-10-15 13:36:16 - MODEL_6 - INFO - AIC: 88,653
-2025-10-15 13:36:16 - MODEL_6 - INFO - BIC: 89,080
-2025-10-15 13:36:16 - MODEL_6 - INFO - Log-Normal model fitted successfully
-2025-10-15 13:36:16 - MODEL_6 - INFO - Model training complete
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - MAKING PREDICTIONS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Predictions complete
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - CALCULATING METRICS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Training R^2: -0.3626
-2025-10-15 13:36:16 - MODEL_6 - INFO - Test R^2: -0.3517
-2025-10-15 13:36:16 - MODEL_6 - INFO - RMSE (original): $51,923.33
-2025-10-15 13:36:16 - MODEL_6 - INFO - RMSE (sqrt scale): $1.23
-2025-10-15 13:36:16 - MODEL_6 - INFO - MAE: $35,373.73
-2025-10-15 13:36:16 - MODEL_6 - INFO - MAPE: 423.85%
-2025-10-15 13:36:16 - MODEL_6 - INFO - CV R^2 (mean +- std): -0.3704 +- 0.0754
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - SUBGROUP ANALYSIS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Calculated metrics for 10 subgroups
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO -   living_FH:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 3,767
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: 0.1024
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $30,173.35
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $-5,118.27
-2025-10-15 13:36:16 - MODEL_6 - INFO -   living_ILSL:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 893
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: 0.2458
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $35,010.45
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+7,974.97
-2025-10-15 13:36:16 - MODEL_6 - INFO -   living_RH1-4:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 2,174
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -2.7981
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $79,962.36
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+57,051.56
-2025-10-15 13:36:16 - MODEL_6 - INFO -   age_AgeUnderTwentyOne:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 694
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: 0.4235
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $28,329.45
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $-7,464.30
-2025-10-15 13:36:16 - MODEL_6 - INFO -   age_AgeTwentyOneToThirty:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 1,797
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: 0.0306
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $48,105.77
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+9,148.11
-2025-10-15 13:36:16 - MODEL_6 - INFO -   age_AgeThirtyOnePlus:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 4,343
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -0.7207
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $56,183.71
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+23,166.54
-2025-10-15 13:36:16 - MODEL_6 - INFO -   cost_QOneLow:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 1,709
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -10.0000
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $26,817.02
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+18,283.10
-2025-10-15 13:36:16 - MODEL_6 - INFO -   cost_QTwo:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 1,708
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -10.0000
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $28,282.79
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+11,028.56
-2025-10-15 13:36:16 - MODEL_6 - INFO -   cost_QThree:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 1,708
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -10.0000
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $53,516.01
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+16,201.16
-2025-10-15 13:36:16 - MODEL_6 - INFO -   cost_QFourHigh:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     N: 1,709
-2025-10-15 13:36:16 - MODEL_6 - INFO -     R^2: -3.9867
-2025-10-15 13:36:16 - MODEL_6 - INFO -     RMSE: $80,000.53
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Bias: $+19,963.16
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - VARIANCE ANALYSIS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Variance metrics calculated
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Coefficient of Variation (Actual): 1.0101
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Coefficient of Variation (Predicted): 1.0513
-2025-10-15 13:36:16 - MODEL_6 - INFO -   95% Prediction Interval Width: $96,579.71
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Actual-Predicted Correlation: 0.6369
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - POPULATION SCENARIOS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - Calculated 4 population scenarios
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO -   Base budget: $1,200,000,000
-2025-10-15 13:36:16 - MODEL_6 - INFO -   currentbaseline:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Clients served: 19,806
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Avg allocation: $60,585.98
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist change: +0
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist %: +0.0%
-2025-10-15 13:36:16 - MODEL_6 - INFO -   modelbalanced:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Clients served: 20,202
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Avg allocation: $59,374.27
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist change: +396
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist %: +2.0%
-2025-10-15 13:36:16 - MODEL_6 - INFO -   modelefficiency:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Clients served: 20,796
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Avg allocation: $57,556.69
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist change: +990
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist %: +5.0%
-2025-10-15 13:36:16 - MODEL_6 - INFO -   categoryfocused:
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Clients served: 16,835
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Avg allocation: $71,491.46
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist change: -2,970
-2025-10-15 13:36:16 - MODEL_6 - INFO -     Waitlist %: -15.0%
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - GENERATING OUTPUTS
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - 
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - LATEX GENERATION
-2025-10-15 13:36:16 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:16 - MODEL_6 - INFO - LaTeX commands generated:
-2025-10-15 13:36:16 - MODEL_6 - INFO -   - Newcommands file: ..\..\report\models\model_6\model_6_newcommands.tex
-2025-10-15 13:36:16 - MODEL_6 - INFO -     (87 placeholder commands)
-2025-10-15 13:36:16 - MODEL_6 - INFO -   - Renewcommands file: ..\..\report\models\model_6\model_6_renewcommands.tex
-2025-10-15 13:36:16 - MODEL_6 - INFO -     (87 value commands)
-2025-10-15 13:36:16 - MODEL_6 - INFO - Adding Model 6 specific LaTeX commands...
-2025-10-15 13:36:16 - MODEL_6 - INFO - Model 6 specific commands added successfully
-2025-10-15 13:36:17 - MODEL_6 - INFO - Results saved:
-2025-10-15 13:36:17 - MODEL_6 - INFO -   - Metrics JSON: ..\..\report\models\model_6\metrics.json
-2025-10-15 13:36:17 - MODEL_6 - INFO -   - Predictions CSV: ..\..\report\models\model_6\predictions.csv
-2025-10-15 13:36:17 - MODEL_6 - INFO -     (27,339 train + 6,834 test predictions)
-2025-10-15 13:36:17 - MODEL_6 - INFO - 
-2025-10-15 13:36:17 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:17 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 13:36:17 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
-2025-10-15 13:36:18 - MODEL_6 - INFO - 
-2025-10-15 13:36:18 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:18 - MODEL_6 - INFO - PIPELINE COMPLETE: LOG-NORMAL GLM (CONDITIONAL SMEARING)
-2025-10-15 13:36:18 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:18 - MODEL_6 - INFO - 
-2025-10-15 13:36:18 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - PERFORMANCE METRICS SUMMARY
-2025-10-15 13:36:18 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - Training R^2: -0.3626
-2025-10-15 13:36:18 - MODEL_6 - INFO - Test R^2: -0.3517
-2025-10-15 13:36:18 - MODEL_6 - INFO - RMSE: $51,923.33
-2025-10-15 13:36:18 - MODEL_6 - INFO - MAE: $35,373.73
-2025-10-15 13:36:18 - MODEL_6 - INFO - MAPE: 423.85%
-2025-10-15 13:36:18 - MODEL_6 - INFO - CV R^2 (mean +- std): -0.3704 +- 0.0754
-2025-10-15 13:36:18 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - Generating full-population predictions for BASE_YEAR=2024 ...
-2025-10-15 13:36:18 - MODEL_6 - INFO - 
-2025-10-15 13:36:18 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - LOADING DATA: FY2024-2024
-2025-10-15 13:36:18 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:18 - MODEL_6 - INFO - Loading data from data\cached\fy2024.pkl
-2025-10-15 13:36:18 - MODEL_6 - INFO - Found 47259 records in 'data' key
-2025-10-15 13:36:19 - MODEL_6 - INFO - FY2024 Summary:
-2025-10-15 13:36:19 - MODEL_6 - INFO -   - Processed: 34,173
-2025-10-15 13:36:19 - MODEL_6 - INFO -   - Skipped (Usable=0): 0
-2025-10-15 13:36:19 - MODEL_6 - INFO -   - Skipped (no cost): 13,086
-2025-10-15 13:36:19 - MODEL_6 - INFO -   - Skipped (errors): 0
-2025-10-15 13:36:19 - MODEL_6 - INFO - Total loaded: 34,173 usable records
-2025-10-15 13:36:20 - MODEL_6 - INFO - Features prepared: 57 total features from 34173 records
-2025-10-15 13:36:20 - MODEL_6 - INFO - Feature breakdown:
-2025-10-15 13:36:20 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
-2025-10-15 13:36:20 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
-2025-10-15 13:36:20 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
-2025-10-15 13:36:20 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
-2025-10-15 13:36:20 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
-2025-10-15 13:36:20 - MODEL_6 - INFO - Feature counts by type:
-2025-10-15 13:36:20 - MODEL_6 - INFO -   numeric: 9
-2025-10-15 13:36:20 - MODEL_6 - INFO -   categorical: 5
-2025-10-15 13:36:20 - MODEL_6 - INFO -   binary: 3
-2025-10-15 13:36:20 - MODEL_6 - INFO -   qsi: 37
-2025-10-15 13:36:20 - MODEL_6 - INFO -   interactions: 3
-2025-10-15 13:36:20 - MODEL_6 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_6\predictions_full_2024.csv
-2025-10-15 13:36:20 - MODEL_6 - INFO - 
-2025-10-15 13:36:20 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:20 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 13:36:20 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:21 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
-2025-10-15 13:36:21 - MODEL_6 - INFO - 
-2025-10-15 13:36:21 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:21 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
-2025-10-15 13:36:21 - MODEL_6 - INFO - ------------------------------------------------------------
-2025-10-15 13:36:22 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:22 - MODEL_6 - INFO - MODEL 6 FINAL SUMMARY
-2025-10-15 13:36:22 - MODEL_6 - INFO - ============================================================
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - Performance Metrics (Final):
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Training R^2: -0.3626
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Test R^2: -0.3517
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Log-scale R^2: 0.4362
-2025-10-15 13:36:22 - MODEL_6 - INFO -   RMSE (original scale): $51,923.33
-2025-10-15 13:36:22 - MODEL_6 - INFO -   MAE (original scale): $35,373.73
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - Percentage Error Metrics:
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO -   CV R^2: -0.3704 +- 0.0754
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - Log-Normal Specific Metrics:
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Global smearing factor: 1.878673
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Retransformation bias (global): +87.87%
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Sigma (log scale): 1.2232
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Variance (log scale): 1.4962
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Skewness (original): 1.3009
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Skewness (log scale): -0.6390
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Skewness reduction: 149.1%
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Heteroscedasticity p-value: 0.000000
-2025-10-15 13:36:22 - MODEL_6 - INFO -   AIC: 88,653
-2025-10-15 13:36:22 - MODEL_6 - INFO -   BIC: 89,080
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO -   INTERPRETATION:
-2025-10-15 13:36:22 - MODEL_6 - INFO -   - Using global smearing (conditional not computed)
-2025-10-15 13:36:22 - MODEL_6 - INFO -   - High log-variance (sigma^2 = 1.50) creates large bias
-2025-10-15 13:36:22 - MODEL_6 - INFO -   - Consider using conditional smearing or Model 2 (Gamma GLM)
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - Data Utilization:
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Training: 27,339 (100% retention)
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Test: 6,834 (100% retention)
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - Output:
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Results: ..\..\report\models\model_6
-2025-10-15 13:36:22 - MODEL_6 - INFO -   Plots: ..\..\report\models\model_6\diagnostic_plots.png
-2025-10-15 13:36:22 - MODEL_6 - INFO -   LaTeX: ..\..\report\models\model_6\model_6_renewcommands.tex
-2025-10-15 13:36:22 - MODEL_6 - INFO - 
-2025-10-15 13:36:22 - MODEL_6 - INFO - ================================================================================
-2025-10-15 13:36:22 - MODEL_6 - INFO - MODEL 6 PIPELINE COMPLETE
-2025-10-15 13:36:22 - MODEL_6 - INFO - ================================================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - 
+2025-10-15 16:58:46 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - INITIALIZING MODEL 6: LOG-NORMAL GLM (CONDITIONAL SMEARING)
+2025-10-15 16:58:46 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - Output directory: ..\..\report\models\model_6
+2025-10-15 16:58:46 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - Configuration:
+2025-10-15 16:58:46 - MODEL_6 - INFO -   - Outlier removal: False
+2025-10-15 16:58:46 - MODEL_6 - INFO -   - Transformation: log
+2025-10-15 16:58:46 - MODEL_6 - INFO -   - Random seed: 42
+2025-10-15 16:58:46 - MODEL_6 - INFO - 
+2025-10-15 16:58:46 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - STARTING PIPELINE: LOG-NORMAL GLM (CONDITIONAL SMEARING)
+2025-10-15 16:58:46 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:46 - MODEL_6 - INFO - 
+2025-10-15 16:58:46 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:46 - MODEL_6 - INFO - LOADING DATA: FY2024-2024
+2025-10-15 16:58:46 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:46 - MODEL_6 - INFO - Loading data from data\cached\fy2024.pkl
+2025-10-15 16:58:46 - MODEL_6 - INFO - Found 47259 records in 'data' key
+2025-10-15 16:58:48 - MODEL_6 - INFO - FY2024 Summary:
+2025-10-15 16:58:48 - MODEL_6 - INFO -   - Processed: 34,173
+2025-10-15 16:58:48 - MODEL_6 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 16:58:48 - MODEL_6 - INFO -   - Skipped (no cost): 13,086
+2025-10-15 16:58:48 - MODEL_6 - INFO -   - Skipped (errors): 0
+2025-10-15 16:58:48 - MODEL_6 - INFO - Total loaded: 34,173 usable records
+2025-10-15 16:58:48 - MODEL_6 - INFO - 
+2025-10-15 16:58:48 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:48 - MODEL_6 - INFO - DATA SPLIT
+2025-10-15 16:58:48 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:48 - MODEL_6 - INFO - Training samples: 27,339
+2025-10-15 16:58:48 - MODEL_6 - INFO - Test samples: 6,834
+2025-10-15 16:58:48 - MODEL_6 - INFO - Split ratio: 20.0%
+2025-10-15 16:58:48 - MODEL_6 - INFO - 
+2025-10-15 16:58:48 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:48 - MODEL_6 - INFO - FEATURE PREPARATION
+2025-10-15 16:58:48 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:48 - MODEL_6 - INFO - Features prepared: 57 total features from 27339 records
+2025-10-15 16:58:48 - MODEL_6 - INFO - Feature breakdown:
+2025-10-15 16:58:48 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:58:48 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:58:48 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:58:48 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:58:48 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:58:48 - MODEL_6 - INFO - Feature counts by type:
+2025-10-15 16:58:48 - MODEL_6 - INFO -   numeric: 9
+2025-10-15 16:58:48 - MODEL_6 - INFO -   categorical: 5
+2025-10-15 16:58:48 - MODEL_6 - INFO -   binary: 3
+2025-10-15 16:58:48 - MODEL_6 - INFO -   qsi: 37
+2025-10-15 16:58:48 - MODEL_6 - INFO -   interactions: 3
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features prepared: 57 total features from 6834 records
+2025-10-15 16:58:49 - MODEL_6 - INFO - Feature breakdown:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:58:49 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:58:49 - MODEL_6 - INFO - Feature counts by type:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   numeric: 9
+2025-10-15 16:58:49 - MODEL_6 - INFO -   categorical: 5
+2025-10-15 16:58:49 - MODEL_6 - INFO -   binary: 3
+2025-10-15 16:58:49 - MODEL_6 - INFO -   qsi: 37
+2025-10-15 16:58:49 - MODEL_6 - INFO -   interactions: 3
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features prepared: 57 features
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Training shape: (27339, 57)
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Test shape: (6834, 57)
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Target range: $31.25 - $346,560.68
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Target mean: $44,675.37
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Target median: $32,279.60
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - 10-FOLD CROSS-VALIDATION
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6355
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 148.9%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4376
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2217
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2204
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.34
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.83
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.879894
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001761
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 46.031684
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.879894
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +87.99%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:49 - MODEL_6 - INFO - AIC: 79,732
+2025-10-15 16:58:49 - MODEL_6 - INFO - BIC: 80,154
+2025-10-15 16:58:49 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:49 - MODEL_6 - INFO - Inverse transformation using GLOBAL smearing:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Log predictions range: [6.94, 12.16]
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Smearing factor: 1.879894
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Dollar predictions range: [$1,950, $357,274]
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Fold 1: R^2 = -0.4282
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6385
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 149.1%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4377
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2207
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: -0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2194
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.37
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.77
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.872065
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001720
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 43.591873
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.872065
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +87.21%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.87 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:49 - MODEL_6 - INFO - AIC: 79,693
+2025-10-15 16:58:49 - MODEL_6 - INFO - BIC: 80,115
+2025-10-15 16:58:49 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Fold 2: R^2 = -0.3875
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6414
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 149.3%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4336
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2254
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2241
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.37
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.78
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.879069
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001718
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 43.883420
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.879069
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +87.91%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:49 - MODEL_6 - INFO - AIC: 79,880
+2025-10-15 16:58:49 - MODEL_6 - INFO - BIC: 80,301
+2025-10-15 16:58:49 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Fold 3: R^2 = -0.3274
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6394
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 149.1%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4355
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2243
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2230
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.35
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.82
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.882445
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001754
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 45.729806
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.882445
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +88.24%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:49 - MODEL_6 - INFO - AIC: 79,836
+2025-10-15 16:58:49 - MODEL_6 - INFO - BIC: 80,258
+2025-10-15 16:58:49 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Fold 4: R^2 = -0.2264
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6398
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 149.2%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4377
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2221
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2208
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.35
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.83
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.876834
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001739
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 46.142259
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.876834
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +87.68%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:49 - MODEL_6 - INFO - AIC: 79,750
+2025-10-15 16:58:49 - MODEL_6 - INFO - BIC: 80,171
+2025-10-15 16:58:49 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Fold 5: R^2 = -0.4426
+2025-10-15 16:58:49 - MODEL_6 - INFO - 
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:49 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:49 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:49 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:49 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness (log scale): -0.6397
+2025-10-15 16:58:49 - MODEL_6 - INFO - Skewness reduction: 149.2%
+2025-10-15 16:58:49 - MODEL_6 - INFO - R-squared (log scale): 0.4362
+2025-10-15 16:58:49 - MODEL_6 - INFO - Sigma (log scale): 1.2237
+2025-10-15 16:58:49 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean: -0.000000
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Std: 1.2224
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: -6.32
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 3.90
+2025-10-15 16:58:49 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Mean (smearing factor): 1.877023
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Min: 0.001798
+2025-10-15 16:58:49 - MODEL_6 - INFO -   Max: 49.551135
+2025-10-15 16:58:49 - MODEL_6 - INFO - Smearing factor: 1.877023
+2025-10-15 16:58:49 - MODEL_6 - INFO - Retransformation bias: +87.70%
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:49 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
+2025-10-15 16:58:49 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:49 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 79,812
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 80,234
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Fold 6: R^2 = -0.3573
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:50 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:50 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (log scale): -0.6366
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness reduction: 148.9%
+2025-10-15 16:58:50 - MODEL_6 - INFO - R-squared (log scale): 0.4347
+2025-10-15 16:58:50 - MODEL_6 - INFO - Sigma (log scale): 1.2281
+2025-10-15 16:58:50 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean: -0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std: 1.2268
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: -6.36
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 3.81
+2025-10-15 16:58:50 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean (smearing factor): 1.887294
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: 0.001726
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 45.274571
+2025-10-15 16:58:50 - MODEL_6 - INFO - Smearing factor: 1.887294
+2025-10-15 16:58:50 - MODEL_6 - INFO - Retransformation bias: +88.73%
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Smearing factor = 1.89 means predictions multiplied by ~1.9x
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.51)
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 79,990
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 80,412
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Fold 7: R^2 = -0.4850
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:50 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:50 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (log scale): -0.6438
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness reduction: 149.5%
+2025-10-15 16:58:50 - MODEL_6 - INFO - R-squared (log scale): 0.4365
+2025-10-15 16:58:50 - MODEL_6 - INFO - Sigma (log scale): 1.2209
+2025-10-15 16:58:50 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std: 1.2196
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: -6.22
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 3.79
+2025-10-15 16:58:50 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean (smearing factor): 1.875747
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: 0.001986
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 44.074387
+2025-10-15 16:58:50 - MODEL_6 - INFO - Smearing factor: 1.875747
+2025-10-15 16:58:50 - MODEL_6 - INFO - Retransformation bias: +87.57%
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 79,698
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 80,120
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Fold 8: R^2 = -0.2870
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training samples: 24,605
+2025-10-15 16:58:50 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:50 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (log scale): -0.6369
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness reduction: 149.0%
+2025-10-15 16:58:50 - MODEL_6 - INFO - R-squared (log scale): 0.4365
+2025-10-15 16:58:50 - MODEL_6 - INFO - Sigma (log scale): 1.2214
+2025-10-15 16:58:50 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std: 1.2201
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: -6.33
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 3.87
+2025-10-15 16:58:50 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean (smearing factor): 1.875595
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: 0.001791
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 47.957982
+2025-10-15 16:58:50 - MODEL_6 - INFO - Smearing factor: 1.875595
+2025-10-15 16:58:50 - MODEL_6 - INFO - Retransformation bias: +87.56%
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.49)
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 79,721
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 80,143
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Fold 9: R^2 = -0.4307
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training samples: 24,606
+2025-10-15 16:58:50 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:50 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (log scale): -0.6383
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness reduction: 149.1%
+2025-10-15 16:58:50 - MODEL_6 - INFO - R-squared (log scale): 0.4367
+2025-10-15 16:58:50 - MODEL_6 - INFO - Sigma (log scale): 1.2237
+2025-10-15 16:58:50 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std: 1.2224
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: -6.32
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 3.77
+2025-10-15 16:58:50 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean (smearing factor): 1.879162
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: 0.001792
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 43.300450
+2025-10-15 16:58:50 - MODEL_6 - INFO - Smearing factor: 1.879162
+2025-10-15 16:58:50 - MODEL_6 - INFO - Retransformation bias: +87.92%
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 79,815
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 80,237
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Fold 10: R^2 = -0.3315
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - Cross-validation summary:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean R^2: -0.3704
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std R^2: 0.0754
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min R^2: -0.4850 (Fold 7)
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max R^2: -0.2264 (Fold 4)
+2025-10-15 16:58:50 - MODEL_6 - INFO -   95% CI: [-0.5181, -0.2226]
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL TRAINING
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MODEL 6 FITTING: LOG-NORMAL GLM
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training samples: 27,339
+2025-10-15 16:58:50 - MODEL_6 - INFO - Features: 57
+2025-10-15 16:58:50 - MODEL_6 - INFO - Note: y already log-transformed by base class
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (original scale): 1.3009
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness (log scale): -0.6390
+2025-10-15 16:58:50 - MODEL_6 - INFO - Skewness reduction: 149.1%
+2025-10-15 16:58:50 - MODEL_6 - INFO - R-squared (log scale): 0.4362
+2025-10-15 16:58:50 - MODEL_6 - INFO - Sigma (log scale): 1.2232
+2025-10-15 16:58:50 - MODEL_6 - INFO - Residual statistics (log scale):
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Std: 1.2220
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: -6.34
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 3.83
+2025-10-15 16:58:50 - MODEL_6 - INFO - exp(residuals) statistics:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Mean (smearing factor): 1.878673
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Min: 0.001756
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Max: 46.066134
+2025-10-15 16:58:50 - MODEL_6 - INFO - Smearing factor: 1.878673
+2025-10-15 16:58:50 - MODEL_6 - INFO - Retransformation bias: +87.87%
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - WARNING - CAUTION: Large smearing factor detected!
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Smearing factor = 1.88 means predictions multiplied by ~1.9x
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   This occurs when log-scale residual variance is high (sigma^2 = 1.50)
+2025-10-15 16:58:50 - MODEL_6 - WARNING -   Indicates log-normal distribution may not be appropriate for this data
+2025-10-15 16:58:50 - MODEL_6 - WARNING - ============================================================
+2025-10-15 16:58:50 - MODEL_6 - INFO - Breusch-Pagan test p-value: 0.000000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   -> Some heteroscedasticity remains on log scale
+2025-10-15 16:58:50 - MODEL_6 - INFO - AIC: 88,653
+2025-10-15 16:58:50 - MODEL_6 - INFO - BIC: 89,080
+2025-10-15 16:58:50 - MODEL_6 - INFO - Log-Normal model fitted successfully
+2025-10-15 16:58:50 - MODEL_6 - INFO - Model training complete
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - MAKING PREDICTIONS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Predictions complete
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - CALCULATING METRICS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Training R^2: -0.3626
+2025-10-15 16:58:50 - MODEL_6 - INFO - Test R^2: -0.3517
+2025-10-15 16:58:50 - MODEL_6 - INFO - RMSE (original): $51,923.33
+2025-10-15 16:58:50 - MODEL_6 - INFO - RMSE (sqrt scale): $1.23
+2025-10-15 16:58:50 - MODEL_6 - INFO - MAE: $35,373.73
+2025-10-15 16:58:50 - MODEL_6 - INFO - MAPE: 423.85%
+2025-10-15 16:58:50 - MODEL_6 - INFO - CV R^2 (mean +- std): -0.3704 +- 0.0754
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - SUBGROUP ANALYSIS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Calculated metrics for 10 subgroups
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO -   living_FH:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 3,767
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: 0.1024
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $30,173.35
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $-5,118.27
+2025-10-15 16:58:50 - MODEL_6 - INFO -   living_ILSL:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 893
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: 0.2458
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $35,010.45
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+7,974.97
+2025-10-15 16:58:50 - MODEL_6 - INFO -   living_RH1-4:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 2,174
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -2.7981
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $79,962.36
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+57,051.56
+2025-10-15 16:58:50 - MODEL_6 - INFO -   age_AgeUnderTwentyOne:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 694
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: 0.4235
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $28,329.45
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $-7,464.30
+2025-10-15 16:58:50 - MODEL_6 - INFO -   age_AgeTwentyOneToThirty:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 1,797
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: 0.0306
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $48,105.77
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+9,148.11
+2025-10-15 16:58:50 - MODEL_6 - INFO -   age_AgeThirtyOnePlus:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 4,343
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -0.7207
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $56,183.71
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+23,166.54
+2025-10-15 16:58:50 - MODEL_6 - INFO -   cost_QOneLow:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 1,709
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -10.0000
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $26,817.02
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+18,283.10
+2025-10-15 16:58:50 - MODEL_6 - INFO -   cost_QTwo:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 1,708
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -10.0000
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $28,282.79
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+11,028.56
+2025-10-15 16:58:50 - MODEL_6 - INFO -   cost_QThree:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 1,708
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -10.0000
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $53,516.01
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+16,201.16
+2025-10-15 16:58:50 - MODEL_6 - INFO -   cost_QFourHigh:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     N: 1,709
+2025-10-15 16:58:50 - MODEL_6 - INFO -     R^2: -3.9867
+2025-10-15 16:58:50 - MODEL_6 - INFO -     RMSE: $80,000.53
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Bias: $+19,963.16
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - VARIANCE ANALYSIS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Variance metrics calculated
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Coefficient of Variation (Actual): 1.0101
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Coefficient of Variation (Predicted): 1.0513
+2025-10-15 16:58:50 - MODEL_6 - INFO -   95% Prediction Interval Width: $96,579.71
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Actual-Predicted Correlation: 0.6369
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - POPULATION SCENARIOS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - Calculated 4 population scenarios
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO -   Base budget: $1,200,000,000
+2025-10-15 16:58:50 - MODEL_6 - INFO -   currentbaseline:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Clients served: 19,806
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Avg allocation: $60,585.98
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist change: +0
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist %: +0.0%
+2025-10-15 16:58:50 - MODEL_6 - INFO -   modelbalanced:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Clients served: 20,202
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Avg allocation: $59,374.27
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist change: +396
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist %: +2.0%
+2025-10-15 16:58:50 - MODEL_6 - INFO -   modelefficiency:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Clients served: 20,796
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Avg allocation: $57,556.69
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist change: +990
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist %: +5.0%
+2025-10-15 16:58:50 - MODEL_6 - INFO -   categoryfocused:
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Clients served: 16,835
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Avg allocation: $71,491.46
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist change: -2,970
+2025-10-15 16:58:50 - MODEL_6 - INFO -     Waitlist %: -15.0%
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - GENERATING OUTPUTS
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - 
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - LATEX GENERATION
+2025-10-15 16:58:50 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:50 - MODEL_6 - INFO - LaTeX commands generated:
+2025-10-15 16:58:50 - MODEL_6 - INFO -   - Newcommands file: ..\..\report\models\model_6\model_6_newcommands.tex
+2025-10-15 16:58:50 - MODEL_6 - INFO -     (87 placeholder commands)
+2025-10-15 16:58:50 - MODEL_6 - INFO -   - Renewcommands file: ..\..\report\models\model_6\model_6_renewcommands.tex
+2025-10-15 16:58:50 - MODEL_6 - INFO -     (87 value commands)
+2025-10-15 16:58:50 - MODEL_6 - INFO - Adding Model 6 specific LaTeX commands...
+2025-10-15 16:58:50 - MODEL_6 - INFO - Model 6 specific commands added successfully
+2025-10-15 16:58:51 - MODEL_6 - INFO - Results saved:
+2025-10-15 16:58:51 - MODEL_6 - INFO -   - Metrics JSON: ..\..\report\models\model_6\metrics.json
+2025-10-15 16:58:51 - MODEL_6 - INFO -   - Predictions CSV: ..\..\report\models\model_6\predictions.csv
+2025-10-15 16:58:51 - MODEL_6 - INFO -     (27,339 train + 6,834 test predictions)
+2025-10-15 16:58:51 - MODEL_6 - INFO - 
+2025-10-15 16:58:51 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:51 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 16:58:51 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
+2025-10-15 16:58:52 - MODEL_6 - INFO - 
+2025-10-15 16:58:52 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:52 - MODEL_6 - INFO - PIPELINE COMPLETE: LOG-NORMAL GLM (CONDITIONAL SMEARING)
+2025-10-15 16:58:52 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:52 - MODEL_6 - INFO - 
+2025-10-15 16:58:52 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - PERFORMANCE METRICS SUMMARY
+2025-10-15 16:58:52 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - Training R^2: -0.3626
+2025-10-15 16:58:52 - MODEL_6 - INFO - Test R^2: -0.3517
+2025-10-15 16:58:52 - MODEL_6 - INFO - RMSE: $51,923.33
+2025-10-15 16:58:52 - MODEL_6 - INFO - MAE: $35,373.73
+2025-10-15 16:58:52 - MODEL_6 - INFO - MAPE: 423.85%
+2025-10-15 16:58:52 - MODEL_6 - INFO - CV R^2 (mean +- std): -0.3704 +- 0.0754
+2025-10-15 16:58:52 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - Generating full-population predictions for BASE_YEAR=2023 ...
+2025-10-15 16:58:52 - MODEL_6 - INFO - 
+2025-10-15 16:58:52 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - LOADING DATA: FY2023-2023
+2025-10-15 16:58:52 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:52 - MODEL_6 - INFO - Loading data from data\cached\fy2023.pkl
+2025-10-15 16:58:52 - MODEL_6 - INFO - Found 46193 records in 'data' key
+2025-10-15 16:58:54 - MODEL_6 - INFO - FY2023 Summary:
+2025-10-15 16:58:54 - MODEL_6 - INFO -   - Processed: 33,092
+2025-10-15 16:58:54 - MODEL_6 - INFO -   - Skipped (Usable=0): 0
+2025-10-15 16:58:54 - MODEL_6 - INFO -   - Skipped (no cost): 13,101
+2025-10-15 16:58:54 - MODEL_6 - INFO -   - Skipped (errors): 0
+2025-10-15 16:58:54 - MODEL_6 - INFO - Total loaded: 33,092 usable records
+2025-10-15 16:58:54 - MODEL_6 - INFO - Features prepared: 57 total features from 33092 records
+2025-10-15 16:58:54 - MODEL_6 - INFO - Feature breakdown:
+2025-10-15 16:58:54 - MODEL_6 - INFO -   living_setting: 5 categories [ILSL, RH1, RH2, RH3, RH4] (reference: FH)
+2025-10-15 16:58:54 - MODEL_6 - INFO -   Binary: 3 features [Age21_30, Age31Plus, Male]
+2025-10-15 16:58:54 - MODEL_6 - INFO -   Numeric: 9 features [losri, olevel, blevel, flevel, plevel, bsum, fsum, psum, age]
+2025-10-15 16:58:54 - MODEL_6 - INFO -   QSI: 37 features [Q14-Q50 (37 items)]
+2025-10-15 16:58:54 - MODEL_6 - INFO -   Interactions: 3 features [SupportedLiving_x_LOSRI, Age_x_BSum, FH_x_FSum]
+2025-10-15 16:58:54 - MODEL_6 - INFO - Feature counts by type:
+2025-10-15 16:58:54 - MODEL_6 - INFO -   numeric: 9
+2025-10-15 16:58:54 - MODEL_6 - INFO -   categorical: 5
+2025-10-15 16:58:54 - MODEL_6 - INFO -   binary: 3
+2025-10-15 16:58:54 - MODEL_6 - INFO -   qsi: 37
+2025-10-15 16:58:54 - MODEL_6 - INFO -   interactions: 3
+2025-10-15 16:58:54 - MODEL_6 - INFO - Saved full-population predictions to C:\Dropbox\!JBGConsulting\!2025 ISF iBudget\GitHub\iBudget\report\models\model_6\predictions_full_2023.csv
+2025-10-15 16:58:54 - MODEL_6 - INFO - 
+2025-10-15 16:58:54 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:54 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 16:58:54 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:55 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
+2025-10-15 16:58:55 - MODEL_6 - INFO - 
+2025-10-15 16:58:55 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:55 - MODEL_6 - INFO - GENERATING DIAGNOSTIC PLOTS
+2025-10-15 16:58:55 - MODEL_6 - INFO - ------------------------------------------------------------
+2025-10-15 16:58:56 - MODEL_6 - INFO - Diagnostic plots saved to ..\..\report\models\model_6\diagnostic_plots.png
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:56 - MODEL_6 - INFO - MODEL 6 FINAL SUMMARY
+2025-10-15 16:58:56 - MODEL_6 - INFO - ============================================================
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - Performance Metrics (Final):
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Training R^2: -0.3626
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Test R^2: -0.3517
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Log-scale R^2: 0.4362
+2025-10-15 16:58:56 - MODEL_6 - INFO -   RMSE (original scale): $51,923.33
+2025-10-15 16:58:56 - MODEL_6 - INFO -   MAE (original scale): $35,373.73
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - Percentage Error Metrics:
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO -   CV R^2: -0.3704 +- 0.0754
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - Log-Normal Specific Metrics:
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Global smearing factor: 1.878673
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Retransformation bias (global): +87.87%
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Sigma (log scale): 1.2232
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Variance (log scale): 1.4962
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Skewness (original): 1.3009
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Skewness (log scale): -0.6390
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Skewness reduction: 149.1%
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Heteroscedasticity p-value: 0.000000
+2025-10-15 16:58:56 - MODEL_6 - INFO -   AIC: 88,653
+2025-10-15 16:58:56 - MODEL_6 - INFO -   BIC: 89,080
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO -   INTERPRETATION:
+2025-10-15 16:58:56 - MODEL_6 - INFO -   - Using global smearing (conditional not computed)
+2025-10-15 16:58:56 - MODEL_6 - INFO -   - High log-variance (sigma^2 = 1.50) creates large bias
+2025-10-15 16:58:56 - MODEL_6 - INFO -   - Consider using conditional smearing or Model 2 (Gamma GLM)
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - Data Utilization:
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Training: 27,339 (100% retention)
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Test: 6,834 (100% retention)
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - Output:
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Results: ..\..\report\models\model_6
+2025-10-15 16:58:56 - MODEL_6 - INFO -   Plots: ..\..\report\models\model_6\diagnostic_plots.png
+2025-10-15 16:58:56 - MODEL_6 - INFO -   LaTeX: ..\..\report\models\model_6\model_6_renewcommands.tex
+2025-10-15 16:58:56 - MODEL_6 - INFO - 
+2025-10-15 16:58:56 - MODEL_6 - INFO - ================================================================================
+2025-10-15 16:58:56 - MODEL_6 - INFO - MODEL 6 PIPELINE COMPLETE
+2025-10-15 16:58:56 - MODEL_6 - INFO - ================================================================================
